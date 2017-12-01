@@ -1,0 +1,48 @@
+<!--div class="ui divided items">
+  <div *ngFor="let competicion of competiciones" class="item">
+    <div class="image">
+      <img src="/images/wireframe/image.png">
+    </div>
+    <div class="content">
+      <a class="header">{{competicion.nombre}}</a>
+      <div class="meta">
+        <span class="cinema">{{competicion.descripcion}}</span>
+      </div>
+      <div class="description">
+        <p></p>
+      </div>
+      <div class="extra">
+        <div class="ui green label"><i class="globe icon"></i> {{competicion.ubicacion}}</div>
+        <div class="ui label" [ngClass]="{'blue':competicion.registrado,'yellow':!competicion.registrado}">
+          <div *ngIf="competicion.registrado">Registrado</div>
+          <div *ngIf="!competicion.registrado">No registrado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div -->
+<div class="ui cards">
+  <div *ngFor="let competicion of competiciones" class="item" class="card">
+    <div class="image">
+      <img src="{{competicion.logoUrl}}">
+    </div>
+    <div class="content">
+      <img class="right floated mini ui image" src="/images/avatar/large/elliot.jpg">
+      <div class="header">
+        {{competicion.nombre}}
+      </div>
+      <div class="meta">
+        {{competicion.ubicacion}}
+      </div>
+      <div class="description">
+        {{competicion.descripcion}}
+      </div>
+    </div>
+    <div class="extra content">
+      <div class="ui two buttons">
+        <div *ngIf="!competicion.registrado" class="ui blue button">Registrarse</div>
+        <div *ngIf="competicion.registrado" class="ui green button">Ir</div>
+      </div>
+    </div>
+  </div>
+</div>
