@@ -1,13 +1,13 @@
 package io.semantic.openscore.core.repository;
 
-import java.text.MessageFormat;
-import java.util.List;
-import java.util.Optional;
+import io.semantic.openscore.core.model.Storable;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
-import io.semantic.openscore.core.model.Storable;
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.Optional;
 
 public abstract class Repository<T extends Storable> {
 
@@ -26,7 +26,7 @@ public abstract class Repository<T extends Storable> {
     }
 
     public long save(T storable) {
-        if (storable.getId() > 0) {
+        if (storable.getId() != 0) {
             this.entityManager.merge(storable);
         } else {
             this.entityManager.persist(storable);
@@ -36,14 +36,14 @@ public abstract class Repository<T extends Storable> {
 
     public TypedQuery<T> createQuery(String query) {
         return this.entityManager.createQuery(query,
-                                              this.persistentClass);
+                this.persistentClass);
     }
 
     public Optional<T> findById(long id) {
 
         List<T> found = this.createQuery(MessageFormat.format("from {0} s where s.id=:id and s.deleted=false",
-                                                              this.persistentClass.getSimpleName())).setParameter("id",
-                                                                                                                  id).getResultList();
+                this.persistentClass.getSimpleName())).setParameter("id",
+                id).getResultList();
 
         if (!found.isEmpty()) {
             return Optional.of(found.get(0));
@@ -67,15 +67,15 @@ public abstract class Repository<T extends Storable> {
 
     public void hardDeleteByQuery(TypedQuery<T> query) {
         List<T> found = this.findByQuery(query,
-                                         new Page(0,
-                                                  0));
+                new Page(0,
+                        0));
         found.forEach(entity -> entityManager.remove(entity));
     }
 
     public void deleteByQuery(TypedQuery<T> query) {
         List<T> found = this.findByQuery(query,
-                                         new Page(0,
-                                                  0));
+                new Page(0,
+                        0));
         found.forEach(elem -> {
             elem.setDeleted(true);
             save(elem);
@@ -92,8 +92,8 @@ public abstract class Repository<T extends Storable> {
 
     public List<T> findAll(Page page) {
         TypedQuery<T> query = this.createQuery(MessageFormat.format("from {0}",
-                                                                    this.persistentClass.getSimpleName()));
+                this.persistentClass.getSimpleName()));
         return this.findByQuery(query,
-                                page);
+                page);
     }
 }

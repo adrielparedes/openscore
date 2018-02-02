@@ -1,11 +1,7 @@
 package io.semantic.openscore.core.model;
 
+import javax.persistence.*;
 import java.util.Date;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
 
 @MappedSuperclass
 public class Storable {

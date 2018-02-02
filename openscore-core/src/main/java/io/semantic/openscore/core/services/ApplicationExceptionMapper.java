@@ -16,8 +16,8 @@ public class ApplicationExceptionMapper implements ExceptionMapper<ApplicationEx
         return Response
                 .status(500)
                 .entity(error("ERROR",
-                              exception.getMessage(),
-                              null))
+                        exception.getMessage(),
+                        null))
                 .build();
     }
 }

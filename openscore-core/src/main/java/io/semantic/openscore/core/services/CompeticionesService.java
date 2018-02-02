@@ -1,18 +1,14 @@
 package io.semantic.openscore.core.services;
 
-import java.util.List;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.competiciones.CompeticionApi;
 import io.semantic.openscore.core.api.competiciones.CrearCompeticionApi;
+import io.semantic.openscore.core.model.Partido;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.Set;
 
 @Path("competiciones")
 @Produces(MediaType.APPLICATION_JSON)
@@ -26,9 +22,13 @@ public interface CompeticionesService {
 
     @GET
     @Path("/{id}")
-    ApiResponse<CompeticionApi> getCompeticion(@PathParam("id") Long id);
+    ApiResponse<CompeticionApi> getCompeticion(@PathParam("id") long id);
 
     @POST
     @Path("/")
     ApiResponse<CompeticionApi> addCompeticion(CrearCompeticionApi competicionApi);
+
+    @POST
+    @Path("{id}/partidos")
+    ApiResponse<CompeticionApi> addPartidos(@PathParam("id") String id, Set<Partido> partidos);
 }

@@ -3,6 +3,8 @@ package io.semantic.openscore.core.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
 public class Competicion extends Storable {
@@ -26,6 +28,12 @@ public class Competicion extends Storable {
 
     @Column(name = "REGISTRADO")
     private boolean registrado;
+
+    @OneToMany
+    private Set<Partido> partidos;
+
+    @OneToMany
+    private Set<Resultado> resultados;
 
     public String getNombre() {
         return nombre;
@@ -73,5 +81,21 @@ public class Competicion extends Storable {
 
     public void setCopa(byte[] copa) {
         this.copa = copa;
+    }
+
+    public Set<Partido> getPartidos() {
+        return partidos;
+    }
+
+    public void setPartidos(Set<Partido> partidos) {
+        this.partidos = partidos;
+    }
+
+    public Set<Resultado> getResultados() {
+        return resultados;
+    }
+
+    public void setResultados(Set<Resultado> resultados) {
+        this.resultados = resultados;
     }
 }

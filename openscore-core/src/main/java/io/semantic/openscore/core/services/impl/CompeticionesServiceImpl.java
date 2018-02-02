@@ -3,6 +3,7 @@ package io.semantic.openscore.core.services.impl;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import io.semantic.openscore.core.api.competiciones.CompeticionApi;
 import io.semantic.openscore.core.api.competiciones.CrearCompeticionApi;
 import io.semantic.openscore.core.exceptions.EntityNotFoundException;
 import io.semantic.openscore.core.model.Competicion;
+import io.semantic.openscore.core.model.Partido;
 import io.semantic.openscore.core.repository.CompeticionesRepository;
 import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.services.CompeticionesService;
@@ -39,29 +41,34 @@ public class CompeticionesServiceImpl implements CompeticionesService {
     public ApiResponse<List<CompeticionApi>> getCompeticiones(@QueryParam("page") int page,
                                                               @QueryParam("pageSize") int pageSize) {
         return ok(this.competicionesRepository.findAll(new Page(page,
-                                                                pageSize))
-                          .stream()
-                          .map(competicion -> dozerMapper.map(competicion,
-                                                              CompeticionApi.class))
-                          .collect(Collectors.toList()));
+                pageSize))
+                .stream()
+                .map(competicion -> dozerMapper.map(competicion,
+                        CompeticionApi.class))
+                .collect(Collectors.toList()));
     }
 
     @Override
-    public ApiResponse<CompeticionApi> getCompeticion(Long id) {
+    public ApiResponse<CompeticionApi> getCompeticion(long id) {
         Optional<Competicion> found = this.competicionesRepository.findById(id);
         return ok(found.map(competicion -> dozerMapper.map(competicion,
-                                                           CompeticionApi.class))
-                          .orElseThrow(() -> new EntityNotFoundException(MessageFormat.format("La competicion con el id <{0}> no fue encontrada",
-                                                                                              id))));
+                CompeticionApi.class))
+                .orElseThrow(() -> new EntityNotFoundException(MessageFormat.format("La competicion con el id <{0}> no fue encontrada",
+                        id))));
     }
 
     @Override
     public ApiResponse<CompeticionApi> addCompeticion(CrearCompeticionApi crearCompeticionApi) {
 
         Competicion competicion = dozerMapper.map(crearCompeticionApi,
-                                                  Competicion.class);
+                Competicion.class);
         this.competicionesRepository.save(competicion);
         return ok(dozerMapper.map(competicion,
-                                  CompeticionApi.class));
+                CompeticionApi.class));
+    }
+
+    @Override
+    public ApiResponse<CompeticionApi> addPartidos(String id, Set<Partido> partidos) {
+        return null;
     }
 }
