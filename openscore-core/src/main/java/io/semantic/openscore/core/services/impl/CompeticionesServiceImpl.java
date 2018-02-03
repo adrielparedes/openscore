@@ -17,7 +17,7 @@ import io.semantic.openscore.core.model.Competicion;
 import io.semantic.openscore.core.model.Partido;
 import io.semantic.openscore.core.repository.CompeticionesRepository;
 import io.semantic.openscore.core.repository.Page;
-import io.semantic.openscore.core.services.CompeticionesService;
+import io.semantic.openscore.core.services.api.CompeticionesService;
 import org.dozer.DozerBeanMapper;
 
 import static io.semantic.openscore.core.services.RestUtil.ok;

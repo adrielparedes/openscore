@@ -1,4 +1,4 @@
-package io.semantic.openscore.core.services;
+package io.semantic.openscore.core.services.api;
 
 import io.semantic.openscore.core.api.ApiResponse;
 

@@ -1,7 +1,7 @@
 package io.semantic.openscore.core;
 
 import io.semantic.openscore.core.api.competiciones.CrearCompeticionApi;
-import io.semantic.openscore.core.services.CompeticionesService;
+import io.semantic.openscore.core.services.api.CompeticionesService;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
