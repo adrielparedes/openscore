@@ -32,4 +32,9 @@ export const navigation = [
     title: true,
     name: 'Admin'
   },
+  {
+    name: 'Usuarios',
+    url: '/admin/usuarios',
+    icon: 'icon-people'
+  },
 ];
