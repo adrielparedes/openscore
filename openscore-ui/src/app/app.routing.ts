@@ -23,6 +23,18 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'
+      },
+      {
+        path: 'noticias',
+        loadChildren: './views/noticias/noticias.module#NoticiasModule'
+      },
+      {
+        path: 'ranking',
+        loadChildren: './views/ranking/ranking.module#RankingModule'
+      },
+      {
+        path: 'explorar',
+        loadChildren: './views/explorar/explorar.module#ExplorarModule'
       }
     ]
   }
