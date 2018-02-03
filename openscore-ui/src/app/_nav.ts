@@ -33,6 +33,11 @@ export const navigation = [
     icon: 'icon-trophy',
     children: [
       {
+        name: 'Todas',
+        url: '/competiciones',
+        icon: 'icon-trophy'
+      },
+      {
         name: 'Copa Conmebol Libertadores',
         url: '/competiciones/1',
         icon: 'icon-trophy'
