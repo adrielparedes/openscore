@@ -37,11 +37,24 @@ export const routes: Routes = [
         loadChildren: './views/explorar/explorar.module#ExplorarModule'
       }
     ]
+  },
+  {
+    path: 'pages',
+    component: SimpleLayoutComponent,
+    data: {
+      title: 'Pages'
+    },
+    children: [
+      {
+        path: '',
+        loadChildren: './views/pages/pages.module#PagesModule',
+      }
+    ]
   }
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

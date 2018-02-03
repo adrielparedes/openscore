@@ -20,7 +20,7 @@ export const navigation = [
   {
     name: 'Ranking',
     url: '/ranking',
-    icon: 'icon-list '
+    icon: 'icon-trophy '
   },
   {
     name: 'Explorar',
