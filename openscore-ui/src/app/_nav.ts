@@ -27,6 +27,18 @@ export const navigation = [
     url: '/explorar',
     icon: 'icon-compass'
   },
+  {
+    name: 'Competiciones',
+    url: '/competiciones',
+    icon: 'icon-trophy',
+    children: [
+      {
+        name: 'Copa Conmebol Libertadores',
+        url: '/competiciones/1',
+        icon: 'icon-trophy'
+      }
+    ]
+  },
   // ACA ABAJO VA LA PARTE DE AMIN
   {
     title: true,
