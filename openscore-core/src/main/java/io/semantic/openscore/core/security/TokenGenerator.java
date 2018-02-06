@@ -38,7 +38,6 @@ public class TokenGenerator {
                 .subject(SUBJECT)
                 .issuer(ISSUER)
                 .expirationTime(EXPIRACION_TOKEN)
-                .claim(USERNAME, usuario.getUsername())
                 .claim(EMAIL, usuario.getEmail())
                 .claim(NOMBRE, usuario.getNombre())
                 .claim(APELLIDO, usuario.getApellido())
@@ -74,5 +73,9 @@ public class TokenGenerator {
         } catch (Exception e) {
             throw new RuntimeException("Error al firmar el token", e);
         }
+    }
+
+    public static String passwordRegex() {
+        return null;
     }
 }

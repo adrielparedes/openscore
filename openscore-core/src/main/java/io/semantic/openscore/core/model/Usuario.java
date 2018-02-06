@@ -25,11 +25,8 @@ public class Usuario extends Storable {
 
     @NotNull
     @Email
+    @Column(unique = true)
     private String email;
-
-    @NotNull
-    @Length(min = 3)
-    private String username;
 
     @NotNull
     private String password;
@@ -70,14 +67,6 @@ public class Usuario extends Storable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {

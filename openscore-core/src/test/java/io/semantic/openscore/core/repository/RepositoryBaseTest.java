@@ -1,6 +1,7 @@
 package io.semantic.openscore.core.repository;
 
-import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.Before;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -11,7 +12,7 @@ public abstract class RepositoryBaseTest {
 
     protected EntityManager entityManager;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         entityManager = Persistence
                 .createEntityManagerFactory("test")

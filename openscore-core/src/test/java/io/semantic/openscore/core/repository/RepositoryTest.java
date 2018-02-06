@@ -1,6 +1,6 @@
 package io.semantic.openscore.core.repository;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,7 +8,8 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+
 
 class RepositoryTest extends RepositoryBaseTest {
 

@@ -12,6 +12,14 @@ public class Pais extends Storable {
     @NotNull
     private String codigo;
 
+    public Pais() {
+    }
+
+    public Pais(String codigo, String nombre) {
+        this.setCodigo(codigo);
+        this.setNombre(nombre);
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -27,4 +35,14 @@ public class Pais extends Storable {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Pais) {
+            return this.getCodigo().equals(((Pais) obj).getCodigo());
+        } else {
+            return super.equals(obj);
+        }
+    }
+
 }
