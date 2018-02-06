@@ -3,7 +3,6 @@ package io.semantic.openscore.core.services.api;
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.competiciones.CompeticionApi;
 import io.semantic.openscore.core.api.competiciones.CrearCompeticionApi;
-import io.semantic.openscore.core.model.Partido;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -30,5 +29,5 @@ public interface CompeticionesService {
 
     @POST
     @Path("{id}/partidos")
-    ApiResponse<CompeticionApi> addPartidos(@PathParam("id") String id, Set<Partido> partidos);
+    ApiResponse<CompeticionApi> addPartidos(@PathParam("id") String id, Set<String> partidos);
 }

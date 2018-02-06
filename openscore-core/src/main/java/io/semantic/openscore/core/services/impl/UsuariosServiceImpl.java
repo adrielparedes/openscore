@@ -7,6 +7,7 @@ import io.semantic.openscore.core.api.usuarios.UsuarioApi;
 import io.semantic.openscore.core.model.Pais;
 import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.model.Usuario;
+import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.repository.PaisRepository;
 import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.security.TokenGenerator;
@@ -20,6 +21,7 @@ import javax.ws.rs.Path;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/usuarios")
 @RequestScoped
@@ -86,6 +88,11 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     @Override
     public ApiResponse<List<UsuarioApi>> getAll(int page, int pageSize, String filter) {
-        return null;
+        List<Usuario> usuarios = this.usuarioRepository.findAll(new Page(page, pageSize));
+        List<UsuarioApi> usuariosApi = usuarios
+                .stream()
+                .map(usuario -> this.mapper.map(usuario, UsuarioApi.class))
+                .collect(Collectors.toList());
+        return new ApiResponse<>(usuariosApi);
     }
 }

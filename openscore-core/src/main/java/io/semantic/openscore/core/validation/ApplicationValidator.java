@@ -17,6 +17,9 @@ public class ApplicationValidator {
 
     private Validator validator;
 
+    public ApplicationValidator() {
+    }
+
     @Inject
     public ApplicationValidator(Validator validator) {
         this.validator = validator;

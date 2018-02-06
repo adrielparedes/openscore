@@ -4,7 +4,7 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="db" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
