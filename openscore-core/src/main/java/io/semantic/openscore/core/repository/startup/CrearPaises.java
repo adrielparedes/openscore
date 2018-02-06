@@ -1,8 +1,9 @@
 package io.semantic.openscore.core.repository.startup;
 
-import io.semantic.openscore.core.logger.LoggerFactory;
 import io.semantic.openscore.core.model.Pais;
 import io.semantic.openscore.core.repository.PaisRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
@@ -13,7 +14,7 @@ import javax.inject.Inject;
 public class CrearPaises {
 
 
-    ApplicationLogger logger = LoggerFactory.get(ApplicationLogger.class, CrearPaises.class);
+    Logger logger = LoggerFactory.getLogger(CrearPaises.class);
     private PaisRepository paisRepository;
 
     @Inject
@@ -22,19 +23,19 @@ public class CrearPaises {
     }
 
     public void initialize(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        logger.inicializandoPaises();
+//        logger.inicializandoPaises();
 
         this.guardarSiNoExiste("ARG", crearPais("ARG", "Argentina"));
         this.guardarSiNoExiste("CHI", crearPais("CHI", "Chile"));
         this.guardarSiNoExiste("PER", crearPais("PER", "Peru"));
         this.guardarSiNoExiste("COL", crearPais("COL", "Colombia"));
 
-        logger.inicializacionDePaisesCompleta();
+//        logger.inicializacionDePaisesCompleta();
     }
 
     public void guardarSiNoExiste(String codigo, Pais pais) {
         if (this.paisRepository.exist(codigo)) {
-            logger.seCreaElPaisNoExistente(pais.getNombre());
+//            logger.seCreaElPaisNoExistente(pais.getNombre());
             this.paisRepository.save(pais);
         }
     }

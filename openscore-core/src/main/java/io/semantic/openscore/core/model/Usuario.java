@@ -25,18 +25,17 @@ public class Usuario extends Storable {
 
     @NotNull
     @Email
+    @Column(unique = true)
     private String email;
-
-    @NotNull
-    @Length(min = 3)
-    private String username;
 
     @NotNull
     private String password;
 
-    @ManyToMany
-    private Set<Competicion> competiciones;
+//    @ManyToMany
+//    private Set<Competicion> competiciones;
 
+    @ElementCollection
+    @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "usuario_id"))
     @Enumerated(EnumType.STRING)
     private Set<Rol> roles;
 
@@ -72,14 +71,6 @@ public class Usuario extends Storable {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -88,17 +79,17 @@ public class Usuario extends Storable {
         this.password = password;
     }
 
-    public Set<Competicion> getCompeticiones() {
-        return competiciones;
-    }
-
-    public void setCompeticiones(Set<Competicion> competiciones) {
-        this.competiciones = competiciones;
-    }
-
-    public void addCompeticion(Competicion competicion) {
-        this.competiciones.add(competicion);
-    }
+//    public Set<Competicion> getCompeticiones() {
+//        return competiciones;
+//    }
+//
+//    public void setCompeticiones(Set<Competicion> competiciones) {
+//        this.competiciones = competiciones;
+//    }
+//
+//    public void addCompeticion(Competicion competicion) {
+//        this.competiciones.add(competicion);
+//    }
 
     public Set<Rol> getRoles() {
         return roles;

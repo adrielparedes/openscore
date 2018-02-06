@@ -1,24 +1,23 @@
 package io.semantic.openscore.core.services.impl;
 
-import java.text.MessageFormat;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.ws.rs.QueryParam;
-
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.competiciones.CompeticionApi;
 import io.semantic.openscore.core.api.competiciones.CrearCompeticionApi;
 import io.semantic.openscore.core.exceptions.EntityNotFoundException;
 import io.semantic.openscore.core.model.Competicion;
-import io.semantic.openscore.core.model.Partido;
 import io.semantic.openscore.core.repository.CompeticionesRepository;
 import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.services.api.CompeticionesService;
 import org.dozer.DozerBeanMapper;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.ws.rs.QueryParam;
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static io.semantic.openscore.core.services.RestUtil.ok;
 
@@ -68,7 +67,7 @@ public class CompeticionesServiceImpl implements CompeticionesService {
     }
 
     @Override
-    public ApiResponse<CompeticionApi> addPartidos(String id, Set<Partido> partidos) {
+    public ApiResponse<CompeticionApi> addPartidos(String id, Set<String> partidos) {
         return null;
     }
 }

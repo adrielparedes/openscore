@@ -2,12 +2,12 @@ package io.semantic.openscore.core.services.api;
 
 import io.semantic.openscore.core.api.ApiResponse;
 
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public interface LuceneSearchService<T> {
 
     @GET

@@ -44,7 +44,7 @@ export const navigation = [
       }
     ]
   },
-  // ACA ABAJO VA LA PARTE DE AMIN
+  // ACA ABAJO VA LA PARTE DE ADMIN
   {
     title: true,
     name: 'Admin'
@@ -54,4 +54,14 @@ export const navigation = [
     url: '/admin/usuarios',
     icon: 'icon-people'
   },
+    // ACA ABAJO VA LA PARTE DE DESA PARA HACER PRUEBAS
+    {
+      title: true,
+      name: 'Dev'
+    },
+    {
+      name: 'Registro',
+      url: '/pages/register',
+      icon: 'icon-people'
+    }
 ];

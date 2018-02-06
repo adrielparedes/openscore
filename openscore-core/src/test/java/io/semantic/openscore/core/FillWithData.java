@@ -5,10 +5,10 @@ import io.semantic.openscore.core.services.api.CompeticionesService;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.Ignore;
+import org.junit.Test;
 
-@Disabled
+@Ignore
 public class FillWithData {
 
     private static final String TARGET = "http://localhost:8080/openscore/api/rest";
@@ -17,7 +17,7 @@ public class FillWithData {
     public void doYourStuffs() {
         CompeticionesService competicionesService = proxy(CompeticionesService.class);
         competicionesService.getCompeticiones(0,
-                                              0);
+                0);
     }
 
     @Test

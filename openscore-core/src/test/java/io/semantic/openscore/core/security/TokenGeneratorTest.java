@@ -4,18 +4,21 @@ import com.google.common.collect.Sets;
 import com.nimbusds.jwt.SignedJWT;
 import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.model.Usuario;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.text.ParseException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 
 class TokenGeneratorTest {
 
     private TokenGenerator tokenGenerator;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         this.tokenGenerator = new TokenGenerator();
     }
@@ -31,7 +34,6 @@ class TokenGeneratorTest {
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setEmail(email);
-        usuario.setUsername(username);
         usuario.setRoles(Sets.newHashSet(Rol.ADMIN, Rol.USUARIO));
         String token = this.tokenGenerator.generarToken(usuario);
 
