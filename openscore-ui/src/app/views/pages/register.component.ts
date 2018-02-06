@@ -19,8 +19,8 @@ export class RegisterComponent {
       pais: ['', Validators.required],
       email: ['', Validators.email],
       confirmacionEmail: ['', Validators.email],
-      password: ['', Validators.required],
-      confirmacionPassword: ['', Validators.required]
+      password: ['', Validators.required, Validators.minLength(6)],
+      confirmacionPassword: ['', Validators.required, Validators.minLength(6)]
     });
   }
 
