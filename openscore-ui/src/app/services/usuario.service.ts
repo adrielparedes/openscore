@@ -6,7 +6,6 @@ import { UsuariosRoutingModule } from './../views/admin/usuarios/usuarios.routin
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-
 @Injectable()
 export class UsuarioService extends Rest {
 
@@ -20,7 +19,8 @@ export class UsuarioService extends Rest {
     public registrar(usuario: CrearUsuario) {
         console.log(this.getUrl(this.registrarUrl));
         console.log(usuario);
-        this.http.post(this.getUrl(this.registrarUrl), usuario).subscribe(res => console.log(res));
+        return this.http
+            .post(this.getUrl(this.registrarUrl), usuario);
     }
 
 }

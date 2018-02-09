@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ServicesModule } from './../../services/services.module';
 import { NgModule } from '@angular/core';
 
@@ -13,7 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     PagesRoutingModule,
     ServicesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   declarations: [
     P404Component,

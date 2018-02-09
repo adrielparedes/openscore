@@ -10,6 +10,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 export class RegisterComponent {
 
   registro: FormGroup;
+  error = false;
 
   constructor(private usuarioService: UsuarioService, private fb: FormBuilder) {
 
@@ -27,7 +28,7 @@ export class RegisterComponent {
   registrar() {
     if (this.registro.valid) {
       const crearUsuario: CrearUsuario = this.registro.value;
-      this.usuarioService.registrar(crearUsuario);
+      this.usuarioService.registrar(crearUsuario)
     }
   }
 
