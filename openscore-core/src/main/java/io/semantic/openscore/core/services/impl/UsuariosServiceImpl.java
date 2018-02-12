@@ -3,6 +3,7 @@ package io.semantic.openscore.core.services.impl;
 import io.semantic.openscore.core.annotations.Mapper;
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.usuarios.CrearUsuarioApi;
+import io.semantic.openscore.core.api.usuarios.LoginUsuarioApi;
 import io.semantic.openscore.core.api.usuarios.UsuarioApi;
 import io.semantic.openscore.core.model.Pais;
 import io.semantic.openscore.core.model.Rol;
@@ -21,6 +22,7 @@ import javax.ws.rs.Path;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Path("/usuarios")
@@ -82,8 +84,10 @@ public class UsuariosServiceImpl implements UsuariosService {
     }
 
     @Override
-    public ApiResponse<String> login() {
-        return null;
+    public ApiResponse<UsuarioApi> login(LoginUsuarioApi loginUsuario) {
+        Optional<Usuario> usuarioOptional = this.usuarioRepository.findByEmail(loginUsuario.getEmail());
+        UsuarioApi usuarioApi = this.mapper.map(usuarioOptional.get(), UsuarioApi.class);
+        return new ApiResponse<>(usuarioApi);
     }
 
     @Override

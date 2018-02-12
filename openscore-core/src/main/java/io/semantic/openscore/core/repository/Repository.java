@@ -11,9 +11,10 @@ import java.util.Optional;
 
 public abstract class Repository<T extends Storable> {
 
-    private final Class<T> persistentClass;
+    protected final Class<T> persistentClass;
+
     @PersistenceContext(unitName = "db")
-    EntityManager entityManager;
+    protected EntityManager entityManager;
 
     public Repository(Class<T> clazz) {
         this.persistentClass = clazz;

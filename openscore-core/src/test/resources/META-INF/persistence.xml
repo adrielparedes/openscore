@@ -6,6 +6,8 @@
 
     <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>io.semantic.openscore.core.model.Usuario</class>
+        <class>io.semantic.openscore.core.model.Pais</class>
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>

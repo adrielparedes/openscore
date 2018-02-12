@@ -2,6 +2,7 @@ package io.semantic.openscore.core.services.api;
 
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.usuarios.CrearUsuarioApi;
+import io.semantic.openscore.core.api.usuarios.LoginUsuarioApi;
 import io.semantic.openscore.core.api.usuarios.UsuarioApi;
 import io.semantic.openscore.core.model.Usuario;
 
@@ -24,6 +25,6 @@ public interface UsuariosService extends LuceneSearchService<UsuarioApi> {
 
     ApiResponse<String> getUsuario(long id);
 
-    ApiResponse<String> login();
+    ApiResponse<UsuarioApi> login(LoginUsuarioApi loginUsuario);
 
 }
