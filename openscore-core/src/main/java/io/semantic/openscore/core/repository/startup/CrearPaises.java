@@ -17,25 +17,29 @@ public class CrearPaises {
     Logger logger = LoggerFactory.getLogger(CrearPaises.class);
     private PaisRepository paisRepository;
 
+    public CrearPaises() {
+    }
+
     @Inject
     public CrearPaises(PaisRepository paisRepository) {
         this.paisRepository = paisRepository;
     }
 
     public void initialize(@Observes @Initialized(ApplicationScoped.class) Object init) {
-//        logger.inicializandoPaises();
+
+        logger.info("Inicializando paises");
 
         this.guardarSiNoExiste("ARG", crearPais("ARG", "Argentina"));
         this.guardarSiNoExiste("CHI", crearPais("CHI", "Chile"));
         this.guardarSiNoExiste("PER", crearPais("PER", "Peru"));
         this.guardarSiNoExiste("COL", crearPais("COL", "Colombia"));
 
-//        logger.inicializacionDePaisesCompleta();
+        logger.info("Inicializacion de paises completa");
     }
 
     public void guardarSiNoExiste(String codigo, Pais pais) {
-        if (this.paisRepository.exist(codigo)) {
-//            logger.seCreaElPaisNoExistente(pais.getNombre());
+        if (!this.paisRepository.exist(codigo)) {
+            logger.info("Se crea pais no existente: " + codigo);
             this.paisRepository.save(pais);
         }
     }

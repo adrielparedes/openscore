@@ -8,12 +8,13 @@ import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 
 import { PagesRoutingModule } from './pages-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     PagesRoutingModule,
     ServicesModule,
+    FormsModule,
     ReactiveFormsModule,
     CommonModule
   ],

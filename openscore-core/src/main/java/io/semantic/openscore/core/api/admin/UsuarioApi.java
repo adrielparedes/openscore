@@ -1,31 +1,17 @@
-package io.semantic.openscore.core.api.usuarios;
+package io.semantic.openscore.core.api.admin;
 
 import io.semantic.openscore.core.api.paises.PaisApi;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.validation.constraints.NotNull;
 
 public class UsuarioApi {
-
-    @NotEmpty
     private long id;
-
-    @NotNull
-    @Length(min = 2)
     private String nombre;
-
-    @NotNull
-    @Length(min = 2)
     private String apellido;
-
-    @NotNull
     private PaisApi pais;
-
-    @NotNull
-    @Email
     private String email;
+    private boolean deleted;
+    private String creationDate;
+    private String deletionDate;
+    private String modificationDate;
 
     public long getId() {
         return id;
@@ -65,5 +51,37 @@ public class UsuarioApi {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getDeletionDate() {
+        return deletionDate;
+    }
+
+    public void setDeletionDate(String deletionDate) {
+        this.deletionDate = deletionDate;
+    }
+
+    public String getModificationDate() {
+        return modificationDate;
+    }
+
+    public void setModificationDate(String modificationDate) {
+        this.modificationDate = modificationDate;
     }
 }

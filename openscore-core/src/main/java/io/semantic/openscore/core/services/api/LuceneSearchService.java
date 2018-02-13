@@ -12,7 +12,7 @@ public interface LuceneSearchService<T> {
 
     @GET
     @Path("/")
-    ApiResponse<List<T>> getAll(@QueryParam("page") @DefaultValue("1") int page,
+    ApiResponse<List<T>> getAll(@QueryParam("page") @DefaultValue("0") int page,
                                 @QueryParam("pageSize") @DefaultValue("10") int pageSize,
                                 @QueryParam("q") @DefaultValue("") String filter);
 
