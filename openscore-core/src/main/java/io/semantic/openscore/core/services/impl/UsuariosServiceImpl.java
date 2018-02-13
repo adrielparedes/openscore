@@ -2,6 +2,7 @@ package io.semantic.openscore.core.services.impl;
 
 import io.semantic.openscore.core.annotations.Mapper;
 import io.semantic.openscore.core.api.ApiResponse;
+import io.semantic.openscore.core.api.paises.PaisApi;
 import io.semantic.openscore.core.api.usuarios.CrearUsuarioApi;
 import io.semantic.openscore.core.api.usuarios.LoginUsuarioApi;
 import io.semantic.openscore.core.api.usuarios.UsuarioApi;
@@ -68,7 +69,7 @@ public class UsuariosServiceImpl implements UsuariosService {
         this.usuarioRepository.save(usuario);
 
         UsuarioApi usuarioApi = this.mapper.map(usuario, UsuarioApi.class);
-        usuarioApi.setPais(pais.getCodigo());
+        usuarioApi.setPais(this.mapper.map(pais, PaisApi.class));
 
         return new ApiResponse<>(usuarioApi);
     }

@@ -2,6 +2,10 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
+        <div *ngIf="error" class="alert alert-danger" role="alert">
+          <i class="fa fa-lg fa-times-circle-o"></i>
+          Error al intentar registrarse 
+        </div>
         <div class="card mx-4">
           <div class="card-body p-4" [formGroup]="registro">
             <h1>Registro</h1>
@@ -53,7 +57,7 @@
                   <i class="icon-lock"></i>
                 </span>
               </div>
-              <input type="password" class="form-control"  formControlName="password" placeholder="Password">
+              <input type="password" class="form-control" formControlName="password" placeholder="Password">
             </div>
 
             <div class="input-group mb-4">
@@ -62,10 +66,10 @@
                   <i class="icon-lock"></i>
                 </span>
               </div>
-              <input type="password" class="form-control"  formControlName="confirmacionPassword" placeholder="Confirmacion password">
+              <input type="password" class="form-control" formControlName="confirmacionPassword" placeholder="Confirmacion password">
             </div>
 
-           
+
           </div>
           <div class="card-footer p-4">
             <div class="row">

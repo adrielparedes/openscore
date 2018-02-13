@@ -61,6 +61,12 @@ public abstract class Repository<T extends Storable> {
                 .getResultList();
     }
 
+
+    public List<T> findByQuery(TypedQuery<T> query) {
+
+        return query.getResultList();
+    }
+
     public void hardDeleteById(long id) {
         Optional<T> storable = this.findById(id);
         storable.ifPresent(entity -> entityManager.remove(entity));
@@ -96,5 +102,11 @@ public abstract class Repository<T extends Storable> {
                 this.persistentClass.getSimpleName()));
         return this.findByQuery(query,
                 page);
+    }
+
+    public List<T> findAll() {
+        TypedQuery<T> query = this.createQuery(MessageFormat.format("from {0}",
+                this.persistentClass.getSimpleName()));
+        return this.findByQuery(query);
     }
 }
