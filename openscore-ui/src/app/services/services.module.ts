@@ -1,3 +1,5 @@
+import { EquiposService } from './equipos.service';
+import { DefinicionCompeticionesService } from './definicion-competiciones.service';
 import { UsuarioService } from './usuario.service';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -8,7 +10,9 @@ import { HttpClientModule } from '@angular/common/http';
         HttpClientModule
     ],
     providers: [
-        UsuarioService
+        UsuarioService,
+        DefinicionCompeticionesService,
+        EquiposService
     ]
 })
 export class ServicesModule { }

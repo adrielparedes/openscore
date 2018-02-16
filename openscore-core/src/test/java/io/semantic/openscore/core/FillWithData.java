@@ -1,7 +1,7 @@
 package io.semantic.openscore.core;
 
-import io.semantic.openscore.core.api.competiciones.CrearCompeticionApi;
-import io.semantic.openscore.core.services.api.CompeticionesService;
+import io.semantic.openscore.core.api.competiciones.CrearDefinicionCompeticionApi;
+import io.semantic.openscore.core.services.api.DefinicionCompeticionesService;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
@@ -15,18 +15,18 @@ public class FillWithData {
 
     @Test
     public void doYourStuffs() {
-        CompeticionesService competicionesService = proxy(CompeticionesService.class);
-        competicionesService.getCompeticiones(0,
+        DefinicionCompeticionesService definicionCompeticionesService = proxy(DefinicionCompeticionesService.class);
+        definicionCompeticionesService.getCompeticiones(0,
                 0);
     }
 
     @Test
     public void addCompeticion() {
-        CompeticionesService competicionesService = proxy(CompeticionesService.class);
-        CrearCompeticionApi competicionApi = new CrearCompeticionApi();
+        DefinicionCompeticionesService definicionCompeticionesService = proxy(DefinicionCompeticionesService.class);
+        CrearDefinicionCompeticionApi competicionApi = new CrearDefinicionCompeticionApi();
         competicionApi.setNombre("Libertadores de America");
         competicionApi.setDescripcion("La Champions League de America");
-        competicionesService.addCompeticion(competicionApi);
+        definicionCompeticionesService.addCompeticion(competicionApi);
     }
 
     private <T> T proxy(Class<T> clazz) {
