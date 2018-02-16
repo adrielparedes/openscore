@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { UsuarioCompleto } from 'app/model/usuario-completo';
 
 @Injectable()
-export class UsuarioService extends Rest {
+export class UsuarioService extends Rest<Usuario> {
 
     private getAllUrl = '/usuarios';
     private getAllAdminUrl = '/admin';
@@ -20,10 +20,8 @@ export class UsuarioService extends Rest {
         super(http);
     }
 
-    public all(page: number, pageSize: number) {
-        return this.http
-            .get<ApiResponse<Usuario[]>>(this.getUrl(this.getAllUrl));
-
+    getServiceUrl() {
+        return '/usuarios'
     }
 
     public allAdmin(page: number, pageSize: number) {

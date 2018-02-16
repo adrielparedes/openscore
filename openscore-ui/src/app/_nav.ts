@@ -54,14 +54,24 @@ export const navigation = [
     url: '/admin/usuarios',
     icon: 'icon-people'
   },
-    // ACA ABAJO VA LA PARTE DE DESA PARA HACER PRUEBAS
-    {
-      title: true,
-      name: 'Dev'
-    },
-    {
-      name: 'Registro',
-      url: '/pages/register',
-      icon: 'icon-people'
-    }
+  {
+    name: 'Competiciones',
+    url: '/admin/competiciones',
+    icon: 'icon-trophy'
+  },
+  {
+    name: 'Equipos',
+    url: '/admin/equipos',
+    icon: 'icon-flag'
+  },
+  // ACA ABAJO VA LA PARTE DE DESA PARA HACER PRUEBAS
+  {
+    title: true,
+    name: 'Dev'
+  },
+  {
+    name: 'Registro',
+    url: '/pages/register',
+    icon: 'icon-people'
+  }
 ];

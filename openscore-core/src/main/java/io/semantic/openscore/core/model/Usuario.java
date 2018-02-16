@@ -32,7 +32,7 @@ public class Usuario extends Storable {
     private String password;
 
 //    @ManyToMany
-//    private Set<Competicion> competiciones;
+//    private Set<DefinicionCompeticion> competiciones;
 
     @ElementCollection
     @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "usuario_id"))
@@ -79,15 +79,15 @@ public class Usuario extends Storable {
         this.password = password;
     }
 
-//    public Set<Competicion> getCompeticiones() {
+//    public Set<DefinicionCompeticion> getCompeticiones() {
 //        return competiciones;
 //    }
 //
-//    public void setCompeticiones(Set<Competicion> competiciones) {
+//    public void setCompeticiones(Set<DefinicionCompeticion> competiciones) {
 //        this.competiciones = competiciones;
 //    }
 //
-//    public void addCompeticion(Competicion competicion) {
+//    public void addCompeticion(DefinicionCompeticion competicion) {
 //        this.competiciones.add(competicion);
 //    }
 

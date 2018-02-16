@@ -53,6 +53,19 @@ public abstract class Repository<T extends Storable> {
         }
     }
 
+    public Optional<T> findByIdWithDeleted(long id) {
+
+        List<T> found = this.createQuery(MessageFormat.format("from {0} s where s.id=:id",
+                this.persistentClass.getSimpleName())).setParameter("id",
+                id).getResultList();
+
+        if (!found.isEmpty()) {
+            return Optional.of(found.get(0));
+        } else {
+            return Optional.empty();
+        }
+    }
+
     public List<T> findByQuery(TypedQuery<T> query,
                                Page page) {
 
