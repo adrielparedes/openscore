@@ -2,7 +2,7 @@ import { ApiResponse } from './../model/api-response';
 import { HttpClient } from '@angular/common/http';
 import { Injector } from '@angular/core';
 
-export abstract class Rest<T> {
+export abstract class Rest<X, Y, Z> {
 
     protected http: HttpClient;
 
@@ -21,12 +21,12 @@ export abstract class Rest<T> {
 
     public getAll(page: number, pageSize: number) {
         return this.http
-            .get<ApiResponse<T[]>>(this.getUrl(this.getServiceUrl()));
+            .get<ApiResponse<X[]>>(this.getUrl(this.getServiceUrl()));
     }
 
     public get(id: number) {
         return this.http
-            .get<ApiResponse<T>>(this.getUrl(this.getServiceUrl() + '/' + id));
+            .get<ApiResponse<X>>(this.getUrl(this.getServiceUrl() + '/' + id));
     }
 
     public delete(id: number) {
@@ -34,15 +34,15 @@ export abstract class Rest<T> {
             .delete<ApiResponse<number>>(this.getUrl(this.getServiceUrl() + '/' + id));
     }
 
-    public add(storable: T) {
+    public add(storable: Y) {
         return this.http
-            .post<ApiResponse<T>>(this.getUrl(this.getServiceUrl()), storable);
+            .post<ApiResponse<X>>(this.getUrl(this.getServiceUrl()), storable);
     }
 
 
-    public update(id: number, storable: T) {
+    public update(id: number, storable: Z) {
         return this.http
-            .post<ApiResponse<T>>(this.getUrl(this.getServiceUrl() + '/' + id), storable);
+            .post<ApiResponse<X>>(this.getUrl(this.getServiceUrl() + '/' + id), storable);
     }
 
 }

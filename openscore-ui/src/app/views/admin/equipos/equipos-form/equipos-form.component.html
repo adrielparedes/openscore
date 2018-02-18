@@ -1,3 +1,42 @@
-<p>
-  equipos-form works!
-</p>
+<div class="card">
+  <div class="card-header">
+    <strong *ngIf="!id">Nuevo Equipo</strong>
+    <strong *ngIf="id">Editar Equipo</strong>
+  </div>
+  <div class="card-body" [formGroup]="form">
+    <div *ngIf="id" class="form-group">
+      <label for="id">ID</label>
+      <input disabled type="text" class="form-control" formControlName="id" id="id">
+    </div>
+    <div class="form-group">
+      <label for="deleted">Eliminado</label>
+      <input type="checkbox" class="form-control" formControlName="deleted" id="deleted">
+    </div>
+    <div class="form-group">
+      <label for="vat">Nombre</label>
+      <input type="text" class="form-control" formControlName="nombre" id="nombre">
+    </div>
+    <div class="form-group">
+      <label for="codigo">Codigo</label>
+      <input type="text" class="form-control" formControlName="codigo" id="codigo">
+    </div>
+    <div class="form-group">
+      <label for="pais">Pais</label>
+      <input type="text" class="form-control" formControlName="pais" id="pais">
+    </div>
+    <div class="form-group">
+      <label for="street">URL Logo</label>
+      <input type="text" class="form-control" formControlName="logo" id="street">
+    </div>
+    <div class="form-group" *ngIf="competicion.logo">
+      <label for="street">Logo</label>
+      <img class="form-control muestra" src="{{logo}}" />
+    </div>
+  </div>
+  <div class="card-footer">
+    <button type="submit" class="btn btn-sm btn-success" (click)="guardar()">
+      <i class="fa fa-dot-circle-o"></i> Guardar</button>
+    <button type="reset" class="btn btn-sm btn-danger" (click)="cancelar()">
+      <i class="fa fa-ban"></i> Cancelar</button>
+  </div>
+</div>

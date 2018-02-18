@@ -45,15 +45,15 @@ export class EquiposListComponent implements OnInit {
   }
 
 
-  crearCompeticion() {
+  crearEquipo() {
     this.router.navigate(['/admin/equipos/form']);
   }
 
-  editarCompeticion(id: number) {
+  editarEquipo(id: number) {
     this.router.navigate(['/admin/equipos/form', id]);
   }
 
-  eliminarCompeticion() {
+  eliminarEquipo() {
     this.equiposService.delete(this.id).subscribe(response => {
       this.refresh();
       this.closeModal();

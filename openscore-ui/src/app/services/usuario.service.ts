@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { UsuarioCompleto } from 'app/model/usuario-completo';
 
 @Injectable()
-export class UsuarioService extends Rest<Usuario> {
+export class UsuarioService extends Rest<Usuario, CrearUsuario, CrearUsuario> {
 
     private getAllUrl = '/usuarios';
     private getAllAdminUrl = '/admin';

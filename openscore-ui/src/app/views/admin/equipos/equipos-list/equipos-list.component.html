@@ -1,7 +1,7 @@
 <div>
 
   <div>
-    <button class="btn btn-success" (click)="crearequipo()">
+    <button class="btn btn-success" (click)="crearEquipo()">
       <i class="fa fa-plus-circle"></i> Crear nuevo equipo</button>
   </div>
 
@@ -44,7 +44,7 @@
               <a target="_blank" href="{{equipo.logo}}">Ver logo</a>
             </td>
             <td>
-              <button class="btn btn-warning" (click)="editarequipo(equipo.id)">
+              <button class="btn btn-warning" (click)="editarEquipo(equipo.id)">
                 <i class="fa fa-pencil"></i>
               </button>
               <button class="btn btn-danger" (click)="openModal(template,equipo)">
@@ -61,7 +61,7 @@
   <ng-template #template>
     <div class="modal-body text-center">
       <p>Desea eliminar la equipo <b>{{nombre}}</b>?</p>
-      <button type="button" class="btn btn-default" (click)="eliminarequipo()">Si</button>
+      <button type="button" class="btn btn-default" (click)="eliminarEquipo()">Si</button>
       <button type="button" class="btn btn-primary" (click)="closeModal()">No</button>
     </div>
   </ng-template>

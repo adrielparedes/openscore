@@ -5,7 +5,7 @@ import { Rest } from './rest';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class DefinicionCompeticionesService extends Rest<DefinicionCompeticion> {
+export class DefinicionCompeticionesService extends Rest<DefinicionCompeticion, DefinicionCompeticion, DefinicionCompeticion> {
 
     constructor(protected http: HttpClient) {
         super(http);
