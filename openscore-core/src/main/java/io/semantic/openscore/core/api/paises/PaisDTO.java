@@ -1,6 +1,6 @@
 package io.semantic.openscore.core.api.paises;
 
-public class PaisApi {
+public class PaisDTO {
 
     private String codigo;
     private String nombre;

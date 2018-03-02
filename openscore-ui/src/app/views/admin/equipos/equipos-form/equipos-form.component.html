@@ -22,13 +22,13 @@
     </div>
     <div class="form-group">
       <label for="pais">Pais</label>
-      <input type="text" class="form-control" formControlName="pais" id="pais">
+      <input type="text" class="form-control" formControlName="codigoPais" id="pais">
     </div>
     <div class="form-group">
       <label for="street">URL Logo</label>
       <input type="text" class="form-control" formControlName="logo" id="street">
     </div>
-    <div class="form-group" *ngIf="competicion.logo">
+    <div class="form-group" *ngIf="logo">
       <label for="street">Logo</label>
       <img class="form-control muestra" src="{{logo}}" />
     </div>

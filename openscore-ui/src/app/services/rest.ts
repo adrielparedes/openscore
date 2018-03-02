@@ -35,6 +35,7 @@ export abstract class Rest<X, Y, Z> {
     }
 
     public add(storable: Y) {
+        console.log(storable);
         return this.http
             .post<ApiResponse<X>>(this.getUrl(this.getServiceUrl()), storable);
     }

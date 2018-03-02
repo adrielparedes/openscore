@@ -14,8 +14,8 @@
         <version.junit>4.12</version.junit>
         <version.org.slf4j>1.7.24</version.org.slf4j>
         <version.ch.qos.logback>1.1.11</version.ch.qos.logback>
-        <version.net.sf.dozer>5.5.1</version.net.sf.dozer>
         <version.org.mockito>2.10.0</version.org.mockito>
+        <version.org.mapstruct>1.2.0.Final</version.org.mapstruct>
     </properties>
 
 
@@ -83,6 +83,11 @@
             <version>23.5-jre</version>
         </dependency>
         <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson-provider</artifactId>
             <scope>provided</scope>
@@ -104,9 +109,9 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
-            <version>${version.net.sf.dozer}</version>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${version.org.mapstruct}</version>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
@@ -165,6 +170,13 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${version.org.mapstruct}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>

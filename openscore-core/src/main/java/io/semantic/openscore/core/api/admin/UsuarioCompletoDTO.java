@@ -1,12 +1,12 @@
 package io.semantic.openscore.core.api.admin;
 
-import io.semantic.openscore.core.api.paises.PaisApi;
+import io.semantic.openscore.core.api.paises.PaisDTO;
 
-public class UsuarioApi {
+public class UsuarioCompletoDTO {
     private long id;
     private String nombre;
     private String apellido;
-    private PaisApi pais;
+    private PaisDTO pais;
     private String email;
     private boolean deleted;
     private String creationDate;
@@ -37,11 +37,11 @@ public class UsuarioApi {
         this.apellido = apellido;
     }
 
-    public PaisApi getPais() {
+    public PaisDTO getPais() {
         return pais;
     }
 
-    public void setPais(PaisApi pais) {
+    public void setPais(PaisDTO pais) {
         this.pais = pais;
     }
 

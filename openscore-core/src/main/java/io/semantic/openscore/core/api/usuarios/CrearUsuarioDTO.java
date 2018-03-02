@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
 @Matches.List({
         @Matches(first = "password", second = "confirmacionPassword"),
         @Matches(first = "email", second = "confirmacionEmail")})
-public class CrearUsuarioApi {
+public class CrearUsuarioDTO {
 
     @NotNull
     @Length(min = 2)

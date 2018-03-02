@@ -1,13 +1,13 @@
 package io.semantic.openscore.core.api.usuarios;
 
-import io.semantic.openscore.core.api.paises.PaisApi;
+import io.semantic.openscore.core.api.paises.PaisDTO;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
-public class UsuarioApi {
+public class UsuarioDTO {
 
     @NotEmpty
     private long id;
@@ -21,7 +21,7 @@ public class UsuarioApi {
     private String apellido;
 
     @NotNull
-    private PaisApi pais;
+    private PaisDTO pais;
 
     @NotNull
     @Email
@@ -51,11 +51,11 @@ public class UsuarioApi {
         this.apellido = apellido;
     }
 
-    public PaisApi getPais() {
+    public PaisDTO getPais() {
         return pais;
     }
 
-    public void setPais(PaisApi pais) {
+    public void setPais(PaisDTO pais) {
         this.pais = pais;
     }
 

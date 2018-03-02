@@ -1,13 +1,13 @@
 package io.semantic.openscore.core.api.equipos;
 
-import io.semantic.openscore.core.api.paises.PaisApi;
+import io.semantic.openscore.core.api.paises.PaisDTO;
 
-public class EquipoApi {
+public class EquipoDTO {
 
     private long id;
     private String nombre;
     private String codigo;
-    private PaisApi pais;
+    private PaisDTO pais;
     private String logo;
 
     public long getId() {
@@ -42,11 +42,11 @@ public class EquipoApi {
         this.logo = logo;
     }
 
-    public PaisApi getPais() {
+    public PaisDTO getPais() {
         return pais;
     }
 
-    public void setPais(PaisApi pais) {
+    public void setPais(PaisDTO pais) {
         this.pais = pais;
     }
 }

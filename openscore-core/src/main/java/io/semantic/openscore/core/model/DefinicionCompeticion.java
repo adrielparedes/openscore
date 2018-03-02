@@ -53,4 +53,9 @@ public class DefinicionCompeticion extends Storable {
     public void setPartidos(Set<Partido> partidos) {
         this.partidos = partidos;
     }
+
+    public void addPartido(Partido partido) {
+        this.getPartidos().add(partido);
+    }
+
 }

@@ -5,7 +5,7 @@ import io.semantic.openscore.core.model.Equipo;
 import javax.ejb.Stateless;
 
 @Stateless
-public class EquiposRepository extends Repository {
+public class EquiposRepository extends Repository<Equipo> {
 
     public EquiposRepository() {
         super(Equipo.class);

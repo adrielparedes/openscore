@@ -1,3 +1,4 @@
+import { CrearEquipo } from './../../../../model/crear-equipo';
 import { Pais } from './../../../../model/pais';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EquiposService } from './../../../../services/equipos.service';
@@ -57,7 +58,7 @@ export class EquiposFormComponent implements OnInit {
       deleted: [equipo.deleted],
       nombre: [equipo.nombre],
       codigo: [equipo.codigo],
-      Pais: [equipo.pais],
+      codigoPais: [equipo.pais],
       logo: [equipo.logo]
     });
     this.logo = equipo.logo;
@@ -65,10 +66,16 @@ export class EquiposFormComponent implements OnInit {
   }
 
   guardar() {
-    const equipo = this.form.value;
+    const id = this.form.value.id;
+    const equipo: CrearEquipo = <CrearEquipo>{
+      nombre: this.form.value.nombre,
+      codigo: this.form.value.codigo,
+      codigoPais: this.form.value.codigoPais,
+      logo: this.form.value.logo,
+    }
 
-    if (equipo.id) {
-      this.equiposService.update(equipo.id, equipo).subscribe(res =>
+    if (this.form.value.id) {
+      this.equiposService.update(this.form.value.id, equipo).subscribe(res =>
         this.cancelar());
     } else {
       this.equiposService.add(equipo).subscribe(res => this.cancelar());

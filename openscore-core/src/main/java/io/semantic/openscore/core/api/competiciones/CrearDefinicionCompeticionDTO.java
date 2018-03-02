@@ -1,6 +1,6 @@
 package io.semantic.openscore.core.api.competiciones;
 
-public class CrearDefinicionCompeticionApi {
+public class CrearDefinicionCompeticionDTO {
 
     private String nombre;
     private String logo;

@@ -1,13 +1,16 @@
 package io.semantic.openscore.core.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Equipo extends Storable {
 
     private String nombre;
     private String codigo;
-    private String pais;
+
+    @ManyToOne
+    private Pais pais;
     private String logo;
 
     public String getNombre() {
@@ -34,11 +37,11 @@ public class Equipo extends Storable {
         this.logo = logo;
     }
 
-    public String getPais() {
+    public Pais getPais() {
         return pais;
     }
 
-    public void setPais(String pais) {
+    public void setPais(Pais pais) {
         this.pais = pais;
     }
 }

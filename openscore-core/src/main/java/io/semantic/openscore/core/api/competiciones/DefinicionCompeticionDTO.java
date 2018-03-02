@@ -2,7 +2,7 @@ package io.semantic.openscore.core.api.competiciones;
 
 import javax.persistence.Column;
 
-public class DefinicionCompeticionApi {
+public class DefinicionCompeticionDTO {
 
     private String nombre;
     private String logo;

@@ -1,6 +1,6 @@
 package io.semantic.openscore.core.api.equipos;
 
-public class CrearEquipoApi {
+public class CrearEquipoDTO {
 
     private String nombre;
     private String codigo;
