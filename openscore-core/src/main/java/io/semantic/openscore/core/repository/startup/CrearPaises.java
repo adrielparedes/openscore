@@ -34,7 +34,7 @@ public class CrearPaises {
         this.guardarSiNoExiste("PER", crearPais("PER", "Peru"));
         this.guardarSiNoExiste("COL", crearPais("COL", "Colombia"));
 
-        logger.info("Inicializacion de paises completa");
+        logger.info("Inicial de paises completa");
     }
 
     public void guardarSiNoExiste(String codigo, Pais pais) {

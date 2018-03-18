@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,8 +33,12 @@ public class Usuario extends Storable {
     @NotNull
     private String password;
 
-//    @ManyToMany
-//    private Set<DefinicionCompeticion> competiciones;
+    @OneToMany
+    private Set<Pronostico> pronosticos;
+
+    public Usuario() {
+        this.pronosticos = new HashSet<>();
+    }
 
     @ElementCollection
     @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "usuario_id"))
@@ -79,23 +85,23 @@ public class Usuario extends Storable {
         this.password = password;
     }
 
-//    public Set<DefinicionCompeticion> getCompeticiones() {
-//        return competiciones;
-//    }
-//
-//    public void setCompeticiones(Set<DefinicionCompeticion> competiciones) {
-//        this.competiciones = competiciones;
-//    }
-//
-//    public void addCompeticion(DefinicionCompeticion competicion) {
-//        this.competiciones.add(competicion);
-//    }
-
     public Set<Rol> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Rol> roles) {
         this.roles = roles;
+    }
+
+    public Set<Pronostico> getPronosticos() {
+        return pronosticos;
+    }
+
+    public void setPronosticos(Set<Pronostico> pronosticos) {
+        this.pronosticos = pronosticos;
+    }
+
+    public void addPronostico(Pronostico pronostico) {
+        this.pronosticos.add(pronostico);
     }
 }

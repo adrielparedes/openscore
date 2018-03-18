@@ -89,7 +89,7 @@ public class DefinicionCompeticionServiceImpl implements DefinicionCompeticiones
         Optional<DefinicionCompeticion> definicionCompeticion = this.competicionesRepository.findByIdWithDeleted(id);
 
         DefinicionCompeticion competicion = definicionCompeticion
-                .orElseThrow(() -> new RuntimeException("Error al intentar hacer update de la competicion: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Error al intentar hacer update de la competicion: " + id));
 
         competicion.setNombre(competicionApi.getNombre());
         competicion.setLogo(competicionApi.getLogo());
