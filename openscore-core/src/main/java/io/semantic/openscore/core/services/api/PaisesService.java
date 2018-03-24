@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 @Path("paises")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public interface PaisesService extends LuceneSearchService<PaisDTO> {
+public interface PaisesService extends SearchService<PaisDTO> {
 
 
 }

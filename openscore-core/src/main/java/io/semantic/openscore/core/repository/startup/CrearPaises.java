@@ -10,8 +10,7 @@ import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-@ApplicationScoped
-public class CrearPaises {
+public class CrearPaises implements StartupStep {
 
 
     Logger logger = LoggerFactory.getLogger(CrearPaises.class);
@@ -25,7 +24,8 @@ public class CrearPaises {
         this.paisRepository = paisRepository;
     }
 
-    public void initialize(@Observes @Initialized(ApplicationScoped.class) Object init) {
+    @Override
+    public void run() {
 
         logger.info("Inicializando paises");
 
@@ -35,6 +35,11 @@ public class CrearPaises {
         this.guardarSiNoExiste("COL", crearPais("COL", "Colombia"));
 
         logger.info("Inicial de paises completa");
+    }
+
+    @Override
+    public int priority() {
+        return 0;
     }
 
     public void guardarSiNoExiste(String codigo, Pais pais) {

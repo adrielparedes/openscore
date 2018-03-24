@@ -20,7 +20,7 @@ public class Partido extends Storable {
     private Grupo grupo;
 
     @ManyToOne
-    private Etapa etapa;
+    private Fase fase;
 
     public Equipo getLocal() {
         return local;
@@ -62,11 +62,11 @@ public class Partido extends Storable {
         this.grupo = grupo;
     }
 
-    public Etapa getEtapa() {
-        return etapa;
+    public Fase getFase() {
+        return fase;
     }
 
-    public void setEtapa(Etapa etapa) {
-        this.etapa = etapa;
+    public void setFase(Fase fase) {
+        this.fase = fase;
     }
 }

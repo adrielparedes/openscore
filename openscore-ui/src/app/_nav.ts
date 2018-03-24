@@ -23,27 +23,32 @@ export const navigation = [
     icon: 'icon-trophy '
   },
   {
-    name: 'Explorar',
-    url: '/explorar',
+    name: 'Pronosticos',
+    url: '/pronosticos',
     icon: 'icon-compass'
   },
-  {
-    name: 'Competiciones',
-    url: '/competiciones',
-    icon: 'icon-trophy',
-    children: [
-      {
-        name: 'Todas',
-        url: '/competiciones',
-        icon: 'icon-trophy'
-      },
-      {
-        name: 'Copa Conmebol Libertadores',
-        url: '/competiciones/1',
-        icon: 'icon-trophy'
-      }
-    ]
-  },
+  // {
+  //   name: 'Explorar',
+  //   url: '/explorar',
+  //   icon: 'icon-compass'
+  // },
+  // {
+  //   name: 'Competiciones',
+  //   url: '/competiciones',
+  //   icon: 'icon-trophy',
+  //   children: [
+  //     {
+  //       name: 'Todas',
+  //       url: '/competiciones',
+  //       icon: 'icon-trophy'
+  //     },
+  //     {
+  //       name: 'Copa Conmebol Libertadores',
+  //       url: '/competiciones/1',
+  //       icon: 'icon-trophy'
+  //     }
+  //   ]
+  // },
   // ACA ABAJO VA LA PARTE DE ADMIN
   {
     title: true,

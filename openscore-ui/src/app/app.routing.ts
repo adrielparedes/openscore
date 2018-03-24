@@ -33,6 +33,10 @@ export const routes: Routes = [
         loadChildren: './views/ranking/ranking.module#RankingModule'
       },
       {
+        path: 'pronosticos',
+        loadChildren: './views/pronosticos/pronosticos.module#PronosticosModule'
+      },
+      {
         path: 'explorar',
         loadChildren: './views/explorar/explorar.module#ExplorarModule'
       },

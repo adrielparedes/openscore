@@ -10,7 +10,7 @@ import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-public class CrearDefinicionCompeticion {
+public class CrearDefinicionCompeticion implements StartupStep {
 
     public static final String NOMBRE = "Copa del Mundo Rusia 2018";
     public static final String LOGO = "http://4.bp.blogspot.com/-mI8c_hLez24/VP3-XTk8dPI/AAAAAAAAIkc/fpi6SFOhuTM/s1600/logo%2Bmundial%2Brussia%2B2018%2Bvector%2Bai%2B(Large).jpg";
@@ -25,13 +25,19 @@ public class CrearDefinicionCompeticion {
         this.competicionesRepository = competicionesRepository;
     }
 
-    public void initialize(@Observes @Initialized(ApplicationScoped.class) Object init) {
+    @Override
+    public void run() {
 
         logger.info("Inicializando competiciones");
 
         this.guardarSiNoExiste(NOMBRE, this.crearCompeticion());
 
         logger.info("Inicializacion de competiciones completa");
+    }
+
+    @Override
+    public int priority() {
+        return 0;
     }
 
     public void guardarSiNoExiste(String nombre, DefinicionCompeticion competicion) {

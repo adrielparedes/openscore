@@ -1,6 +1,7 @@
 package io.semantic.openscore.core.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Pronostico extends Storable {
@@ -9,7 +10,11 @@ public class Pronostico extends Storable {
     private boolean visitante;
     private boolean empate;
 
+    @ManyToOne
     private Partido partido;
+
+    @ManyToOne
+    private Usuario usuario;
 
     public boolean isLocal() {
         return local;
@@ -41,5 +46,31 @@ public class Pronostico extends Storable {
 
     public void setPartido(Partido partido) {
         this.partido = partido;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public void local() {
+        this.setLocal(true);
+        this.setVisitante(false);
+        this.setEmpate(false);
+    }
+
+    public void empate() {
+        this.setLocal(false);
+        this.setVisitante(false);
+        this.setEmpate(true);
+    }
+
+    public void visitante() {
+        this.setLocal(false);
+        this.setVisitante(true);
+        this.setEmpate(false);
     }
 }

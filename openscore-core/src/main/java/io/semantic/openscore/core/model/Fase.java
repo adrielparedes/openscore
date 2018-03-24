@@ -3,24 +3,24 @@ package io.semantic.openscore.core.model;
 import javax.persistence.Entity;
 
 @Entity
-public class Grupo extends Storable {
+public class Fase extends Storable {
 
     private String codigo;
     private String nombre;
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     public String getCodigo() {
         return codigo;
     }
 
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     public String getNombre() {
         return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }

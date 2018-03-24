@@ -8,7 +8,7 @@ import java.util.List;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public interface LuceneSearchService<T> {
+public interface SearchService<T> {
 
     @GET
     @Path("/")

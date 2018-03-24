@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public interface UsuariosService extends LuceneSearchService<UsuarioDTO> {
+public interface UsuariosService extends SearchService<UsuarioDTO> {
 
 
     @POST
