@@ -68,19 +68,7 @@ public class PronosticosServiceImpl implements PronosticosService {
 
     @Override
     public ApiResponse<PronosticoDTO> add(CrearPronosticoDTO entity) {
-        long idUsuario = 0l;
-        validator.validate(entity);
-
-        Pronostico pronostico = this.pronosticoMapper.asPronostico(entity);
-        Partido partido = getPartido(entity.getPartido());
-        pronostico.setPartido(partido);
-        this.pronosticoRepository.save(pronostico);
-
-        Usuario usuario = getUsuario(idUsuario);
-        usuario.addPronostico(pronostico);
-        this.usuarioRepository.save(usuario);
-
-        return ok(this.pronosticoMapper.asApi(pronostico));
+        throw new UnsupportedOperationException("La operacion ADD para PronosticoService no esta soportada");
     }
 
     @Override

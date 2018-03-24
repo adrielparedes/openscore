@@ -1,9 +1,10 @@
-package io.semantic.openscore.core.repository.startup;
+package io.semantic.openscore.core.repository.startup.steps;
 
 import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.model.Usuario;
 import io.semantic.openscore.core.repository.PaisRepository;
 import io.semantic.openscore.core.repository.UsuarioRepository;
+import io.semantic.openscore.core.repository.startup.StartupStep;
 import io.semantic.openscore.core.security.TokenGenerator;
 
 import javax.enterprise.context.ApplicationScoped;

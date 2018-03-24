@@ -1,13 +1,11 @@
-package io.semantic.openscore.core.repository.startup;
+package io.semantic.openscore.core.repository.startup.steps;
 
 import io.semantic.openscore.core.model.DefinicionCompeticion;
 import io.semantic.openscore.core.repository.CompeticionesRepository;
+import io.semantic.openscore.core.repository.startup.StartupStep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Initialized;
-import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 public class CrearDefinicionCompeticion implements StartupStep {

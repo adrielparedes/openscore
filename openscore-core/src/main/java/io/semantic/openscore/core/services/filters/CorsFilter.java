@@ -12,6 +12,11 @@ import java.io.IOException;
 @Provider
 public class CorsFilter implements ContainerResponseFilter {
 
+    public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
+    public static final String ACCESS_CONTROL_ALLOW_METHODS = "Access-Control-Allow-Methods";
+    public static final String ACCESS_CONTROL_MAX_AGE = "Access-Control-Max-Age";
+    public static final String ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials";
+    public static final String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
     private Logger logger = LoggerFactory.getLogger(CorsFilter.class);
 
     @Override
@@ -19,11 +24,11 @@ public class CorsFilter implements ContainerResponseFilter {
 
         logger.info("Cors Filter enabled");
 
-        responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
-        responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
-        responseContext.getHeaders().add("Access-Control-Max-Age", "-1");
-        responseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
-        responseContext.getHeaders().add("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+        responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+        responseContext.getHeaders().add(ACCESS_CONTROL_MAX_AGE, "-1");
+        responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+        responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_HEADERS, "Authorization, Origin, X-Requested-With, Content-Type, Accept");
     }
 
 }

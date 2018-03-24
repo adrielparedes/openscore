@@ -13,15 +13,15 @@ import javax.ws.rs.core.MediaType;
 public interface PronosticosService extends StandardService<PronosticoDTO, CrearPronosticoDTO, CrearPronosticoDTO> {
 
 
-    @Path("/:id/local")
+    @Path("/{id}/local")
     @POST
     ApiResponse<PronosticoDTO> local(@PathParam("id") long idPartido);
 
-    @Path("/:id/empate")
+    @Path("/{id}/empate")
     @POST
     ApiResponse<PronosticoDTO> empate(@PathParam("id") long idPartido);
 
-    @Path("/:id/visitante")
+    @Path("/{id}/visitante")
     @POST
     ApiResponse<PronosticoDTO> visitante(@PathParam("id") long idPartido);
 

@@ -7,7 +7,6 @@ import io.semantic.openscore.core.model.DefinicionCompeticion;
 import io.semantic.openscore.core.repository.CompeticionesRepository;
 import io.semantic.openscore.core.repository.EquiposRepository;
 import io.semantic.openscore.core.repository.PartidoRepository;
-import io.semantic.openscore.core.repository.startup.CrearDefinicionCompeticion;
 import io.semantic.openscore.core.services.api.DefinicionCompeticionesService;
 import org.junit.Before;
 import org.junit.Test;

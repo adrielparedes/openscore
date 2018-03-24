@@ -1,9 +1,10 @@
-package io.semantic.openscore.core.repository.startup;
+package io.semantic.openscore.core.repository.startup.steps;
 
 import io.semantic.openscore.core.model.Fase;
 import io.semantic.openscore.core.model.Grupo;
 import io.semantic.openscore.core.repository.FaseRepository;
 import io.semantic.openscore.core.repository.GrupoRepository;
+import io.semantic.openscore.core.repository.startup.StartupStep;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
