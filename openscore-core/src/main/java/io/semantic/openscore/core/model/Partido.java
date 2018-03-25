@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.util.Date;
+import java.util.Optional;
 
 @Entity
 public class Partido extends Storable {
@@ -21,6 +22,9 @@ public class Partido extends Storable {
 
     @ManyToOne
     private Fase fase;
+
+    @OneToOne
+    private Resultado resultado;
 
     public Equipo getLocal() {
         return local;
@@ -68,5 +72,39 @@ public class Partido extends Storable {
 
     public void setFase(Fase fase) {
         this.fase = fase;
+    }
+
+    public Resultado getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(Resultado resultado) {
+        this.resultado = resultado;
+    }
+
+    public int getPuntos(Pronostico pronostico) {
+
+        if (this.getResultado() == null) {
+            return 0;
+        }
+
+        int puntosAsignables = calcularPuntos();
+        Ganador ganador = this.getResultado().getGanador();
+        if (isSumaPuntos(pronostico, ganador)) {
+            return puntosAsignables;
+        } else {
+            return 0;
+        }
+    }
+
+    private boolean isSumaPuntos(Pronostico pronostico, Ganador ganador) {
+        return pronostico.isLocal() && Ganador.LOCAL.equals(ganador) ||
+                pronostico.isVisitante() && Ganador.VISITANTE.equals(ganador) ||
+                pronostico.isEmpate() && Ganador.EMPATE.equals(ganador);
+    }
+
+
+    private int calcularPuntos() {
+        return this.getFase().getPuntos();
     }
 }

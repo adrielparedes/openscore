@@ -16,6 +16,7 @@ public class Pronostico extends Storable {
     @ManyToOne
     private Usuario usuario;
 
+
     public boolean isLocal() {
         return local;
     }
@@ -73,4 +74,9 @@ public class Pronostico extends Storable {
         this.setVisitante(true);
         this.setEmpate(false);
     }
+
+    public int getPuntos() {
+        return this.getPartido().getPuntos(this);
+    }
+
 }

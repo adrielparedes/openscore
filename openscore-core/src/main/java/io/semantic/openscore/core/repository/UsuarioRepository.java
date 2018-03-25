@@ -12,6 +12,8 @@ import java.util.Optional;
 @Stateless
 public class UsuarioRepository extends Repository<Usuario> {
 
+    public static final String FIND_BY_EMAIL = "from Usuario s where s.email=:email";
+
     @Inject
     public UsuarioRepository() {
         super(Usuario.class);
@@ -24,8 +26,7 @@ public class UsuarioRepository extends Repository<Usuario> {
     }
 
     public Optional<Usuario> findByEmail(String email) {
-        List<Usuario> found = this.createQuery(MessageFormat.format("from {0} s where s.email=:email",
-                this.persistentClass.getSimpleName())).setParameter("email", email).getResultList();
+        List<Usuario> found = this.createQuery(FIND_BY_EMAIL).setParameter("email", email).getResultList();
 
         if (!found.isEmpty()) {
             return Optional.of(found.get(0));

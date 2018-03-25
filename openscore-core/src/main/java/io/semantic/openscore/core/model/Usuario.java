@@ -104,4 +104,8 @@ public class Usuario extends Storable {
     public void addPronostico(Pronostico pronostico) {
         this.pronosticos.add(pronostico);
     }
+
+    public int getPuntos() {
+        return this.getPronosticos().stream().mapToInt(Pronostico::getPuntos).sum();
+    }
 }

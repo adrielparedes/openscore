@@ -11,18 +11,18 @@ import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-public class CrearGruposYEtapas implements StartupStep {
+public class CrearGruposYFases implements StartupStep {
 
     private GrupoRepository grupoRepository;
     private FaseRepository faseRepository;
 
-    public CrearGruposYEtapas() {
+    public CrearGruposYFases() {
 
     }
 
     @Inject
-    public CrearGruposYEtapas(GrupoRepository grupoRepository,
-                              FaseRepository faseRepository) {
+    public CrearGruposYFases(GrupoRepository grupoRepository,
+                             FaseRepository faseRepository) {
 
         this.grupoRepository = grupoRepository;
         this.faseRepository = faseRepository;
@@ -30,11 +30,11 @@ public class CrearGruposYEtapas implements StartupStep {
 
     @Override
     public void run() {
-        this.crearEtapaSiNoExiste("GRUPO", this.crearFase("GRUPO", "Grupo"));
-        this.crearEtapaSiNoExiste("OCTAVOS", this.crearFase("OCTAVOS", "Octavos de Final"));
-        this.crearEtapaSiNoExiste("CUARTOS", this.crearFase("CUARTOS", "Cuartos de Final"));
-        this.crearEtapaSiNoExiste("SEMI", this.crearFase("SEMI", "Semifinal"));
-        this.crearEtapaSiNoExiste("FINAL", this.crearFase("FINAL", "Final"));
+        this.crearEtapaSiNoExiste("GRUPO", this.crearFase("GRUPO", "Grupo", 1));
+        this.crearEtapaSiNoExiste("OCTAVOS", this.crearFase("OCTAVOS", "Octavos de Final", 2));
+        this.crearEtapaSiNoExiste("CUARTOS", this.crearFase("CUARTOS", "Cuartos de Final", 3));
+        this.crearEtapaSiNoExiste("SEMI", this.crearFase("SEMI", "Semifinal", 4));
+        this.crearEtapaSiNoExiste("FINAL", this.crearFase("FINAL", "Final", 4));
 
         this.crearGrupoSiNoExiste("GRUPO_A", this.crearGrupo("GRUPO_A", "Grupo A"));
         this.crearGrupoSiNoExiste("GRUPO_B", this.crearGrupo("GRUPO_B", "Grupo B"));
@@ -71,10 +71,11 @@ public class CrearGruposYEtapas implements StartupStep {
         return grupo;
     }
 
-    private Fase crearFase(String codigo, String nombre) {
+    private Fase crearFase(String codigo, String nombre, int puntos) {
         Fase fase = new Fase();
         fase.setCodigo(codigo);
         fase.setNombre(nombre);
+        fase.setPuntos(puntos);
         return fase;
     }
 }

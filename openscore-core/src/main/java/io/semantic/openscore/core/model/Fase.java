@@ -7,6 +7,7 @@ public class Fase extends Storable {
 
     private String codigo;
     private String nombre;
+    private int puntos;
 
     public String getCodigo() {
         return codigo;
@@ -22,5 +23,13 @@ public class Fase extends Storable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
     }
 }
