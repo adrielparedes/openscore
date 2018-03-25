@@ -33,7 +33,7 @@ public class Usuario extends Storable {
     @NotNull
     private String password;
 
-    @OneToMany
+    @OneToMany()
     private Set<Pronostico> pronosticos;
 
     public Usuario() {

@@ -5,9 +5,11 @@ import io.semantic.openscore.core.api.ranking.Ranking;
 import io.semantic.openscore.core.model.Usuario;
 import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.services.api.RankingService;
+import org.w3c.dom.ranges.Range;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.text.MessageFormat;
 import java.util.Comparator;
 import java.util.List;
@@ -48,17 +50,24 @@ public class RankingServiceImpl implements RankingService {
         return ok(rankings);
     }
 
-    private List<Ranking> calcularRankings(List<Usuario> usuarios) {
+    @Transactional
+    List<Ranking> calcularRankings(List<Usuario> usuarios) {
+        int i = 0;
         return usuarios.stream()
                 .map(usuario -> {
                     Ranking ranking = new Ranking();
                     ranking.setNombre(usuario.getNombre() + " " + usuario.getApellido());
-                    ranking.setNombre(usuario.getPais().getNombre());
+                    ranking.setPais(usuario.getPais().getNombre());
                     ranking.setUsuario(usuario.getId());
                     ranking.setPuntos(usuario.getPuntos());
                     return ranking;
                 })
                 .sorted(Comparator.comparingInt(ranking -> ranking.getPuntos()))
+                .forEachOrdered(ranking -> {
+                    ranking.setRanking(i++);
+                    return ranking;
+                })
                 .collect(Collectors.toList());
+
     }
 }
