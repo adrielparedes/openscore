@@ -5,7 +5,6 @@ import io.semantic.openscore.core.api.ranking.Ranking;
 import io.semantic.openscore.core.model.Usuario;
 import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.services.api.RankingService;
-import org.w3c.dom.ranges.Range;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -14,8 +13,10 @@ import java.text.MessageFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static io.semantic.openscore.core.services.RestUtil.ok;
+import static java.util.stream.Collectors.toList;
 
 @RequestScoped
 public class RankingServiceImpl implements RankingService {
@@ -52,8 +53,7 @@ public class RankingServiceImpl implements RankingService {
 
     @Transactional
     List<Ranking> calcularRankings(List<Usuario> usuarios) {
-        int i = 0;
-        return usuarios.stream()
+        List<Ranking> rankings = usuarios.stream()
                 .map(usuario -> {
                     Ranking ranking = new Ranking();
                     ranking.setNombre(usuario.getNombre() + " " + usuario.getApellido());
@@ -63,11 +63,14 @@ public class RankingServiceImpl implements RankingService {
                     return ranking;
                 })
                 .sorted(Comparator.comparingInt(ranking -> ranking.getPuntos()))
-                .forEachOrdered(ranking -> {
-                    ranking.setRanking(i++);
-                    return ranking;
-                })
-                .collect(Collectors.toList());
+                .collect(toList());
 
+        return IntStream
+                .range(0, rankings.size())
+                .mapToObj(i -> {
+                    Ranking r = rankings.get(i);
+                    r.setRanking(i + 1);
+                    return r;
+                }).collect(toList());
     }
 }
