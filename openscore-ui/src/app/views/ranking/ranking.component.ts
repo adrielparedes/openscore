@@ -20,7 +20,6 @@ export class RankingComponent implements OnInit {
   update() {
     this.rankingService.getAll(0, 0).subscribe(
       res => {
-        console.log(res.data);
         this.ranking = res.data;
       });
   }
