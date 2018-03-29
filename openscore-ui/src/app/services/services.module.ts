@@ -3,6 +3,7 @@ import { DefinicionCompeticionesService } from './definicion-competiciones.servi
 import { UsuarioService } from './usuario.service';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { RankingService } from './ranking.service';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
     providers: [
         UsuarioService,
         DefinicionCompeticionesService,
-        EquiposService
+        EquiposService,
+        RankingService
     ]
 })
 export class ServicesModule { }

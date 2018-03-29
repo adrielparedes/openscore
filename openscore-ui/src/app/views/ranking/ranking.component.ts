@@ -1,4 +1,6 @@
+import { RankingService } from './../../services/ranking.service';
 import { Component, OnInit } from '@angular/core';
+import { Ranking } from '../../model/ranking';
 
 @Component({
   selector: 'app-ranking',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RankingComponent implements OnInit {
 
-  constructor() { }
+  ranking: Ranking[]
+
+  constructor(private rankingService: RankingService) { }
 
   ngOnInit() {
+    this.update();
+  }
+
+  update() {
+    this.rankingService.getAll(0, 0).subscribe(
+      res => {
+        console.log(res.data);
+        this.ranking = res.data;
+      });
   }
 
 }

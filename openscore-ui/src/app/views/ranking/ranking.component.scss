@@ -1,0 +1,12 @@
+table {
+    background: white;
+    tr:first-child {
+        background: gold;
+    }
+    tr:nth-child(2) {
+        background: silver;
+    }
+    tr:nth-child(3) {
+        background: #AE6938;
+    }
+}

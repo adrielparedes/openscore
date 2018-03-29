@@ -1,23 +1,16 @@
+import { RestConfiguration } from './rest-configuration';
 import { ApiResponse } from './../model/api-response';
 import { HttpClient } from '@angular/common/http';
 import { Injector } from '@angular/core';
 
-export abstract class Rest<X, Y, Z> {
+export abstract class Rest<X, Y, Z> extends RestConfiguration {
 
     protected http: HttpClient;
 
-    private baseUrl = 'http://localhost:8080/openscore/api/rest';
-
     constructor(http: HttpClient) {
+        super();
         this.http = http;
     }
-
-    getUrl(url: string) {
-        return this.baseUrl + url;
-    }
-
-    abstract getServiceUrl(): string;
-
 
     public getAll(page: number, pageSize: number) {
         return this.http
