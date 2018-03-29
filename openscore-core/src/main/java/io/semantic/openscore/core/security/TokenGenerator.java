@@ -10,11 +10,14 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.model.Usuario;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.Date;
+import java.util.Set;
 
 public class TokenGenerator {
 
@@ -53,6 +56,17 @@ public class TokenGenerator {
         return Hashing.sha256().hashString(password, Charsets.UTF_8).toString();
     }
 
+    public String getTokenFromAuthHeader(String authHeader) {
+        try {
+            String[] authorizationParts = authHeader.split(" ");
+
+            return authorizationParts[1];
+        } catch (Exception e) {
+            throw new IllegalArgumentException("token vacio o invalido");
+
+        }
+    }
+
     public boolean verify(String token) {
         try {
             SignedJWT signedJWT = SignedJWT.parse(token);
@@ -61,9 +75,25 @@ public class TokenGenerator {
         } catch (Exception e) {
             throw new RuntimeException("Error al firmar el token", e);
         }
-
     }
 
+    public String getMail(String token) {
+        try {
+            SignedJWT signedJWT = SignedJWT.parse(token);
+            return (String) signedJWT.getJWTClaimsSet().getClaim(EMAIL);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al firmar el token", e);
+        }
+    }
+
+    public Set<Rol> getRoles(String token) {
+        try {
+            SignedJWT signedJWT = SignedJWT.parse(token);
+            return (Set<Rol>) signedJWT.getJWTClaimsSet().getClaim(ROLES);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al firmar el token", e);
+        }
+    }
 
     private void sign(SignedJWT signedJWT) {
         try {

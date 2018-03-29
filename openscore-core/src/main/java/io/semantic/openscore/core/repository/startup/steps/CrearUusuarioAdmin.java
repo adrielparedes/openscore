@@ -53,7 +53,7 @@ public class CrearUusuarioAdmin implements StartupStep {
     private Usuario crearUsuarioAdmin() {
         Usuario usuario = new Usuario();
         usuario.setRoles(new HashSet<>(Arrays.asList(Rol.ADMIN)));
-        usuario.setEmail("admin@admin");
+        usuario.setEmail("admin@admin.com");
         usuario.setApellido("Admin");
         usuario.setNombre("Admin");
         usuario.setPassword(tokenGenerator.generarPassword("admin"));

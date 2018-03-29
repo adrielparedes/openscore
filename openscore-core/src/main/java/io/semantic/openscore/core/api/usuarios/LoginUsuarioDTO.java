@@ -1,9 +1,9 @@
 package io.semantic.openscore.core.api.usuarios;
 
-public class LoginUsuarioApi {
+public class LoginUsuarioDTO {
 
     private String email;
-    private String token;
+    private String password;
 
     public String getEmail() {
         return email;
@@ -13,11 +13,11 @@ public class LoginUsuarioApi {
         this.email = email;
     }
 
-    public String getToken() {
-        return token;
+    public String getPassword() {
+        return password;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
