@@ -10,12 +10,12 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException> {
+public class RuntimeExceptionMapper implements ExceptionMapper<IllegalArgumentException> {
 
     private Logger logger = LoggerFactory.getLogger(ApplicationExceptionMapper.class);
 
     @Override
-    public Response toResponse(RuntimeException e) {
+    public Response toResponse(IllegalArgumentException e) {
         logger.error(e.getLocalizedMessage(), e);
         return Response
                 .serverError()

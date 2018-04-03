@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.ext.Provider;
 
 @Provider
@@ -17,8 +18,7 @@ public class SecureFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext containerRequestContext) {
         logger.info("secure filter");
         TokenGenerator tokenGenerator = new TokenGenerator();
-
-        tokenGenerator.verify(tokenGenerator.getTokenFromAuthHeader(containerRequestContext.getHeaderString("Authorization")));
+        tokenGenerator.verify(tokenGenerator.getTokenFromAuthHeader(containerRequestContext.getHeaderString(HttpHeaders.AUTHORIZATION)));
     }
 }
 

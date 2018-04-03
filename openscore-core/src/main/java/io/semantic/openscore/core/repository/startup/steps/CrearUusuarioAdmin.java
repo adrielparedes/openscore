@@ -35,7 +35,7 @@ public class CrearUusuarioAdmin implements StartupStep {
 
     @Override
     public void run() {
-        this.crearUsuarioSiNoExiste("admin@admin", this.crearUsuarioAdmin());
+        this.crearUsuarioSiNoExiste("admin@admin.com", this.crearUsuarioAdmin());
 
     }
 

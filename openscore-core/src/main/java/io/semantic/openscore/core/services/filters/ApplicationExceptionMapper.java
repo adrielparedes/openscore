@@ -18,7 +18,7 @@ public class ApplicationExceptionMapper implements ExceptionMapper<ApplicationEx
 
     @Override
     public Response toResponse(ApplicationException exception) {
-        logger.error(exception.getLocalizedMessage(), exception);
+        logger.error(exception.getMessage(), exception);
         return Response
                 .status(500)
                 .type(MediaType.APPLICATION_JSON_TYPE)

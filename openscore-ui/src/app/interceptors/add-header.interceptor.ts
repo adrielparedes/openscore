@@ -20,19 +20,18 @@ export class AddHeaderInterceptor implements HttpInterceptor {
 
         const token = this.storageService.getToken();
 
-        if (token) {
+        if (token !== undefined) {
             console.log(token);
             const clonedRequest = req.clone({
                 setHeaders: {
-                    'Authorization': 'Bearer 123',
-                    'content-type': 'application/json'
+                    'Authorization': 'Bearer ' + token
                 }
             });
             return next.handle(clonedRequest);
+        } else {
+            console.log('No token');
+            return next.handle(req);
         }
-
-        console.log('No token');
-        return next.handle(req);
     }
 
 }

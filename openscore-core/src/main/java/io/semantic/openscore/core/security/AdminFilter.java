@@ -1,6 +1,5 @@
 package io.semantic.openscore.core.security;
 
-import com.nimbusds.jwt.JWTClaimsSet;
 import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.model.Usuario;
 import io.semantic.openscore.core.repository.UsuarioRepository;
