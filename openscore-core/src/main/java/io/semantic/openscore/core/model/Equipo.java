@@ -8,10 +8,17 @@ public class Equipo extends Storable {
 
     private String nombre;
     private String codigo;
-
-    @ManyToOne
-    private Pais pais;
     private String logo;
+
+
+    public Equipo() {
+    }
+
+    public Equipo(String codigo, String nombre, String logo) {
+        this.nombre = nombre;
+        this.codigo = codigo;
+        this.logo = logo;
+    }
 
     public String getNombre() {
         return nombre;
@@ -37,11 +44,4 @@ public class Equipo extends Storable {
         this.logo = logo;
     }
 
-    public Pais getPais() {
-        return pais;
-    }
-
-    public void setPais(Pais pais) {
-        this.pais = pais;
-    }
 }

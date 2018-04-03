@@ -1,5 +1,6 @@
 package io.semantic.openscore.core.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -25,6 +26,7 @@ public class Partido extends Storable {
 
     @OneToOne
     private Resultado resultado;
+
 
     public Equipo getLocal() {
         return local;

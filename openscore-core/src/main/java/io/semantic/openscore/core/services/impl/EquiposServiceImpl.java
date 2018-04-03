@@ -73,7 +73,6 @@ public class EquiposServiceImpl implements EquiposService {
         validator.validate(entity);
         Pais pais = this.paisRepository.findByCodigo(entity.getCodigoPais());
         Equipo equipo = this.mapper.asEquipo(entity);
-        equipo.setPais(pais);
         this.equiposRepository.save(equipo);
         return ok(map(equipo));
     }
@@ -85,8 +84,6 @@ public class EquiposServiceImpl implements EquiposService {
         if (equipoOptional.isPresent()) {
             Equipo equipo = equipoOptional.get();
             equipo.setCodigo(entity.getCodigo());
-            Pais pais = this.paisRepository.findByCodigo(entity.getCodigoPais());
-            equipo.setPais(pais);
             equipo.setLogo(entity.getLogo());
             equipo.setNombre(entity.getNombre());
             this.equiposRepository.save(equipo);

@@ -18,7 +18,6 @@
             <th>ID</th>
             <th>Codigo</th>
             <th>Nombre</th>
-            <th>Pais</th>
             <th>Logo</th>
             <th>Acciones</th>
           </tr>
@@ -38,10 +37,7 @@
               </div>
             </td>
             <td>
-              <div>{{equipo.pais.nombre}}</div>
-            </td>
-            <td>
-              <a target="_blank" href="{{equipo.logo}}">Ver logo</a>
+              <img src="{{equipo.logo}}"/>
             </td>
             <td>
               <button class="btn btn-warning" (click)="editarEquipo(equipo.id)">
