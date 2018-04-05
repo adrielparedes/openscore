@@ -7,6 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PronosticosComponent implements OnInit {
 
+  formato = "lista";
+  grupos = [
+    {
+      nombre: 'Grupo A', partidos: [{}, {}]
+    },
+    {
+      nombre: 'Grupo B', partidos: [{}, {}]
+    }
+  ];
+
+
   constructor() { }
 
   ngOnInit() {

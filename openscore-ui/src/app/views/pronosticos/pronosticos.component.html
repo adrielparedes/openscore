@@ -1,43 +1,62 @@
 <div class="animated fadeIn">
 
 
-
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary active">
+      <input type="radio" name="options" id="option1" autocomplete="off"> Por Fase
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" name="options" id="option2" autocomplete="off"> Por Fecha
+    </label>
+  </div>
 
 
   <div class="row">
+    <tabset>
+      <tab heading="{{grupo.nombre}}" [ngSwitch]="formato" *ngFor="let grupo of grupos">
+        <div class="row" *ngSwitchCase="lista">
+          <div class="long" *ngFor="let partido of grupo.partidos">
+            <div class="card text-center">
+              <div class="card-body">
+                <div class="score">
+                  <button class="btn btn-primary">Argentina</button>
+                  <img src="https://fsprdcdnpublic.azureedge.net/global-pictures/flags-fwc2018-3/arg" /> 1 - 0
+                  <img src="https://fsprdcdnpublic.azureedge.net/global-pictures/flags-fwc2018-3/isl" />
+                  <button class="btn btn-primary">Islandia</button>
+                </div>
+                <div>Moscú</div>
+                <div>14 de Junio - (18:00 UTC+3)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngSwitchDefault>
+          <div class="col-sm-6 col-md-4" *ngFor="let partido of grupo.partidos">
+            <div class="card text-center">
+              <!-- <div class="card-header">
+                  Card title
+                </div> -->
+              <div class="card-body">
+                <div class="score">
+                  <img src="https://fsprdcdnpublic.azureedge.net/global-pictures/flags-fwc2018-3/arg" /> -
+                  <img src="https://fsprdcdnpublic.azureedge.net/global-pictures/flags-fwc2018-3/isl" />
+                </div>
+                <div class="score"> 1 - 0 </div>
+                <div>Moscú</div>
+                <div>14 de Junio - (18:00 UTC+3)</div>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-primary">Argentina</button>
+                <button class="btn">Empate</button>
+                <button class="btn">Islandia</button>
+              </div>
+            </div>
+          </div>
+          <!--/.col-->
+        </div>
+      </tab>
+    </tabset>
 
-    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-      <label class="btn btn-secondary active">
-        <input type="radio" name="options" id="option1" autocomplete="off"> Por Fase
-      </label>
-      <label class="btn btn-secondary">
-        <input type="radio" name="options" id="option2" autocomplete="off"> Por Fecha
-      </label>
-    </div>
-
-    <div class="">
-      <!-- Nav tabs -->
-      <tabset>
-        <tab heading="Home">
-          1. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-          aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </tab>
-        <tab heading="Profile">
-          2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-          aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </tab>
-        <tab heading="Messages">
-          3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-          aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </tab>
-      </tabset>
-    </div>
 
     <!--/.col-->
   </div>
