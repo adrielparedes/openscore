@@ -6,8 +6,10 @@ import io.semantic.openscore.core.repository.startup.StartupStep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.inject.Vetoed;
 import javax.inject.Inject;
 
+@Vetoed
 public class CrearDefinicionCompeticion implements StartupStep {
 
     public static final String NOMBRE = "Copa del Mundo Rusia 2018";

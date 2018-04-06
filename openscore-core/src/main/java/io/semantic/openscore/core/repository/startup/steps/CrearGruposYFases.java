@@ -30,20 +30,20 @@ public class CrearGruposYFases implements StartupStep {
 
     @Override
     public void run() {
-        this.crearEtapaSiNoExiste("GRUPO", this.crearFase("GRUPO", "Grupo", 1));
-        this.crearEtapaSiNoExiste("OCTAVOS", this.crearFase("OCTAVOS", "Octavos de Final", 2));
-        this.crearEtapaSiNoExiste("CUARTOS", this.crearFase("CUARTOS", "Cuartos de Final", 3));
-        this.crearEtapaSiNoExiste("SEMI", this.crearFase("SEMI", "Semifinal", 4));
-        this.crearEtapaSiNoExiste("FINAL", this.crearFase("FINAL", "Final", 4));
+        this.crearEtapaSiNoExiste(Fase.GRUPO, this.crearFase(Fase.GRUPO, "Grupo", 1));
+        this.crearEtapaSiNoExiste(Fase.OCTAVOS, this.crearFase(Fase.OCTAVOS, "Octavos de Final", 2));
+        this.crearEtapaSiNoExiste(Fase.CUARTOS, this.crearFase(Fase.CUARTOS, "Cuartos de Final", 3));
+        this.crearEtapaSiNoExiste(Fase.SEMI, this.crearFase(Fase.SEMI, "Semifinal", 4));
+        this.crearEtapaSiNoExiste(Fase.FINAL, this.crearFase(Fase.FINAL, "Final", 4));
 
-        this.crearGrupoSiNoExiste("GRUPO_A", this.crearGrupo("GRUPO_A", "Grupo A"));
-        this.crearGrupoSiNoExiste("GRUPO_B", this.crearGrupo("GRUPO_B", "Grupo B"));
-        this.crearGrupoSiNoExiste("GRUPO_C", this.crearGrupo("GRUPO_C", "Grupo C"));
-        this.crearGrupoSiNoExiste("GRUPO_D", this.crearGrupo("GRUPO_D", "Grupo D"));
-        this.crearGrupoSiNoExiste("GRUPO_E", this.crearGrupo("GRUPO_E", "Grupo E"));
-        this.crearGrupoSiNoExiste("GRUPO_F", this.crearGrupo("GRUPO_F", "Grupo F"));
-        this.crearGrupoSiNoExiste("GRUPO_G", this.crearGrupo("GRUPO_G", "Grupo G"));
-        this.crearGrupoSiNoExiste("GRUPO_H", this.crearGrupo("GRUPO_H", "Grupo H"));
+        this.crearGrupoSiNoExiste(Grupo.GRUPO_A, this.crearGrupo(Grupo.GRUPO_A, "Grupo A"));
+        this.crearGrupoSiNoExiste(Grupo.GRUPO_B, this.crearGrupo(Grupo.GRUPO_B, "Grupo B"));
+        this.crearGrupoSiNoExiste(Grupo.GRUPO_C, this.crearGrupo(Grupo.GRUPO_C, "Grupo C"));
+        this.crearGrupoSiNoExiste(Grupo.GRUPO_D, this.crearGrupo(Grupo.GRUPO_D, "Grupo D"));
+        this.crearGrupoSiNoExiste(Grupo.GRUPO_E, this.crearGrupo(Grupo.GRUPO_E, "Grupo E"));
+        this.crearGrupoSiNoExiste(Grupo.GRUPO_F, this.crearGrupo(Grupo.GRUPO_F, "Grupo F"));
+        this.crearGrupoSiNoExiste(Grupo.GRUPO_G, this.crearGrupo(Grupo.GRUPO_G, "Grupo G"));
+        this.crearGrupoSiNoExiste(Grupo.GRUPO_H, this.crearGrupo(Grupo.GRUPO_H, "Grupo H"));
 
     }
 

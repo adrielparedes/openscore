@@ -5,6 +5,12 @@ import javax.persistence.Entity;
 @Entity
 public class Fase extends Storable {
 
+    public static final String GRUPO = "GRUPO";
+    public static final String OCTAVOS = "OCTAVOS";
+    public static final String CUARTOS = "CUARTOS";
+    public static final String SEMI = "SEMI";
+    public static final String FINAL = "FINAL";
+
     private String codigo;
     private String nombre;
     private Integer puntos;

@@ -1,0 +1,58 @@
+[
+  {
+    "local": "RUS",
+    "visitante": "KSA",
+    "grupo": "GRUPO_A",
+    "lugar": "Estadio Luzhnikí, Moscú",
+    "fecha": "14-06-2018T12:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "EGY",
+    "visitante": "URU",
+    "grupo": "GRUPO_A",
+    "lugar": "Estadio Ekaterimburgo Arena, Ekaterinburg",
+    "fecha": "15-06-2018T09:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "POR",
+    "visitante": "ESP",
+    "grupo": "GRUPO_B",
+    "lugar": "Estadio Fisht, Sochi",
+    "fecha": "",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "MAR",
+    "visitante": "IRN",
+    "grupo": "GRUPO_B",
+    "lugar": "Estadio de San Petersburgo, San Petersburgo",
+    "fecha": "",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "FRA",
+    "visitante": "AUS",
+    "grupo": "GRUPO_C",
+    "lugar": "Estadio Kazán Arena, Kazán",
+    "fecha": "",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "PER",
+    "visitante": "DEN",
+    "grupo": "GRUPO_C",
+    "lugar": "Estadio Mordovia Arena, Saransk",
+    "fecha": "",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "ARG",
+    "visitante": "ISL",
+    "grupo": "GRUPO_D",
+    "lugar": "Estadio del Spartak, Moscú",
+    "fecha": "",
+    "fase": "GRUPO"
+  }
+]
