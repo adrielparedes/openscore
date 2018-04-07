@@ -1,3 +1,4 @@
+import { PartidosService } from './partidos.service';
 import { StorageService } from './storage.service';
 import { AddHeaderInterceptor } from './../interceptors/add-header.interceptor';
 import { EquiposService } from './equipos.service';
@@ -18,6 +19,7 @@ import { RankingService } from './ranking.service';
         EquiposService,
         RankingService,
         StorageService,
+        PartidosService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AddHeaderInterceptor,

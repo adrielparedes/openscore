@@ -5,12 +5,15 @@ import io.semantic.openscore.core.api.partidos.CrearOUpdatePartidoDTO;
 import io.semantic.openscore.core.api.partidos.PartidoDTO;
 import io.semantic.openscore.core.mapping.PartidoMapper;
 import io.semantic.openscore.core.model.Partido;
+import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.repository.PartidoRepository;
 import io.semantic.openscore.core.services.api.PartidosService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static io.semantic.openscore.core.services.RestUtil.ok;
 
@@ -32,10 +35,18 @@ public class PartidosServiceImpl implements PartidosService {
     }
 
     @Override
-    public ApiResponse<List<PartidoDTO>> getAll(int page, int pageSize) {
+    public ApiResponse<List<PartidoDTO>> getAll(int page,
+                                                int pageSize,
+                                                String grupo,
+                                                String fase,
+                                                long fecha,
+                                                String equipo) {
+
+        this.partidoRepository.findAll();
         List<Partido> partidos = this.partidoRepository.findAll();
         return ok(this.partidoMapper.asApi(partidos));
     }
+
 
     @Override
     public ApiResponse<PartidoDTO> get(long id) {

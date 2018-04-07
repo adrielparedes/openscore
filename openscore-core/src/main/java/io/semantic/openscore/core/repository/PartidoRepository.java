@@ -10,4 +10,5 @@ public class PartidoRepository extends Repository<Partido> {
     public PartidoRepository() {
         super(Partido.class);
     }
+
 }

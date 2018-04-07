@@ -88,6 +88,8 @@ public class CrearPartidos implements StartupStep {
                                         Fase fase,
                                         Date fecha,
                                         String lugar) {
+
+
         Equipo local = getEquipo(codigoLocal);
         Equipo visitante = getEquipo(codigoVisitante);
 
