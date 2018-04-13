@@ -3,6 +3,9 @@ package io.semantic.openscore.core.model;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 @Entity
 public class Pronostico extends Storable {
 
@@ -15,7 +18,6 @@ public class Pronostico extends Storable {
 
     @ManyToOne
     private Usuario usuario;
-
 
     public boolean isLocal() {
         return local;
@@ -78,5 +80,4 @@ public class Pronostico extends Storable {
     public int getPuntos() {
         return this.getPartido().getPuntos(this);
     }
-
 }
