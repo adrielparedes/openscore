@@ -15,7 +15,7 @@ public interface PronosticoMapper {
 
 
     @Mappings({
-            @Mapping(source = "partido.id", target = "partido")
+            @Mapping(source = "partido.id", target = "partido.id")
     })
     PronosticoDTO asApi(Pronostico pronostico);
 

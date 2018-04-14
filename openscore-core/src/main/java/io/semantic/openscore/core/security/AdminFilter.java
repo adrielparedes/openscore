@@ -15,8 +15,12 @@ import java.util.Optional;
 @Admin
 public class AdminFilter implements ContainerRequestFilter {
 
-    @Inject
     UsuarioRepository usuarioRepository;
+
+    @Inject
+    public AdminFilter(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     @Override
     public void filter(ContainerRequestContext containerRequestContext) {

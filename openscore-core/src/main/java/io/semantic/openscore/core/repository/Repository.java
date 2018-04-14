@@ -1,5 +1,6 @@
 package io.semantic.openscore.core.repository;
 
+import io.semantic.openscore.core.model.Pronostico;
 import io.semantic.openscore.core.model.Storable;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -147,5 +149,9 @@ public abstract class Repository<T extends Storable> {
         query.select(entity).where(cb.and(params.toArray(new Predicate[params.size()])));
         TypedQuery<T> typedQuery = this.entityManager.createQuery(query);
         return this.findByQuery(typedQuery);
+    }
+
+    public List<Pronostico> findAllWithPronostico() {
+        return new ArrayList<Pronostico>();
     }
 }
