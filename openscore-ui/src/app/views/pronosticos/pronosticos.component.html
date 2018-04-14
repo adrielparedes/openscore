@@ -13,19 +13,17 @@
 
   <div class="row">
     <tabset>
-      <tab heading="{{grupo.nombre}}" *ngFor="let grupo of grupos">
+      <tab heading="{{grupo.nombre}}" (select)="retrievePartidos(grupo.codigo)" *ngFor="let grupo of grupos">
         <div class="row">
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
             <div class="card text-center">
-              <!-- <div class="card-header">
-                  Card title
-                </div> -->
               <div class="card-body">
                 <div class="score">
                   <img src="{{partido.local.logo}}" /> -
                   <img src="{{partido.visitante.logo}}" />
                 </div>
                 <div class="score"> {{getResultado(partido)}} </div>
+                <div class="grupo_fase">{{partido.grupo.nombre}}</div>
                 <div>{{partido.lugar}}</div>
                 <div>{{partido.fecha | date: 'dd/MM/yyyy HH:mm (O)'}}</div>
               </div>

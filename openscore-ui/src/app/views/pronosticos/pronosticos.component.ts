@@ -20,10 +20,10 @@ export class PronosticosComponent implements OnInit {
   constructor(private partidosService: PartidosService) { }
 
   ngOnInit() {
-    this.retrievePartidos(undefined);
+    this.retrievePartidos('GRUPO_A');
   }
 
-  retrievePartidos(grupo: Grupo) {
+  retrievePartidos(grupo: string) {
     console.log(grupo);
     this.partidosService.getAll(0, 0).subscribe(res => {
       this.partidos = res.data;

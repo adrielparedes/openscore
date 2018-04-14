@@ -1,3 +1,5 @@
+import { Fase } from './fase';
+import { Grupo } from './grupo';
 import { Equipo } from './equipo';
 export interface Partido {
 
@@ -7,5 +9,7 @@ export interface Partido {
     fecha: Date;
     lugar: string;
     resultado: string;
+    grupo: Grupo;
+    fase: Fase;
     status: string;
 }
