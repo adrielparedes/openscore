@@ -14,6 +14,7 @@ import io.semantic.openscore.core.validation.ApplicationValidator;
 
 import javax.inject.Inject;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.UriInfo;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +46,7 @@ public class EquiposServiceImpl implements EquiposService {
     }
 
     @Override
-    public ApiResponse<List<EquipoDTO>> getAll(int page, int pageSize) {
+    public ApiResponse<List<EquipoDTO>> getAll(int page, int pageSize, UriInfo uriInfo) {
         List<EquipoDTO> equipos = this.equiposRepository
                 .findAll(new Page(page, pageSize))
                 .stream()

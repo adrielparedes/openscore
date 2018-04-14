@@ -55,4 +55,5 @@ public class PronosticoRepository extends Repository<Pronostico> {
             return Optional.of(results.get(0));
         }
     }
+
 }

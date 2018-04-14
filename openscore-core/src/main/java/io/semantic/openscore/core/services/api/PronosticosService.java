@@ -6,12 +6,34 @@ import io.semantic.openscore.core.api.pronosticos.PronosticoDTO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("pronosticos")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public interface PronosticosService extends StandardService<PronosticoDTO, CrearPronosticoDTO, CrearPronosticoDTO> {
+public interface PronosticosService {
 
+    @Path("/")
+    @GET
+    ApiResponse<List<PronosticoDTO>> getAll(@QueryParam("page") int page,
+                                            @QueryParam("pageSize") int pageSize);
+
+    @Path("/{id}")
+    @GET
+    ApiResponse<PronosticoDTO> get(@PathParam("id") long id);
+
+    @Path("/{id}")
+    @DELETE
+    ApiResponse<Long> delete(@PathParam("id") long id);
+
+    @Path("/")
+    @POST
+    ApiResponse<PronosticoDTO> add(CrearPronosticoDTO entity);
+
+    @Path("/{id}")
+    @POST
+    ApiResponse<PronosticoDTO> update(@PathParam("id") long id,
+                                      CrearPronosticoDTO entity);
 
     @Path("/{id}/local")
     @POST

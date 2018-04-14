@@ -1,12 +1,14 @@
 package io.semantic.openscore.core.api.pronosticos;
 
+import io.semantic.openscore.core.api.partidos.PartidoDTO;
+
 public class PronosticoDTO {
 
     private long id;
     private boolean local;
     private boolean visitante;
     private boolean empate;
-    private long partido;
+    private PartidoDTO partido;
 
     public long getId() {
         return id;
@@ -40,11 +42,11 @@ public class PronosticoDTO {
         this.empate = empate;
     }
 
-    public long getPartido() {
+    public PartidoDTO getPartido() {
         return partido;
     }
 
-    public void setPartido(long partido) {
+    public void setPartido(PartidoDTO partido) {
         this.partido = partido;
     }
 }

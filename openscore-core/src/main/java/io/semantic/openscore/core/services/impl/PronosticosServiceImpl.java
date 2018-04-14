@@ -15,8 +15,6 @@ import io.semantic.openscore.core.validation.ApplicationValidator;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriInfo;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -49,13 +47,11 @@ public class PronosticosServiceImpl implements PronosticosService {
 
     @Override
     public ApiResponse<List<PronosticoDTO>> getAll(int page,
-                                                   int pageSize,
-                                                   UriInfo uriInfo) {
+                                                   int pageSize) {
         long usuarioId = 0l;
 
-        MultivaluedMap<String, String> parameters = uriInfo.getQueryParameters();
-
-        List<Pronostico> pronosticos = this.pronosticoRepository.findAll(parameters);
+        this.partidoRepository.findAll();
+        List<Pronostico> pronosticos = this.pronosticoRepository.findAllWithPronostico();
 
         return ok(this.pronosticoMapper.asApi(pronosticos));
     }
@@ -64,7 +60,7 @@ public class PronosticosServiceImpl implements PronosticosService {
     public ApiResponse<PronosticoDTO> get(long id) {
         long idUsuario = 0l;
         Pronostico pronostico = getPronostico(id,
-                                              idUsuario);
+                idUsuario);
         return ok(this.pronosticoMapper.asApi(pronostico));
     }
 
@@ -86,42 +82,42 @@ public class PronosticosServiceImpl implements PronosticosService {
         validator.validate(entity);
 
         Pronostico pronostico = this.getPronostico(id,
-                                                   idUsuario);
+                idUsuario);
         this.pronosticoMapper.updatePronostico(entity,
-                                               pronostico);
+                pronostico);
         this.pronosticoRepository.save(pronostico);
         return ok(this.pronosticoMapper.asApi(pronostico));
     }
 
     private Usuario getUsuario(long idUsuario) {
         return this.usuarioRepository.findById(idUsuario).orElseThrow(() -> new IllegalArgumentException(MessageFormat
-                                                                                                                 .format("El Usuario con ID {0} no fue encontrado",
-                                                                                                                         idUsuario)));
+                .format("El Usuario con ID {0} no fue encontrado",
+                        idUsuario)));
     }
 
     private Pronostico getPronostico(long id,
                                      long idUsuario) {
         return this.pronosticoRepository
                 .findById(id,
-                          idUsuario)
+                        idUsuario)
                 .orElseThrow(() -> new IllegalArgumentException(MessageFormat
-                                                                        .format("El Pronostico con ID {0} no se encuentra para el usuario {1}",
-                                                                                id,
-                                                                                idUsuario)));
+                        .format("El Pronostico con ID {0} no se encuentra para el usuario {1}",
+                                id,
+                                idUsuario)));
     }
 
     private Partido getPartido(long id) {
         return this.partidoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(MessageFormat
-                                                                        .format("El Partido con ID {0} no fue encontrado",
-                                                                                id)));
+                        .format("El Partido con ID {0} no fue encontrado",
+                                id)));
     }
 
     @Override
     public ApiResponse<PronosticoDTO> local(long idPartido) {
         long idUsuario = 0;
         Pronostico pronostico = this.getPronosticoOrCreatePronostico(idPartido,
-                                                                     idUsuario);
+                idUsuario);
         pronostico.local();
         this.pronosticoRepository.save(pronostico);
         return ok(this.pronosticoMapper.asApi(pronostico));
@@ -131,7 +127,7 @@ public class PronosticosServiceImpl implements PronosticosService {
     public ApiResponse<PronosticoDTO> empate(long idPartido) {
         long idUsuario = 0;
         Pronostico pronostico = this.getPronosticoOrCreatePronostico(idPartido,
-                                                                     idUsuario);
+                idUsuario);
         pronostico.empate();
         this.pronosticoRepository.save(pronostico);
         return ok(this.pronosticoMapper.asApi(pronostico));
@@ -141,7 +137,7 @@ public class PronosticosServiceImpl implements PronosticosService {
     public ApiResponse<PronosticoDTO> visitante(long idPartido) {
         long idUsuario = 0;
         Pronostico pronostico = this.getPronosticoOrCreatePronostico(idPartido,
-                                                                     idUsuario);
+                idUsuario);
         pronostico.visitante();
         this.pronosticoRepository.save(pronostico);
         return ok(this.pronosticoMapper.asApi(pronostico));
@@ -150,7 +146,7 @@ public class PronosticosServiceImpl implements PronosticosService {
     private Pronostico getPronosticoOrCreatePronostico(long idPartido,
                                                        long idUsuario) {
         return this.pronosticoRepository.findByPartidoAndUsuario(idPartido,
-                                                                 idUsuario).orElseGet(() -> {
+                idUsuario).orElseGet(() -> {
             Pronostico pronostico = new Pronostico();
             Partido partido = getPartido(idPartido);
             pronostico.setPartido(partido);

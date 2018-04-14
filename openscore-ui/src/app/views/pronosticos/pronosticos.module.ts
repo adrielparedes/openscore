@@ -1,3 +1,4 @@
+import { ServicesModule } from './../../services/services.module';
 import { PronosticosRoutes } from './pronosticos.routing';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,6 +9,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
   imports: [
     CommonModule,
     PronosticosRoutes,
+    ServicesModule,
     TabsModule
   ],
   declarations: [PronosticosComponent]

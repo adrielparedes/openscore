@@ -1,3 +1,4 @@
+import { PartidosService } from './../../services/partidos.service';
 import { Grupo } from './../../model/grupo';
 import { Partido } from './../../model/partido';
 import { Component, OnInit } from '@angular/core';
@@ -10,19 +11,23 @@ import { Component, OnInit } from '@angular/core';
 export class PronosticosComponent implements OnInit {
 
   formato = "lista";
+  partidos: Partido[] = [];
   grupos: Grupo[] = [
     { codigo: "GRUPO_A", nombre: "Grupo A" },
     { codigo: "GRUPO_B", nombre: "Grupo B" }
   ]
 
-  constructor() { }
+  constructor(private partidosService: PartidosService) { }
 
   ngOnInit() {
+    this.retrievePartidos(undefined);
   }
 
-  partidos(grupo: Grupo): Partido[] {
+  retrievePartidos(grupo: Grupo) {
     console.log(grupo);
-    return <Partido[]>[{}];
+    this.partidosService.getAll(0, 0).subscribe(res => {
+      this.partidos = res.data;
+    });
   }
 
 }

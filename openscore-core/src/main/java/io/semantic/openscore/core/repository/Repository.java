@@ -1,14 +1,6 @@
 package io.semantic.openscore.core.repository;
 
 import io.semantic.openscore.core.model.Storable;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.queryparser.xml.builders.UserInputQueryBuilder;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-import org.hibernate.engine.query.internal.NativeQueryInterpreterStandardImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,10 +11,10 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.MultivaluedMap;
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -54,14 +46,14 @@ public abstract class Repository<T extends Storable> {
 
     public TypedQuery<T> createQuery(String query) {
         return this.entityManager.createQuery(query,
-                                              this.persistentClass);
+                this.persistentClass);
     }
 
     public Optional<T> findById(long id) {
 
         List<T> found = this.createQuery(MessageFormat.format("from {0} s where s.id=:id and s.deleted=false",
-                                                              this.persistentClass.getSimpleName())).setParameter("id",
-                                                                                                                  id).getResultList();
+                this.persistentClass.getSimpleName())).setParameter("id",
+                id).getResultList();
 
         if (!found.isEmpty()) {
             return Optional.of(found.get(0));
@@ -73,8 +65,8 @@ public abstract class Repository<T extends Storable> {
     public Optional<T> findByIdWithDeleted(long id) {
 
         List<T> found = this.createQuery(MessageFormat.format("from {0} s where s.id=:id",
-                                                              this.persistentClass.getSimpleName())).setParameter("id",
-                                                                                                                  id).getResultList();
+                this.persistentClass.getSimpleName())).setParameter("id",
+                id).getResultList();
 
         if (!found.isEmpty()) {
             return Optional.of(found.get(0));
@@ -103,15 +95,15 @@ public abstract class Repository<T extends Storable> {
 
     public void hardDeleteByQuery(TypedQuery<T> query) {
         List<T> found = this.findByQuery(query,
-                                         new Page(0,
-                                                  0));
+                new Page(0,
+                        0));
         found.forEach(entity -> entityManager.remove(entity));
     }
 
     public void deleteByQuery(TypedQuery<T> query) {
         List<T> found = this.findByQuery(query,
-                                         new Page(0,
-                                                  0));
+                new Page(0,
+                        0));
         found.forEach(elem -> {
             elem.setDeleted(true);
             save(elem);
@@ -128,18 +120,18 @@ public abstract class Repository<T extends Storable> {
 
     public List<T> findAll(Page page) {
         TypedQuery<T> query = this.createQuery(MessageFormat.format("from {0}",
-                                                                    this.persistentClass.getSimpleName()));
+                this.persistentClass.getSimpleName()));
         return this.findByQuery(query,
-                                page);
+                page);
     }
 
     public List<T> findAll() {
         TypedQuery<T> query = this.createQuery(MessageFormat.format("from {0}",
-                                                                    this.persistentClass.getSimpleName()));
+                this.persistentClass.getSimpleName()));
         return this.findByQuery(query);
     }
 
-    public List<T> findAll(Map<String, String> parameters) {
+    public List<T> findAll(Map<String, ?> parameters) {
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(this.persistentClass);
         Root<T> entity = query.from(this.persistentClass);
@@ -147,10 +139,13 @@ public abstract class Repository<T extends Storable> {
         List<Predicate> params = parameters
                 .entrySet()
                 .stream()
+                .filter(entry -> entry.getValue() != null)
                 .map(e -> cb.equal(entity.get(e.getKey()),
-                                   e.getValue()))
+                        e.getValue()))
                 .collect(toList());
 
         query.select(entity).where(cb.and(params.toArray(new Predicate[params.size()])));
+        TypedQuery<T> typedQuery = this.entityManager.createQuery(query);
+        return this.findByQuery(typedQuery);
     }
 }
