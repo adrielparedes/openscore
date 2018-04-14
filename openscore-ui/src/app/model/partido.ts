@@ -7,5 +7,5 @@ export interface Partido {
     fecha: Date;
     lugar: string;
     resultado: string;
-    estado: string;
+    status: string;
 }

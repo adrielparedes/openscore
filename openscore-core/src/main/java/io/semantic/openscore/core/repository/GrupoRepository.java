@@ -1,9 +1,12 @@
 package io.semantic.openscore.core.repository;
 
+import io.semantic.openscore.core.model.Equipo;
 import io.semantic.openscore.core.model.Grupo;
 
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
+import java.util.List;
+import java.util.Optional;
 
 @Stateless
 public class GrupoRepository extends Repository<Grupo> {
@@ -20,9 +23,14 @@ public class GrupoRepository extends Repository<Grupo> {
         return this.findByQuery(query).size() > 0;
     }
 
-    public Grupo findByCodigo(String codigo) {
+    public Optional<Grupo> findByCodigo(String codigo) {
         TypedQuery<Grupo> query = this.createQuery(FIND_ENTITY_BY_CODIGO_QUERY);
         query.setParameter("codigo", codigo);
-        return query.getSingleResult();
+        List<Grupo> found = this.findByQuery(query);
+        if (found.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(found.get(0));
+        }
     }
 }

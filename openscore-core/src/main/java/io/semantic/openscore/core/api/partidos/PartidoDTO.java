@@ -11,6 +11,7 @@ public class PartidoDTO {
     private EquipoDTO visitante;
     private Date fecha;
     private String lugar;
+    private String status;
 
     public long getId() {
         return id;
@@ -50,5 +51,13 @@ public class PartidoDTO {
 
     public void setLugar(String lugar) {
         this.lugar = lugar;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

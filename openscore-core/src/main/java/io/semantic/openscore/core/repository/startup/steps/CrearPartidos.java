@@ -120,7 +120,8 @@ public class CrearPartidos implements StartupStep {
     }
 
     private Grupo getGrupo(String codigo) {
-        return this.grupoRepository.findByCodigo(codigo);
+        logger.info(codigo);
+        return this.grupoRepository.findByCodigo(codigo).orElseThrow(() -> new IllegalArgumentException("El grupo " + codigo + "no existe"));
     }
 
     private Fase getFase(String codigo) {

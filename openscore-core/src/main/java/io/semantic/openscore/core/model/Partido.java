@@ -107,4 +107,18 @@ public class Partido extends Storable {
     private int calcularPuntos() {
         return this.getFase().getPuntos();
     }
+
+    public boolean isBloqueado() {
+        return this.getFecha().getTime() <= new Date().getTime() + 900000;
+    }
+
+    public PartidoStatus getStatus() {
+        if (this.getResultado() != null) {
+            return PartidoStatus.FINALIZADO;
+        } else if (this.isBloqueado()) {
+            return PartidoStatus.BLOQUEADO;
+        } else {
+            return PartidoStatus.SIN_COMENZAR;
+        }
+    }
 }

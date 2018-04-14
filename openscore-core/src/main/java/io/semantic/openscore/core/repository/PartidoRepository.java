@@ -11,9 +11,9 @@ import javax.persistence.TypedQuery;
 public class PartidoRepository extends Repository<Partido> {
 
     private static final String EXIST = "select e from Partido e where " +
-            "e.local.id = :local AND" +
-            "e.visitante.id = :visitante AND" +
-            "e.fase.id = :fase AND" +
+            "e.local.codigo = :local AND " +
+            "e.visitante.codigo = :visitante AND " +
+            "e.fase.id = :fase AND " +
             "e.grupo.id = :grupo";
 
     public PartidoRepository() {
@@ -27,7 +27,6 @@ public class PartidoRepository extends Repository<Partido> {
                 .setParameter("fase", fase.getId())
                 .setParameter("grupo", grupo.getId());
 
-        return query.getResultList().size() > 0;
-
+        return this.findByQuery(query).size() > 0;
     }
 }

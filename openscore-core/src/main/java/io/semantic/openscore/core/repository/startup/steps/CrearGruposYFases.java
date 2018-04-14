@@ -73,7 +73,7 @@ public class CrearGruposYFases implements StartupStep {
 
     private Fase crearFase(String codigo, String nombre, int puntos) {
         Fase fase = new Fase();
-        fase.setCodigo(codigo);
+        fase.setCodigo(codigo.toUpperCase());
         fase.setNombre(nombre);
         fase.setPuntos(puntos);
         return fase;

@@ -30,4 +30,12 @@ export class PronosticosComponent implements OnInit {
     });
   }
 
+  getResultado(partido: Partido) {
+    return this.capitalize(partido.status.replace('_', ' ').toLowerCase());
+  }
+
+  capitalize(str: string) {
+    return str.replace(/\b(\w)/g, s => s.toUpperCase());
+  }
+
 }
