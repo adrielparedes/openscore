@@ -89,22 +89,19 @@ public class CrearPartidos implements StartupStep {
                                         Date fecha,
                                         String lugar) {
 
-        this.partidoRepository.exist(codigoLocal,codigoVisitante,grupo,fase);
+        if (!this.partidoRepository.exist(codigoLocal, codigoVisitante, grupo, fase)) {
+            Equipo local = getEquipo(codigoLocal);
+            Equipo visitante = getEquipo(codigoVisitante);
+            Partido partido = new Partido();
+            partido.setLocal(local);
+            partido.setVisitante(visitante);
+            partido.setFecha(fecha);
+            partido.setLugar(lugar);
+            partido.setGrupo(grupo);
+            partido.setFase(fase);
 
-        Equipo local = getEquipo(codigoLocal);
-        Equipo visitante = getEquipo(codigoVisitante);
-
-
-
-        Partido partido = new Partido();
-        partido.setLocal(local);
-        partido.setVisitante(visitante);
-        partido.setFecha(fecha);
-        partido.setLugar(lugar);
-        partido.setGrupo(grupo);
-        partido.setFase(fase);
-
-        this.partidoRepository.save(partido);
+            this.partidoRepository.save(partido);
+        }
     }
 
     private Equipo getEquipo(String codigoLocal) {
