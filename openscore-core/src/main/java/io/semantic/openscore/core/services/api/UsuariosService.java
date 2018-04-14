@@ -5,7 +5,6 @@ import io.semantic.openscore.core.api.TokenDTO;
 import io.semantic.openscore.core.api.usuarios.CrearUsuarioDTO;
 import io.semantic.openscore.core.api.usuarios.LoginUsuarioDTO;
 import io.semantic.openscore.core.api.usuarios.UsuarioDTO;
-import io.semantic.openscore.core.security.Admin;
 import io.semantic.openscore.core.security.Secure;
 
 import javax.ws.rs.*;
@@ -31,7 +30,6 @@ public interface UsuariosService extends SearchService<UsuarioDTO> {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @Secure
-    @Admin
     public ApiResponse<List<UsuarioDTO>> getAll(@QueryParam("page") int page, @QueryParam("pageSize") int pageSize, @QueryParam("filter") String filter);
 
     @POST

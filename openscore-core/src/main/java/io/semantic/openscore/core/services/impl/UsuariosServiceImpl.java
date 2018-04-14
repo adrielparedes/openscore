@@ -13,7 +13,6 @@ import io.semantic.openscore.core.model.Usuario;
 import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.repository.PaisRepository;
 import io.semantic.openscore.core.repository.UsuarioRepository;
-import io.semantic.openscore.core.security.Admin;
 import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.security.TokenGenerator;
 import io.semantic.openscore.core.services.api.UsuariosService;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -85,7 +83,6 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     @Override
     @Secure
-    @Admin
     public ApiResponse<String> deleteUsuario(long id) {
         return null;
     }
