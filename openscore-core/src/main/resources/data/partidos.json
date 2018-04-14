@@ -20,7 +20,7 @@
     "visitante": "ESP",
     "grupo": "GRUPO_B",
     "lugar": "Estadio Fisht, Sochi",
-    "fecha": "",
+    "fecha": "15-06-2018T15:00-0300",
     "fase": "GRUPO"
   },
   {
@@ -28,7 +28,7 @@
     "visitante": "IRN",
     "grupo": "GRUPO_B",
     "lugar": "Estadio de San Petersburgo, San Petersburgo",
-    "fecha": "",
+    "fecha": "15-06-2018T12:00-0300",
     "fase": "GRUPO"
   },
   {
@@ -36,7 +36,7 @@
     "visitante": "AUS",
     "grupo": "GRUPO_C",
     "lugar": "Estadio Kazán Arena, Kazán",
-    "fecha": "",
+    "fecha": "16-06-2018T07:00-0300",
     "fase": "GRUPO"
   },
   {
@@ -44,7 +44,7 @@
     "visitante": "DEN",
     "grupo": "GRUPO_C",
     "lugar": "Estadio Mordovia Arena, Saransk",
-    "fecha": "",
+    "fecha": "16-06-2018T13:00-0300",
     "fase": "GRUPO"
   },
   {
@@ -52,7 +52,335 @@
     "visitante": "ISL",
     "grupo": "GRUPO_D",
     "lugar": "Estadio del Spartak, Moscú",
-    "fecha": "",
+    "fecha": "16-06-2018T10:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "CRO",
+    "visitante": "NGA",
+    "grupo": "GRUPO_D",
+    "lugar": "Estadio de Kaliningrado, Kaliningrado",
+    "fecha": "16-06-2018T16:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "BRA",
+    "visitante": "SUI",
+    "grupo": "GRUPO_E",
+    "lugar": "Estadio Rostov Arena",
+    "fecha": "17-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "CRC",
+    "visitante": "SRB",
+    "grupo": "GRUPO_E",
+    "lugar": "Estadio Samara Arena",
+    "fecha": "17-06-2018T09:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "GER",
+    "visitante": "MEX",
+    "grupo": "GRUPO_F",
+    "lugar": "Estadio Luzhnikí, Moscú",
+    "fecha": "17-06-2018T12:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "SWE",
+    "visitante": "KOR",
+    "grupo": "GRUPO_F",
+    "lugar": "Estadio de Nizhni Nóvgorod",
+    "fecha": "18-06-2018T09:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "BEL",
+    "visitante": "PAN",
+    "grupo": "GRUPO_G ",
+    "lugar": "Estadio Fisht, Sochi",
+    "fecha": "18-06-2018T12:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "TUN",
+    "visitante": "ENG",
+    "grupo": "GRUPO_G",
+    "lugar": "Estadio Volvogrado Arena",
+    "fecha": "18-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "POL",
+    "visitante": "SEN",
+    "grupo": "GRUPO_H",
+    "lugar": "Estadio del Spartak, Moscú",
+    "fecha": "19-06-2018T12:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "COL",
+    "visitante": "JPN",
+    "grupo": "GRUPO_H",
+    "lugar": "Estadio Mordovia Arena, Saransk",
+    "fecha": "19-06-2018T09:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "RUS",
+    "visitante": "EGY",
+    "grupo": "GRUPO_A",
+    "lugar": "Estadio de San Petersburgo, San Petersburgo",
+    "fecha": "19-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "URU",
+    "visitante": "KSA",
+    "grupo": "GRUPO_A",
+    "lugar": "Estadio Rostov Arena",
+    "fecha": "20-06-2018T12:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "POR",
+    "visitante": "MAR",
+    "grupo": "GRUPO_B",
+    "lugar": "Estadio Luzhnikí, Moscú",
+    "fecha": "20-06-2018T09:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "IRN",
+    "visitante": "ESP",
+    "grupo": "GRUPO_B",
+    "lugar": "Estadio Kazán Arena, Kazán, Estadio",
+    "fecha": "20-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "FRA",
+    "visitante": "PER",
+    "grupo": "GRUPO_C",
+    "lugar": "Estadio Ekaterimburgo Arena, Ekaterinburg",
+    "fecha": "21-06-2018T12:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "DEN",
+    "visitante": "AUS",
+    "grupo": "GRUPO_C",
+    "lugar": "Estadio Samara Arena",
+    "fecha": "21-06-2018T09:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "ARG",
+    "visitante": "CRO",
+    "grupo": "GRUPO_D",
+    "lugar": "Estadio de Nizhni Nóvgorod",
+    "fecha": "21-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "NGA",
+    "visitante": "ISL",
+    "grupo": "GRUPO_D",
+    "lugar": "Estadio Volvogrado Arena",
+    "fecha": "22-06-2018T12:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "BRA",
+    "visitante": "CRC",
+    "grupo": "GRUPO_E",
+    "lugar": "Estadio de San Petersburgo, San Petersburgo",
+    "fecha": "22-06-2018T09:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "SRB",
+    "visitante": "SUI",
+    "grupo": "GRUPO_E",
+    "lugar": "Estadio de Kaliningrado",
+    "fecha": "22-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "GER",
+    "visitante": "SWE",
+    "grupo": "GRUPO_F",
+    "lugar": "Estadio Fisht",
+    "fecha": "23-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "KOR",
+    "visitante": "MEX",
+    "grupo": "GRUPO_F",
+    "lugar": "Estadio Rostov Arena",
+    "fecha": "23-06-2018T12:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "BEL",
+    "visitante": "TUN",
+    "grupo": "GRUPO_G",
+    "lugar": "Estadio del Spartak, Moscú",
+    "fecha": "23-06-2018T09:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "ENG",
+    "visitante": "PAN",
+    "grupo": "GRUPO_G",
+    "lugar": "Estadio de Nizhni Nóvgorod",
+    "fecha": "24-06-2018T09:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "POL",
+    "visitante": "COL",
+    "grupo": "GRUPO_H",
+    "lugar": "Estadio Kazán Arena, Kazán, Estadio",
+    "fecha": "24-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "JPN",
+    "visitante": "SEN",
+    "grupo": "GRUPO_H",
+    "lugar": "Estadio Ekaterimburgo Arena, Ekaterinburg",
+    "fecha": "24-06-2018T12:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "URU",
+    "visitante": "RUS",
+    "grupo": "GRUPO_A",
+    "lugar": "Estadio Samara Arena",
+    "fecha": "25-06-2018T11:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "KSA",
+    "visitante": "EGY",
+    "grupo": "GRUPO_A",
+    "lugar": "Estadio Volvogrado Arena",
+    "fecha": "25-06-2018T11:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "IRN",
+    "visitante": "POR",
+    "grupo": "GRUPO_B",
+    "lugar": "Estadio Mordovia Arena, Saransk",
+    "fecha": "25-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "ESP",
+    "visitante": "MAR",
+    "grupo": "GRUPO_B",
+    "lugar": "Estadio de Kaliningrado",
+    "fecha": "25-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "DEN",
+    "visitante": "FRA",
+    "grupo": "GRUPO_C",
+    "lugar": "Estadio Luzhnikí, Moscú",
+    "fecha": "26-06-2018T11:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "AUS",
+    "visitante": "PER",
+    "grupo": "GRUPO_C",
+    "lugar": "Estadio Fisht, Sochi",
+    "fecha": "26-06-2018T11:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "NGA",
+    "visitante": "ARG",
+    "grupo": "GRUPO_D",
+    "lugar": "Estadio de San Petersburgo, San Petersburgo",
+    "fecha": "26-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "ISL",
+    "visitante": "CRO",
+    "grupo": "GRUPO_D",
+    "lugar": "Estadio Rostov Arena",
+    "fecha": "26-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "SRB",
+    "visitante": "BRA",
+    "grupo": "GRUPO_E",
+    "lugar": "Estadio del Spartak, Moscú, Moscú",
+    "fecha": "27-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "SUI",
+    "visitante": "CRC",
+    "grupo": "GRUPO_E",
+    "lugar": "Estadio de Nizhni Nóvgorod",
+    "fecha": "27-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "KOR",
+    "visitante": "GER",
+    "grupo": "GRUPO_F",
+    "lugar": "Estadio Kazán Arena, Kazán, Estadio",
+    "fecha": "27-06-2018T11:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "MEX",
+    "visitante": "SWE",
+    "grupo": "GRUPO_F",
+    "lugar": "Estadio Ekaterimburgo Arena, Ekaterinburg",
+    "fecha": "27-06-2018T11:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "ENG",
+    "visitante": "BEL",
+    "grupo": "GRUPO_G",
+    "lugar": "Estadio de Kaliningrado",
+    "fecha": "28-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "PAN",
+    "visitante": "TUN",
+    "grupo": "GRUPO_G",
+    "lugar": "Estadio Mordovia Arena, Saransk",
+    "fecha": "28-06-2018T15:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "JPN",
+    "visitante": "POL",
+    "grupo": "GRUPO_H",
+    "lugar": "Estadio Volvogrado Arena",
+    "fecha": "28-06-2018T11:00-0300",
+    "fase": "GRUPO"
+  },
+  {
+    "local": "SEN",
+    "visitante": "COL",
+    "grupo": "GRUPO_H",
+    "lugar": "Estadio Samara Arena",
+    "fecha": "28-06-2018T11:00-0300",
     "fase": "GRUPO"
   }
 ]
