@@ -7,6 +7,7 @@ import io.semantic.openscore.core.api.pronosticos.PronosticoDTO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Date;
 import java.util.List;
 
 @Path("pronosticos")
@@ -18,7 +19,8 @@ public interface PronosticosService {
     @GET
     ApiResponse<List<PartidoPronosticoDTO>> getAll(@QueryParam("page") int page,
                                                    @QueryParam("pageSize") int pageSize,
-                                                   @QueryParam("grupo") String grupo);
+                                                   @QueryParam("grupo") String grupo,
+                                                   @QueryParam("fecha") String fecha);
 
     @Path("/{id}")
     @GET

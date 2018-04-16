@@ -11,7 +11,6 @@ import io.semantic.openscore.core.model.Pronostico;
 import io.semantic.openscore.core.model.Usuario;
 import io.semantic.openscore.core.repository.PartidoRepository;
 import io.semantic.openscore.core.repository.PronosticoRepository;
-import io.semantic.openscore.core.repository.Sort;
 import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.services.UserInfo;
 import io.semantic.openscore.core.services.api.PronosticosService;
@@ -20,9 +19,10 @@ import io.semantic.openscore.core.validation.ApplicationValidator;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.text.MessageFormat;
-import java.util.HashMap;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import static io.semantic.openscore.core.services.RestUtil.ok;
 
@@ -60,17 +60,10 @@ public class PronosticosServiceImpl implements PronosticosService {
     @Override
     public ApiResponse<List<PartidoPronosticoDTO>> getAll(int page,
                                                           int pageSize,
-                                                          String grupo) {
+                                                          String grupo,
+                                                          String fecha) {
 
-        this.partidoRepository.findAll();
-        Map<String, Object> parameters = new HashMap<String, Object>() {{
-            put("grupo.codigo", grupo);
-        }};
-
-        Map<String, Sort> sort = new HashMap<String, Sort>() {{
-            put("fecha", Sort.ASC);
-        }};
-        List<Partido> partidos = this.partidoRepository.findAll(parameters, sort);
+        List<Partido> partidos = getPartidos(grupo, fecha);
         List<Pronostico> pronosticos = this.pronosticoRepository.findByUsuario(userInfo.getUserId());
 
 
@@ -86,6 +79,25 @@ public class PronosticosServiceImpl implements PronosticosService {
 
 
         return ok(partidoDTOs);
+    }
+
+    private List<Partido> getPartidos(String grupo, String fecha) {
+        if (grupo != null && !grupo.isEmpty()) {
+            return this.partidoRepository.findAllByGrupo(grupo);
+        } else if (fecha != null && !fecha.isEmpty()) {
+            Date date = getDate(fecha);
+            return this.partidoRepository.findAllByFecha(date);
+        } else {
+            return this.partidoRepository.findAll();
+        }
+    }
+
+    private Date getDate(String fecha) {
+        try {
+            return new SimpleDateFormat("yyyyMMdd").parse(fecha);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("El formato de la fecha es incorrecto", e);
+        }
     }
 
     @Override
