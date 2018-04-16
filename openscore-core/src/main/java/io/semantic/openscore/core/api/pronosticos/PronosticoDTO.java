@@ -1,6 +1,8 @@
 package io.semantic.openscore.core.api.pronosticos;
 
-import io.semantic.openscore.core.api.partidos.PartidoDTO;
+import io.semantic.openscore.core.model.Usuario;
+
+import javax.persistence.ManyToOne;
 
 public class PronosticoDTO {
 
@@ -8,7 +10,9 @@ public class PronosticoDTO {
     private boolean local;
     private boolean visitante;
     private boolean empate;
-    private PartidoDTO partido;
+
+    @ManyToOne
+    private Usuario usuario;
 
     public long getId() {
         return id;
@@ -42,11 +46,4 @@ public class PronosticoDTO {
         this.empate = empate;
     }
 
-    public PartidoDTO getPartido() {
-        return partido;
-    }
-
-    public void setPartido(PartidoDTO partido) {
-        this.partido = partido;
-    }
 }

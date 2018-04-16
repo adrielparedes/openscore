@@ -12,7 +12,7 @@ export class PartidosService extends Rest<Partido, CrearPartido, CrearPartido> {
     }
 
     getServiceUrl() {
-        return '/partidos';
+        return '/pronosticos';
     }
 
 }

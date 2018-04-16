@@ -1,3 +1,6 @@
+import { GruposService } from './../../services/grupos.service';
+import { Pronostico } from './../../model/pronostico';
+import { PronosticoService } from './../../services/pronostico.service';
 import { PartidosService } from './../../services/partidos.service';
 import { Grupo } from './../../model/grupo';
 import { Partido } from './../../model/partido';
@@ -10,22 +13,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PronosticosComponent implements OnInit {
 
-  formato = "lista";
   partidos: Partido[] = [];
-  grupos: Grupo[] = [
-    { codigo: "GRUPO_A", nombre: "Grupo A" },
-    { codigo: "GRUPO_B", nombre: "Grupo B" }
-  ]
+  grupos: Grupo[] = [];
 
-  constructor(private partidosService: PartidosService) { }
+  constructor(private partidosService: PronosticoService,
+    private gruposService: GruposService) {
+
+  }
 
   ngOnInit() {
-    this.retrievePartidos('GRUPO_A');
+
+    this.gruposService.getAll(0, 0).subscribe(res => {
+      console.log(res);
+      this.grupos = res.data;
+      this.retrievePartidos(this.grupos[0].codigo);
+    });
+
+
   }
 
   retrievePartidos(grupo: string) {
     console.log(grupo);
-    this.partidosService.getAll(0, 0).subscribe(res => {
+    this.partidosService.getAll(0, 0, [{ key: 'grupo', value: grupo }]).subscribe(res => {
       this.partidos = res.data;
     });
   }
@@ -38,4 +47,15 @@ export class PronosticosComponent implements OnInit {
     return str.replace(/\b(\w)/g, s => s.toUpperCase());
   }
 
+  isLocal(pronostico: Pronostico) {
+    return pronostico !== null && pronostico.local;
+  }
+
+  isEmpate(pronostico: Pronostico) {
+    return pronostico !== null && pronostico.empate;
+  }
+
+  isVisitante(pronostico: Pronostico) {
+    return pronostico !== null && pronostico.visitante;
+  }
 }

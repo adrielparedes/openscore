@@ -2,58 +2,90 @@ package io.semantic.openscore.core.services.impl;
 
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.pronosticos.CrearPronosticoDTO;
+import io.semantic.openscore.core.api.pronosticos.PartidoPronosticoDTO;
 import io.semantic.openscore.core.api.pronosticos.PronosticoDTO;
+import io.semantic.openscore.core.mapping.PartidoMapper;
 import io.semantic.openscore.core.mapping.PronosticoMapper;
 import io.semantic.openscore.core.model.Partido;
 import io.semantic.openscore.core.model.Pronostico;
 import io.semantic.openscore.core.model.Usuario;
 import io.semantic.openscore.core.repository.PartidoRepository;
 import io.semantic.openscore.core.repository.PronosticoRepository;
+import io.semantic.openscore.core.repository.Sort;
 import io.semantic.openscore.core.repository.UsuarioRepository;
+import io.semantic.openscore.core.services.UserInfo;
 import io.semantic.openscore.core.services.api.PronosticosService;
 import io.semantic.openscore.core.validation.ApplicationValidator;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static io.semantic.openscore.core.services.RestUtil.ok;
 
 @RequestScoped
 public class PronosticosServiceImpl implements PronosticosService {
 
+    private UserInfo userInfo;
     private PronosticoRepository pronosticoRepository;
     private PartidoRepository partidoRepository;
     private UsuarioRepository usuarioRepository;
     private ApplicationValidator validator;
+    private PartidoMapper partidoMapper;
     private PronosticoMapper pronosticoMapper;
 
     public PronosticosServiceImpl() {
     }
 
     @Inject
-    public PronosticosServiceImpl(PronosticoRepository pronosticoRepository,
+    public PronosticosServiceImpl(UserInfo userInfo,
+                                  PronosticoRepository pronosticoRepository,
                                   PartidoRepository partidoRepository,
                                   UsuarioRepository usuarioRepository,
                                   ApplicationValidator validator,
+                                  PartidoMapper partidoMapper,
                                   PronosticoMapper pronosticoMapper) {
+        this.userInfo = userInfo;
         this.pronosticoRepository = pronosticoRepository;
         this.partidoRepository = partidoRepository;
         this.usuarioRepository = usuarioRepository;
         this.validator = validator;
+        this.partidoMapper = partidoMapper;
         this.pronosticoMapper = pronosticoMapper;
     }
 
     @Override
-    public ApiResponse<List<PronosticoDTO>> getAll(int page,
-                                                   int pageSize) {
-        long usuarioId = 0l;
+    public ApiResponse<List<PartidoPronosticoDTO>> getAll(int page,
+                                                          int pageSize,
+                                                          String grupo) {
 
         this.partidoRepository.findAll();
-        List<Pronostico> pronosticos = this.pronosticoRepository.findAllWithPronostico();
+        Map<String, Object> parameters = new HashMap<String, Object>() {{
+            put("grupo.codigo", grupo);
+        }};
 
-        return ok(this.pronosticoMapper.asApi(pronosticos));
+        Map<String, Sort> sort = new HashMap<String, Sort>() {{
+            put("fecha", Sort.ASC);
+        }};
+        List<Partido> partidos = this.partidoRepository.findAll(parameters, sort);
+        List<Pronostico> pronosticos = this.pronosticoRepository.findByUsuario(userInfo.getUserId());
+
+
+        List<PartidoPronosticoDTO> partidoDTOs = this.pronosticoMapper.asApiPronostico(partidos);
+
+        partidoDTOs.forEach(partidoPronosticoDTO -> {
+            pronosticos.forEach(pronostico -> {
+                if (partidoPronosticoDTO.getId() == pronostico.getPartido().getId()) {
+                    partidoPronosticoDTO.setPronostico(this.pronosticoMapper.asApi(pronostico));
+                }
+            });
+        });
+
+
+        return ok(partidoDTOs);
     }
 
     @Override

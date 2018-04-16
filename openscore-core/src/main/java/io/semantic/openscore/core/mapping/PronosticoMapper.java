@@ -1,7 +1,9 @@
 package io.semantic.openscore.core.mapping;
 
 import io.semantic.openscore.core.api.pronosticos.CrearPronosticoDTO;
+import io.semantic.openscore.core.api.pronosticos.PartidoPronosticoDTO;
 import io.semantic.openscore.core.api.pronosticos.PronosticoDTO;
+import io.semantic.openscore.core.model.Partido;
 import io.semantic.openscore.core.model.Pronostico;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,9 +16,6 @@ import java.util.List;
 public interface PronosticoMapper {
 
 
-    @Mappings({
-            @Mapping(source = "partido.id", target = "partido.id")
-    })
     PronosticoDTO asApi(Pronostico pronostico);
 
     List<PronosticoDTO> asApi(List<Pronostico> pronosticos);
@@ -25,6 +24,10 @@ public interface PronosticoMapper {
             @Mapping(source = "partido", target = "partido", ignore = true)
     })
     Pronostico asPronostico(CrearPronosticoDTO crearPronostico);
+
+    PartidoPronosticoDTO asApiPronostico(Partido partido);
+
+    List<PartidoPronosticoDTO> asApiPronostico(List<Partido> partido);
 
     @Mappings({
             @Mapping(source = "partido", target = "partido", ignore = true)

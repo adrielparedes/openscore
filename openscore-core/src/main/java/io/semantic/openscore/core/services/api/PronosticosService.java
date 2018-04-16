@@ -2,6 +2,7 @@ package io.semantic.openscore.core.services.api;
 
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.pronosticos.CrearPronosticoDTO;
+import io.semantic.openscore.core.api.pronosticos.PartidoPronosticoDTO;
 import io.semantic.openscore.core.api.pronosticos.PronosticoDTO;
 
 import javax.ws.rs.*;
@@ -15,8 +16,9 @@ public interface PronosticosService {
 
     @Path("/")
     @GET
-    ApiResponse<List<PronosticoDTO>> getAll(@QueryParam("page") int page,
-                                            @QueryParam("pageSize") int pageSize);
+    ApiResponse<List<PartidoPronosticoDTO>> getAll(@QueryParam("page") int page,
+                                                   @QueryParam("pageSize") int pageSize,
+                                                   @QueryParam("grupo") String grupo);
 
     @Path("/{id}")
     @GET

@@ -1,6 +1,6 @@
 import { RestConfiguration } from './rest-configuration';
 import { ApiResponse } from './../model/api-response';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injector } from '@angular/core';
 
 export abstract class Rest<X, Y, Z> extends RestConfiguration {
@@ -12,9 +12,20 @@ export abstract class Rest<X, Y, Z> extends RestConfiguration {
         this.http = http;
     }
 
-    public getAll(page: number, pageSize: number) {
+    public getAll(page: number, pageSize: number, parameters?: Array<any>) {
+
+
+        let params = new HttpParams();
+        if (parameters !== undefined) {
+            parameters.forEach(elem => {
+                params = params.set(elem.key, elem.value)
+            });
+        }
+
+
+        console.log(params.keys());
         return this.http
-            .get<ApiResponse<X[]>>(this.getUrl(this.getServiceUrl()));
+            .get<ApiResponse<X[]>>(this.getUrl(this.getServiceUrl()), { params: params });
     }
 
     public get(id: number) {

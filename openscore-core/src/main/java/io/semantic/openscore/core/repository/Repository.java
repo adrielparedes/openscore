@@ -1,28 +1,32 @@
 package io.semantic.openscore.core.repository;
 
-import io.semantic.openscore.core.model.Pronostico;
+import afu.org.checkerframework.checker.oigj.qual.O;
 import io.semantic.openscore.core.model.Storable;
+import org.apache.commons.lang3.text.StrSubstitutor;
+import org.apache.commons.text.StringSubstitutor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.ws.rs.core.MultivaluedMap;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 public abstract class Repository<T extends Storable> {
 
     protected final Class<T> persistentClass;
+
+    private Logger logger = LoggerFactory.getLogger(Repository.class);
 
     @PersistenceContext(unitName = "db")
     protected EntityManager entityManager;
@@ -133,25 +137,42 @@ public abstract class Repository<T extends Storable> {
         return this.findByQuery(query);
     }
 
-    public List<T> findAll(Map<String, ?> parameters) {
-        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> query = cb.createQuery(this.persistentClass);
-        Root<T> entity = query.from(this.persistentClass);
+    public List<T> findAll(Map<String, Object> parameters, Map<String, Sort> sort) {
+        String queryString = this.buildQuery(parameters, sort);
+        TypedQuery<T> query = this.createQuery(queryString);
 
-        List<Predicate> params = parameters
-                .entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() != null)
-                .map(e -> cb.equal(entity.get(e.getKey()),
-                        e.getValue()))
-                .collect(toList());
+        parameters.entrySet().forEach(entry -> {
+            query.setParameter(entry.getKey().replace(".", "_"), entry.getValue());
+        });
 
-        query.select(entity).where(cb.and(params.toArray(new Predicate[params.size()])));
-        TypedQuery<T> typedQuery = this.entityManager.createQuery(query);
-        return this.findByQuery(typedQuery);
+        return this.findByQuery(query);
     }
 
-    public List<Pronostico> findAllWithPronostico() {
-        return new ArrayList<Pronostico>();
+    private String buildQuery(Map<String, Object> parameters, Map<String, Sort> sort) {
+
+
+        String queryString = "from {0} ";
+
+        if (!parameters.isEmpty()) {
+            queryString += "where ";
+            queryString += parameters.entrySet()
+                    .stream()
+                    .map(entry -> entry.getKey() + " = :" + entry.getKey().replace(".", "_"))
+                    .collect(joining(" AND "));
+        }
+
+
+        String formatted = MessageFormat.format(queryString,
+                this.persistentClass.getSimpleName());
+
+        if (!sort.isEmpty()) {
+            formatted += " order by " +
+                    sort.entrySet()
+                            .stream()
+                            .map(entry -> entry.getKey() + " " + entry.getValue().toString())
+                            .collect(joining(" , "));
+        }
+        return formatted;
     }
+
 }

@@ -25,7 +25,6 @@ public class Partido extends Storable {
     @OneToOne
     private Resultado resultado;
 
-
     public Equipo getLocal() {
         return local;
     }
