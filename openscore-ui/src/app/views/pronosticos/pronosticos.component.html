@@ -1,49 +1,56 @@
 <div class="animated fadeIn">
+  <ngx-spinner bdOpacity=0.9 bdColor="#333" size="large" color="#fff" type="ball-atom"></ngx-spinner>
 
   <h1>Pronosticos</h1>
 
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-secondary">
-      <input type="radio" name="options" id="option1" autocomplete="off"> Hoy
-    </label>
-    <label class="btn btn-secondary active">
-      <input type="radio" name="options" id="option2" autocomplete="off"> Por Fase
-    </label>
-    <label class="btn btn-secondary">
-      <input type="radio" name="options" id="option3" autocomplete="off"> Por Fecha
-    </label>
+  <div class="row">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-secondary" [ngClass]="{'active': isHoy()}">
+        <input type="radio" name="options" id="option1" (click)="hoy()" autocomplete="off"> Hoy
+      </label>
+      <label class="btn btn-secondary" [ngClass]="{'active': isGrupo()}">
+        <input type="radio" name="options" id="option2" (click)="grupo()" autocomplete="off"> Por Grupos
+      </label>
+      <label class="btn btn-secondary" [ngClass]="{'active': isFecha()}">
+        <input type="radio" name="options" id="option3" (click)="fecha()" autocomplete="off"> Por Fecha
+      </label>
+    </div>
   </div>
 
 
   <div class="row">
-    <tabset>
-      <tab class="animated fadeIn" heading="{{grupo.nombre}}" (select)="retrievePartidos(grupo.codigo)" *ngFor="let grupo of grupos">
+    <tabset *ngIf="isGrupo()">
+      <tab class="animated fadeIn" heading="{{grupo.nombre}}" (select)="retrievePartidosPorGrupo(grupo.codigo)" *ngFor="let grupo of grupos">
         <div class="row">
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
-            <div class="card text-center">
-              <div class="card-body">
-                <div class="score">
-                  <img src="{{partido.local.logo}}" /> -
-                  <img src="{{partido.visitante.logo}}" />
-                </div>
-                <div class="score"> {{getResultado(partido)}} </div>
-                <div class="grupo_fase">{{partido.grupo.nombre}}</div>
-                <div>{{partido.lugar}}</div>
-                <div>{{partido.fecha | date: 'dd/MM/yyyy HH:mm (O)'}}</div>
-              </div>
-              <div class="card-footer">
-                <button class="btn" (click)="local(partido)" [ngClass]="{'btn-primary': isLocal(partido.pronostico)}">{{partido.local.nombre}}</button>
-                <button class="btn" (click)="empate(partido)" [ngClass]="{'btn-primary': isEmpate(partido.pronostico)}">Empate</button>
-                <button class="btn" (click)="visitante(partido)" [ngClass]="{'btn-primary': isVisitante(partido.pronostico)}">{{partido.visitante.nombre}}</button>
-              </div>
-            </div>
+            <app-pronostico [partido]="partido"></app-pronostico>
           </div>
           <!--/.col-->
         </div>
       </tab>
     </tabset>
 
+    <tabset *ngIf="isFecha()">
+      <tab class="animated fadeIn" heading="{{fecha |  date:'dd/MM/yyyy'}}" (select)="retrievePartidosPorFecha(fecha)" *ngFor="let fecha of fechas">
+        <div class="row">
+          <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
+            <app-pronostico [partido]="partido"></app-pronostico>
+          </div>
+          <!--/.col-->
+        </div>
+      </tab>
+    </tabset>
 
+    <tabset *ngIf="isHoy()">
+      <tab class="animated fadeIn" heading="{{today |  date:'dd/MM/yyyy'}}" (select)="retrievePartidosPorFecha(today)">
+        <div class="row">
+          <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
+            <app-pronostico [partido]="partido"></app-pronostico>
+          </div>
+          <!--/.col-->
+        </div>
+      </tab>
+    </tabset>
     <!--/.col-->
   </div>
   <!--/.row-->

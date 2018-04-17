@@ -1,0 +1,21 @@
+<div>
+  <div class="card text-center">
+    <div>
+      <div class="card-body">
+        <div class="score">
+          <img src="{{partido.local.logo}}" /> -
+          <img src="{{partido.visitante.logo}}" />
+        </div>
+        <div class="score"> {{getResultado(partido)}} </div>
+        <div class="grupo_fase">{{partido.grupo.nombre}}</div>
+        <div class="lugar">{{partido.lugar}}</div>
+        <div>{{partido.fecha | date: 'dd/MM/yyyy HH:mm (O)'}}</div>
+      </div>
+      <div class="card-footer">
+        <button class="btn" (click)="local(partido)" [ngClass]="{'btn-primary': isLocal(partido.pronostico)}">{{partido.local.nombre}}</button>
+        <button class="btn" (click)="empate(partido)" [ngClass]="{'btn-primary': isEmpate(partido.pronostico)}">Empate</button>
+        <button class="btn" (click)="visitante(partido)" [ngClass]="{'btn-primary': isVisitante(partido.pronostico)}">{{partido.visitante.nombre}}</button>
+      </div>
+    </div>
+  </div>
+</div>

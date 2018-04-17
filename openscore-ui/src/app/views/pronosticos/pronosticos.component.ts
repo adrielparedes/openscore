@@ -6,6 +6,7 @@ import { Grupo } from './../../model/grupo';
 import { Partido } from './../../model/partido';
 import { Component, OnInit } from '@angular/core';
 import { ApiResponse } from '../../model/api-response';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-pronosticos',
@@ -14,69 +15,85 @@ import { ApiResponse } from '../../model/api-response';
 })
 export class PronosticosComponent implements OnInit {
 
+
+  formato: Formato = Formato.HOY;
   partidos: Partido[] = [];
   grupos: Grupo[] = [];
+  today = Date.now();
+  fechas: Date[] = [new Date('2018-06-14T00:00:00'), new Date('2018-06-15T00:00:00')];
+
 
   constructor(private partidosService: PronosticoService,
-    private gruposService: GruposService) {
-
-  }
+    private gruposService: GruposService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.update();
+  }
 
+  update() {
+    this.spinner.show();
     this.gruposService.getAll(0, 0).subscribe(res => {
-      console.log(res);
+      this.spinner.show();
       this.grupos = res.data;
-      this.retrievePartidos(this.grupos[0].codigo);
+      this.retrievePartidosPorGrupo(this.grupos[0].codigo);
     });
-
 
   }
 
-  retrievePartidos(grupo: string) {
-    console.log(grupo);
+  retrievePartidosPorGrupo(grupo: string) {
     this.partidosService.getAll(0, 0, [{ key: 'grupo', value: grupo }]).subscribe(res => {
       this.partidos = res.data;
-      console.log(this.partidos);
+      this.spinner.hide();
     });
   }
 
-  getResultado(partido: Partido) {
-    return this.capitalize(partido.status.replace('_', ' ').toLowerCase());
+  retrievePartidosPorFecha(fecha: Date) {
+    const date = this.buildDate(fecha);
+    this.partidosService.getAll(0, 0, [{ key: 'fecha', value: date }]).subscribe(res => {
+      this.partidos = res.data;
+      this.spinner.hide();
+    });
   }
 
-  capitalize(str: string) {
-    return str.replace(/\b(\w)/g, s => s.toUpperCase());
+  hoy() {
+    this.formato = Formato.HOY
   }
 
-  isLocal(pronostico: Pronostico) {
-    return pronostico !== null && pronostico.local;
+  grupo() {
+    this.formato = Formato.GRUPO
   }
 
-  local(partido: Partido) {
-    console.log('local');
-    this.partidosService.local(partido.id).subscribe(this.updatePartido(partido));
+  fecha() {
+    this.formato = Formato.FECHA
   }
 
-
-  empate(partido: Partido) {
-    this.partidosService.empate(partido.id).subscribe(this.updatePartido(partido));
+  isHoy() {
+    return this.formato === Formato.HOY;
   }
 
-
-  visitante(partido: Partido) {
-    this.partidosService.visitante(partido.id).subscribe(this.updatePartido(partido));
+  isGrupo() {
+    return this.formato === Formato.GRUPO;
   }
 
-  isEmpate(pronostico: Pronostico) {
-    return pronostico !== null && pronostico.empate;
+  isFecha() {
+    return this.formato === Formato.FECHA;
   }
 
-  updatePartido(partido: Partido) {
-    return (res: ApiResponse<Pronostico>) => { partido.pronostico = res.data }
+  buildDate(fecha: Date) {
+    return fecha.getFullYear().toString() + this.completeMonth((fecha.getMonth() + 1).toString()) + fecha.getDate().toString();
   }
 
-  isVisitante(pronostico: Pronostico) {
-    return pronostico !== null && pronostico.visitante;
+  completeMonth(month: string) {
+    if (month.length === 1) {
+      return '0' + month;
+    } else {
+      return month;
+    }
   }
+
+}
+
+export enum Formato {
+  HOY, GRUPO, FECHA
 }
