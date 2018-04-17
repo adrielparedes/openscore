@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class StorageService {
 
-    private TOKEN = 'token';
+    private TOKEN = 'openscore-token';
 
     constructor() {
 

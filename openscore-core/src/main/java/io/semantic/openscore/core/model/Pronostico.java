@@ -1,5 +1,8 @@
 package io.semantic.openscore.core.model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -77,5 +80,10 @@ public class Pronostico extends Storable {
 
     public int getPuntos() {
         return this.getPartido().getPuntos(this);
+    }
+
+    @Override
+    public String toString() {
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
     }
 }

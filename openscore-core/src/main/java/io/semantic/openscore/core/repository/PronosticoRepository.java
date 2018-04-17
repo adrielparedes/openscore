@@ -1,14 +1,12 @@
 package io.semantic.openscore.core.repository;
 
-import io.semantic.openscore.core.model.Partido;
 import io.semantic.openscore.core.model.Pronostico;
 
+import javax.ejb.Stateless;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import static java.util.stream.Collectors.toList;
-
+@Stateless
 public class PronosticoRepository extends Repository<Pronostico> {
 
     private static final String FIND_BY_ID_AND_USER = "select e from Pronostico e where " +

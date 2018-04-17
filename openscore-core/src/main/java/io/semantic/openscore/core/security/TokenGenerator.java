@@ -73,7 +73,7 @@ public class TokenGenerator {
             JWSVerifier verifier = new MACVerifier(SECRET);
             return signedJWT.verify(verifier);
         } catch (Exception e) {
-            throw new RuntimeException("Error al firmar el token", e);
+            return false;
         }
     }
 

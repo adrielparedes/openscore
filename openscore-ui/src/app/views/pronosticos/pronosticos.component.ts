@@ -5,6 +5,7 @@ import { PartidosService } from './../../services/partidos.service';
 import { Grupo } from './../../model/grupo';
 import { Partido } from './../../model/partido';
 import { Component, OnInit } from '@angular/core';
+import { ApiResponse } from '../../model/api-response';
 
 @Component({
   selector: 'app-pronosticos',
@@ -36,6 +37,7 @@ export class PronosticosComponent implements OnInit {
     console.log(grupo);
     this.partidosService.getAll(0, 0, [{ key: 'grupo', value: grupo }]).subscribe(res => {
       this.partidos = res.data;
+      console.log(this.partidos);
     });
   }
 
@@ -51,8 +53,27 @@ export class PronosticosComponent implements OnInit {
     return pronostico !== null && pronostico.local;
   }
 
+  local(partido: Partido) {
+    console.log('local');
+    this.partidosService.local(partido.id).subscribe(this.updatePartido(partido));
+  }
+
+
+  empate(partido: Partido) {
+    this.partidosService.empate(partido.id).subscribe(this.updatePartido(partido));
+  }
+
+
+  visitante(partido: Partido) {
+    this.partidosService.visitante(partido.id).subscribe(this.updatePartido(partido));
+  }
+
   isEmpate(pronostico: Pronostico) {
     return pronostico !== null && pronostico.empate;
+  }
+
+  updatePartido(partido: Partido) {
+    return (res: ApiResponse<Pronostico>) => { partido.pronostico = res.data }
   }
 
   isVisitante(pronostico: Pronostico) {

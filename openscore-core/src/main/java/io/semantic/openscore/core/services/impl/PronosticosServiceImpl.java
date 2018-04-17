@@ -4,6 +4,7 @@ import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.pronosticos.CrearPronosticoDTO;
 import io.semantic.openscore.core.api.pronosticos.PartidoPronosticoDTO;
 import io.semantic.openscore.core.api.pronosticos.PronosticoDTO;
+import io.semantic.openscore.core.exceptions.PartidoBloqueadoException;
 import io.semantic.openscore.core.mapping.PartidoMapper;
 import io.semantic.openscore.core.mapping.PronosticoMapper;
 import io.semantic.openscore.core.model.Partido;
@@ -15,6 +16,8 @@ import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.services.UserInfo;
 import io.semantic.openscore.core.services.api.PronosticosService;
 import io.semantic.openscore.core.validation.ApplicationValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -28,6 +31,8 @@ import static io.semantic.openscore.core.services.RestUtil.ok;
 
 @RequestScoped
 public class PronosticosServiceImpl implements PronosticosService {
+
+    private Logger logger = LoggerFactory.getLogger(PronosticosServiceImpl.class);
 
     private UserInfo userInfo;
     private PronosticoRepository pronosticoRepository;
@@ -66,6 +71,8 @@ public class PronosticosServiceImpl implements PronosticosService {
         List<Partido> partidos = getPartidos(grupo, fecha);
         List<Pronostico> pronosticos = this.pronosticoRepository.findByUsuario(userInfo.getUserId());
 
+        logger.info("Pronosticos encontrados para el usuario {}: {}", this.userInfo.getUsuario().get().getEmail(), pronosticos.size());
+
 
         List<PartidoPronosticoDTO> partidoDTOs = this.pronosticoMapper.asApiPronostico(partidos);
 
@@ -102,7 +109,7 @@ public class PronosticosServiceImpl implements PronosticosService {
 
     @Override
     public ApiResponse<PronosticoDTO> get(long id) {
-        long idUsuario = 0l;
+        long idUsuario = this.userInfo.getUserId();
         Pronostico pronostico = getPronostico(id,
                 idUsuario);
         return ok(this.pronosticoMapper.asApi(pronostico));
@@ -122,7 +129,7 @@ public class PronosticosServiceImpl implements PronosticosService {
     @Override
     public ApiResponse<PronosticoDTO> update(long id,
                                              CrearPronosticoDTO entity) {
-        long idUsuario = 0l;
+        long idUsuario = this.userInfo.getUserId();
         validator.validate(entity);
 
         Pronostico pronostico = this.getPronostico(id,
@@ -159,30 +166,44 @@ public class PronosticosServiceImpl implements PronosticosService {
 
     @Override
     public ApiResponse<PronosticoDTO> local(long idPartido) {
-        long idUsuario = 0;
+        verificarSiElPartidoEstaBloqueado(idPartido);
+        long idUsuario = this.userInfo.getUserId();
         Pronostico pronostico = this.getPronosticoOrCreatePronostico(idPartido,
                 idUsuario);
         pronostico.local();
+        pronostico.setUsuario(this.userInfo.getUsuario().get());
         this.pronosticoRepository.save(pronostico);
         return ok(this.pronosticoMapper.asApi(pronostico));
+
+    }
+
+    private void verificarSiElPartidoEstaBloqueado(long idPartido) {
+        Partido partido = this.getPartido(idPartido);
+        if (partido.isBloqueado()) {
+            throw new PartidoBloqueadoException(partido.getLocal().getCodigo(), partido.getVisitante().getCodigo());
+        }
     }
 
     @Override
     public ApiResponse<PronosticoDTO> empate(long idPartido) {
-        long idUsuario = 0;
+        verificarSiElPartidoEstaBloqueado(idPartido);
+        long idUsuario = this.userInfo.getUserId();
         Pronostico pronostico = this.getPronosticoOrCreatePronostico(idPartido,
                 idUsuario);
         pronostico.empate();
+        pronostico.setUsuario(this.userInfo.getUsuario().get());
         this.pronosticoRepository.save(pronostico);
         return ok(this.pronosticoMapper.asApi(pronostico));
     }
 
     @Override
     public ApiResponse<PronosticoDTO> visitante(long idPartido) {
-        long idUsuario = 0;
+        verificarSiElPartidoEstaBloqueado(idPartido);
+        long idUsuario = this.userInfo.getUserId();
         Pronostico pronostico = this.getPronosticoOrCreatePronostico(idPartido,
                 idUsuario);
         pronostico.visitante();
+        pronostico.setUsuario(this.userInfo.getUsuario().get());
         this.pronosticoRepository.save(pronostico);
         return ok(this.pronosticoMapper.asApi(pronostico));
     }
@@ -194,10 +215,10 @@ public class PronosticosServiceImpl implements PronosticosService {
             Pronostico pronostico = new Pronostico();
             Partido partido = getPartido(idPartido);
             pronostico.setPartido(partido);
-            this.pronosticoRepository.save(pronostico);
-
             Usuario usuario = getUsuario(idUsuario);
             usuario.addPronostico(pronostico);
+
+            this.pronosticoRepository.save(pronostico);
             this.usuarioRepository.save(usuario);
             return pronostico;
         });

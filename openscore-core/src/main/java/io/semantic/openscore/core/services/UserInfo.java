@@ -23,7 +23,6 @@ public class UserInfo {
     }
 
     public long getUserId() {
-//        return this.usuario.orElseThrow(() -> new IllegalArgumentException("Se necesita un usuario en la sesion para poder obtener el id")).getId();
-        return 0l;
+        return this.usuario.orElseThrow(() -> new IllegalArgumentException("Se necesita un usuario en la sesion para poder obtener el id")).getId();
     }
 }

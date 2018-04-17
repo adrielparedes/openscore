@@ -1,12 +1,16 @@
 <div class="animated fadeIn">
 
+  <h1>Pronosticos</h1>
 
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary">
+      <input type="radio" name="options" id="option1" autocomplete="off"> Hoy
+    </label>
     <label class="btn btn-secondary active">
-      <input type="radio" name="options" id="option1" autocomplete="off"> Por Fase
+      <input type="radio" name="options" id="option2" autocomplete="off"> Por Fase
     </label>
     <label class="btn btn-secondary">
-      <input type="radio" name="options" id="option2" autocomplete="off"> Por Fecha
+      <input type="radio" name="options" id="option3" autocomplete="off"> Por Fecha
     </label>
   </div>
 
@@ -28,9 +32,9 @@
                 <div>{{partido.fecha | date: 'dd/MM/yyyy HH:mm (O)'}}</div>
               </div>
               <div class="card-footer">
-                <button class="btn" [ngClass]="{'btn-primary': isLocal(partido.pronostico)}">{{partido.local.nombre}}</button>
-                <button class="btn" [ngClass]="{'btn-primary': isEmpate(partido.pronostico)}">Empate</button>
-                <button class="btn" [ngClass]="{'btn-primary': isVisitante(partido.pronostico)}">{{partido.visitante.nombre}}</button>
+                <button class="btn" (click)="local(partido)" [ngClass]="{'btn-primary': isLocal(partido.pronostico)}">{{partido.local.nombre}}</button>
+                <button class="btn" (click)="empate(partido)" [ngClass]="{'btn-primary': isEmpate(partido.pronostico)}">Empate</button>
+                <button class="btn" (click)="visitante(partido)" [ngClass]="{'btn-primary': isVisitante(partido.pronostico)}">{{partido.visitante.nombre}}</button>
               </div>
             </div>
           </div>
