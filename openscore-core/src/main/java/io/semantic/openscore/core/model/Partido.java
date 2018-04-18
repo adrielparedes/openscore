@@ -118,7 +118,7 @@ public class Partido extends Storable {
         } else if (this.isBloqueado()) {
             return PartidoStatus.BLOQUEADO;
         } else {
-            return PartidoStatus.SIN_COMENZAR;
+            return PartidoStatus.PENDIENTE;
         }
     }
 

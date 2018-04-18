@@ -60,4 +60,22 @@ export class PronosticoComponent implements OnInit {
     return pronostico !== null && pronostico.visitante;
   }
 
+  isPendiente() {
+    return this.partido.status === 'PENDIENTE';
+  }
+
+  getEleccion() {
+    if (this.partido.pronostico == null) {
+      return 'Sin pronostico';
+    } else if (this.partido.pronostico.empate) {
+      return 'Empate';
+    } else if (this.partido.pronostico.local) {
+      return this.partido.local.nombre;
+    } else if (this.partido.pronostico.visitante) {
+      return this.partido.visitante.nombre;
+    } else {
+      return 'Sin pronostico';
+    }
+  }
+
 }

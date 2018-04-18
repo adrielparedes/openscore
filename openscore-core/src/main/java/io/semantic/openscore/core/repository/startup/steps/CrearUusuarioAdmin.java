@@ -36,6 +36,8 @@ public class CrearUusuarioAdmin implements StartupStep {
     @Override
     public void run() {
         this.crearUsuarioSiNoExiste("admin@admin.com", this.crearUsuarioAdmin());
+        this.crearUsuarioSiNoExiste("john@redhat.com", this.crearUsuarioJohn());
+        this.crearUsuarioSiNoExiste("jimi@redhat.com", this.crearUsuarioJimi());
 
     }
 
@@ -57,6 +59,28 @@ public class CrearUusuarioAdmin implements StartupStep {
         usuario.setApellido("Admin");
         usuario.setNombre("Admin");
         usuario.setPassword(tokenGenerator.generarPassword("admin"));
+        usuario.setPais(this.paisRepository.findByCodigo("ARG"));
+        return usuario;
+    }
+
+    private Usuario crearUsuarioJohn() {
+        Usuario usuario = new Usuario();
+        usuario.setRoles(new HashSet<>(Arrays.asList(Rol.USUARIO)));
+        usuario.setEmail("john@redhat.com");
+        usuario.setApellido("John");
+        usuario.setNombre("Frusciante");
+        usuario.setPassword(tokenGenerator.generarPassword("redhat.1"));
+        usuario.setPais(this.paisRepository.findByCodigo("ARG"));
+        return usuario;
+    }
+
+    private Usuario crearUsuarioJimi() {
+        Usuario usuario = new Usuario();
+        usuario.setRoles(new HashSet<>(Arrays.asList(Rol.USUARIO)));
+        usuario.setEmail("jimi@redhat.com");
+        usuario.setApellido("Jimi");
+        usuario.setNombre("Hendrix");
+        usuario.setPassword(tokenGenerator.generarPassword("redhat.1"));
         usuario.setPais(this.paisRepository.findByCodigo("ARG"));
         return usuario;
     }
