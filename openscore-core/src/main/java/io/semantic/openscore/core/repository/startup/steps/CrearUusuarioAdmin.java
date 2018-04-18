@@ -66,10 +66,10 @@ public class CrearUusuarioAdmin implements StartupStep {
     private Usuario crearUsuarioJohn() {
         Usuario usuario = new Usuario();
         usuario.setRoles(new HashSet<>(Arrays.asList(Rol.USUARIO)));
-        usuario.setEmail("john@redhat.com");
-        usuario.setApellido("John");
-        usuario.setNombre("Frusciante");
-        usuario.setPassword(tokenGenerator.generarPassword("redhat.1"));
+        usuario.setEmail("john@admin.com");
+        usuario.setApellido("Frusciante");
+        usuario.setNombre("John");
+        usuario.setPassword(tokenGenerator.generarPassword("admin"));
         usuario.setPais(this.paisRepository.findByCodigo("ARG"));
         return usuario;
     }
@@ -77,10 +77,10 @@ public class CrearUusuarioAdmin implements StartupStep {
     private Usuario crearUsuarioJimi() {
         Usuario usuario = new Usuario();
         usuario.setRoles(new HashSet<>(Arrays.asList(Rol.USUARIO)));
-        usuario.setEmail("jimi@redhat.com");
-        usuario.setApellido("Jimi");
-        usuario.setNombre("Hendrix");
-        usuario.setPassword(tokenGenerator.generarPassword("redhat.1"));
+        usuario.setEmail("jimi@admin.com");
+        usuario.setApellido("Hendrix");
+        usuario.setNombre("Jimi");
+        usuario.setPassword(tokenGenerator.generarPassword("admin"));
         usuario.setPais(this.paisRepository.findByCodigo("ARG"));
         return usuario;
     }
