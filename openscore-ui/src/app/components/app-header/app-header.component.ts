@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as JWT from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,8 +15,20 @@ export class AppHeaderComponent implements OnInit {
     const token = localStorage.getItem('openscore-token');
     const decoded = JWT(token);
     console.log(decoded);
+
     this.nombre = decoded['nombre'];
     this.apellido = decoded['apellido'];
     this.roles = decoded['roles'];
+  }
+
+  constructor(private router: Router) {
+    
+  }
+
+  logout() {
+    localStorage.removeItem('openscore-token');
+
+    this.router.navigate(['/dashboard']);
+
   }
 }

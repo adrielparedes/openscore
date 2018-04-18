@@ -2,7 +2,6 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
-
         <div class="card-group">
           <div class="card p-4">
             <div class="card-body" [formGroup]="loginForm">
@@ -19,6 +18,12 @@
                   <span class="input-group-text"><i class="icon-lock"></i></span>
                 </div>
                 <input type="password" class="form-control" formControlName="password" placeholder="Password">
+              </div>
+              <div class="row">
+                <div *ngIf="error" class="alert alert-danger" role="alert">
+                  <i class="fa fa-lg fa-times-circle-o"></i>
+                  Error al intentar autenticarse
+                </div>
               </div>
               <div class="row">
                 <div class="col-6">
