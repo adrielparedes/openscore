@@ -83,5 +83,10 @@ export const navigation = [
     name: 'Registro',
     url: '/pages/register',
     icon: 'icon-people'
+  },
+  {
+    name: 'Login',
+    url: '/pages/login',
+    icon: 'icon-people'
   }
 ];
