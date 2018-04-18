@@ -10,6 +10,7 @@ public class Fase extends Storable {
     public static final String CUARTOS = "CUARTOS";
     public static final String SEMI = "SEMI";
     public static final String FINAL = "FINAL";
+    public static final String TERCER = "TERCER";
 
     private String codigo;
     private String nombre;

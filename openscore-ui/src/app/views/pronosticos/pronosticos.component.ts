@@ -1,3 +1,5 @@
+import { FaseService } from './../../services/fase.service';
+import { Fase } from './../../model/fase';
 import { GruposService } from './../../services/grupos.service';
 import { Pronostico } from './../../model/pronostico';
 import { PronosticoService } from './../../services/pronostico.service';
@@ -19,6 +21,7 @@ export class PronosticosComponent implements OnInit {
   formato: Formato = Formato.HOY;
   partidos: Partido[] = [];
   grupos: Grupo[] = [];
+  fases: Fase[] = [];
   today: Date = new Date(Date.now());
   fechas: number[] = [];
 
@@ -26,6 +29,7 @@ export class PronosticosComponent implements OnInit {
   constructor(private pronosticoService: PronosticoService,
     private partidosService: PartidosService,
     private gruposService: GruposService,
+    private fasesService: FaseService,
     private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
@@ -40,6 +44,9 @@ export class PronosticosComponent implements OnInit {
     });
     this.partidosService.getFechas().subscribe(res => {
       this.fechas = res.data;
+    });
+    this.fasesService.getAll(0, 0).subscribe(res => {
+      this.fases = res.data;
     });
 
     this.retrievePartidosPorDia(this.today);
@@ -69,6 +76,13 @@ export class PronosticosComponent implements OnInit {
     });
   }
 
+  retrievePartidosPorFase(fase: Fase) {
+    this.pronosticoService.getAll(0, 0, [{ key: 'fase', value: fase.codigo }]).subscribe(res => {
+      this.partidos = res.data;
+      this.spinner.hide();
+    });
+  }
+
   hoy() {
     this.formato = Formato.HOY
     this.retrievePartidosPorDia(this.today);
@@ -84,6 +98,11 @@ export class PronosticosComponent implements OnInit {
     this.retrievePartidosPorFecha(this.fechas[0]);
   }
 
+  fase() {
+    this.formato = Formato.FASE
+    this.retrievePartidosPorFase(this.fases[0]);
+  }
+
   isHoy() {
     return this.formato === Formato.HOY;
   }
@@ -94,6 +113,10 @@ export class PronosticosComponent implements OnInit {
 
   isFecha() {
     return this.formato === Formato.FECHA;
+  }
+
+  isFase() {
+    return this.formato === Formato.FASE;
   }
 
   buildDate(fecha: Date) {

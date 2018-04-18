@@ -1,3 +1,4 @@
+import { FaseService } from './fase.service';
 import { GruposService } from './grupos.service';
 import { PronosticoService } from './pronostico.service';
 import { PartidosService } from './partidos.service';
@@ -22,7 +23,8 @@ import { RankingService } from './ranking.service';
         RankingService,
         StorageService,
         PartidosService,
-        GruposService,
+        GruposService, ,
+        FaseService,
         PronosticoService,
         {
             provide: HTTP_INTERCEPTORS,
