@@ -60,11 +60,6 @@ export const navigation = [
     icon: 'icon-people'
   },
   {
-    name: 'Competiciones',
-    url: '/admin/competiciones',
-    icon: 'icon-trophy'
-  },
-  {
     name: 'Equipos',
     url: '/admin/equipos',
     icon: 'icon-flag'

@@ -47,10 +47,6 @@ export const routes: Routes = [
         loadChildren: './views/admin/usuarios/usuarios.module#UsuariosModule'
       },
       {
-        path: 'admin/competiciones',
-        loadChildren: './views/admin/competiciones/competiciones.module#CompeticionesModule'
-      },
-      {
         path: 'admin/equipos',
         loadChildren: './views/admin/equipos/equipos.module#EquiposModule'
       },
