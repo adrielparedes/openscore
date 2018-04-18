@@ -44,6 +44,10 @@
     <tabset class="animated fadeIn" *ngIf="isHoy()">
       <tab class="animated fadeIn" heading="{{today |  date:'dd/MM/yyyy'}}" (select)="retrievePartidosPorFecha(today)">
         <div class="row">
+          <div class="card-body">
+            <div *ngIf="partidos.length == 0">
+              <i class="fa fa-times"></i> No se han encontrado partidos para este dia</div>
+          </div>
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
             <app-pronostico [partido]="partido"></app-pronostico>
           </div>
