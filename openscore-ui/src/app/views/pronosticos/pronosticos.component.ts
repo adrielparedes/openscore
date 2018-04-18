@@ -19,7 +19,7 @@ export class PronosticosComponent implements OnInit {
   formato: Formato = Formato.HOY;
   partidos: Partido[] = [];
   grupos: Grupo[] = [];
-  today = Date.now();
+  today: Date = new Date(Date.now());
   fechas: Date[] = [new Date('2018-06-14T00:00:00'), new Date('2018-06-15T00:00:00')];
 
 
@@ -36,8 +36,8 @@ export class PronosticosComponent implements OnInit {
     this.gruposService.getAll(0, 0).subscribe(res => {
       this.spinner.show();
       this.grupos = res.data;
-      this.retrievePartidosPorGrupo(this.grupos[0].codigo);
     });
+    this.retrievePartidosPorFecha(this.today);
 
   }
 
@@ -58,14 +58,17 @@ export class PronosticosComponent implements OnInit {
 
   hoy() {
     this.formato = Formato.HOY
+    this.retrievePartidosPorFecha(this.today);
   }
 
   grupo() {
     this.formato = Formato.GRUPO
+    this.retrievePartidosPorGrupo(this.grupos[0].codigo);
   }
 
   fecha() {
     this.formato = Formato.FECHA
+    this.retrievePartidosPorFecha(this.fechas[0]);
   }
 
   isHoy() {

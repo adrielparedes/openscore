@@ -19,7 +19,7 @@
 
 
   <div class="row">
-    <tabset *ngIf="isGrupo()">
+    <tabset class="animated fadeIn" *ngIf="isGrupo()">
       <tab class="animated fadeIn" heading="{{grupo.nombre}}" (select)="retrievePartidosPorGrupo(grupo.codigo)" *ngFor="let grupo of grupos">
         <div class="row">
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
@@ -30,7 +30,7 @@
       </tab>
     </tabset>
 
-    <tabset *ngIf="isFecha()">
+    <tabset class="animated fadeIn" *ngIf="isFecha()">
       <tab class="animated fadeIn" heading="{{fecha |  date:'dd/MM/yyyy'}}" (select)="retrievePartidosPorFecha(fecha)" *ngFor="let fecha of fechas">
         <div class="row">
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
@@ -41,7 +41,7 @@
       </tab>
     </tabset>
 
-    <tabset *ngIf="isHoy()">
+    <tabset class="animated fadeIn" *ngIf="isHoy()">
       <tab class="animated fadeIn" heading="{{today |  date:'dd/MM/yyyy'}}" (select)="retrievePartidosPorFecha(today)">
         <div class="row">
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
