@@ -34,6 +34,7 @@ public class CrearGruposYFases implements StartupStep {
         this.crearEtapaSiNoExiste(Fase.OCTAVOS, this.crearFase(Fase.OCTAVOS, "Octavos de Final", 2));
         this.crearEtapaSiNoExiste(Fase.CUARTOS, this.crearFase(Fase.CUARTOS, "Cuartos de Final", 3));
         this.crearEtapaSiNoExiste(Fase.SEMI, this.crearFase(Fase.SEMI, "Semifinal", 4));
+        this.crearEtapaSiNoExiste(Fase.TERCER, this.crearFase(Fase.TERCER, "Tercer Puesto", 4));
         this.crearEtapaSiNoExiste(Fase.FINAL, this.crearFase(Fase.FINAL, "Final", 4));
 
         this.crearGrupoSiNoExiste(Grupo.GRUPO_A, this.crearGrupo(Grupo.GRUPO_A, "Grupo A"));

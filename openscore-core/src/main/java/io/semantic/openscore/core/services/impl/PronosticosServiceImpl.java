@@ -66,9 +66,11 @@ public class PronosticosServiceImpl implements PronosticosService {
     public ApiResponse<List<PartidoPronosticoDTO>> getAll(int page,
                                                           int pageSize,
                                                           String grupo,
-                                                          String dia) {
+                                                          String fase,
+                                                          String dia,
+                                                          int fecha) {
 
-        List<Partido> partidos = getPartidos(grupo, dia);
+        List<Partido> partidos = getPartidos(grupo, dia, fase, fecha);
         List<Pronostico> pronosticos = this.pronosticoRepository.findByUsuario(userInfo.getUserId());
 
         logger.info("Pronosticos encontrados para el usuario {}: {}", this.userInfo.getUsuario().get().getEmail(), pronosticos.size());
@@ -88,11 +90,15 @@ public class PronosticosServiceImpl implements PronosticosService {
         return ok(partidoDTOs);
     }
 
-    private List<Partido> getPartidos(String grupo, String fecha) {
+    private List<Partido> getPartidos(String grupo, String dia, String fase, int fecha) {
         if (grupo != null && !grupo.isEmpty()) {
             return this.partidoRepository.findAllByGrupo(grupo);
-        } else if (fecha != null && !fecha.isEmpty()) {
-            Date date = getDate(fecha);
+        } else if (fase != null && !fase.isEmpty()) {
+            return this.partidoRepository.findAllByFase(fase);
+        } else if (fecha > 0) {
+            return this.partidoRepository.findAllByFecha(fecha);
+        } else if (dia != null && !dia.isEmpty()) {
+            Date date = getDate(dia);
             return this.partidoRepository.findAllByDia(date);
         } else {
             return this.partidoRepository.findAll();

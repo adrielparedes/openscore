@@ -22,7 +22,9 @@ public interface PronosticosService {
     ApiResponse<List<PartidoPronosticoDTO>> getAll(@QueryParam("page") int page,
                                                    @QueryParam("pageSize") int pageSize,
                                                    @QueryParam("grupo") String grupo,
-                                                   @QueryParam("dia") String dia);
+                                                   @QueryParam("fase") String fase,
+                                                   @QueryParam("dia") String dia,
+                                                   @QueryParam("fecha") int fecha);
 
     @Path("/{id}")
     @GET
