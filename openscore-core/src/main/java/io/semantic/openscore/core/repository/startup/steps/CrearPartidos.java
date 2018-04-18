@@ -10,6 +10,7 @@ import io.semantic.openscore.core.repository.EquiposRepository;
 import io.semantic.openscore.core.repository.FaseRepository;
 import io.semantic.openscore.core.repository.GrupoRepository;
 import io.semantic.openscore.core.repository.PartidoRepository;
+import io.semantic.openscore.core.repository.startup.builder.DiaBuilder;
 import io.semantic.openscore.core.repository.startup.PartidoData;
 import io.semantic.openscore.core.repository.startup.StartupStep;
 import org.slf4j.Logger;
@@ -19,8 +20,6 @@ import javax.inject.Inject;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,12 +28,11 @@ public class CrearPartidos implements StartupStep {
 
     private Logger logger = LoggerFactory.getLogger(CrearPartidos.class);
 
-
-    public static final String DATE_PATTERN = "dd-MM-yyyy'T'HH:mmZ";
     private PartidoRepository partidoRepository;
     private EquiposRepository equiposRepository;
     private GrupoRepository grupoRepository;
     private FaseRepository faseRepository;
+    private DiaBuilder diaBuilder;
 
 
     public CrearPartidos() {
@@ -44,12 +42,14 @@ public class CrearPartidos implements StartupStep {
     public CrearPartidos(PartidoRepository partidoRepository,
                          EquiposRepository equiposRepository,
                          GrupoRepository grupoRepository,
-                         FaseRepository faseRepository) {
+                         FaseRepository faseRepository,
+                         DiaBuilder diaBuilder) {
 
         this.partidoRepository = partidoRepository;
         this.equiposRepository = equiposRepository;
         this.grupoRepository = grupoRepository;
         this.faseRepository = faseRepository;
+        this.diaBuilder = diaBuilder;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class CrearPartidos implements StartupStep {
                     partido.getVisitante(),
                     getGrupo(partido.getGrupo()),
                     getFase(partido.getFase()),
-                    getMatchDate(partido.getDia()),
+                    diaBuilder.getMatchDate(partido.getDia()),
                     Integer.parseInt(partido.getFecha()),
                     partido.getLugar());
         });
@@ -111,16 +111,6 @@ public class CrearPartidos implements StartupStep {
         return this.equiposRepository.findByCodigo(codigoLocal).orElseThrow(() -> new IllegalArgumentException("El equipo " + codigoLocal + "no existe"));
     }
 
-    protected Date getMatchDate(String fecha) {
-
-        try {
-            return new SimpleDateFormat(DATE_PATTERN).parse(fecha);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
 
     private Grupo getGrupo(String codigo) {
         logger.info(codigo);
