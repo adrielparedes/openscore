@@ -6,6 +6,7 @@ import {
   FullLayoutComponent,
   SimpleLayoutComponent
 } from './containers';
+import { AuthGuard } from './services/auth-guard';
 
 export const routes: Routes = [
   {
@@ -19,10 +20,11 @@ export const routes: Routes = [
     data: {
       title: 'Home'
     },
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'dashboard',
-        loadChildren: './views/dashboard/dashboard.module#DashboardModule'
+        loadChildren: './views/dashboard/dashboard.module#DashboardModule',
       },
       {
         path: 'noticias',

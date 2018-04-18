@@ -1,3 +1,4 @@
+import { ServicesModule } from './services/services.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -73,6 +74,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
+    ServicesModule,
     NgxSpinnerModule
   ],
   declarations: [

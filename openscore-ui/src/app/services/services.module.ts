@@ -10,6 +10,7 @@ import { UsuarioService } from './usuario.service';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RankingService } from './ranking.service';
+import { AuthGuard } from './auth-guard';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { RankingService } from './ranking.service';
         PartidosService,
         GruposService, ,
         FaseService,
+        AuthGuard,
         PronosticoService,
         {
             provide: HTTP_INTERCEPTORS,

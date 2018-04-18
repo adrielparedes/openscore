@@ -9,12 +9,17 @@ export class StorageService {
 
     }
 
+    isLoggedIn() {
+        const t = this.getToken();
+        return t !== undefined && t !== null && t.length > 0;
+    }
+
     public getToken() {
         return localStorage.getItem(this.TOKEN);
     }
 
     public setToken(token: string) {
-        return localStorage.setItem(this.TOKEN, token)
+        return localStorage.setItem(this.TOKEN, token);
     }
 
 }

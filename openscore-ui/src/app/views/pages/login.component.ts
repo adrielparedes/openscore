@@ -26,9 +26,18 @@ export class LoginComponent {
     this.loginForm.valueChanges.subscribe(change => { this.error = false });
   }
 
+  goToRegistro() {
+    this.router.navigate(['/pages/register']);
+  }
+
+  onEnter(event) {
+    console.log("enter");
+    this.login();
+  }
+
   login() {
     if (this.loginForm.valid) {
-      const loginUsuario : LoginUsuario = this.loginForm.value;
+      const loginUsuario: LoginUsuario = this.loginForm.value;
 
       this.usuarioService.login(loginUsuario).subscribe(res => {
         console.log("respuesta ok")

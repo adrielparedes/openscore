@@ -22,7 +22,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   constructor(private router: Router) {
-    
+
   }
 
   logout() {
