@@ -1,3 +1,4 @@
+import { Token } from './../model/token';
 import { ApiResponse } from './../model/api-response';
 import { Injector } from '@angular/core/src/di/injector';
 import { Rest } from './rest';
@@ -15,7 +16,7 @@ export class UsuarioService extends Rest<Usuario, CrearUsuario, CrearUsuario> {
     private getAllUrl = '/usuarios';
     private getAllAdminUrl = '/admin';
     private registrarUrl = '/usuarios/registrar';
-    private loginUrl = "/usuarios/login";
+    private loginUrl = '/usuarios/login';
 
 
     constructor(protected http: HttpClient) {
@@ -41,10 +42,10 @@ export class UsuarioService extends Rest<Usuario, CrearUsuario, CrearUsuario> {
     }
 
     public login(usuario: LoginUsuario) {
-       console.log(this.getUrl(this.loginUrl));
-       console.log(usuario);
+        console.log(this.getUrl(this.loginUrl));
+        console.log(usuario);
 
-       return this.http.post(this.getUrl(this.loginUrl), usuario);
+        return this.http.post<ApiResponse<Token>>(this.getUrl(this.loginUrl), usuario);
     }
 
 }
