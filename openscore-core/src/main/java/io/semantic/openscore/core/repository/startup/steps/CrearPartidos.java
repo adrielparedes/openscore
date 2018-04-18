@@ -61,7 +61,7 @@ public class CrearPartidos implements StartupStep {
                     partido.getVisitante(),
                     getGrupo(partido.getGrupo()),
                     getFase(partido.getFase()),
-                    getMatchDate(partido.getFecha()),
+                    getMatchDate(partido.getDia()),
                     partido.getLugar());
         });
 
@@ -86,7 +86,7 @@ public class CrearPartidos implements StartupStep {
                                         String codigoVisitante,
                                         Grupo grupo,
                                         Fase fase,
-                                        Date fecha,
+                                        Date dia,
                                         String lugar) {
 
         if (!this.partidoRepository.exist(codigoLocal, codigoVisitante, grupo, fase)) {
@@ -95,7 +95,7 @@ public class CrearPartidos implements StartupStep {
             Partido partido = new Partido();
             partido.setLocal(local);
             partido.setVisitante(visitante);
-            partido.setFecha(fecha);
+            partido.setDia(dia);
             partido.setLugar(lugar);
             partido.setGrupo(grupo);
             partido.setFase(fase);

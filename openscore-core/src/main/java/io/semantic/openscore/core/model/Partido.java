@@ -13,8 +13,9 @@ public class Partido extends Storable {
 
     @OneToOne
     private Equipo visitante;
-    private Date fecha;
+    private Date dia;
     private String lugar;
+    private int fecha;
 
     @ManyToOne
     private Grupo grupo;
@@ -41,12 +42,12 @@ public class Partido extends Storable {
         this.visitante = visitante;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getDia() {
+        return dia;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setDia(Date dia) {
+        this.dia = dia;
     }
 
     public String getLugar() {
@@ -108,7 +109,7 @@ public class Partido extends Storable {
     }
 
     public boolean isBloqueado() {
-        return this.getFecha().getTime() <= new Date().getTime() + 900000;
+        return this.getDia().getTime() <= new Date().getTime() + 900000;
     }
 
     public PartidoStatus getStatus() {
@@ -119,5 +120,13 @@ public class Partido extends Storable {
         } else {
             return PartidoStatus.SIN_COMENZAR;
         }
+    }
+
+    public int getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(int fecha) {
+        this.fecha = fecha;
     }
 }

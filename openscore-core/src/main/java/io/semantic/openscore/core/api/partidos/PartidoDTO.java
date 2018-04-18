@@ -3,7 +3,6 @@ package io.semantic.openscore.core.api.partidos;
 import io.semantic.openscore.core.api.equipos.EquipoDTO;
 import io.semantic.openscore.core.api.grupos.FaseDTO;
 import io.semantic.openscore.core.api.grupos.GrupoDTO;
-import io.semantic.openscore.core.model.Fase;
 
 import java.util.Date;
 
@@ -12,7 +11,8 @@ public class PartidoDTO {
     private long id;
     private EquipoDTO local;
     private EquipoDTO visitante;
-    private Date fecha;
+    private Date dia;
+    private int fecha;
     private GrupoDTO grupo;
     private FaseDTO fase;
     private String lugar;
@@ -42,12 +42,12 @@ public class PartidoDTO {
         this.visitante = visitante;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getDia() {
+        return dia;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setDia(Date dia) {
+        this.dia = dia;
     }
 
     public String getLugar() {
@@ -80,5 +80,13 @@ public class PartidoDTO {
 
     public void setFase(FaseDTO fase) {
         this.fase = fase;
+    }
+
+    public int getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(int fecha) {
+        this.fecha = fecha;
     }
 }

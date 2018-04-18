@@ -4,6 +4,7 @@ public class PartidoData {
 
     private String local;
     private String visitante;
+    private String dia;
     private String fecha;
     private String lugar;
     private String grupo;
@@ -25,12 +26,12 @@ public class PartidoData {
         this.visitante = visitante;
     }
 
-    public String getFecha() {
-        return fecha;
+    public String getDia() {
+        return dia;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setDia(String dia) {
+        this.dia = dia;
     }
 
     public String getLugar() {
@@ -55,5 +56,13 @@ public class PartidoData {
 
     public void setFase(String fase) {
         this.fase = fase;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 }

@@ -21,13 +21,15 @@ public class PartidoRepository extends Repository<Partido> {
 
     private static final String FIND_ALL_BY_GROUP = "from Partido where " +
             "grupo.codigo = :grupo " +
-            "order by fecha asc";
+            "order by dia asc";
 
-    private static final String FIND_ALL_BY_FECHA = "from Partido where " +
-            "day(fecha) = day(:fecha) AND " +
-            "month(fecha) = month(:fecha) AND " +
-            "year(fecha) = year(:fecha) " +
-            "order by fecha asc";
+    private static final String FIND_ALL_BY_DIA = "from Partido where " +
+            "day(dia) = day(:dia) AND " +
+            "month(dia) = month(:dia) AND " +
+            "year(dia) = year(:dia) " +
+            "order by dia asc";
+
+    private static final String FIND_ALL_FECHAS = "select distinct p.fecha from Partido p group by p.fecha order by p.fecha asc";
 
     public PartidoRepository() {
         super(Partido.class);
@@ -49,9 +51,13 @@ public class PartidoRepository extends Repository<Partido> {
         return this.findByQuery(query);
     }
 
-    public List<Partido> findAllByFecha(Date fecha) {
-        TypedQuery<Partido> query = this.createQuery(FIND_ALL_BY_FECHA)
-                .setParameter("fecha", fecha, TemporalType.DATE);
+    public List<Partido> findAllByDia(Date dia) {
+        TypedQuery<Partido> query = this.createQuery(FIND_ALL_BY_DIA)
+                .setParameter("dia", dia, TemporalType.DATE);
         return this.findByQuery(query);
+    }
+
+    public List<Integer> findAllFechas() {
+        return this.entityManager.createQuery(FIND_ALL_FECHAS).getResultList();
     }
 }

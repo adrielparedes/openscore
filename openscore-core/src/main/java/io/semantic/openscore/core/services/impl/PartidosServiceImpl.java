@@ -5,15 +5,13 @@ import io.semantic.openscore.core.api.partidos.CrearOUpdatePartidoDTO;
 import io.semantic.openscore.core.api.partidos.PartidoDTO;
 import io.semantic.openscore.core.mapping.PartidoMapper;
 import io.semantic.openscore.core.model.Partido;
-import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.repository.PartidoRepository;
 import io.semantic.openscore.core.services.api.PartidosService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import static io.semantic.openscore.core.services.RestUtil.ok;
 
@@ -39,7 +37,7 @@ public class PartidosServiceImpl implements PartidosService {
                                                 int pageSize,
                                                 String grupo,
                                                 String fase,
-                                                long fecha,
+                                                long dia,
                                                 String equipo) {
 
         this.partidoRepository.findAll();
@@ -51,6 +49,11 @@ public class PartidosServiceImpl implements PartidosService {
     @Override
     public ApiResponse<PartidoDTO> get(long id) {
         return null;
+    }
+
+    @Override
+    public ApiResponse<List<Integer>> getFechas() {
+        return ok(this.partidoRepository.findAllFechas());
     }
 
     @Override

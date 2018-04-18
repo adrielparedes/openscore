@@ -6,7 +6,8 @@ public class CrearOUpdatePartidoDTO {
 
     private long idLocal;
     private long idVisitante;
-    private Date fecha;
+    private Date dia;
+    private int fecha;
     private String lugar;
 
     public long getIdLocal() {
@@ -25,12 +26,12 @@ public class CrearOUpdatePartidoDTO {
         this.idVisitante = idVisitante;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getDia() {
+        return dia;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setDia(Date dia) {
+        this.dia = dia;
     }
 
     public String getLugar() {
@@ -39,5 +40,13 @@ public class CrearOUpdatePartidoDTO {
 
     public void setLugar(String lugar) {
         this.lugar = lugar;
+    }
+
+    public int getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(int fecha) {
+        this.fecha = fecha;
     }
 }

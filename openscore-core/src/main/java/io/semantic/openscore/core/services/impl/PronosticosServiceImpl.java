@@ -66,9 +66,9 @@ public class PronosticosServiceImpl implements PronosticosService {
     public ApiResponse<List<PartidoPronosticoDTO>> getAll(int page,
                                                           int pageSize,
                                                           String grupo,
-                                                          String fecha) {
+                                                          String dia) {
 
-        List<Partido> partidos = getPartidos(grupo, fecha);
+        List<Partido> partidos = getPartidos(grupo, dia);
         List<Pronostico> pronosticos = this.pronosticoRepository.findByUsuario(userInfo.getUserId());
 
         logger.info("Pronosticos encontrados para el usuario {}: {}", this.userInfo.getUsuario().get().getEmail(), pronosticos.size());
@@ -93,7 +93,7 @@ public class PronosticosServiceImpl implements PronosticosService {
             return this.partidoRepository.findAllByGrupo(grupo);
         } else if (fecha != null && !fecha.isEmpty()) {
             Date date = getDate(fecha);
-            return this.partidoRepository.findAllByFecha(date);
+            return this.partidoRepository.findAllByDia(date);
         } else {
             return this.partidoRepository.findAll();
         }

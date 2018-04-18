@@ -20,10 +20,11 @@ export class PronosticosComponent implements OnInit {
   partidos: Partido[] = [];
   grupos: Grupo[] = [];
   today: Date = new Date(Date.now());
-  fechas: Date[] = [new Date('2018-06-14T00:00:00'), new Date('2018-06-15T00:00:00')];
+  fechas: number[] = [];
 
 
-  constructor(private partidosService: PronosticoService,
+  constructor(private pronosticoService: PronosticoService,
+    private partidosService: PartidosService,
     private gruposService: GruposService,
     private spinner: NgxSpinnerService) { }
 
@@ -37,20 +38,32 @@ export class PronosticosComponent implements OnInit {
       this.spinner.show();
       this.grupos = res.data;
     });
-    this.retrievePartidosPorFecha(this.today);
+    this.partidosService.getFechas().subscribe(res => {
+      this.fechas = res.data;
+    });
+
+    this.retrievePartidosPorDia(this.today);
 
   }
 
   retrievePartidosPorGrupo(grupo: string) {
-    this.partidosService.getAll(0, 0, [{ key: 'grupo', value: grupo }]).subscribe(res => {
+    this.pronosticoService.getAll(0, 0, [{ key: 'grupo', value: grupo }]).subscribe(res => {
       this.partidos = res.data;
       this.spinner.hide();
     });
   }
 
-  retrievePartidosPorFecha(fecha: Date) {
-    const date = this.buildDate(fecha);
-    this.partidosService.getAll(0, 0, [{ key: 'fecha', value: date }]).subscribe(res => {
+  retrievePartidosPorDia(dia: Date) {
+    const date = this.buildDate(dia);
+    this.pronosticoService.getAll(0, 0, [{ key: 'dia', value: date }]).subscribe(res => {
+      this.partidos = res.data;
+      this.spinner.hide();
+    });
+  }
+
+
+  retrievePartidosPorFecha(fecha: number) {
+    this.pronosticoService.getAll(0, 0, [{ key: 'fecha', value: fecha }]).subscribe(res => {
       this.partidos = res.data;
       this.spinner.hide();
     });
@@ -58,7 +71,7 @@ export class PronosticosComponent implements OnInit {
 
   hoy() {
     this.formato = Formato.HOY
-    this.retrievePartidosPorFecha(this.today);
+    this.retrievePartidosPorDia(this.today);
   }
 
   grupo() {
@@ -98,5 +111,5 @@ export class PronosticosComponent implements OnInit {
 }
 
 export enum Formato {
-  HOY, GRUPO, FECHA
+  HOY, GRUPO, FECHA, FASE
 }

@@ -9,7 +9,7 @@
         <div class="score"> {{getResultado(partido)}} </div>
         <div class="grupo_fase">{{partido.grupo.nombre}}</div>
         <div class="lugar">{{partido.lugar}}</div>
-        <div>{{partido.fecha | date: 'dd/MM/yyyy HH:mm (O)'}}</div>
+        <div>{{partido.dia | date: 'dd/MM/yyyy HH:mm (O)'}}</div>
       </div>
       <div class="card-footer">
         <button class="btn" (click)="local(partido)" [ngClass]="{'btn-primary': isLocal(partido.pronostico)}">{{partido.local.nombre}}</button>

@@ -1,3 +1,4 @@
+import { ApiResponse } from './../model/api-response';
 import { CrearPartido } from './../model/crear-partido';
 import { Partido } from './../model/partido';
 import { Rest } from './rest';
@@ -12,7 +13,12 @@ export class PartidosService extends Rest<Partido, CrearPartido, CrearPartido> {
     }
 
     getServiceUrl() {
-        return '/pronosticos';
+        return '/partidos';
     }
+
+    getFechas() {
+        return this.http.get<ApiResponse<number[]>>(this.getUrl(this.getServiceUrl()) + '/fechas');
+    }
+
 
 }

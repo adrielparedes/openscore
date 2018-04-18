@@ -6,6 +6,7 @@ import io.semantic.openscore.core.api.partidos.PartidoDTO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Date;
 import java.util.List;
 
 @Produces(MediaType.APPLICATION_JSON)
@@ -25,6 +26,10 @@ public interface PartidosService {
     @GET
     @Path("/{id}")
     ApiResponse<PartidoDTO> get(@PathParam("id") long id);
+
+    @GET
+    @Path("/fechas")
+    ApiResponse<List<Integer>> getFechas();
 
     @DELETE
     @PathParam("/{id}")

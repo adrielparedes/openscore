@@ -30,8 +30,9 @@
       </tab>
     </tabset>
 
+
     <tabset class="animated fadeIn" *ngIf="isFecha()">
-      <tab class="animated fadeIn" heading="{{fecha |  date:'dd/MM/yyyy'}}" (select)="retrievePartidosPorFecha(fecha)" *ngFor="let fecha of fechas">
+      <tab class="animated fadeIn" heading="Fecha {{fecha}}" (select)="retrievePartidosPorFecha(fecha)" *ngFor="let fecha of fechas">
         <div class="row">
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
             <app-pronostico [partido]="partido"></app-pronostico>
@@ -40,6 +41,7 @@
         </div>
       </tab>
     </tabset>
+
 
     <tabset class="animated fadeIn" *ngIf="isHoy()">
       <tab class="animated fadeIn" heading="{{today |  date:'dd/MM/yyyy'}}" (select)="retrievePartidosPorFecha(today)">
