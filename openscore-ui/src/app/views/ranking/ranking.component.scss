@@ -1,12 +1,17 @@
 table {
     background: white;
-    tr:first-child {
-        background: gold;
+    .gold {
+        color: gold;
     }
-    tr:nth-child(2) {
-        background: silver;
+    .silver {
+        color: silver;
     }
+    .bronze {
+        color: #AE6938;
+    }
+    tr:first-child,
+    tr:nth-child(2),
     tr:nth-child(3) {
-        background: #AE6938;
+        background-color: #C8F7C5;
     }
 }
