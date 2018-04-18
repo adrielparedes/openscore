@@ -1,7 +1,6 @@
 import { RankingService } from './../../services/ranking.service';
 import { Component, OnInit } from '@angular/core';
 import { Ranking } from '../../model/ranking';
-import { INTERNAL_BROWSER_PLATFORM_PROVIDERS } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-ranking',
