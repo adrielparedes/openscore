@@ -1,10 +1,10 @@
 <div>
-  <div class="card text-center">
+  <div class="card text-center" [ngClass]="{success:true,error:false}">
     <div>
       <div class="card-body">
         <div class="score">
-          <img src="{{partido.local.logo}}" /> -
-          <img src="{{partido.visitante.logo}}" />
+          <img [ngClass]="{'bloqueado': !isPendiente()}" src="{{partido.local.logo}}" /> -
+          <img [ngClass]="{'bloqueado': !isPendiente()}" src="{{partido.visitante.logo}}" />
         </div>
         <div class="score"> {{getResultado(partido)}} </div>
         <div class="grupo_fase">{{partido.grupo.nombre}}</div>

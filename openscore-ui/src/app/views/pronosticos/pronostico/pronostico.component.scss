@@ -1,24 +1,39 @@
+$green-color: #00E640;
+$red-color: #D91E18;
 .score {
-    font-size: 25px;
-    font-weight: 600;
+  font-size: 25px;
+  font-weight: 600;
 }
 
 .grupo_fase {
-    font-size: 15px;
-    font-weight: 600;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.card {
+  .success {
+    border-color: $green-color;
+  }
+  .error {
+    border-color: $red-color;
+  }
 }
 
 img {
-    width: 40%;
+  width: 40%;
+}
+
+.bloqueado {
+  filter: grayscale(100%);
 }
 
 .lugar {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pronostico {
-    font-size: 15px;
-    font-weight: 600;
+  font-size: 15px;
+  font-weight: 600;
 }
