@@ -3,6 +3,7 @@ package io.semantic.openscore.core.services.api;
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.partidos.CrearOUpdatePartidoDTO;
 import io.semantic.openscore.core.api.partidos.PartidoDTO;
+import io.semantic.openscore.core.api.partidos.ResultadoDTO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -42,4 +43,9 @@ public interface PartidosService {
     @POST
     @PathParam("/{id}")
     ApiResponse<PartidoDTO> update(@PathParam("id") long id, CrearOUpdatePartidoDTO entity);
+
+    @POST
+    @Path("{id}/resultado")
+    ApiResponse<PartidoDTO> setResultado(@PathParam("id") long id, ResultadoDTO resultado);
 }
+

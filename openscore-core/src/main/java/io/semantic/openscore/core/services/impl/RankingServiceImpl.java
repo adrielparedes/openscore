@@ -61,7 +61,7 @@ public class RankingServiceImpl implements RankingService {
                     ranking.setPuntos(usuario.getPuntos());
                     return ranking;
                 })
-                .sorted(Comparator.comparingInt(ranking -> ranking.getPuntos()))
+                .sorted(Comparator.comparingInt(Ranking::getPuntos).reversed())
                 .collect(toList());
 
         return IntStream

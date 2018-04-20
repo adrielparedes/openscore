@@ -1,3 +1,4 @@
+import { Resultado } from './resultado';
 import { Pronostico } from './pronostico';
 import { Fase } from './fase';
 import { Grupo } from './grupo';
@@ -10,7 +11,7 @@ export interface Partido {
     dia: Date;
     fecha: number;
     lugar: string;
-    resultado: string;
+    resultado: Resultado;
     grupo: Grupo;
     fase: Fase;
     status: string;

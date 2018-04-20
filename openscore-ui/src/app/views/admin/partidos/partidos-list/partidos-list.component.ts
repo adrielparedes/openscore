@@ -2,8 +2,9 @@ import { Partido } from './../../../../model/partido';
 import { PartidosService } from './../../../../services/partidos.service';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Router } from '@angular/router';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { ResultadoComponent } from '../resultado/resultado.component';
 
 @Component({
   selector: 'app-partidos-list',
@@ -50,6 +51,16 @@ export class PartidosListComponent implements OnInit {
 
   editarEquipo(id: number) {
     this.router.navigate(['/admin/partidos/form', id]);
+  }
+
+  openResultadoModal(partido: Partido) {
+
+    const initialState = {
+      partido: partido,
+      callback: () => this.refresh()
+    };
+
+    this.modalService.show(ResultadoComponent, { initialState });
   }
 
   eliminarEquipo() {

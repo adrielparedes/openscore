@@ -53,6 +53,10 @@ export const routes: Routes = [
       {
         path: 'admin/partidos',
         loadChildren: './views/admin/partidos/partidos.module#PartidosModule'
+      },
+      {
+        path: 'admin/noticias',
+        loadChildren: './views/admin/noticias/noticias.module#NoticiasModule'
       }
     ]
   },

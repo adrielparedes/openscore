@@ -17,6 +17,7 @@ public class PartidoDTO {
     private FaseDTO fase;
     private String lugar;
     private String status;
+    private ResultadoDTO resultado;
 
     public long getId() {
         return id;
@@ -88,5 +89,13 @@ public class PartidoDTO {
 
     public void setFecha(int fecha) {
         this.fecha = fecha;
+    }
+
+    public ResultadoDTO getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(ResultadoDTO resultado) {
+        this.resultado = resultado;
     }
 }

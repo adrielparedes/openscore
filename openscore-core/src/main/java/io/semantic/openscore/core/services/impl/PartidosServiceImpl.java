@@ -3,6 +3,7 @@ package io.semantic.openscore.core.services.impl;
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.partidos.CrearOUpdatePartidoDTO;
 import io.semantic.openscore.core.api.partidos.PartidoDTO;
+import io.semantic.openscore.core.api.partidos.ResultadoDTO;
 import io.semantic.openscore.core.mapping.PartidoMapper;
 import io.semantic.openscore.core.model.Partido;
 import io.semantic.openscore.core.repository.PartidoRepository;
@@ -10,7 +11,7 @@ import io.semantic.openscore.core.services.api.PartidosService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import java.util.Date;
+import java.text.MessageFormat;
 import java.util.List;
 
 import static io.semantic.openscore.core.services.RestUtil.ok;
@@ -69,5 +70,22 @@ public class PartidosServiceImpl implements PartidosService {
     @Override
     public ApiResponse<PartidoDTO> update(long id, CrearOUpdatePartidoDTO entity) {
         return null;
+    }
+
+    @Override
+    public ApiResponse<PartidoDTO> setResultado(long partidoId, ResultadoDTO resultado) {
+        Partido partido = this.getPartido(partidoId);
+        partido.setResultado(this.partidoMapper.asResultado(resultado));
+        this.partidoRepository.save(partido);
+        return ok(this.partidoMapper.asApi(partido));
+
+    }
+
+    private Partido getPartido(long partidoId) {
+        return this.partidoRepository
+                .findById(partidoId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(MessageFormat
+                                .format("El partido <{0}> no fue encontrado", partidoId)));
     }
 }

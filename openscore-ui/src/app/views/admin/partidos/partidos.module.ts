@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PartidosComponent } from './partidos.component';
 import { PartidosListComponent } from './partidos-list/partidos-list.component';
+import { ResultadoComponent } from './resultado/resultado.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,9 @@ import { PartidosListComponent } from './partidos-list/partidos-list.component';
     ModalModule.forRoot()
   ],
   declarations: [PartidosComponent,
-    PartidosListComponent
-]
+    PartidosListComponent,
+    ResultadoComponent
+  ],
+  entryComponents: [ResultadoComponent]
 })
 export class PartidosModule { }

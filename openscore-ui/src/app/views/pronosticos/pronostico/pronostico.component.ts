@@ -64,6 +64,20 @@ export class PronosticoComponent implements OnInit {
     return this.partido.status === 'PENDIENTE';
   }
 
+  isGanador() {
+    if (this.partido.resultado !== null && this.partido.pronostico !== null) {
+      if ((this.partido.resultado.local > this.partido.resultado.visitante && this.partido.pronostico.local) ||
+        (this.partido.resultado.local === this.partido.resultado.visitante && this.partido.pronostico.empate) ||
+        (this.partido.resultado.local < this.partido.resultado.visitante && this.partido.pronostico.visitante)) {
+        return 'success';
+      } else {
+        return 'error';
+      }
+    } else {
+      return '';
+    }
+  }
+
   getEleccion() {
     if (this.partido.pronostico == null) {
       return 'Sin pronostico';

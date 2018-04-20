@@ -1,12 +1,17 @@
 package io.semantic.openscore.core.model;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
-@Entity
-public class Resultado extends Storable {
+@Embeddable
+public class Resultado {
 
+    @Column(nullable = true)
     private int local;
+
+    @Column(nullable = true)
     private int visitante;
 
     @OneToOne

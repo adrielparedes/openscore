@@ -14,7 +14,6 @@ export class AppHeaderComponent implements OnInit {
   ngOnInit() {
     const token = localStorage.getItem('openscore-token');
     const decoded = JWT(token);
-    console.log(decoded);
 
     this.nombre = decoded['nombre'];
     this.apellido = decoded['apellido'];

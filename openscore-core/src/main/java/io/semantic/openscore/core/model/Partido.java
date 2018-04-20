@@ -1,8 +1,7 @@
 package io.semantic.openscore.core.model;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.annotation.Nullable;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -23,7 +22,7 @@ public class Partido extends Storable {
     @ManyToOne
     private Fase fase;
 
-    @OneToOne
+    @Embedded
     private Resultado resultado;
 
     public Equipo getLocal() {

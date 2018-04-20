@@ -69,6 +69,11 @@ export const navigation = [
     url: '/admin/partidos',
     icon: 'icon-calendar'
   },
+  {
+    name: 'Noticias',
+    url: '/admin/noticias',
+    icon: 'icon-list'
+  },
   // ACA ABAJO VA LA PARTE DE DESA PARA HACER PRUEBAS
   {
     title: true,

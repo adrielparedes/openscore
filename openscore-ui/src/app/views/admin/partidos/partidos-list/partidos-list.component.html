@@ -48,15 +48,15 @@
               {{partido.lugar}}
             </td>
             <td>
-              {{partido.resultado}}
+              {{partido.resultado && partido.resultado.local}} - {{partido.resultado && partido.resultado.visitante}}
             </td>
             <td>
               {{partido.status}}
             </td>
             <td>
-                <button class="btn btn-success" (click)="editarEquipo(partido.id)">
-                    <i class="fas fa-futbol"></i>
-                  </button>
+              <button class="btn btn-success" (click)="openResultadoModal(partido)">
+                <i class="fas fa-futbol"></i>
+              </button>
               <button class="btn btn-warning" (click)="editarEquipo(partido.id)">
                 <i class="fas fa-edit"></i>
               </button>
