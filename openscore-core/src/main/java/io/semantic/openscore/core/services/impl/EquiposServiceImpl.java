@@ -46,7 +46,7 @@ public class EquiposServiceImpl implements EquiposService {
     }
 
     @Override
-    public ApiResponse<List<EquipoDTO>> getAll(int page, int pageSize, UriInfo uriInfo) {
+    public ApiResponse<List<EquipoDTO>> getAll(int page, int pageSize) {
         List<EquipoDTO> equipos = this.equiposRepository
                 .findAll(new Page(page, pageSize))
                 .stream()
