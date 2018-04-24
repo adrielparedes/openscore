@@ -1,7 +1,7 @@
 import { ApiResponse } from './../../../model/api-response';
 import { PronosticoService } from './../../../services/pronostico.service';
 import { Partido } from './../../../model/partido';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Pronostico } from '../../../model/pronostico';
 
 @Component({
@@ -9,13 +9,34 @@ import { Pronostico } from '../../../model/pronostico';
   templateUrl: './pronostico.component.html',
   styleUrls: ['./pronostico.component.scss']
 })
-export class PronosticoComponent implements OnInit {
+export class PronosticoComponent implements OnInit, OnDestroy {
 
   @Input() partido: Partido;
+
+  timeToBlock: string;
+
+  bloqueado = false;
+
+  interval;
 
   constructor(private pronosticoService: PronosticoService) { }
 
   ngOnInit() {
+    if (this.isPendiente()) {
+      this.interval = setInterval(() => {
+        const diff = this.getTimeDiffToBlock(this.partido.dia);
+        if (diff >= 0) {
+          this.timeToBlock = this.getTimeToBlock(diff);
+        } else {
+          this.bloqueado = true;
+          clearInterval(this.interval);
+        }
+      }, 1000);
+    }
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.interval);
   }
 
 
@@ -61,7 +82,7 @@ export class PronosticoComponent implements OnInit {
   }
 
   isPendiente() {
-    return this.partido.status === 'PENDIENTE';
+    return this.partido.status === 'PENDIENTE' || this.bloqueado;
   }
 
   isGanador() {
@@ -76,6 +97,18 @@ export class PronosticoComponent implements OnInit {
     } else {
       return '';
     }
+  }
+
+  getTimeToBlock(diff: number) {
+    const minutes = Math.floor(diff / 60000);
+    const seconds = ((diff % 60000) / 1000).toFixed(0);
+    return minutes + ':' + seconds;
+  }
+
+  getTimeDiffToBlock(matchDate: Date) {
+    const fecha = new Date(matchDate).getTime();
+    const now = new Date().getTime();
+    return (fecha - (now + 900000));
   }
 
   getEleccion() {

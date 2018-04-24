@@ -10,12 +10,15 @@
         <div class="grupo_fase">{{partido.grupo.nombre}}</div>
         <div class="lugar">{{partido.lugar}}</div>
         <div>{{partido.dia | date: 'dd/MM/yyyy HH:mm (O)'}}</div>
+        <div *ngIf="isPendiente()">Tiempo para bloquearse:
+          <span class="block">{{timeToBlock}} minutos</span>
+        </div>
       </div>
       <div class="card-footer" [ngClass]="isGanador()">
         <div *ngIf="isPendiente()">
-          <button class="btn" (click)="local(partido)" [ngClass]="{'btn-primary': isLocal(partido.pronostico)}">{{partido.local.nombre}}</button>
-          <button class="btn" (click)="empate(partido)" [ngClass]="{'btn-primary': isEmpate(partido.pronostico)}">Empate</button>
-          <button class="btn" (click)="visitante(partido)" [ngClass]="{'btn-primary': isVisitante(partido.pronostico)}">{{partido.visitante.nombre}}</button>
+          <button class="btn" (click)="local(partido)" [ngClass]="{'btn-success': isLocal(partido.pronostico)}">{{partido.local.nombre}}</button>
+          <button class="btn" (click)="empate(partido)" [ngClass]="{'btn-success': isEmpate(partido.pronostico)}">Empate</button>
+          <button class="btn" (click)="visitante(partido)" [ngClass]="{'btn-success': isVisitante(partido.pronostico)}">{{partido.visitante.nombre}}</button>
         </div>
         <p class="pronostico" *ngIf="!isPendiente() && partido.pronostico == null">Qué pena, no hiciste tu pronóstico!</p>
         <p class="pronostico" *ngIf="!isPendiente() && partido.pronostico !== null">Tu elección fue: {{getEleccion()}}
