@@ -8,11 +8,14 @@ import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.repository.PostRepository;
 import io.semantic.openscore.core.services.api.PostService;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import java.text.MessageFormat;
 import java.util.List;
 
 import static io.semantic.openscore.core.services.RestUtil.ok;
 
+@RequestScoped
 public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
@@ -20,8 +23,8 @@ public class PostServiceImpl implements PostService {
     public PostServiceImpl() {
     }
 
+    @Inject
     public PostServiceImpl(PostRepository postRepository) {
-
         this.postRepository = postRepository;
     }
 

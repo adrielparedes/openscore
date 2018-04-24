@@ -1,3 +1,5 @@
+import { CrearNoticia } from './../../../../model/crear-noticia';
+import { NoticiasService } from './../../../../services/noticias.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,14 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NoticiasEditorComponent implements OnInit {
 
+  id: number;
   htmlContent: string;
 
-  constructor() { }
+  constructor(private noticiasService: NoticiasService) { }
 
   ngOnInit() {
   }
 
   save() {
-    console.log(this.htmlContent);
+    const crearNoticia = <CrearNoticia>{ titulo: '', contenido: this.htmlContent }
+    this.noticiasService.add(crearNoticia).subscribe(res => this.id = res.data.id);
   }
 }

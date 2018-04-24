@@ -1,3 +1,4 @@
+import { NoticiasService } from './noticias.service';
 import { FaseService } from './fase.service';
 import { GruposService } from './grupos.service';
 import { PronosticoService } from './pronostico.service';
@@ -24,7 +25,8 @@ import { AuthGuard } from './auth-guard';
         RankingService,
         StorageService,
         PartidosService,
-        GruposService, ,
+        GruposService,
+        NoticiasService,
         FaseService,
         AuthGuard,
         PronosticoService,
