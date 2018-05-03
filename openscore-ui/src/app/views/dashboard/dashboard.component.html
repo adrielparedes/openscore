@@ -2,6 +2,12 @@
   <h1>Dashboard</h1>
 
   <div class="row">
+    <ngx-twitter-timeline [data]="{
+        sourceType: 'url',
+        url: 'https://twitter.com/fifaworldcup'}" [opts]="{
+        tweetLimit: 5
+    }"></ngx-twitter-timeline>
+
     <div class="col-sm-6 col-lg-3">
       <div class="card text-white bg-primary">
         <div class="card-body pb-0">
@@ -9,9 +15,7 @@
           <p>Dias al mundial</p>
         </div>
       </div>
+
     </div>
-
-
-
   </div>
 </div>

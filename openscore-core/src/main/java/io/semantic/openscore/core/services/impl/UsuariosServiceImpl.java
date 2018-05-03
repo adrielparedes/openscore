@@ -17,21 +17,27 @@ import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.security.TokenGenerator;
 import io.semantic.openscore.core.services.api.UsuariosService;
 import io.semantic.openscore.core.validation.ApplicationValidator;
+import io.semantic.openscore.core.validation.validators.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.ws.rs.Path;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+
+import static java.util.stream.Collectors.toList;
 
 @Path("/usuarios")
 @RequestScoped
 public class UsuariosServiceImpl implements UsuariosService {
 
+    private List<EmailValidator> mailValidators;
     private Logger logger = LoggerFactory.getLogger(UsuariosServiceImpl.class);
 
     private UsuarioRepository usuarioRepository;
@@ -49,15 +55,18 @@ public class UsuariosServiceImpl implements UsuariosService {
     public UsuariosServiceImpl(UsuarioRepository usuarioRepository,
                                PaisRepository paisRepository,
                                TokenGenerator tokenGenerator,
-                               ApplicationValidator validator,
+                               ApplicationValidator appValidator,
                                UsuarioMapper mapper,
-                               PaisMapper paisMapper) {
+                               PaisMapper paisMapper,
+                               Instance<EmailValidator> mailValidators) {
         this.usuarioRepository = usuarioRepository;
         this.paisRepository = paisRepository;
         this.tokenGenerator = tokenGenerator;
-        this.validator = validator;
+        this.validator = appValidator;
         this.mapper = mapper;
         this.paisMapper = paisMapper;
+        this.mailValidators = StreamSupport.stream(mailValidators.spliterator(), false).collect(toList());
+
     }
 
 
@@ -65,6 +74,7 @@ public class UsuariosServiceImpl implements UsuariosService {
     public ApiResponse<UsuarioDTO> registrarUsuario(CrearUsuarioDTO crearUsuario) {
 
         this.validator.validate(crearUsuario);
+        this.mailValidators.stream().anyMatch(emailValidator -> emailValidator.validate(crearUsuario.getEmail()));
 
         Pais pais = this.paisRepository.findByCodigo(crearUsuario.getPais());
 

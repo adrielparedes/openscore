@@ -28,12 +28,11 @@
             <td>
               <div>{{usuario.nombre}} {{usuario.apellido}}</div>
               <div class="small text-muted">
-                <span>Eliminado: {{ usuario.deleted }}</span> | Registrado el: {{usuario.creationDate}}
+                <span>Eliminado: {{ usuario.deleted }}</span> | Registrado el: {{usuario.creationDate | date: 'dd/MM/yyyy HH:mm:ss (O)'}}
               </div>
             </td>
             <td class="text-center">
               <div>{{usuario.pais.nombre}}</div>
-              <i class="flag-icon flag-icon-ar h4 mb-0" title="us" id="us"></i>
             </td>
             <td>
              {{usuario.email}}

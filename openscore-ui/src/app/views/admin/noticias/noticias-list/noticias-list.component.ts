@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NoticiasService } from '../../../../services/noticias.service';
+import { Noticia } from '../../../../model/noticia';
 
 @Component({
   selector: 'app-noticias-list',
@@ -24,6 +25,18 @@ export class NoticiasListComponent implements OnInit {
 
   nueva() {
     this.router.navigate(['/admin/noticias/editor']);
+  }
+
+  editar(noticia: Noticia) {
+    this.router.navigate(['/admin/noticias/editor', noticia.id]);
+  }
+
+  publicar(noticia: Noticia) {
+    this.noticiasService.publicar(noticia.id).subscribe(res => this.refresh());
+  }
+
+  retirar(noticia: Noticia) {
+    this.noticiasService.retirar(noticia.id).subscribe(res => this.refresh());
   }
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Stateless
 public class PostRepository extends Repository<Post> {
 
-    private static final String FIND_ALL_BY_STATUS = "from Post where post.status = :status order by post.modificationDate";
+    private static final String FIND_ALL_BY_STATUS = "from Post where status = :status order by modificationDate";
 
     public PostRepository() {
         super(Post.class);
@@ -18,6 +18,7 @@ public class PostRepository extends Repository<Post> {
 
     public List<Post> findAllByStatus(PostStatus postStatus) {
         TypedQuery<Post> query = this.createQuery(FIND_ALL_BY_STATUS);
+        query.setParameter("status",postStatus);
         return this.findByQuery(query);
     }
 }

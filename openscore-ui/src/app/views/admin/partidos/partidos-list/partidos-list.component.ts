@@ -45,11 +45,11 @@ export class PartidosListComponent implements OnInit {
   }
 
 
-  crearEquipo() {
+  crearPartido() {
     this.router.navigate(['/admin/partidos/form']);
   }
 
-  editarEquipo(id: number) {
+  editarPartido(id: number) {
     this.router.navigate(['/admin/partidos/form', id]);
   }
 

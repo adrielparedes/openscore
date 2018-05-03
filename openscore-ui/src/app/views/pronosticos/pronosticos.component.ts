@@ -37,9 +37,9 @@ export class PronosticosComponent implements OnInit {
   }
 
   update() {
-    this.spinner.show();
+    // this.spinner.show();
     this.gruposService.getAll(0, 0).subscribe(res => {
-      this.spinner.show();
+      // this.spinner.show();
       this.grupos = res.data;
     });
     this.partidosService.getFechas().subscribe(res => {
@@ -62,6 +62,7 @@ export class PronosticosComponent implements OnInit {
 
   retrievePartidosPorDia(dia: Date) {
     const date = this.buildDate(dia);
+    console.log(date);
     this.pronosticoService.getAll(0, 0, [{ key: 'dia', value: date }]).subscribe(res => {
       this.partidos = res.data;
       this.spinner.hide();

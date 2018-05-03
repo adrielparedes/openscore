@@ -107,7 +107,9 @@ public class PronosticosServiceImpl implements PronosticosService {
 
     private Date getDate(String fecha) {
         try {
-            return new SimpleDateFormat("yyyyMMdd").parse(fecha);
+            Date date = new SimpleDateFormat("yyyyMMdd").parse(fecha);
+            logger.info("{}", date);
+            return date;
         } catch (ParseException e) {
             throw new IllegalArgumentException("El formato de la fecha es incorrecto", e);
         }

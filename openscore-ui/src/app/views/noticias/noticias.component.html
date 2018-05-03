@@ -1,4 +1,8 @@
 <div class="animated fadeIn">
-    <h1>Noticias</h1>
+  <h1>Noticias</h1>
+
+  <div *ngIf="noticias.length == 0">No hay noticias disponibles</div>
+  <div *ngFor="let noticia of noticias">
+    <app-noticia [noticia]="noticia"></app-noticia>
   </div>
-  
+</div>

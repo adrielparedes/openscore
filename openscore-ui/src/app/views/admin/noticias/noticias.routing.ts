@@ -23,6 +23,13 @@ const routes: Routes = [
       data: {
         title: 'Editor'
       },
+    },
+    {
+      path: 'editor/:id',
+      component: NoticiasEditorComponent,
+      data: {
+        title: 'Editor'
+      },
     }]
   },
 ];

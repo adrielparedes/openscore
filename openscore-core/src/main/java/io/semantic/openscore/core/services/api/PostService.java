@@ -1,7 +1,7 @@
 package io.semantic.openscore.core.services.api;
 
 import io.semantic.openscore.core.api.ApiResponse;
-import io.semantic.openscore.core.api.post.CreatePost;
+import io.semantic.openscore.core.api.post.CrearPost;
 import io.semantic.openscore.core.model.Post;
 
 import javax.ws.rs.*;
@@ -11,7 +11,7 @@ import java.util.List;
 @Path("/posts")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public interface PostService extends StandardService<Post, CreatePost, CreatePost> {
+public interface PostService extends StandardService<Post, CrearPost, CrearPost> {
 
     @Path("/")
     @GET

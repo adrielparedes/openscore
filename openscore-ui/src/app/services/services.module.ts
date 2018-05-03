@@ -1,3 +1,4 @@
+import { PaisesService } from './paises.service';
 import { NoticiasService } from './noticias.service';
 import { FaseService } from './fase.service';
 import { GruposService } from './grupos.service';
@@ -28,6 +29,7 @@ import { AuthGuard } from './auth-guard';
         GruposService,
         NoticiasService,
         FaseService,
+        PaisesService,
         AuthGuard,
         PronosticoService,
         {

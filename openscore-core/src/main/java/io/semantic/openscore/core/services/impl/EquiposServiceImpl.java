@@ -6,9 +6,11 @@ import io.semantic.openscore.core.api.equipos.EquipoDTO;
 import io.semantic.openscore.core.mapping.EquipoMapper;
 import io.semantic.openscore.core.model.Equipo;
 import io.semantic.openscore.core.model.Pais;
+import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.repository.EquiposRepository;
 import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.repository.PaisRepository;
+import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.services.api.EquiposService;
 import io.semantic.openscore.core.validation.ApplicationValidator;
 
@@ -64,12 +66,14 @@ public class EquiposServiceImpl implements EquiposService {
     }
 
     @Override
+    @Secure(Rol.ADMIN)
     public ApiResponse<Long> delete(long id) {
         this.equiposRepository.deleteById(id);
         return ok(id);
     }
 
     @Override
+    @Secure(Rol.ADMIN)
     public ApiResponse<EquipoDTO> add(CrearEquipoDTO entity) {
         validator.validate(entity);
         Pais pais = this.paisRepository.findByCodigo(entity.getCodigoPais());
@@ -79,6 +83,7 @@ public class EquiposServiceImpl implements EquiposService {
     }
 
     @Override
+    @Secure(Rol.ADMIN)
     public ApiResponse<EquipoDTO> update(long id, CrearEquipoDTO entity) {
         validator.validate(entity);
         Optional<Equipo> equipoOptional = this.equiposRepository.findById(id);

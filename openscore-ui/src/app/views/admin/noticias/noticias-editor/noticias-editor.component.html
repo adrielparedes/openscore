@@ -3,7 +3,9 @@
 
   <div>
     <label>Titulo: </label>
-    <input />
+    <input [(ngModel)]="titulo" />
+    <label>Autor: </label>
+    <input [(ngModel)]="autor" />
     <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" [(ngModel)]="htmlContent"></app-ngx-editor>
   </div>
 </div>

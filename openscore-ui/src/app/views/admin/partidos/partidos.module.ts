@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { PartidosComponent } from './partidos.component';
 import { PartidosListComponent } from './partidos-list/partidos-list.component';
 import { ResultadoComponent } from './resultado/resultado.component';
+import { PartidoFormComponent } from './partido-form/partido-form.component';
 
 @NgModule({
   imports: [
@@ -18,8 +19,9 @@ import { ResultadoComponent } from './resultado/resultado.component';
   ],
   declarations: [PartidosComponent,
     PartidosListComponent,
-    ResultadoComponent
-  ],
+    ResultadoComponent,
+    PartidoFormComponent
+],
   entryComponents: [ResultadoComponent]
 })
 export class PartidosModule { }

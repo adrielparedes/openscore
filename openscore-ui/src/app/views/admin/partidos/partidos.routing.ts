@@ -1,3 +1,4 @@
+import { PartidoFormComponent } from './partido-form/partido-form.component';
 import { PartidosListComponent } from './partidos-list/partidos-list.component';
 import { PartidosComponent } from './partidos.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -17,6 +18,20 @@ const routes: Routes = [
           title: 'Listado de Partidos'
         }
       },
+      {
+        path: 'form',
+        component: PartidoFormComponent,
+        data: {
+          title: 'Crear Partido'
+        }
+      },
+      {
+        path: 'form/:id',
+        component: PartidoFormComponent,
+        data: {
+          title: 'Editar Partido'
+        }
+      }
     ]
   },
 ];

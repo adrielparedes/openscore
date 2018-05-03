@@ -1,7 +1,7 @@
 <div>
 
   <div>
-    <button class="btn btn-success" (click)="crearEquipo()">
+    <button class="btn btn-success" (click)="crearPartido()">
       <i class="fa fa-plus-circle"></i> Crear nuevo partido</button>
   </div>
 
@@ -57,7 +57,7 @@
               <button class="btn btn-success" (click)="openResultadoModal(partido)">
                 <i class="fas fa-futbol"></i>
               </button>
-              <button class="btn btn-warning" (click)="editarEquipo(partido.id)">
+              <button class="btn btn-warning" (click)="editarPartido(partido.id)">
                 <i class="fas fa-edit"></i>
               </button>
               <button class="btn btn-danger" (click)="openModal(template,partido)">

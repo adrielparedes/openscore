@@ -1,11 +1,13 @@
 package io.semantic.openscore.core.services.impl;
 
 import io.semantic.openscore.core.api.ApiResponse;
-import io.semantic.openscore.core.api.post.CreatePost;
+import io.semantic.openscore.core.api.post.CrearPost;
 import io.semantic.openscore.core.model.Post;
 import io.semantic.openscore.core.model.PostStatus;
+import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.repository.PostRepository;
+import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.services.api.PostService;
 
 import javax.enterprise.context.RequestScoped;
@@ -39,11 +41,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Secure(Rol.ADMIN)
     public ApiResponse<Post> publicar(long id) {
         return ok(cambiarStatus(id, PostStatus.PUBLICADO));
     }
 
     @Override
+    @Secure(Rol.ADMIN)
     public ApiResponse<Post> retirar(long id) {
         return ok(cambiarStatus(id, PostStatus.BORRADOR));
     }
@@ -73,22 +77,24 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ApiResponse<Post> add(CreatePost entity) {
+    public ApiResponse<Post> add(CrearPost entity) {
         Post post = new Post();
-        post.setTitulo(entity.getTitulo());
-        post.setContenido(entity.getContenido());
-        post.setStatus(PostStatus.BORRADOR);
-        this.postRepository.save(post);
+        savePost(entity, post);
         return ok(post);
     }
 
-    @Override
-    public ApiResponse<Post> update(long id, CreatePost entity) {
-        Post post = this.getPost(id);
+    private void savePost(CrearPost entity, Post post) {
         post.setTitulo(entity.getTitulo());
         post.setContenido(entity.getContenido());
+        post.setAutor(entity.getAutor());
         post.setStatus(PostStatus.BORRADOR);
         this.postRepository.save(post);
+    }
+
+    @Override
+    public ApiResponse<Post> update(long id, CrearPost entity) {
+        Post post = this.getPost(id);
+        savePost(entity, post);
         return ok(post);
     }
 }

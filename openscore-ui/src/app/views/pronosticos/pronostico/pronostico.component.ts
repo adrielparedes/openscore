@@ -15,20 +15,23 @@ export class PronosticoComponent implements OnInit, OnDestroy {
 
   timeToBlock: string;
 
-  bloqueado = false;
+  pendiente = true;
 
   interval;
 
   constructor(private pronosticoService: PronosticoService) { }
 
   ngOnInit() {
-    if (this.isPendiente()) {
+
+    this.pendiente = this.pendiente && this.isPendiente();
+
+    if (this.pendiente) {
       this.interval = setInterval(() => {
         const diff = this.getTimeDiffToBlock(this.partido.dia);
         if (diff >= 0) {
           this.timeToBlock = this.getTimeToBlock(diff);
         } else {
-          this.bloqueado = true;
+          this.pendiente = false;
           clearInterval(this.interval);
         }
       }, 1000);
@@ -82,7 +85,7 @@ export class PronosticoComponent implements OnInit, OnDestroy {
   }
 
   isPendiente() {
-    return this.partido.status === 'PENDIENTE' || this.bloqueado;
+    return this.partido.status === 'PENDIENTE';
   }
 
   isGanador() {

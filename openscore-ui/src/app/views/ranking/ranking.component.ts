@@ -10,6 +10,8 @@ import { Ranking } from '../../model/ranking';
 export class RankingComponent implements OnInit {
 
   ranking: Ranking[]
+  unfilteredRanking: Ranking[]
+  filter: String = '';
 
   constructor(private rankingService: RankingService) { }
 
@@ -20,12 +22,32 @@ export class RankingComponent implements OnInit {
   update() {
     this.rankingService.getAll(0, 0).subscribe(
       res => {
-        this.ranking = res.data;
+        this.unfilteredRanking = res.data;
+        this.ranking = this.unfilteredRanking;
+        this.filter = '';
       });
   }
 
+  onChange(event) {
+    console.log(event);
+    this.filter = event;
+    if (event === '') {
+      this.ranking = this.unfilteredRanking;
+    } else {
+      this.ranking = this.unfilteredRanking.filter(rank => {
+        const found = this.find(event, rank.nombre) || this.find(event, rank.pais);
+        console.log(found);
+        return found;
+      });
+    }
+  }
+
+
+  find(search: string, attr: string) {
+    return attr.toLowerCase().indexOf(search.toLowerCase()) >= 0
+  }
+
   getCopa(ranking: Ranking) {
-    console.log(ranking.ranking);
     if (ranking.ranking === 1) {
       return 'fas fa-trophy gold';
     } else if (ranking.ranking === 2) {

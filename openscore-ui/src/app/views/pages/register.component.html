@@ -34,7 +34,9 @@
                   <i class="icon-map"></i>
                 </span>
               </div>
-              <input type="text" class="form-control" formControlName="pais" placeholder="País">
+              <select class="form-control" id="power" formControlName="pais" placeholder="Pais" required>
+                <option *ngFor="let pais of paises" [value]="pais.codigo">{{pais.nombre}}</option>
+              </select>
             </div>
 
             <div class="input-group mb-3">

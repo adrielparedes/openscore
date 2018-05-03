@@ -1,18 +1,10 @@
-package io.semantic.openscore.core.model;
+package io.semantic.openscore.core.api.post;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
-@Entity
-public class Post extends Storable {
+public class CrearPost {
 
     private String titulo;
     private String contenido;
     private String autor;
-
-    @Enumerated(EnumType.STRING)
-    private PostStatus status;
 
     public String getTitulo() {
         return titulo;
@@ -28,14 +20,6 @@ public class Post extends Storable {
 
     public void setContenido(String contenido) {
         this.contenido = contenido;
-    }
-
-    public PostStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(PostStatus status) {
-        this.status = status;
     }
 
     public String getAutor() {

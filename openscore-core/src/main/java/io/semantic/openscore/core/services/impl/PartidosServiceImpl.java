@@ -6,13 +6,16 @@ import io.semantic.openscore.core.api.partidos.PartidoDTO;
 import io.semantic.openscore.core.api.partidos.ResultadoDTO;
 import io.semantic.openscore.core.mapping.PartidoMapper;
 import io.semantic.openscore.core.model.Partido;
+import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.repository.PartidoRepository;
+import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.services.api.PartidosService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Optional;
 
 import static io.semantic.openscore.core.services.RestUtil.ok;
 
@@ -49,7 +52,8 @@ public class PartidosServiceImpl implements PartidosService {
 
     @Override
     public ApiResponse<PartidoDTO> get(long id) {
-        return null;
+        Partido partido = getPartido(id);
+        return ok(this.partidoMapper.asApi(partido));
     }
 
     @Override
@@ -58,21 +62,25 @@ public class PartidosServiceImpl implements PartidosService {
     }
 
     @Override
+    @Secure(Rol.ADMIN)
     public ApiResponse<Long> delete(long id) {
         return null;
     }
 
     @Override
+    @Secure(Rol.ADMIN)
     public ApiResponse<PartidoDTO> add(CrearOUpdatePartidoDTO entity) {
         return null;
     }
 
     @Override
+    @Secure(Rol.ADMIN)
     public ApiResponse<PartidoDTO> update(long id, CrearOUpdatePartidoDTO entity) {
         return null;
     }
 
     @Override
+    @Secure(Rol.ADMIN)
     public ApiResponse<PartidoDTO> setResultado(long partidoId, ResultadoDTO resultado) {
         Partido partido = this.getPartido(partidoId);
         partido.setResultado(this.partidoMapper.asResultado(resultado));

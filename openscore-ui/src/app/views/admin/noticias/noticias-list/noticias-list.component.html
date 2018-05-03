@@ -17,8 +17,9 @@
           <tr>
             <th>ID</th>
             <th>Titulo</th>
-            <th>Fecha</th>
+            <th>Autor</th>
             <th>Estado</th>
+            <th>Fecha</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -31,20 +32,23 @@
               {{noticia.titulo}}
             </td>
             <td>
-              {{noticia.fecha}}
+              {{noticia.autor}}
             </td>
             <td>
-              {{noticia.estado}}
+              {{noticia.modificationDate | date:'dd/MM/yyyy HH:mm:ss (O)'}}
             </td>
             <td>
-                <button class="btn btn-warning" (click)="editarEquipo(equipo.id)">
-                    <i class="fa fa-publish"></i>
-                  </button>
-                  <button class="btn btn-warning" (click)="editarEquipo(equipo.id)">
-                      <i class="fa fa-pencil"></i>
-                    </button>
-              <button class="btn btn-warning" (click)="editarEquipo(equipo.id)">
-                <i class="fa fa-pencil"></i>
+              {{noticia.status}}
+            </td>
+            <td>
+              <button class="btn btn-warning" (click)="editar(noticia)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-warning" (click)="publicar(noticia)">
+                <i class="fas fa-play"></i>
+              </button>
+              <button class="btn btn-warning" (click)="retirar(noticia)">
+                <i class="fas fa-stop"></i>
               </button>
               <button class="btn btn-danger" (click)="openModal(template,equipo)">
                 <i class="fa fa-trash"></i>

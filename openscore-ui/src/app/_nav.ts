@@ -1,21 +1,18 @@
 export const navigation = [
   {
+    name: 'Home',
+    url: '/home',
+    icon: 'icon-home'
+  },
+  {
     name: 'Dashboard',
     url: '/dashboard',
-    icon: 'icon-speedometer',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
+    icon: 'icon-speedometer'
   },
   {
     name: 'Noticias',
     url: '/noticias',
-    icon: 'icon-book-open',
-    badge: {
-      variant: 'warning',
-      text: '1'
-    }
+    icon: 'icon-book-open'
   },
   {
     name: 'Ranking',
@@ -27,52 +24,35 @@ export const navigation = [
     url: '/pronosticos',
     icon: 'icon-compass'
   },
-  // {
-  //   name: 'Explorar',
-  //   url: '/explorar',
-  //   icon: 'icon-compass'
-  // },
-  // {
-  //   name: 'Competiciones',
-  //   url: '/competiciones',
-  //   icon: 'icon-trophy',
-  //   children: [
-  //     {
-  //       name: 'Todas',
-  //       url: '/competiciones',
-  //       icon: 'icon-trophy'
-  //     },
-  //     {
-  //       name: 'Copa Conmebol Libertadores',
-  //       url: '/competiciones/1',
-  //       icon: 'icon-trophy'
-  //     }
-  //   ]
-  // },
   // ACA ABAJO VA LA PARTE DE ADMIN
   {
     title: true,
-    name: 'Admin'
+    name: 'Admin',
+    role: 'ADMIN'
   },
   {
     name: 'Usuarios',
     url: '/admin/usuarios',
-    icon: 'icon-people'
+    icon: 'icon-people',
+    role: 'ADMIN'
   },
   {
     name: 'Equipos',
     url: '/admin/equipos',
-    icon: 'icon-flag'
+    icon: 'icon-flag',
+    role: 'ADMIN'
   },
   {
     name: 'Partidos',
     url: '/admin/partidos',
-    icon: 'icon-calendar'
+    icon: 'icon-calendar',
+    role: 'ADMIN'
   },
   {
     name: 'Noticias',
     url: '/admin/noticias',
-    icon: 'icon-list'
+    icon: 'icon-list',
+    role: 'ADMIN'
   },
   // ACA ABAJO VA LA PARTE DE DESA PARA HACER PRUEBAS
   {

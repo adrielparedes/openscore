@@ -11,7 +11,7 @@ import { AuthGuard } from './services/auth-guard';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
@@ -22,6 +22,10 @@ export const routes: Routes = [
     },
     canActivateChild: [AuthGuard],
     children: [
+      {
+        path: 'home',
+        loadChildren: './views/home/home.module#HomeModule',
+      },
       {
         path: 'dashboard',
         loadChildren: './views/dashboard/dashboard.module#DashboardModule',
