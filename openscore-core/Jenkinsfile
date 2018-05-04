@@ -10,6 +10,7 @@ pipeline {
             steps {
                 script {
                     openshift.withCluster() {
+                        openshift.verbose();
                         openshift.withProject("openscore") {
                             if (!openshift.selector("bc", "openscore-core").exists()) {
                                 // Creates the application if not exists
