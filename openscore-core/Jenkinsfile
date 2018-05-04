@@ -6,18 +6,6 @@ pipeline {
         skipDefaultCheckout() 
     }
     stages {
-         stage("Checkout") {
-            steps {
-                git branch: env.BRANCH, url: env.REPO
-            }
-        }
-        stage("Compile") {
-            steps {
-                dir ("openscore-core") {
-                    sh "mvn package -DskipTests"
-                }
-            }
-        }
         stage("Build") {
             steps {
                 script {
@@ -25,10 +13,27 @@ pipeline {
                         openshift.withProject("openscore") {
                             if (!openshift.selector("bc", "openscore-core").exists()) {
                                 // Creates the application if not exists
-                                openshift.newBuild("--image-stream=wildfly:10.1", "--name=openscore-core", "--binary=true");                 
+                                def bc = openshift.newBuild("wildfly:10.1~${REPO}#${BRANCH}", "--name=openscore-core", "--strategy=source").narrow("bc");
+    
+                                // Gets the Builds related to the BuildConfig
+                                def builds = bc.related("builds");
+    
+                                // Gets a map with the BuildConfig values
+                                def bcMap = bc.object();
+
+                                // Sets incremental builds
+                                bcMap.spec.strategy.sourceStrategy["incremental"] = true;
+                                
+                                // Applies the changes
+                                openshift.apply(bcMap);            
+
+                                // Waits for the Build completion
+                                builds.untilEach(1) { 
+                                    return (it.object().status.phase == "Complete")
+                                }                                  
                             } else {
                                 // Starts a new build and waits for its completion
-                                openshift.selector("bc", "openscore-core").startBuild("--from-file=./openscore-core/target/openscore-core.war", "--wait=true");
+                                openshift.selector("bc", "openscore-core").startBuild("--wait=true");
                             }
                         }
                     }
@@ -41,7 +46,18 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject("openscore") {
                             if (!openshift.selector("dc", "openscore-core").exists()) {
-                                createApp("openscore-core", "latest");                   
+                                // Creates the application and get the brand new BuildConfig
+                                def dc = openshift.newApp("openscore-core:latest").narrow("dc");
+                                // Creates the app Route
+                                openshift.selector("svc", "openscore-core").expose();
+
+                                // Waits for the deployment to finish
+                                while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                                    sleep 10
+                                }
+                                
+                                // Removes the triggers  
+                                openshift.set("triggers", "dc/openscore-core", "--manual");                 
                             } else {
                                 // Rollouts to latest version
                                 openshift.selector("dc", "openscore-core").rollout().latest();   
@@ -52,19 +68,4 @@ pipeline {
             }
         }      
     }
-}
-
-def createApp(app, tag) {
-    // Creates the application and get the brand new BuildConfig
-    def dc = openshift.newApp("${app}:${tag}").narrow("dc");
-    // Creates the app Route
-    openshift.selector("svc", app).expose();
-
-    // Waits for the deployment to finish
-    while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
-        sleep 10
-    }
-    
-    // Removes the triggers  
-    openshift.set("triggers", "dc/${app}", "--manual");
 }
