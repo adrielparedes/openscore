@@ -13,7 +13,9 @@ pipeline {
         }
         stage("Compile") {
             steps {
-                sh "mvn package -DskipTests"
+                dir ("openscore-core") {
+                    sh "mvn package -DskipTests"
+                }
             }
         }
         stage("Build") {
@@ -26,7 +28,7 @@ pipeline {
                                 openshift.newBuild("--image-stream=wildfly:10.1", "--name=openscore-core", "--binary=true");                 
                             } else {
                                 // Starts a new build and waits for its completion
-                                openshift.selector("bc", "openscore-core").startBuild("--from-file=openscore-core.war", "--wait=true");
+                                openshift.selector("bc", "openscore-core").startBuild("--from-file=./openscore-core/target/openscore-core.war", "--wait=true");
                             }
                         }
                     }
