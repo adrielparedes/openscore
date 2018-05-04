@@ -9,10 +9,10 @@ import java.util.Date;
 @Entity
 public class Partido extends Storable {
 
-    @OneToOne
+    @ManyToOne
     private Equipo local;
 
-    @OneToOne
+    @ManyToOne
     private Equipo visitante;
     private Date dia;
     private String lugar;
