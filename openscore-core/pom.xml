@@ -147,6 +147,7 @@
 
 
     <build>
+	<finalName>${project.artifactId}</finalName>
         <pluginManagement>
             <plugins>
                 <!-- The Maven Surefire plugin tests your application. Here we ensure we are using a version compatible with Arquillian -->
