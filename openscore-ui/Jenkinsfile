@@ -16,15 +16,17 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject("openscore") {
-                            sh  "npm install"
-                            sh  "./node_modules/@angular/cli/bin/ng build --prod --aot"
-
-                            if (!openshift.selector("bc", "openscore-core").exists()) {
+                            dir("openscore-ui") {
+                                sh  "npm install"
+                                sh  "./node_modules/@angular/cli/bin/ng build --prod --aot"
+                            }
+                            
+                            if (!openshift.selector("bc", "openscore-ui").exists()) {
                                 // Creates the application if not exists
                                 openshift.newBuild("httpd:2.4", "--binary", "--name=openscore-ui");                  
                             } else {
                                 // Starts a new build and waits for its completion
-                                openshift.selector("bc", "openscore-uicore").startBuild("--from-dir=./dist", "--wait=true");
+                                openshift.selector("bc", "openscore-ui").startBuild("--from-dir=./openscore-ui/dist", "--wait=true");
                             }
                         }
                     }
