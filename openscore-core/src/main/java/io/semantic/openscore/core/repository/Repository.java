@@ -1,9 +1,6 @@
 package io.semantic.openscore.core.repository;
 
-import afu.org.checkerframework.checker.oigj.qual.O;
 import io.semantic.openscore.core.model.Storable;
-import org.apache.commons.lang3.text.StrSubstitutor;
-import org.apache.commons.text.StringSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,13 +11,8 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
 
 public abstract class Repository<T extends Storable> {
 

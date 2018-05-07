@@ -5,5 +5,7 @@
 
 export const environment = {
   production: false,
+  name: 'dev',
+  version: require('../../package.json').version,
   url: 'http://localhost:8080/openscore/api/rest'
 };
