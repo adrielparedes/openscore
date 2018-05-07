@@ -30,7 +30,7 @@ public class ApplicationValidator {
         if (!errors.isEmpty()) {
             String message = ValidationException.generateMessage(errors);
             logger.error(message);
-            throw new ValidationException(message);
+            throw new ValidationException(message, ValidationException.generateErrorsList(errors));
         }
     }
 }

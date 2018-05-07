@@ -1,15 +1,12 @@
 package io.semantic.openscore.core.api.usuarios;
 
-import io.semantic.openscore.core.security.TokenGenerator;
 import io.semantic.openscore.core.validation.annotations.Matches;
 import io.semantic.openscore.core.validation.annotations.Password;
-import jdk.nashorn.internal.parser.Token;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 @Matches.List({
         @Matches(first = "password", second = "confirmacionPassword"),
@@ -29,11 +26,11 @@ public class CrearUsuarioDTO {
     private String pais;
 
     @NotNull
-    @Email
+    @Email(regexp = ".*@redhat\\.com")
     private String email;
 
     @NotNull
-    @Email
+    @Email(regexp = ".*@redhat\\.com")
     private String confirmacionEmail;
 
     @NotNull

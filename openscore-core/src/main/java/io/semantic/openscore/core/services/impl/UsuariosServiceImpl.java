@@ -5,6 +5,8 @@ import io.semantic.openscore.core.api.TokenDTO;
 import io.semantic.openscore.core.api.usuarios.CrearUsuarioDTO;
 import io.semantic.openscore.core.api.usuarios.LoginUsuarioDTO;
 import io.semantic.openscore.core.api.usuarios.UsuarioDTO;
+import io.semantic.openscore.core.exceptions.EmailException;
+import io.semantic.openscore.core.logging.ServiceLogger;
 import io.semantic.openscore.core.mapping.PaisMapper;
 import io.semantic.openscore.core.mapping.UsuarioMapper;
 import io.semantic.openscore.core.model.Pais;
@@ -38,6 +40,7 @@ import static java.util.stream.Collectors.toList;
 public class UsuariosServiceImpl implements UsuariosService {
 
     private List<EmailValidator> mailValidators;
+    private ServiceLogger serviceLogger;
     private Logger logger = LoggerFactory.getLogger(UsuariosServiceImpl.class);
 
     private UsuarioRepository usuarioRepository;
@@ -58,7 +61,8 @@ public class UsuariosServiceImpl implements UsuariosService {
                                ApplicationValidator appValidator,
                                UsuarioMapper mapper,
                                PaisMapper paisMapper,
-                               Instance<EmailValidator> mailValidators) {
+                               Instance<EmailValidator> mailValidators,
+                               ServiceLogger serviceLogger) {
         this.usuarioRepository = usuarioRepository;
         this.paisRepository = paisRepository;
         this.tokenGenerator = tokenGenerator;
@@ -67,6 +71,7 @@ public class UsuariosServiceImpl implements UsuariosService {
         this.paisMapper = paisMapper;
         this.mailValidators = StreamSupport.stream(mailValidators.spliterator(), false).collect(toList());
 
+        this.serviceLogger = serviceLogger;
     }
 
 
@@ -74,7 +79,6 @@ public class UsuariosServiceImpl implements UsuariosService {
     public ApiResponse<UsuarioDTO> registrarUsuario(CrearUsuarioDTO crearUsuario) {
 
         this.validator.validate(crearUsuario);
-        this.mailValidators.stream().anyMatch(emailValidator -> emailValidator.validate(crearUsuario.getEmail()));
 
         Pais pais = this.paisRepository.findByCodigo(crearUsuario.getPais());
 

@@ -3,8 +3,11 @@
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div *ngIf="error" class="alert alert-danger" role="alert">
-          <i class="fa fa-lg fa-times-circle-o"></i>
+          <i class="fas fa-lg fa-times-circle-o"></i>
           Error al intentar registrarse
+          <ul>
+            <li *ngFor="let errorDescription of errores">{{errorDescription}}</li>
+          </ul>
         </div>
         <div class="card mx-4">
           <div class="card-body p-4" [formGroup]="registro">
