@@ -18,7 +18,7 @@ public class TestDiaBuilder implements DiaBuilder {
     public Date getMatchDate(String fecha) {
         Calendar date = Calendar.getInstance();
         long t = date.getTimeInMillis();
-        Date afterAddingTenMins = new Date(t + (random.nextInt(60) * ONE_MINUTE_IN_MILLIS));
+        Date afterAddingTenMins = new Date(t + (random.nextInt(8 * 60) * ONE_MINUTE_IN_MILLIS));
         logger.info(afterAddingTenMins.toString());
         return afterAddingTenMins;
     }
