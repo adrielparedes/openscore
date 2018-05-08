@@ -6,7 +6,7 @@
 
     <persistence-unit name="db" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <jta-data-source>openscore</jta-data-source>
+        <jta-data-source>java:jboss/datasources/openscore</jta-data-source>
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.flushMode" value="FLUSH_AUTO"/>
