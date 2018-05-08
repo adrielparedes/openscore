@@ -1,11 +1,11 @@
 <div>
-  <button class="btn btn-success" (click)="save()">Guardar</button>
+  <button class="btn btn-success" [disabled]="!isDirty" (click)="save()">Guardar</button>
 
   <div>
     <label>Titulo: </label>
     <input [(ngModel)]="titulo" />
     <label>Autor: </label>
     <input [(ngModel)]="autor" />
-    <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" [(ngModel)]="htmlContent"></app-ngx-editor>
+    <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" [(ngModel)]="htmlContent" (ngModelChange)="onChange($event)"></app-ngx-editor>
   </div>
 </div>

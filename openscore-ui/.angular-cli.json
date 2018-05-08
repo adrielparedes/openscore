@@ -26,7 +26,7 @@
         "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css",
         "../node_modules/simple-line-icons/css/simple-line-icons.css",
         "../node_modules/load-awesome/css/ball-scale-multiple.min.css",
-        "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
+        "../node_modules/ngx-toastr/toastr.css",
         "scss/style.scss"
       ],
       "scripts": [
@@ -37,7 +37,8 @@
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
+        "prod": "environments/environment.prod.ts",
+        "test": "environments/environment.test.ts"
       }
     }
   ],

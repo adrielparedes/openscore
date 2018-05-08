@@ -15,7 +15,7 @@ export class RegisterComponent {
   paises: Pais[] = [];
   registro: FormGroup;
   error = false;
-
+  errores: string[] = [];
   constructor(private usuarioService: UsuarioService,
     private fb: FormBuilder,
     private paisesService: PaisesService,
@@ -46,7 +46,9 @@ export class RegisterComponent {
         this.router.navigate(['/dashboard']);
       }, error => {
         this.error = true;
+        this.errores = error.error.data;
         console.log(error);
+        console.log(this.errores);
       });
     } else {
       this.error = true;

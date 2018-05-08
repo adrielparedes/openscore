@@ -6,7 +6,7 @@
 
     <groupId>io.semantic</groupId>
     <artifactId>openscore-core</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>
@@ -147,7 +147,23 @@
 
 
     <build>
-	<finalName>${project.artifactId}</finalName>
+        <finalName>${project.artifactId}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>info.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>info.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <!-- The Maven Surefire plugin tests your application. Here we ensure we are using a version compatible with Arquillian -->
@@ -198,6 +214,25 @@
                 </configuration>
             </plugin>
         </plugins>
+
     </build>
+
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <project.environment>prod</project.environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <project.environment>test</project.environment>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>
