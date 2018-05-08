@@ -17,11 +17,11 @@ export class NoticiasEditorComponent implements OnInit {
   titulo: string;
   autor: string;
   htmlContent: string;
+  isDirty = false;
 
   constructor(private noticiasService: NoticiasService,
     private activedRoute: ActivatedRoute,
     private toastr: ToastrService) {
-    console.log(this.toastr);
   }
 
   ngOnInit() {
@@ -43,10 +43,15 @@ export class NoticiasEditorComponent implements OnInit {
     }
   }
 
+  onChange(newValue) {
+    this.isDirty = true;
+  }
+
   noticiaGuardada(toastr: ToastrService) {
     return (res: ApiResponse<Noticia>) => {
       this.id = res.data.id;
       toastr.success(`Noticia ${this.id} guardado`);
+      this.isDirty = false;
     };
   }
 }
