@@ -29,3 +29,7 @@ node_modules/
 .idea/
 *.iml
 dist/
+
+.classpath
+.project
+.settings
