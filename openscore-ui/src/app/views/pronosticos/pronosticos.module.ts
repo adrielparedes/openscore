@@ -1,4 +1,4 @@
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ServicesModule } from './../../services/services.module';
 import { PronosticosRoutes } from './pronosticos.routing';
 import { NgModule } from '@angular/core';
@@ -13,10 +13,10 @@ import { PronosticoComponent } from './pronostico/pronostico.component';
     PronosticosRoutes,
     ServicesModule,
     TabsModule,
-    NgxSpinnerModule
+    MatProgressSpinnerModule
   ],
   declarations: [PronosticosComponent,
     PronosticoComponent
-]
+  ]
 })
 export class PronosticosModule { }

@@ -1,3 +1,4 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ServicesModule } from './../../../services/services.module';
@@ -14,6 +15,7 @@ import { EquiposFormComponent } from './equipos-form/equipos-form.component';
     EquiposRoutingModule,
     ServicesModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
     ModalModule.forRoot()
   ],
   declarations: [EquiposComponent,

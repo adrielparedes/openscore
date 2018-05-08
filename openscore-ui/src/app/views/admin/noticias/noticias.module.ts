@@ -7,14 +7,15 @@ import { NoticiasComponent } from './noticias.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { NoticiasEditorComponent } from './noticias-editor/noticias-editor.component';
 import { NoticiasListComponent } from './noticias-list/noticias-list.component';
-import { ToastrModule } from 'ngx-toastr';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
     CommonModule,
     NgxEditorModule,
     FormsModule,
-    NoticiasRoutes
+    NoticiasRoutes,
+    MatProgressSpinnerModule
   ],
   declarations: [NoticiasComponent,
     NoticiasEditorComponent,

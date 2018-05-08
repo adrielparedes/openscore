@@ -16,7 +16,8 @@
 
   <hr/>
 
-  <table class="table table-responsive-sm table-hover table-outline mb-0">
+  <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
+  <table *ngIf="!loading" class="table table-responsive-sm table-hover table-outline mb-0">
     <thead class="thead-light">
       <tr>
         <th class="text-center">Posicion</th>

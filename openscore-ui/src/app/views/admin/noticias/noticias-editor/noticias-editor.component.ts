@@ -14,10 +14,17 @@ import { Noticia } from '../../../../model/noticia';
 export class NoticiasEditorComponent implements OnInit {
 
   id: number;
-  titulo: string;
-  autor: string;
-  htmlContent: string;
+  titulo = '';
+  autor = '';
+  htmlContent = '';
   isDirty = false;
+  saving = false;
+  config = {
+    placeholder: 'Escriba aqui',
+    height: 'auto',
+    minHeight: '300px',
+    spellcheck: true
+  }
 
   constructor(private noticiasService: NoticiasService,
     private activedRoute: ActivatedRoute,
@@ -34,12 +41,13 @@ export class NoticiasEditorComponent implements OnInit {
   }
 
   save() {
-    const crearNoticia = <CrearNoticia>{ titulo: this.titulo, contenido: this.htmlContent, autor: this.autor }
+    this.saving = true;
+    const crearNoticia = <CrearNoticia>{ titulo: this.titulo.trim(), contenido: this.htmlContent, autor: this.autor.trim() }
     console.log(this.id);
     if (this.id) {
-      this.noticiasService.update(this.id, crearNoticia).subscribe(this.noticiaGuardada(this.toastr));
+      this.noticiasService.update(this.id, crearNoticia).subscribe(this.noticiaGuardada(this.toastr), this.errorAlGuardar(this.toastr));
     } else {
-      this.noticiasService.add(crearNoticia).subscribe(this.noticiaGuardada(this.toastr));
+      this.noticiasService.add(crearNoticia).subscribe(this.noticiaGuardada(this.toastr), this.errorAlGuardar(this.toastr));
     }
   }
 
@@ -52,6 +60,19 @@ export class NoticiasEditorComponent implements OnInit {
       this.id = res.data.id;
       toastr.success(`Noticia ${this.id} guardado`);
       this.isDirty = false;
+      this.saving = false;
+    };
+  }
+
+
+  errorAlGuardar(toastr: ToastrService) {
+    return (res) => {
+      let titulo = '';
+      if (this.titulo !== undefined && this.titulo.length > 0) {
+        titulo = '"' + this.titulo + '"';
+      }
+      toastr.error(`No se pudo guardar la noticia ${titulo}`);
+      this.saving = false;
     };
   }
 }

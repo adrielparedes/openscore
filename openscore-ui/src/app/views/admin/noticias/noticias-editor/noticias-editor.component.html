@@ -1,11 +1,25 @@
 <div>
-  <button class="btn btn-success" [disabled]="!isDirty" (click)="save()">Guardar</button>
+  <button class="btn btn-info btn-nuevo" (click)="save()">
+      <i class="fas fa-arrow-left"></i>
+    <span>Volver</span>
+  </button>
+  <button class="btn btn-success btn-nuevo" [disabled]="!isDirty" (click)="save()">
+    <span>Guardar</span>
+    <i *ngIf="saving" class="fas fa-circle-notch fa-spin"></i>
+  </button>
+
 
   <div>
-    <label>Titulo: </label>
-    <input [(ngModel)]="titulo" />
-    <label>Autor: </label>
-    <input [(ngModel)]="autor" />
-    <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" [(ngModel)]="htmlContent" (ngModelChange)="onChange($event)"></app-ngx-editor>
+    <div>
+      <div>
+        <label>Titulo: </label>
+        <input required [(ngModel)]="titulo" (ngModelChange)="onChange($event)" />
+      </div>
+      <div>
+        <label>Autor: </label>
+        <input required [(ngModel)]="autor" (ngModelChange)="onChange($event)" />
+      </div>
+    </div>
+    <app-ngx-editor [config]="config" [(ngModel)]="htmlContent" (ngModelChange)="onChange($event)"></app-ngx-editor>
   </div>
 </div>

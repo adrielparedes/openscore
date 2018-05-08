@@ -12,6 +12,7 @@ export class RankingComponent implements OnInit {
   ranking: Ranking[]
   unfilteredRanking: Ranking[]
   filter: String = '';
+  loading = true;
 
   constructor(private rankingService: RankingService) { }
 
@@ -20,11 +21,13 @@ export class RankingComponent implements OnInit {
   }
 
   update() {
+    this.loading = true;
     this.rankingService.getAll(0, 0).subscribe(
       res => {
         this.unfilteredRanking = res.data;
         this.ranking = this.unfilteredRanking;
         this.filter = '';
+        this.loading = false;
       });
   }
 
@@ -36,7 +39,6 @@ export class RankingComponent implements OnInit {
     } else {
       this.ranking = this.unfilteredRanking.filter(rank => {
         const found = this.find(event, rank.nombre) || this.find(event, rank.pais);
-        console.log(found);
         return found;
       });
     }

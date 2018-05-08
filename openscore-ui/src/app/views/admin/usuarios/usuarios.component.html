@@ -7,8 +7,10 @@
     </div>
     <div class="card-body">
 
-      <div *ngIf="usuarios.length == 0"><i class="fa fa-times"></i> No se han encontrado usuarios registrados</div>
-      <table *ngIf="usuarios.length > 0" class="table table-responsive-sm table-hover table-outline mb-0">
+      <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
+      <div *ngIf="!loading && usuarios.length === 0">
+        <i class="fa fa-times"></i> No se han encontrado usuarios registrados</div>
+      <table *ngIf="!loading && usuarios.length > 0" class="table table-responsive-sm table-hover table-outline mb-0">
         <thead class="thead-light">
           <tr>
             <th class="text-center">
@@ -28,14 +30,15 @@
             <td>
               <div>{{usuario.nombre}} {{usuario.apellido}}</div>
               <div class="small text-muted">
-                <span>Eliminado: {{ usuario.deleted }}</span> | Registrado el: {{usuario.creationDate | date: 'dd/MM/yyyy HH:mm:ss (O)'}}
+                <span>Eliminado: {{ usuario.deleted }}</span> | Registrado el: {{usuario.creationDate | date: 'dd/MM/yyyy HH:mm:ss
+                (O)'}}
               </div>
             </td>
             <td class="text-center">
               <div>{{usuario.pais.nombre}}</div>
             </td>
             <td>
-             {{usuario.email}}
+              {{usuario.email}}
             </td>
             <td>
               <div class="small text-muted">Last login</div>

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ResultadoComponent } from '../resultado/resultado.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-partidos-list',
@@ -15,6 +16,7 @@ export class PartidosListComponent implements OnInit {
 
   modalRef: BsModalRef;
   partidos = [];
+  loading = true;
 
   id: number;
   nombre: string;
@@ -22,16 +24,27 @@ export class PartidosListComponent implements OnInit {
   constructor(
     private equiposService: PartidosService,
     private modalService: BsModalService,
-    private router: Router) { }
+    private router: Router,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.refresh();
   }
 
   refresh() {
+    this.loading = true;
     this.equiposService.getAll(1, 10).subscribe(response => {
       this.partidos = response.data;
-    });
+      this.loading = false;
+    },
+      err => {
+        if (err.status === 0) {
+          this.toastr.error('No se puede comunicar con el servicio de Partidos');
+        } else {
+          this.toastr.error('Error desconocido');
+        }
+        this.loading = false;
+      });
   }
 
   openModal(template: TemplateRef<any>, partido: Partido) {

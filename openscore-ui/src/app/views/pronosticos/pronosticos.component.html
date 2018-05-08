@@ -1,5 +1,4 @@
 <div class="animated fadeIn">
-  <ngx-spinner bdOpacity=0.9 bdColor="#333" size="large" color="#fff" type="ball-atom"></ngx-spinner>
 
   <h1>Pronosticos</h1>
 
@@ -25,6 +24,7 @@
     <tabset class="animated fadeIn" *ngIf="isGrupo()">
       <tab class="animated fadeIn" heading="{{grupo.nombre}}" (select)="retrievePartidosPorGrupo(grupo.codigo)" *ngFor="let grupo of grupos">
         <div class="row">
+          <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
             <app-pronostico [partido]="partido"></app-pronostico>
           </div>
@@ -37,8 +37,9 @@
     <tabset class="animated fadeIn" *ngIf="isFase()">
       <tab class="animated fadeIn" heading="Fase: {{fase.nombre}}" (select)="retrievePartidosPorFase(fase)" *ngFor="let fase of fases">
         <div class="row">
-          <div class="card-body" *ngIf="partidos.length == 0">
-            <div >
+          <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
+          <div class="card-body" *ngIf="!loading && partidos.length == 0">
+            <div>
               <i class="fa fa-times"></i> Todavia no hay partidos para esta fase</div>
           </div>
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
@@ -53,6 +54,7 @@
     <tabset class="animated fadeIn" *ngIf="isFecha()">
       <tab class="animated fadeIn" heading="Fecha {{fecha}}" (select)="retrievePartidosPorFecha(fecha)" *ngFor="let fecha of fechas">
         <div class="row">
+          <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
             <app-pronostico [partido]="partido"></app-pronostico>
           </div>
@@ -65,8 +67,9 @@
     <tabset class="animated fadeIn" *ngIf="isHoy()">
       <tab class="animated fadeIn" heading="{{today |  date:'dd/MM/yyyy'}}" (select)="retrievePartidosPorFecha(today)">
         <div class="row">
-          <div class="card-body" *ngIf="partidos.length == 0">
-            <div >
+          <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
+          <div class="card-body" *ngIf="!loading && partidos.length == 0">
+            <div>
               <i class="fa fa-times"></i> No se han encontrado partidos para este dia</div>
           </div>
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">

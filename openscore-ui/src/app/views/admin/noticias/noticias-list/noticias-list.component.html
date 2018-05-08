@@ -1,6 +1,6 @@
 <div>
   <div>
-    <button class="btn btn-success" (click)="nueva()">
+    <button class="btn btn-success btn-nuevo" (click)="nueva()">
       <i class="fa fa-plus-circle"></i> Nueva noticia</button>
   </div>
 
@@ -9,10 +9,10 @@
       <i class="fa fa-list"></i> Listado de noticias
     </div>
     <div class="card-body">
-
-      <div *ngIf="noticias.length == 0">
+      <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
+      <div *ngIf="!loading && noticias.length == 0">
         <i class="fa fa-times"></i> No se han encontrado noticias</div>
-      <table *ngIf="noticias.length > 0" class="table table-responsive-sm table-hover table-outline mb-0">
+      <table *ngIf="!loading && noticias.length > 0" class="table table-responsive-sm table-hover table-outline mb-0">
         <thead class="thead-light">
           <tr>
             <th>ID</th>

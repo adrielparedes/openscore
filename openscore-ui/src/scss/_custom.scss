@@ -1,8 +1,29 @@
 // Here you can add other styles
+html,
+body {
+    font-family: 'Overpass', sans-serif;
+}
+
+.btn-nuevo {
+    margin-bottom: 10px;
+}
+
+.warn::ng-deep circle {
+    stroke: $blue;
+}
+
 .muestra {
     width: 30%;
 }
 
 .app-header.navbar .navbar-brand {
     background-size: 100px auto;
+}
+
+.username {
+    padding-right: 20px;
+}
+
+.btn-info {
+    color: white;
 }

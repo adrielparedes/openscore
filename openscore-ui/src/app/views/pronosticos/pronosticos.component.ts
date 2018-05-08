@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { FaseService } from './../../services/fase.service';
 import { Fase } from './../../model/fase';
 import { GruposService } from './../../services/grupos.service';
@@ -24,29 +25,28 @@ export class PronosticosComponent implements OnInit {
   fases: Fase[] = [];
   today: Date = new Date(Date.now());
   fechas: number[] = [];
+  loading = true;
 
 
   constructor(private pronosticoService: PronosticoService,
     private partidosService: PartidosService,
     private gruposService: GruposService,
     private fasesService: FaseService,
-    private spinner: NgxSpinnerService) { }
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.update();
   }
 
   update() {
-    // this.spinner.show();
-    this.gruposService.getAll(0, 0).subscribe(res => {
-      // this.spinner.show();
-      this.grupos = res.data;
-    });
-    this.partidosService.getFechas().subscribe(res => {
-      this.fechas = res.data;
-    });
-    this.fasesService.getAll(0, 0).subscribe(res => {
-      this.fases = res.data;
+    this.gruposService.getAll(0, 0).subscribe(res1 => {
+      this.grupos = res1.data;
+      this.partidosService.getFechas().subscribe(res2 => {
+        this.fechas = res2.data;
+        this.fasesService.getAll(0, 0).subscribe(res => {
+          this.fases = res.data;
+        });
+      });
     });
 
     this.retrievePartidosPorDia(this.today);
@@ -54,35 +54,33 @@ export class PronosticosComponent implements OnInit {
   }
 
   retrievePartidosPorGrupo(grupo: string) {
-    this.pronosticoService.getAll(0, 0, [{ key: 'grupo', value: grupo }]).subscribe(res => {
-      this.partidos = res.data;
-      this.spinner.hide();
-    });
+    this.getAll(0, 0, [{ key: 'grupo', value: grupo }]);
   }
 
   retrievePartidosPorDia(dia: Date) {
     const date = this.buildDate(dia);
-    console.log(date);
-    this.pronosticoService.getAll(0, 0, [{ key: 'dia', value: date }]).subscribe(res => {
-      this.partidos = res.data;
-      this.spinner.hide();
-    });
+    this.getAll(0, 0, [{ key: 'dia', value: date }]);
   }
 
 
   retrievePartidosPorFecha(fecha: number) {
-    this.pronosticoService.getAll(0, 0, [{ key: 'fecha', value: fecha }]).subscribe(res => {
-      this.partidos = res.data;
-      this.spinner.hide();
-    });
+    this.getAll(0, 0, [{ key: 'fecha', value: fecha }]);
   }
 
   retrievePartidosPorFase(fase: Fase) {
-    this.pronosticoService.getAll(0, 0, [{ key: 'fase', value: fase.codigo }]).subscribe(res => {
+    this.getAll(0, 0, [{ key: 'fase', value: fase.codigo }]);
+  }
+
+
+  getAll(page: number, pageSize: number, params) {
+    this.loading = true;
+    this.partidos = [];
+    this.pronosticoService.getAll(page, pageSize, params).subscribe((res) => {
       this.partidos = res.data;
-      this.spinner.hide();
+      this.loading = false;
     });
   }
+
 
   hoy() {
     this.formato = Formato.HOY

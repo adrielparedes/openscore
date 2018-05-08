@@ -27,6 +27,10 @@ export const routes: Routes = [
         loadChildren: './views/home/home.module#HomeModule',
       },
       {
+        path: 'reglamento',
+        loadChildren: './views/reglamento/reglamento.module#ReglamentoModule',
+      },
+      {
         path: 'dashboard',
         loadChildren: './views/dashboard/dashboard.module#DashboardModule',
       },

@@ -1,7 +1,7 @@
 <div>
 
   <div>
-    <button class="btn btn-success" (click)="crearEquipo()">
+    <button class="btn btn-success btn-nuevo" (click)="crearEquipo()">
       <i class="fa fa-plus-circle"></i> Crear nuevo equipo</button>
   </div>
 
@@ -11,8 +11,10 @@
     </div>
     <div class="card-body">
 
-      <div *ngIf="equipos.length == 0"><i class="fa fa-times"></i> No se han encontrado equipos disponibles</div>
-      <table *ngIf="equipos.length > 0" class="table table-responsive-sm table-hover table-outline mb-0">
+      <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
+      <div *ngIf="!loading && equipos.length == 0">
+        <i class="fa fa-times"></i> No se han encontrado equipos disponibles</div>
+      <table *ngIf="!loading && equipos.length > 0" class="table table-responsive-sm table-hover table-outline mb-0">
         <thead class="thead-light">
           <tr>
             <th>ID</th>
@@ -37,7 +39,7 @@
               </div>
             </td>
             <td>
-              <img src="{{equipo.logo}}"/>
+              <img src="{{equipo.logo}}" />
             </td>
             <td>
               <button class="btn btn-warning" (click)="editarEquipo(equipo.id)">
@@ -56,7 +58,8 @@
   </div>
   <ng-template #template>
     <div class="modal-body text-center">
-      <p>Desea eliminar la equipo <b>{{nombre}}</b>?</p>
+      <p>Desea eliminar la equipo
+        <b>{{nombre}}</b>?</p>
       <button type="button" class="btn btn-default" (click)="eliminarEquipo()">Si</button>
       <button type="button" class="btn btn-primary" (click)="closeModal()">No</button>
     </div>

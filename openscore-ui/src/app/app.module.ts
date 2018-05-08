@@ -1,3 +1,4 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServicesModule } from './services/services.module';
@@ -78,7 +79,6 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     TabsModule.forRoot(),
     ChartsModule,
     ServicesModule,
-    NgxSpinnerModule,
     ToastrModule.forRoot()
   ],
   declarations: [

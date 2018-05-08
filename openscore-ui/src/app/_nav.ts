@@ -5,6 +5,11 @@ export const navigation = [
     icon: 'icon-home'
   },
   {
+    name: 'Reglamento',
+    url: '/reglamento',
+    icon: 'icon-list'
+  },
+  {
     name: 'Dashboard',
     url: '/dashboard',
     icon: 'icon-speedometer'

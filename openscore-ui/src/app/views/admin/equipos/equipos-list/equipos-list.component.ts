@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { EquiposService } from './../../../../services/equipos.service';
 import { Equipo } from './../../../../model/equipo';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -14,6 +15,7 @@ export class EquiposListComponent implements OnInit {
 
   modalRef: BsModalRef;
   equipos = [];
+  loading = true;
 
   id: number;
   nombre: string;
@@ -21,16 +23,28 @@ export class EquiposListComponent implements OnInit {
   constructor(
     private equiposService: EquiposService,
     private modalService: BsModalService,
-    private router: Router) { }
+    private router: Router,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit() {
     this.refresh();
   }
 
   refresh() {
+    this.loading = true;
     this.equiposService.getAll(1, 10).subscribe(response => {
       this.equipos = response.data;
-    });
+      this.loading = false;
+    },
+      err => {
+        if (err.status === 0) {
+          this.toastr.error('No se puede comunicar con el servicio de Equipos');
+        } else {
+          this.toastr.error('Error desconocido');
+        }
+        this.loading = false;
+      });
   }
 
   openModal(template: TemplateRef<any>, equipo: Equipo) {

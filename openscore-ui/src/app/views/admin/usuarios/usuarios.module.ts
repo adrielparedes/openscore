@@ -1,3 +1,4 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ServicesModule } from './../../../services/services.module';
 import { UsuariosRoutingModule } from './usuarios.routing';
 import { NgModule } from '@angular/core';
@@ -8,7 +9,8 @@ import { UsuariosComponent } from './usuarios.component';
   imports: [
     CommonModule,
     UsuariosRoutingModule,
-    ServicesModule
+    ServicesModule,
+    MatProgressSpinnerModule
   ],
   declarations: [UsuariosComponent]
 })

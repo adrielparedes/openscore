@@ -6,6 +6,7 @@
  * @license MIT
  */
 
+ @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 // Override Boostrap variables
 @import "bootstrap-variables";
 // Import Bootstrap source files
@@ -18,8 +19,3 @@
 @import "custom";
 
 @import url('https://fonts.googleapis.com/css?family=Overpass');
-
-html,
-body {
-    font-family: 'Overpass', sans-serif;
-}
