@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-REPO=https://github.com/adrielparedes/openscore
-BRANCH=develop
-
-oc new-app --name openscore-core wildfly:10.1~$REPO#$BRANCH
-
 oc new-build --name openscore-ui httpd:2.4 --binary
 oc start-build openscore-ui --from-dir=./openscore-ui/dist --wait
 
