@@ -119,14 +119,16 @@ export class PronosticosComponent implements OnInit {
   }
 
   buildDate(fecha: Date) {
-    return fecha.getFullYear().toString() + this.completeMonth((fecha.getMonth() + 1).toString()) + fecha.getDate().toString();
+    return fecha.getFullYear().toString()
+      + this.fillWithZeros((fecha.getMonth() + 1).toString())
+      + this.fillWithZeros(fecha.getDate().toString());
   }
 
-  completeMonth(month: string) {
-    if (month.length === 1) {
-      return '0' + month;
+  fillWithZeros(date: string) {
+    if (date.length === 1) {
+      return '0' + date;
     } else {
-      return month;
+      return date;
     }
   }
 

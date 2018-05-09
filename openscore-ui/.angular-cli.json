@@ -38,7 +38,8 @@
       "environments": {
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts",
-        "test": "environments/environment.test.ts"
+        "test": "environments/environment.test.ts",
+        "minishift": "environments/environment.minishift.ts"
       }
     }
   ],

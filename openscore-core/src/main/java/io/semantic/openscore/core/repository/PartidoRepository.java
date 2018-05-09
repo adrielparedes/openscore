@@ -32,9 +32,7 @@ public class PartidoRepository extends Repository<Partido> {
             "order by dia asc";
 
     private static final String FIND_ALL_BY_DIA = "from Partido where " +
-            "day(dia) = day(:dia) AND " +
-            "month(dia) = month(:dia) AND " +
-            "year(dia) = year(:dia) " +
+            "cast(dia as date) = :dia " +
             "order by dia asc";
 
     private static final String FIND_ALL_FECHAS = "select distinct p.fecha from Partido p group by p.fecha order by p.fecha asc";
@@ -62,7 +60,7 @@ public class PartidoRepository extends Repository<Partido> {
 
     public List<Partido> findAllByDia(Date dia) {
         TypedQuery<Partido> query = this.createQuery(FIND_ALL_BY_DIA)
-                .setParameter("dia", dia, TemporalType.DATE);
+                .setParameter("dia", dia,TemporalType.DATE);
         return this.findByQuery(query);
     }
 

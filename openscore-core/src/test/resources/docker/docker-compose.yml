@@ -4,3 +4,7 @@ wildfly:
         - "8080:8080"
         - "9990:9990"
     mem_limit: 1024m
+postgres:
+    image: postgres:9.4
+    ports:
+        - "5432:5432"

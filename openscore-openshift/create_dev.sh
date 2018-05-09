@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+oc login -u admin
+
+oc new-project openscore --display-name="OpenScore"
+
+oc project openscore
+
 oc new-build --name openscore-ui httpd:2.4 --binary
 oc start-build openscore-ui --from-dir=./openscore-ui/dist --wait
 
