@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
+  mailPattern = '.+@redhat\.com';
   paises: Pais[] = [];
   registro: FormGroup;
   error = false;
@@ -27,10 +28,10 @@ export class RegisterComponent {
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       pais: ['', Validators.required],
-      email: ['', Validators.email],
-      confirmacionEmail: ['', Validators.email],
-      password: ['', Validators.required],
-      confirmacionPassword: ['', Validators.required]
+      email: ['', [Validators.pattern(this.mailPattern)]],
+      confirmacionEmail: ['', [Validators.pattern(this.mailPattern)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmacionPassword: ['', [Validators.required, Validators.minLength(6)]]
     });
 
 
@@ -53,6 +54,11 @@ export class RegisterComponent {
     } else {
       this.error = true;
     }
+  }
+
+  isInvalid(controlName: string) {
+    const control = this.registro.controls[controlName];
+    return control.invalid && control.dirty;
   }
 
 }

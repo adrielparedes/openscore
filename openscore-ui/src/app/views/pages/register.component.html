@@ -19,7 +19,7 @@
                   <i class="icon-user"></i>
                 </span>
               </div>
-              <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre">
+              <input type="text" class="form-control" [ngClass]="{'is-invalid':isInvalid('nombre')}" formControlName="nombre" placeholder="Nombre">
             </div>
 
             <div class="input-group mb-3">
@@ -28,7 +28,7 @@
                   <i class="icon-user"></i>
                 </span>
               </div>
-              <input type="text" class="form-control" formControlName="apellido" placeholder="Apellido">
+              <input type="text" class="form-control" [ngClass]="{'is-invalid':isInvalid('apellido')}" formControlName="apellido" placeholder="Apellido">
             </div>
 
             <div class="input-group mb-3">
@@ -37,7 +37,8 @@
                   <i class="icon-map"></i>
                 </span>
               </div>
-              <select class="form-control" id="power" formControlName="pais" placeholder="Pais" required>
+              <select class="form-control" [ngClass]="{'is-invalid':isInvalid('pais')}" id="power" formControlName="pais" placeholder="Pais"
+                required>
                 <option *ngFor="let pais of paises" [value]="pais.codigo">{{pais.nombre}}</option>
               </select>
             </div>
@@ -46,14 +47,15 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">@</span>
               </div>
-              <input type="text" class="form-control" formControlName="email" placeholder="Email">
+              <input type="text" class="form-control" [ngClass]="{'is-invalid':isInvalid('email')}" formControlName="email" placeholder="Email">
             </div>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text">@</span>
               </div>
-              <input type="text" class="form-control" formControlName="confirmacionEmail" placeholder="Confirmación Email">
+              <input type="text" class="form-control" [ngClass]="{'is-invalid':isInvalid('confirmacionEmail')}" formControlName="confirmacionEmail"
+                placeholder="Confirmación Email">
             </div>
 
             <div class="input-group mb-3">
@@ -62,7 +64,7 @@
                   <i class="icon-lock"></i>
                 </span>
               </div>
-              <input type="password" class="form-control" formControlName="password" placeholder="Password">
+              <input type="password" class="form-control" [ngClass]="{'is-invalid':isInvalid('password')}" formControlName="password" placeholder="Password">
             </div>
 
             <div class="input-group mb-4">
@@ -71,7 +73,8 @@
                   <i class="icon-lock"></i>
                 </span>
               </div>
-              <input type="password" class="form-control" formControlName="confirmacionPassword" placeholder="Confirmación password">
+              <input type="password" class="form-control" [ngClass]="{'is-invalid':isInvalid('confirmacionPassword')}" formControlName="confirmacionPassword"
+                placeholder="Confirmación password">
             </div>
 
 
