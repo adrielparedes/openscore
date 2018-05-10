@@ -20,6 +20,7 @@ export class PartidoFormComponent implements OnInit {
   local: Equipo;
   visitante: Equipo;
   form: FormGroup;
+  loading = true;
 
   constructor(
     private equiposService: EquiposService,
@@ -30,33 +31,42 @@ export class PartidoFormComponent implements OnInit {
 
     this.id = this.activedRoute.snapshot.params.id;
 
-    if (this.id) {
-      this.partidosService.get(this.id).subscribe(res => {
-        this.partido = res.data;
-        this.crearForm(this.partido);
-      });
-    } else {
-      this.partido = <Partido>{};
-      this.crearForm(this.partido);
-    }
-
   }
 
   ngOnInit() {
-
+    this.loading = true;
+    this.crearForm();
+    if (this.id) {
+      this.partidosService.get(this.id).subscribe(res => {
+        this.partido = res.data;
+        this.form.setValue({
+          id: this.partido.id,
+          local: this.partido.local.nombre,
+          visitante: this.partido.visitante.nombre,
+          dia: this.partido.dia,
+          fecha: this.partido.fecha,
+          lugar: this.partido.lugar,
+          grupo: this.partido.grupo.nombre,
+          fase: this.partido.fase.nombre
+        });
+        this.loading = false;
+      });
+    } else {
+      this.partido = <Partido>{};
+      this.loading = false;
+    }
   }
 
-  crearForm(partido: Partido) {
-    console.log(partido);
+  crearForm() {
     this.form = this.fb.group({
-      id: [partido.id],
-      local: [partido.local || partido.local.nombre],
-      visitante: [partido.visitante || partido.visitante.nombre],
-      dia: [partido.dia],
-      fecha: [partido.fecha],
-      lugar: [partido.lugar],
-      grupo: [partido.grupo || partido.grupo.nombre],
-      fase: [partido.fase || partido.fase.nombre]
+      id: [''],
+      local: [''],
+      visitante: [''],
+      dia: [''],
+      fecha: [''],
+      lugar: [''],
+      grupo: [''],
+      fase: ['']
     });
   }
 

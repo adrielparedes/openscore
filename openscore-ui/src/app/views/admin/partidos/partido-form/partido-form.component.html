@@ -3,7 +3,8 @@
     <strong *ngIf="!id">Nuevo Partido</strong>
     <strong *ngIf="id">Editar Equipo</strong>
   </div>
-  <div class="card-body" [formGroup]="form">
+  <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
+  <div *ngIf="!loading" class="card-body" [formGroup]="form">
     <div *ngIf="id" class="form-group">
       <label for="id">ID</label>
       <input disabled type="text" class="form-control" formControlName="id" id="id">
