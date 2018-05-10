@@ -219,19 +219,36 @@
 
     <profiles>
         <profile>
-            <id>prod</id>
+            <id>openshift</id>
             <properties>
-                <project.environment>prod</project.environment>
+                <project.environment>openshift</project.environment>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/environment/openshift</directory>
+                    </resource>
+                </resources>
+            </build>
         </profile>
         <profile>
-            <id>test</id>
+            <id>dev</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <project.environment>test</project.environment>
+                <project.environment>dev</project.environment>
             </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/environment/dev</directory>
+                    </resource>
+                </resources>
+            </build>
         </profile>
     </profiles>
 

@@ -1,6 +1,6 @@
 import { ToastrService } from 'ngx-toastr';
 import { ApiResponse } from './../../../../model/api-response';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CrearNoticia } from './../../../../model/crear-noticia';
 import { NoticiasService } from './../../../../services/noticias.service';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
@@ -27,6 +27,7 @@ export class NoticiasEditorComponent implements OnInit {
   }
 
   constructor(private noticiasService: NoticiasService,
+    private router: Router,
     private activedRoute: ActivatedRoute,
     private toastr: ToastrService) {
   }
@@ -62,6 +63,10 @@ export class NoticiasEditorComponent implements OnInit {
       this.isDirty = false;
       this.saving = false;
     };
+  }
+
+  volver() {
+    this.router.navigate(['admin', 'noticias']);
   }
 
 
