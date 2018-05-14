@@ -38,7 +38,7 @@
       "environments": {
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts",
-        "test": "environments/environment.test.ts",
+        "openshift": "environments/environment.openshift.ts",
         "minishift": "environments/environment.minishift.ts"
       }
     }
