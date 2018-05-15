@@ -16,7 +16,5 @@ public interface PartidoMapper {
 
     List<PartidoDTO> asApi(List<Partido> partido);
 
-    Partido asPartido(CrearOUpdatePartidoDTO crearPartido);
-
     Resultado asResultado(ResultadoDTO resultado);
 }

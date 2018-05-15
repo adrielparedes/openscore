@@ -13,6 +13,7 @@ public class Grupo extends Storable {
     public final static String GRUPO_F = "GRUPO_F";
     public final static String GRUPO_G = "GRUPO_G";
     public final static String GRUPO_H = "GRUPO_H";
+    public final static String NONE = "NONE";
 
     private String codigo;
     private String nombre;

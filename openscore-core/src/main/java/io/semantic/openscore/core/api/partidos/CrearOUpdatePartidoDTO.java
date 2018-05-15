@@ -4,26 +4,28 @@ import java.util.Date;
 
 public class CrearOUpdatePartidoDTO {
 
-    private long idLocal;
-    private long idVisitante;
+    private String local;
+    private String visitante;
     private Date dia;
     private int fecha;
     private String lugar;
+    private String grupo;
+    private String fase;
 
-    public long getIdLocal() {
-        return idLocal;
+    public String getLocal() {
+        return local;
     }
 
-    public void setIdLocal(long idLocal) {
-        this.idLocal = idLocal;
+    public void setLocal(String local) {
+        this.local = local;
     }
 
-    public long getIdVisitante() {
-        return idVisitante;
+    public String getVisitante() {
+        return visitante;
     }
 
-    public void setIdVisitante(long idVisitante) {
-        this.idVisitante = idVisitante;
+    public void setVisitante(String visitante) {
+        this.visitante = visitante;
     }
 
     public Date getDia() {
@@ -48,5 +50,21 @@ public class CrearOUpdatePartidoDTO {
 
     public void setFecha(int fecha) {
         this.fecha = fecha;
+    }
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    public String getFase() {
+        return fase;
+    }
+
+    public void setFase(String fase) {
+        this.fase = fase;
     }
 }

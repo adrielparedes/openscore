@@ -4,6 +4,8 @@ import io.semantic.openscore.core.model.Fase;
 
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
+import java.util.List;
+import java.util.Optional;
 
 @Stateless
 public class FaseRepository extends Repository<Fase> {
@@ -20,9 +22,14 @@ public class FaseRepository extends Repository<Fase> {
         return this.findByQuery(query).size() > 0;
     }
 
-    public Fase findByCodigo(String codigo) {
+    public Optional<Fase> findByCodigo(String codigo) {
         TypedQuery<Fase> query = this.createQuery(FIND_ENTITY_BY_CODIGO_QUERY);
         query.setParameter("codigo", codigo);
-        return query.getSingleResult();
+        List<Fase> results = query.getResultList();
+        if (results.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(results.get(0));
+        }
     }
 }

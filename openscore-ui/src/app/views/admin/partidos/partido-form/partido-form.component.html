@@ -19,7 +19,8 @@
     </div>
     <div class="form-group">
       <label for="vat">Dia</label>
-      <input type="text" class="form-control" formControlName="dia" id="nombre">
+      <input type="text" placeholder="Datepicker" class="form-control" formControlName="dia" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY, HH:mm' }"
+        bsDatepicker>
     </div>
     <div class="form-group">
       <label for="vat">Lugar</label>

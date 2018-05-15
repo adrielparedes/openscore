@@ -7,7 +7,6 @@ import io.semantic.openscore.core.api.partidos.ResultadoDTO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.Date;
 import java.util.List;
 
 @Produces(MediaType.APPLICATION_JSON)
@@ -33,15 +32,15 @@ public interface PartidosService {
     ApiResponse<List<Integer>> getFechas();
 
     @DELETE
-    @PathParam("/{id}")
+    @Path("/{id}")
     ApiResponse<Long> delete(@PathParam("id") long id);
 
     @POST
-    @PathParam("/")
+    @Path("/")
     ApiResponse<PartidoDTO> add(CrearOUpdatePartidoDTO entity);
 
     @POST
-    @PathParam("/{id}")
+    @Path("/{id}")
     ApiResponse<PartidoDTO> update(@PathParam("id") long id, CrearOUpdatePartidoDTO entity);
 
     @POST

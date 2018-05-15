@@ -10,9 +10,9 @@ import io.semantic.openscore.core.repository.EquiposRepository;
 import io.semantic.openscore.core.repository.FaseRepository;
 import io.semantic.openscore.core.repository.GrupoRepository;
 import io.semantic.openscore.core.repository.PartidoRepository;
-import io.semantic.openscore.core.repository.startup.builder.DiaBuilder;
 import io.semantic.openscore.core.repository.startup.PartidoData;
 import io.semantic.openscore.core.repository.startup.StartupStep;
+import io.semantic.openscore.core.repository.startup.builder.DiaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,7 +118,8 @@ public class CrearPartidos implements StartupStep {
     }
 
     private Fase getFase(String codigo) {
-        return this.faseRepository.findByCodigo(codigo);
+        return this.faseRepository.findByCodigo(codigo).orElseThrow(() -> new IllegalArgumentException("La fase " + codigo + "no existe"));
+
     }
 
 

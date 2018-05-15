@@ -41,13 +41,13 @@ export class PartidoFormComponent implements OnInit {
         this.partido = res.data;
         this.form.setValue({
           id: this.partido.id,
-          local: this.partido.local.nombre,
-          visitante: this.partido.visitante.nombre,
-          dia: this.partido.dia,
+          local: this.partido.local.codigo,
+          visitante: this.partido.visitante.codigo,
+          dia: new Date(this.partido.dia),
           fecha: this.partido.fecha,
           lugar: this.partido.lugar,
-          grupo: this.partido.grupo.nombre,
-          fase: this.partido.fase.nombre
+          grupo: this.partido.grupo.codigo,
+          fase: this.partido.fase.codigo
         });
         this.loading = false;
       });
@@ -73,16 +73,20 @@ export class PartidoFormComponent implements OnInit {
   guardar() {
     const id = this.form.value.id;
     const crearPartido: CrearPartido = <CrearPartido>{
-      nombre: this.form.value.nombre,
-      codigo: this.form.value.codigo,
-      codigoPais: this.form.value.codigoPais,
-      logo: this.form.value.logo,
+      local: this.form.value.local,
+      visitante: this.form.value.visitante,
+      dia: this.form.value.dia,
+      fecha: this.form.value.fecha,
+      lugar: this.form.value.lugar,
+      grupo: this.form.value.grupo,
+      fase: this.form.value.fase
     }
 
     if (this.form.value.id) {
       this.partidosService.update(this.form.value.id, crearPartido).subscribe(res =>
         this.cancelar());
     } else {
+      console.log(crearPartido);
       this.partidosService.add(crearPartido).subscribe(res => this.cancelar());
     }
   }

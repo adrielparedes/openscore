@@ -9,6 +9,7 @@ import { PartidosComponent } from './partidos.component';
 import { PartidosListComponent } from './partidos-list/partidos-list.component';
 import { ResultadoComponent } from './resultado/resultado.component';
 import { PartidoFormComponent } from './partido-form/partido-form.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { PartidoFormComponent } from './partido-form/partido-form.component';
     ServicesModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
+    BsDatepickerModule.forRoot(),
     ModalModule.forRoot()
   ],
   declarations: [PartidosComponent,
