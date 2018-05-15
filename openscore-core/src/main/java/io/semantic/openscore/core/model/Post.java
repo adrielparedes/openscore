@@ -1,5 +1,6 @@
 package io.semantic.openscore.core.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -8,6 +9,8 @@ import javax.persistence.Enumerated;
 public class Post extends Storable {
 
     private String titulo;
+
+    @Column(columnDefinition = "TEXT")
     private String contenido;
     private String autor;
 
