@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header">
-    <strong *ngIf="!id">Nuevo Equipo</strong>
-    <strong *ngIf="id">Editar Equipo</strong>
+    <strong *ngIf="!id">New team</strong>
+    <strong *ngIf="id">Edit team</strong>
   </div>
   <div class="card-body" [formGroup]="form">
     <div *ngIf="id" class="form-group">
@@ -9,23 +9,23 @@
       <input disabled type="text" class="form-control" formControlName="id" id="id">
     </div>
     <div class="form-group">
-      <label for="deleted">Eliminado</label>
+      <label for="deleted">Deleted</label>
       <input type="checkbox" class="form-control" formControlName="deleted" id="deleted">
     </div>
     <div class="form-group">
-      <label for="vat">Nombre</label>
+      <label for="vat">Name</label>
       <input type="text" class="form-control" formControlName="nombre" id="nombre">
     </div>
     <div class="form-group">
-      <label for="codigo">Codigo</label>
+      <label for="codigo">Code</label>
       <input type="text" class="form-control" formControlName="codigo" id="codigo">
     </div>
     <div class="form-group">
-      <label for="pais">Pais</label>
+      <label for="pais">Country</label>
       <input type="text" class="form-control" formControlName="codigoPais" id="pais">
     </div>
     <div class="form-group">
-      <label for="street">URL Logo</label>
+      <label for="street">Logo URL</label>
       <input type="text" class="form-control" formControlName="logo" id="street">
     </div>
     <div class="form-group" *ngIf="logo">
@@ -35,8 +35,8 @@
   </div>
   <div class="card-footer">
     <button type="submit" class="btn btn-sm btn-success" (click)="guardar()">
-      <i class="fa fa-dot-circle-o"></i> Guardar</button>
+      <i class="fa fa-dot-circle-o"></i> Save</button>
     <button type="reset" class="btn btn-sm btn-danger" (click)="cancelar()">
-      <i class="fa fa-ban"></i> Cancelar</button>
+      <i class="fa fa-ban"></i> Cancel</button>
   </div>
 </div>
