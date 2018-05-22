@@ -5,7 +5,7 @@ export const navigation = [
     icon: 'icon-home'
   },
   {
-    name: 'Reglamento',
+    name: 'Rules',
     url: '/reglamento',
     icon: 'icon-list'
   },
@@ -15,7 +15,7 @@ export const navigation = [
     icon: 'icon-speedometer'
   },
   {
-    name: 'Noticias',
+    name: 'News',
     url: '/noticias',
     icon: 'icon-book-open'
   },
@@ -25,7 +25,7 @@ export const navigation = [
     icon: 'icon-trophy '
   },
   {
-    name: 'Pronosticos',
+    name: 'Predictions',
     url: '/pronosticos',
     icon: 'icon-compass'
   },
@@ -36,25 +36,25 @@ export const navigation = [
     role: 'ADMIN'
   },
   {
-    name: 'Usuarios',
+    name: 'Users',
     url: '/admin/usuarios',
     icon: 'icon-people',
     role: 'ADMIN'
   },
   {
-    name: 'Equipos',
+    name: 'Teams',
     url: '/admin/equipos',
     icon: 'icon-flag',
     role: 'ADMIN'
   },
   {
-    name: 'Partidos',
+    name: 'Matches',
     url: '/admin/partidos',
     icon: 'icon-calendar',
     role: 'ADMIN'
   },
   {
-    name: 'Noticias',
+    name: 'News',
     url: '/admin/noticias',
     icon: 'icon-list',
     role: 'ADMIN'
@@ -65,7 +65,7 @@ export const navigation = [
     name: 'Dev'
   },
   {
-    name: 'Registro',
+    name: 'Register',
     url: '/pages/register',
     icon: 'icon-people'
   },
