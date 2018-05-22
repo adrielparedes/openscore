@@ -35,7 +35,7 @@
 
 
     <tabset class="animated fadeIn" *ngIf="isFase()">
-      <tab class="animated fadeIn" heading="Fase: {{fase.nombre}}" (select)="retrievePartidosPorFase(fase)" *ngFor="let fase of fases">
+      <tab class="animated fadeIn" heading="Stage: {{fase.nombre}}" (select)="retrievePartidosPorFase(fase)" *ngFor="let fase of fases">
         <div class="row">
           <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
           <div class="card-body" *ngIf="!loading && partidos.length == 0">
