@@ -14,7 +14,7 @@
         <input type="radio" name="options" id="option3" (click)="fecha()" autocomplete="off"> By date
       </label>
       <label class="btn btn-secondary" [ngClass]="{'active': isFase()}">
-        <input type="radio" name="options" id="option3" (click)="fase()" autocomplete="off"> By phase
+        <input type="radio" name="options" id="option3" (click)="fase()" autocomplete="off"> By stage
       </label>
     </div>
   </div>
@@ -40,7 +40,7 @@
           <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
           <div class="card-body" *ngIf="!loading && partidos.length == 0">
             <div>
-              <i class="fa fa-times"></i> No macthes for this phase yet</div>
+              <i class="fa fa-times"></i> No macthes for this stage yet</div>
           </div>
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
             <app-pronostico [partido]="partido"></app-pronostico>
