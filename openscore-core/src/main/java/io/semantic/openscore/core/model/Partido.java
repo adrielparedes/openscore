@@ -3,7 +3,6 @@ package io.semantic.openscore.core.model;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Entity
@@ -115,11 +114,11 @@ public class Partido extends Storable {
 
     public PartidoStatus getStatus() {
         if (this.getResultado() != null) {
-            return PartidoStatus.FINALIZADO;
+            return PartidoStatus.FINISHED;
         } else if (this.isBloqueado()) {
-            return PartidoStatus.BLOQUEADO;
+            return PartidoStatus.BLOCKED;
         } else {
-            return PartidoStatus.PENDIENTE;
+            return PartidoStatus.PENDING;
         }
     }
 
