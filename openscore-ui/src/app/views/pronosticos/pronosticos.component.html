@@ -10,9 +10,6 @@
       <label class="btn btn-secondary" [ngClass]="{'active': isGrupo()}">
         <input type="radio" name="options" id="option2" (click)="grupo()" autocomplete="off"> By group
       </label>
-      <label class="btn btn-secondary" [ngClass]="{'active': isFecha()}">
-        <input type="radio" name="options" id="option3" (click)="fecha()" autocomplete="off"> By date
-      </label>
       <label class="btn btn-secondary" [ngClass]="{'active': isFase()}">
         <input type="radio" name="options" id="option3" (click)="fase()" autocomplete="off"> By stage
       </label>
@@ -49,20 +46,6 @@
         </div>
       </tab>
     </tabset>
-
-
-    <tabset class="animated fadeIn" *ngIf="isFecha()">
-      <tab class="animated fadeIn" heading="Fecha {{fecha}}" (select)="retrievePartidosPorFecha(fecha)" *ngFor="let fecha of fechas">
-        <div class="row">
-          <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
-          <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
-            <app-pronostico [partido]="partido"></app-pronostico>
-          </div>
-          <!--/.col-->
-        </div>
-      </tab>
-    </tabset>
-
 
     <tabset class="animated fadeIn" *ngIf="isHoy()">
       <tab class="animated fadeIn" heading="{{today |  date:'dd/MM/yyyy'}}" (select)="retrievePartidosPorFecha(today)">
