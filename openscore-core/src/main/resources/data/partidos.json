@@ -3,7 +3,7 @@
     "local": "RUS",
     "visitante": "KSA",
     "grupo": "GRUPO_A",
-    "lugar": "Estadio Luzhnikí, Moscú",
+    "lugar": "Luzhnikí Stadium, Moscow",
     "dia": "14-06-2018T12:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -12,7 +12,7 @@
     "local": "EGY",
     "visitante": "URU",
     "grupo": "GRUPO_A",
-    "lugar": "Estadio Ekaterimburgo Arena, Ekaterinburg",
+    "lugar": "Ekaterimburgo Arena, Ekaterinburg",
     "dia": "15-06-2018T09:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -21,7 +21,7 @@
     "local": "POR",
     "visitante": "ESP",
     "grupo": "GRUPO_B",
-    "lugar": "Estadio Fisht, Sochi",
+    "lugar": "Fisht Stadium, Sochi",
     "dia": "15-06-2018T15:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -30,7 +30,7 @@
     "local": "MAR",
     "visitante": "IRN",
     "grupo": "GRUPO_B",
-    "lugar": "Estadio de San Petersburgo, San Petersburgo",
+    "lugar": "Saint Petersburg Arena, Saint Petersburg",
     "dia": "15-06-2018T12:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -39,7 +39,7 @@
     "local": "FRA",
     "visitante": "AUS",
     "grupo": "GRUPO_C",
-    "lugar": "Estadio Kazán Arena, Kazán",
+    "lugar": "Kazán Arena, Kazán",
     "dia": "16-06-2018T07:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -48,7 +48,7 @@
     "local": "PER",
     "visitante": "DEN",
     "grupo": "GRUPO_C",
-    "lugar": "Estadio Mordovia Arena, Saransk",
+    "lugar": "Mordovia Arena, Saransk",
     "dia": "16-06-2018T13:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -57,7 +57,7 @@
     "local": "ARG",
     "visitante": "ISL",
     "grupo": "GRUPO_D",
-    "lugar": "Estadio del Spartak, Moscú",
+    "lugar": "Spartak Stadium, Moscow",
     "dia": "16-06-2018T10:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -66,7 +66,7 @@
     "local": "CRO",
     "visitante": "NGA",
     "grupo": "GRUPO_D",
-    "lugar": "Estadio de Kaliningrado, Kaliningrado",
+    "lugar": "Kaliningrad Stadium, Kaliningrad",
     "dia": "16-06-2018T16:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -75,7 +75,7 @@
     "local": "BRA",
     "visitante": "SUI",
     "grupo": "GRUPO_E",
-    "lugar": "Estadio Rostov Arena",
+    "lugar": "Rostov Arena",
     "dia": "17-06-2018T15:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -84,7 +84,7 @@
     "local": "CRC",
     "visitante": "SRB",
     "grupo": "GRUPO_E",
-    "lugar": "Estadio Samara Arena",
+    "lugar": "Samara Arena",
     "dia": "17-06-2018T09:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -93,7 +93,7 @@
     "local": "GER",
     "visitante": "MEX",
     "grupo": "GRUPO_F",
-    "lugar": "Estadio Luzhnikí, Moscú",
+    "lugar": "Luzhnikí Stadium, Moscow",
     "dia": "17-06-2018T12:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -102,7 +102,7 @@
     "local": "SWE",
     "visitante": "KOR",
     "grupo": "GRUPO_F",
-    "lugar": "Estadio de Nizhni Nóvgorod",
+    "lugar": "Nizhni Nóvgorod Arena",
     "dia": "18-06-2018T09:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -111,7 +111,7 @@
     "local": "BEL",
     "visitante": "PAN",
     "grupo": "GRUPO_G",
-    "lugar": "Estadio Fisht, Sochi",
+    "lugar": "Fisht Stadium, Sochi",
     "dia": "18-06-2018T12:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -120,7 +120,7 @@
     "local": "TUN",
     "visitante": "ENG",
     "grupo": "GRUPO_G",
-    "lugar": "Estadio Volvogrado Arena",
+    "lugar": "Volvograd Arena",
     "dia": "18-06-2018T15:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -129,7 +129,7 @@
     "local": "POL",
     "visitante": "SEN",
     "grupo": "GRUPO_H",
-    "lugar": "Estadio del Spartak, Moscú",
+    "lugar": "Spartak Stadium, Moscow",
     "dia": "19-06-2018T12:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -138,7 +138,7 @@
     "local": "COL",
     "visitante": "JPN",
     "grupo": "GRUPO_H",
-    "lugar": "Estadio Mordovia Arena, Saransk",
+    "lugar": "Mordovia Arena, Saransk",
     "dia": "19-06-2018T09:00-0300",
     "fecha": "1",
     "fase": "GRUPO"
@@ -147,7 +147,7 @@
     "local": "RUS",
     "visitante": "EGY",
     "grupo": "GRUPO_A",
-    "lugar": "Estadio de San Petersburgo, San Petersburgo",
+    "lugar": "Saint Petersburg Stadium, Saint Petersburg",
     "dia": "19-06-2018T15:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -156,7 +156,7 @@
     "local": "URU",
     "visitante": "KSA",
     "grupo": "GRUPO_A",
-    "lugar": "Estadio Rostov Arena",
+    "lugar": "Rostov Arena",
     "dia": "20-06-2018T12:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -165,7 +165,7 @@
     "local": "POR",
     "visitante": "MAR",
     "grupo": "GRUPO_B",
-    "lugar": "Estadio Luzhnikí, Moscú",
+    "lugar": "Luzhnikí Stadium, Moscow",
     "dia": "20-06-2018T09:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -174,7 +174,7 @@
     "local": "IRN",
     "visitante": "ESP",
     "grupo": "GRUPO_B",
-    "lugar": "Estadio Kazán Arena, Kazán, Estadio",
+    "lugar": "Kazán Arena, Kazán",
     "dia": "20-06-2018T15:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -183,7 +183,7 @@
     "local": "FRA",
     "visitante": "PER",
     "grupo": "GRUPO_C",
-    "lugar": "Estadio Ekaterimburgo Arena, Ekaterinburg",
+    "lugar": "Ekaterimburg Arena, Ekaterinburg",
     "dia": "21-06-2018T12:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -192,7 +192,7 @@
     "local": "DEN",
     "visitante": "AUS",
     "grupo": "GRUPO_C",
-    "lugar": "Estadio Samara Arena",
+    "lugar": "Samara Arena",
     "dia": "21-06-2018T09:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -201,7 +201,7 @@
     "local": "ARG",
     "visitante": "CRO",
     "grupo": "GRUPO_D",
-    "lugar": "Estadio de Nizhni Nóvgorod",
+    "lugar": "Nizhni Nóvgorod Stadium",
     "dia": "21-06-2018T15:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -210,7 +210,7 @@
     "local": "NGA",
     "visitante": "ISL",
     "grupo": "GRUPO_D",
-    "lugar": "Estadio Volvogrado Arena",
+    "lugar": "Volgograde Arena",
     "dia": "22-06-2018T12:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -219,7 +219,7 @@
     "local": "BRA",
     "visitante": "CRC",
     "grupo": "GRUPO_E",
-    "lugar": "Estadio de San Petersburgo, San Petersburgo",
+    "lugar": "Saint Petersburg Stadium, Saint Petersburg",
     "dia": "22-06-2018T09:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -228,7 +228,7 @@
     "local": "SRB",
     "visitante": "SUI",
     "grupo": "GRUPO_E",
-    "lugar": "Estadio de Kaliningrado",
+    "lugar": "Kaliningrad Stadium",
     "dia": "22-06-2018T15:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -237,7 +237,7 @@
     "local": "GER",
     "visitante": "SWE",
     "grupo": "GRUPO_F",
-    "lugar": "Estadio Fisht",
+    "lugar": "Fisht Stadium",
     "dia": "23-06-2018T15:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -246,7 +246,7 @@
     "local": "KOR",
     "visitante": "MEX",
     "grupo": "GRUPO_F",
-    "lugar": "Estadio Rostov Arena",
+    "lugar": "Rostov Arena",
     "dia": "23-06-2018T12:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -255,7 +255,7 @@
     "local": "BEL",
     "visitante": "TUN",
     "grupo": "GRUPO_G",
-    "lugar": "Estadio del Spartak, Moscú",
+    "lugar": "Spartak Stadium, Moscow",
     "dia": "23-06-2018T09:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -264,7 +264,7 @@
     "local": "ENG",
     "visitante": "PAN",
     "grupo": "GRUPO_G",
-    "lugar": "Estadio de Nizhni Nóvgorod",
+    "lugar": "Nizhni Nóvgorod Stadium",
     "dia": "24-06-2018T09:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -273,7 +273,7 @@
     "local": "POL",
     "visitante": "COL",
     "grupo": "GRUPO_H",
-    "lugar": "Estadio Kazán Arena, Kazán, Estadio",
+    "lugar": "Kazán Arena, Kazán",
     "dia": "24-06-2018T15:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -282,7 +282,7 @@
     "local": "JPN",
     "visitante": "SEN",
     "grupo": "GRUPO_H",
-    "lugar": "Estadio Ekaterimburgo Arena, Ekaterinburg",
+    "lugar": "Ekaterimburg Arena, Ekaterinburg",
     "dia": "24-06-2018T12:00-0300",
     "fecha": "2",
     "fase": "GRUPO"
@@ -291,7 +291,7 @@
     "local": "URU",
     "visitante": "RUS",
     "grupo": "GRUPO_A",
-    "lugar": "Estadio Samara Arena",
+    "lugar": "Samara Arena",
     "dia": "25-06-2018T11:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -300,7 +300,7 @@
     "local": "KSA",
     "visitante": "EGY",
     "grupo": "GRUPO_A",
-    "lugar": "Estadio Volvogrado Arena",
+    "lugar": "Volgograd Arena",
     "dia": "25-06-2018T11:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -309,7 +309,7 @@
     "local": "IRN",
     "visitante": "POR",
     "grupo": "GRUPO_B",
-    "lugar": "Estadio Mordovia Arena, Saransk",
+    "lugar": "Mordovia Arena, Saransk",
     "dia": "25-06-2018T15:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -318,7 +318,7 @@
     "local": "ESP",
     "visitante": "MAR",
     "grupo": "GRUPO_B",
-    "lugar": "Estadio de Kaliningrado",
+    "lugar": "Kaliningrad Stadium",
     "dia": "25-06-2018T15:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -327,7 +327,7 @@
     "local": "DEN",
     "visitante": "FRA",
     "grupo": "GRUPO_C",
-    "lugar": "Estadio Luzhnikí, Moscú",
+    "lugar": "Luzhnikí Stadium, Moscow",
     "dia": "26-06-2018T11:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -336,7 +336,7 @@
     "local": "AUS",
     "visitante": "PER",
     "grupo": "GRUPO_C",
-    "lugar": "Estadio Fisht, Sochi",
+    "lugar": "Fisht Stadium, Sochi",
     "dia": "26-06-2018T11:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -345,7 +345,7 @@
     "local": "NGA",
     "visitante": "ARG",
     "grupo": "GRUPO_D",
-    "lugar": "Estadio de San Petersburgo, San Petersburgo",
+    "lugar": "Saint Petersburg Stadium, Saint Petersburg",
     "dia": "26-06-2018T15:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -354,7 +354,7 @@
     "local": "ISL",
     "visitante": "CRO",
     "grupo": "GRUPO_D",
-    "lugar": "Estadio Rostov Arena",
+    "lugar": "Rostov Arena",
     "dia": "26-06-2018T15:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -363,7 +363,7 @@
     "local": "SRB",
     "visitante": "BRA",
     "grupo": "GRUPO_E",
-    "lugar": "Estadio del Spartak, Moscú, Moscú",
+    "lugar": "Spartak Stadium, Moscow",
     "dia": "27-06-2018T15:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -372,7 +372,7 @@
     "local": "SUI",
     "visitante": "CRC",
     "grupo": "GRUPO_E",
-    "lugar": "Estadio de Nizhni Nóvgorod",
+    "lugar": "Nizhni Nóvgorod Stadium",
     "dia": "27-06-2018T15:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -381,7 +381,7 @@
     "local": "KOR",
     "visitante": "GER",
     "grupo": "GRUPO_F",
-    "lugar": "Estadio Kazán Arena, Kazán, Estadio",
+    "lugar": "Kazán Arena, Kazán",
     "dia": "27-06-2018T11:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -390,7 +390,7 @@
     "local": "MEX",
     "visitante": "SWE",
     "grupo": "GRUPO_F",
-    "lugar": "Estadio Ekaterimburgo Arena, Ekaterinburg",
+    "lugar": "Ekaterimburg Arena, Ekaterinburg",
     "dia": "27-06-2018T11:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -399,7 +399,7 @@
     "local": "ENG",
     "visitante": "BEL",
     "grupo": "GRUPO_G",
-    "lugar": "Estadio de Kaliningrado",
+    "lugar": "Kaliningrad Stadium",
     "dia": "28-06-2018T15:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -408,7 +408,7 @@
     "local": "PAN",
     "visitante": "TUN",
     "grupo": "GRUPO_G",
-    "lugar": "Estadio Mordovia Arena, Saransk",
+    "lugar": "Mordovia Arena, Saransk",
     "dia": "28-06-2018T15:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -417,7 +417,7 @@
     "local": "JPN",
     "visitante": "POL",
     "grupo": "GRUPO_H",
-    "lugar": "Estadio Volvogrado Arena",
+    "lugar": "Volgogrado Arena",
     "dia": "28-06-2018T11:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
@@ -426,7 +426,7 @@
     "local": "SEN",
     "visitante": "COL",
     "grupo": "GRUPO_H",
-    "lugar": "Estadio Samara Arena",
+    "lugar": "Samara Arena",
     "dia": "28-06-2018T11:00-0300",
     "fecha": "3",
     "fase": "GRUPO"
