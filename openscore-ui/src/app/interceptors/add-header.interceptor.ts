@@ -1,5 +1,5 @@
+import { AuthService } from './../services/auth.service';
 import { Injectable } from '@angular/core';
-import { StorageService } from '../services/storage.service';
 import {
     HttpEvent,
     HttpInterceptor,
@@ -12,13 +12,13 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class AddHeaderInterceptor implements HttpInterceptor {
 
-    constructor(private storageService: StorageService) {
+    constructor(private authService: AuthService) {
         console.log('Interceptor');
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        const token = this.storageService.getToken();
+        const token = this.authService.getToken();
 
         if (token !== undefined) {
             console.log(token);

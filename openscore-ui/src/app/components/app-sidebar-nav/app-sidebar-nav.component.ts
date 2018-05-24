@@ -23,6 +23,11 @@ import { navigation } from './../../_nav';
 export class AppSidebarNavComponent {
 
   public navigation = navigation;
+  authService: AuthService;
+
+  constructor() {
+    this.authService = new AuthService
+  }
 
   public isDivider(item) {
     return item.divider ? true : false
@@ -33,14 +38,17 @@ export class AppSidebarNavComponent {
   }
 
   public isAuthorized(item) {
-    // return item.role !== 'ADMIN';
-    return true;
+    if (item.role) {
+      this.authService.containsRole(item.role);
+    } else {
+      return true;
+    }
   }
 
-  constructor() { }
 }
 
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar-nav-item',

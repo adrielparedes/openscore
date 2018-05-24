@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { UsuarioService } from './../../services/usuario.service';
-import { StorageService } from './../../services/storage.service';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginUsuario } from './../../model/login-usuario';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   templateUrl: 'login.component.html'
@@ -16,7 +16,7 @@ export class LoginComponent {
   constructor(private usuarioService: UsuarioService,
     private fb: FormBuilder,
     private router: Router,
-    private storageService: StorageService) {
+    private storageService: AuthService) {
 
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
@@ -31,7 +31,6 @@ export class LoginComponent {
   }
 
   onEnter(event) {
-    console.log("enter");
     this.login();
   }
 
@@ -40,15 +39,10 @@ export class LoginComponent {
       const loginUsuario: LoginUsuario = this.loginForm.value;
 
       this.usuarioService.login(loginUsuario).subscribe(res => {
-        console.log("respuesta ok")
-        console.log(res)
-
         this.storageService.setToken(res.data.token);
         this.router.navigate(['/dashboard']);
       }, error => {
-        console.log("respuesta no ok")
         this.error = true;
-        console.log(error);
       });
     } else {
       this.error = true;

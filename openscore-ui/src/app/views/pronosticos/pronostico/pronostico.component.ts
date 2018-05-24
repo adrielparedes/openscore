@@ -85,7 +85,7 @@ export class PronosticoComponent implements OnInit, OnDestroy {
   }
 
   isPendiente() {
-    return this.partido.status === 'PENDIENTE';
+    return this.partido.status === 'PENDING';
   }
 
   isGanador() {

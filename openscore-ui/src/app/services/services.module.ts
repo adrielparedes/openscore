@@ -1,10 +1,10 @@
+import { AuthService } from './auth.service';
 import { PaisesService } from './paises.service';
 import { NoticiasService } from './noticias.service';
 import { FaseService } from './fase.service';
 import { GruposService } from './grupos.service';
 import { PronosticoService } from './pronostico.service';
 import { PartidosService } from './partidos.service';
-import { StorageService } from './storage.service';
 import { AddHeaderInterceptor } from './../interceptors/add-header.interceptor';
 import { EquiposService } from './equipos.service';
 import { DefinicionCompeticionesService } from './definicion-competiciones.service';
@@ -24,13 +24,13 @@ import { AuthGuard } from './auth-guard';
         DefinicionCompeticionesService,
         EquiposService,
         RankingService,
-        StorageService,
         PartidosService,
         GruposService,
         NoticiasService,
         FaseService,
         PaisesService,
         AuthGuard,
+        AuthService,
         PronosticoService,
         {
             provide: HTTP_INTERCEPTORS,

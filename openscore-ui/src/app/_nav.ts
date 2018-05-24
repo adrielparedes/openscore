@@ -62,16 +62,19 @@ export const navigation = [
   // ACA ABAJO VA LA PARTE DE DESA PARA HACER PRUEBAS
   {
     title: true,
-    name: 'Dev'
+    name: 'Dev',
+    role: 'ADMIN'
   },
   {
     name: 'Register',
     url: '/pages/register',
-    icon: 'icon-people'
+    icon: 'icon-people',
+    role: 'ADMIN'
   },
   {
     name: 'Login',
     url: '/pages/login',
-    icon: 'icon-people'
+    icon: 'icon-people',
+    role: 'ADMIN'
   }
 ];

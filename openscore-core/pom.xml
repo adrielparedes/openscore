@@ -223,9 +223,6 @@
             <properties>
                 <project.environment>openshift</project.environment>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <build>
                 <resources>
                     <resource>
