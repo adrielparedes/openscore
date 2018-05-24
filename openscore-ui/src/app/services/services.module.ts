@@ -1,3 +1,4 @@
+import { InfoService } from './info.service';
 import { AuthService } from './auth.service';
 import { PaisesService } from './paises.service';
 import { NoticiasService } from './noticias.service';
@@ -31,6 +32,7 @@ import { AuthGuard } from './auth-guard';
         PaisesService,
         AuthGuard,
         AuthService,
+        InfoService,
         PronosticoService,
         {
             provide: HTTP_INTERCEPTORS,

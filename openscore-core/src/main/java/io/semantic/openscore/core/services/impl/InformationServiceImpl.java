@@ -3,6 +3,8 @@ package io.semantic.openscore.core.services.impl;
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.information.Information;
 import io.semantic.openscore.core.exceptions.NoSePuedeLeerInformacionException;
+import io.semantic.openscore.core.model.Rol;
+import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.services.api.InformationService;
 
 import javax.enterprise.context.RequestScoped;
@@ -43,5 +45,11 @@ public class InformationServiceImpl implements InformationService {
         } catch (IOException e) {
             throw new NoSePuedeLeerInformacionException("No se puede leer info.properties", e);
         }
+    }
+
+    @Override
+    @Secure({Rol.ADMIN, Rol.USUARIO})
+    public ApiResponse<String> securePing() {
+        return ok("ok");
     }
 }

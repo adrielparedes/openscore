@@ -39,7 +39,7 @@ export class AppSidebarNavComponent {
 
   public isAuthorized(item) {
     if (item.role) {
-      this.authService.containsRole(item.role);
+      return this.authService.containsRole(item.role);
     } else {
       return true;
     }

@@ -23,6 +23,10 @@ export class AuthService {
         return localStorage.setItem(this.TOKEN, token);
     }
 
+    public logout() {
+        return localStorage.removeItem(this.TOKEN);
+    }
+
     public isAdmin() {
         return this.containsRole('ADMIN');
     }

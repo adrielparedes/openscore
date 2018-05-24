@@ -17,4 +17,8 @@ public interface InformationService {
     @GET
     @Path("/")
     ApiResponse<Information> getInformation();
+
+    @GET
+    @Path("/ping/secure")
+    ApiResponse<String> securePing();
 }
