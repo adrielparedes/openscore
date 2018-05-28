@@ -6,6 +6,7 @@ import io.semantic.openscore.core.api.usuarios.UsuarioDTO;
 import io.semantic.openscore.core.model.Usuario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
 import java.util.List;
@@ -16,9 +17,19 @@ public interface UsuarioMapper {
     Usuario asUsuario(UsuarioDTO api);
 
     @Mappings({
-            @Mapping(source = "pais", target = "pais", ignore = true)
+            @Mapping(source = "pais", target = "pais", ignore = true),
+            @Mapping(source = "preguntaSecreta", target = "preguntaSecreta", ignore = true),
+            @Mapping(source = "respuestaPreguntaSecreta", target = "respuestaPreguntaSecreta", ignore = true)
     })
     Usuario asUsuario(CrearUsuarioDTO crearUsuario);
+
+    @Mappings({
+            @Mapping(source = "pais", target = "pais", ignore = true),
+            @Mapping(source = "password", target = "password", ignore = true),
+            @Mapping(source = "preguntaSecreta", target = "preguntaSecreta", ignore = true),
+            @Mapping(source = "respuestaPreguntaSecreta", target = "respuestaPreguntaSecreta", ignore = true)
+    })
+    void updateUsuario(CrearUsuarioDTO usuarioDTO, @MappingTarget Usuario car);
 
     UsuarioDTO asApi(Usuario usuario);
 

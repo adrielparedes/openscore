@@ -33,6 +33,12 @@ public class Usuario extends Storable {
     @NotNull
     private String password;
 
+    @ManyToOne
+    private PreguntaSecreta preguntaSecreta;
+
+    @NotNull
+    private String respuestaPreguntaSecreta;
+
     @OneToMany()
     private Set<Pronostico> pronosticos;
 
@@ -107,5 +113,21 @@ public class Usuario extends Storable {
 
     public int getPuntos() {
         return this.getPronosticos().stream().mapToInt(Pronostico::getPuntos).sum();
+    }
+
+    public PreguntaSecreta getPreguntaSecreta() {
+        return preguntaSecreta;
+    }
+
+    public void setPreguntaSecreta(PreguntaSecreta preguntaSecreta) {
+        this.preguntaSecreta = preguntaSecreta;
+    }
+
+    public String getRespuestaPreguntaSecreta() {
+        return respuestaPreguntaSecreta;
+    }
+
+    public void setRespuestaPreguntaSecreta(String respuestaPreguntaSecreta) {
+        this.respuestaPreguntaSecreta = respuestaPreguntaSecreta;
     }
 }

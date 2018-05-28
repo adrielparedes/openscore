@@ -76,5 +76,17 @@ export const navigation = [
     url: '/pages/login',
     icon: 'icon-people',
     role: 'ADMIN'
+  },
+  {
+    name: 'Password',
+    url: '/pages/password',
+    icon: 'icon-people',
+    role: 'ADMIN'
+  },
+  {
+    name: 'Secret Question',
+    url: '/pages/secret',
+    icon: 'icon-people',
+    role: 'ADMIN'
   }
 ];

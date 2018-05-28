@@ -9,6 +9,7 @@ import { RegisterComponent } from './register.component';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { PasswordComponent } from './password/password.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
-  ]
+    RegisterComponent,
+    PasswordComponent
+]
 })
 export class PagesModule { }

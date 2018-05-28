@@ -1,3 +1,4 @@
+import { PreguntaSecretaService } from './pregunta-secreta.service';
 import { InfoService } from './info.service';
 import { AuthService } from './auth.service';
 import { PaisesService } from './paises.service';
@@ -33,6 +34,7 @@ import { AuthGuard } from './auth-guard';
         AuthGuard,
         AuthService,
         InfoService,
+        PreguntaSecretaService,
         PronosticoService,
         {
             provide: HTTP_INTERCEPTORS,

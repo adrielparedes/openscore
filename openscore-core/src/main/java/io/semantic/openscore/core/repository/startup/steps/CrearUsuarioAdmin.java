@@ -1,8 +1,10 @@
 package io.semantic.openscore.core.repository.startup.steps;
 
+import io.semantic.openscore.core.model.PreguntaSecreta;
 import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.model.Usuario;
 import io.semantic.openscore.core.repository.PaisRepository;
+import io.semantic.openscore.core.repository.PreguntaSecretaRepository;
 import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.repository.startup.StartupStep;
 import io.semantic.openscore.core.security.TokenGenerator;
@@ -14,23 +16,26 @@ import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class CrearUusuarioAdmin implements StartupStep {
+public class CrearUsuarioAdmin implements StartupStep {
 
     private UsuarioRepository usuarioRepository;
     private PaisRepository paisRepository;
     private TokenGenerator tokenGenerator;
+    private PreguntaSecretaRepository preguntaSecretaRepository;
 
-    public CrearUusuarioAdmin() {
+    public CrearUsuarioAdmin() {
 
     }
 
     @Inject
-    public CrearUusuarioAdmin(UsuarioRepository usuarioRepository,
-                              PaisRepository paisRepository,
-                              TokenGenerator tokenGenerator) {
+    public CrearUsuarioAdmin(UsuarioRepository usuarioRepository,
+                             PaisRepository paisRepository,
+                             TokenGenerator tokenGenerator,
+                             PreguntaSecretaRepository preguntaSecretaRepository) {
         this.usuarioRepository = usuarioRepository;
         this.paisRepository = paisRepository;
         this.tokenGenerator = tokenGenerator;
+        this.preguntaSecretaRepository = preguntaSecretaRepository;
     }
 
     @Override
@@ -54,10 +59,12 @@ public class CrearUusuarioAdmin implements StartupStep {
 
     private Usuario crearUsuarioAdmin() {
         Usuario usuario = new Usuario();
-        usuario.setRoles(new HashSet<>(Arrays.asList(Rol.ADMIN,Rol.USUARIO)));
+        usuario.setRoles(new HashSet<>(Arrays.asList(Rol.ADMIN, Rol.USUARIO)));
         usuario.setEmail("admin@admin.com");
         usuario.setApellido("Admin");
         usuario.setNombre("Admin");
+        usuario.setPreguntaSecreta(this.getPreguntaSecreta(PreguntaSecreta.PRODUCTO_REDHAT_FAVORITO));
+        usuario.setRespuestaPreguntaSecreta("openshift");
         usuario.setPassword(tokenGenerator.generarPassword("admin"));
         usuario.setPais(this.paisRepository.findByCodigo("ARG"));
         return usuario;
@@ -65,10 +72,12 @@ public class CrearUusuarioAdmin implements StartupStep {
 
     private Usuario crearUsuarioJohn() {
         Usuario usuario = new Usuario();
-        usuario.setRoles(new HashSet<>(Arrays.asList(Rol.USUARIO)));
-        usuario.setEmail("john@admin.com");
-        usuario.setApellido("Frusciante");
-        usuario.setNombre("John");
+        usuario.setRoles(new HashSet<>(Arrays.asList(Rol.ADMIN, Rol.USUARIO)));
+        usuario.setEmail("aparedes@redhat.com");
+        usuario.setApellido("Paredes");
+        usuario.setNombre("Adriel");
+        usuario.setPreguntaSecreta(this.getPreguntaSecreta(PreguntaSecreta.LENGUAJE_PROGRAMACION_FAVORITO));
+        usuario.setRespuestaPreguntaSecreta("haskell");
         usuario.setPassword(tokenGenerator.generarPassword("admin"));
         usuario.setPais(this.paisRepository.findByCodigo("ARG"));
         return usuario;
@@ -76,12 +85,18 @@ public class CrearUusuarioAdmin implements StartupStep {
 
     private Usuario crearUsuarioJimi() {
         Usuario usuario = new Usuario();
-        usuario.setRoles(new HashSet<>(Arrays.asList(Rol.USUARIO)));
-        usuario.setEmail("jimi@admin.com");
-        usuario.setApellido("Hendrix");
-        usuario.setNombre("Jimi");
+        usuario.setRoles(new HashSet<>(Arrays.asList(Rol.ADMIN, Rol.USUARIO)));
+        usuario.setEmail("lberetta@redhat.com");
+        usuario.setApellido("Beretta");
+        usuario.setNombre("Leandro");
+        usuario.setPreguntaSecreta(this.getPreguntaSecreta(PreguntaSecreta.BANDA_FAVORITA));
+        usuario.setRespuestaPreguntaSecreta("RHCP");
         usuario.setPassword(tokenGenerator.generarPassword("admin"));
         usuario.setPais(this.paisRepository.findByCodigo("ARG"));
         return usuario;
+    }
+
+    private PreguntaSecreta getPreguntaSecreta(String codigo) {
+        return this.preguntaSecretaRepository.findByCodigo(codigo).orElseThrow(() -> new IllegalArgumentException("La pregunta secreta no existe"));
     }
 }

@@ -12,10 +12,8 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.model.Usuario;
+import org.apache.commons.lang3.RandomStringUtils;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.Set;
 
@@ -107,5 +105,12 @@ public class TokenGenerator {
 
     public static String passwordRegex() {
         return null;
+    }
+
+    public String generateRandomToken() {
+        int length = 10;
+        boolean useLetters = true;
+        boolean useNumbers = false;
+        return RandomStringUtils.random(length, useLetters, useNumbers);
     }
 }

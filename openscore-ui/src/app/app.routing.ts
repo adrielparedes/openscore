@@ -51,6 +51,10 @@ export const routes: Routes = [
         loadChildren: './views/explorar/explorar.module#ExplorarModule'
       },
       {
+        path: 'settings',
+        loadChildren: './views/settings/settings.module#SettingsModule'
+      },
+      {
         path: 'admin/usuarios',
         loadChildren: './views/admin/usuarios/usuarios.module#UsuariosModule'
       },

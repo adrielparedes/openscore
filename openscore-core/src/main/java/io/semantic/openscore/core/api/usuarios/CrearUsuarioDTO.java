@@ -34,6 +34,12 @@ public class CrearUsuarioDTO {
     private String confirmacionEmail;
 
     @NotNull
+    private String preguntaSecreta;
+
+    @NotNull
+    private String respuestaPreguntaSecreta;
+
+    @NotNull
     @Password
     private String password;
 
@@ -95,5 +101,21 @@ public class CrearUsuarioDTO {
 
     public void setConfirmacionPassword(String confirmacionPassword) {
         this.confirmacionPassword = confirmacionPassword;
+    }
+
+    public String getPreguntaSecreta() {
+        return preguntaSecreta;
+    }
+
+    public void setPreguntaSecreta(String preguntaSecreta) {
+        this.preguntaSecreta = preguntaSecreta;
+    }
+
+    public String getRespuestaPreguntaSecreta() {
+        return respuestaPreguntaSecreta;
+    }
+
+    public void setRespuestaPreguntaSecreta(String respuestaPreguntaSecreta) {
+        this.respuestaPreguntaSecreta = respuestaPreguntaSecreta;
     }
 }
