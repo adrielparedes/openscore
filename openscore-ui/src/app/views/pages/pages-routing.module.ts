@@ -6,6 +6,7 @@ import { P404Component } from './404.component';
 import { P500Component } from './500.component';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
+import { RecoverComponent } from './recover/recover.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,12 @@ const routes: Routes = [
         component: PasswordComponent,
         data: {
           title: 'Password Page'
+        }
+      }, {
+        path: 'recover',
+        component: RecoverComponent,
+        data: {
+          title: 'Recover password page'
         }
       }
     ]

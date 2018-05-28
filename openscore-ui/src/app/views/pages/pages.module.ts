@@ -10,6 +10,7 @@ import { RegisterComponent } from './register.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PasswordComponent } from './password/password.component';
+import { RecoverComponent } from './recover/recover.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { PasswordComponent } from './password/password.component';
     P500Component,
     LoginComponent,
     RegisterComponent,
-    PasswordComponent
+    PasswordComponent,
+    RecoverComponent
 ]
 })
 export class PagesModule { }

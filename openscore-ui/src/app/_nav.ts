@@ -84,8 +84,8 @@ export const navigation = [
     role: 'ADMIN'
   },
   {
-    name: 'Secret Question',
-    url: '/pages/secret',
+    name: 'Recover',
+    url: '/pages/recover',
     icon: 'icon-people',
     role: 'ADMIN'
   }

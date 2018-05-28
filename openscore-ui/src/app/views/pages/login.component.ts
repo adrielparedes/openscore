@@ -34,6 +34,10 @@ export class LoginComponent {
     this.login();
   }
 
+  recover() {
+    this.router.navigate(['/pages/recover']);
+  }
+
   login() {
     if (this.loginForm.valid) {
       const loginUsuario: LoginUsuario = this.loginForm.value;
