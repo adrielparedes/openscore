@@ -17,17 +17,13 @@ public interface UsuarioMapper {
     Usuario asUsuario(UsuarioDTO api);
 
     @Mappings({
-            @Mapping(source = "pais", target = "pais", ignore = true),
-            @Mapping(source = "preguntaSecreta", target = "preguntaSecreta", ignore = true),
-            @Mapping(source = "respuestaPreguntaSecreta", target = "respuestaPreguntaSecreta", ignore = true)
+            @Mapping(source = "pais", target = "pais", ignore = true)
     })
     Usuario asUsuario(CrearUsuarioDTO crearUsuario);
 
     @Mappings({
             @Mapping(source = "pais", target = "pais", ignore = true),
             @Mapping(source = "password", target = "password", ignore = true),
-            @Mapping(source = "preguntaSecreta", target = "preguntaSecreta", ignore = true),
-            @Mapping(source = "respuestaPreguntaSecreta", target = "respuestaPreguntaSecreta", ignore = true)
     })
     void updateUsuario(CrearUsuarioDTO usuarioDTO, @MappingTarget Usuario car);
 

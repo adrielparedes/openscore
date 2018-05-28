@@ -9,12 +9,10 @@ import io.semantic.openscore.core.logging.ServiceLogger;
 import io.semantic.openscore.core.mapping.PaisMapper;
 import io.semantic.openscore.core.mapping.UsuarioMapper;
 import io.semantic.openscore.core.model.Pais;
-import io.semantic.openscore.core.model.PreguntaSecreta;
 import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.model.Usuario;
 import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.repository.PaisRepository;
-import io.semantic.openscore.core.repository.PreguntaSecretaRepository;
 import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.security.TokenGenerator;
@@ -49,7 +47,6 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     private UsuarioRepository usuarioRepository;
     private PaisRepository paisRepository;
-    private PreguntaSecretaRepository preguntaSecretaRepository;
     private TokenGenerator tokenGenerator;
     private ApplicationValidator validator;
     private UsuarioMapper mapper;
@@ -62,7 +59,6 @@ public class UsuariosServiceImpl implements UsuariosService {
     @Inject
     public UsuariosServiceImpl(UsuarioRepository usuarioRepository,
                                PaisRepository paisRepository,
-                               PreguntaSecretaRepository preguntaSecretaRepository,
                                TokenGenerator tokenGenerator,
                                ApplicationValidator appValidator,
                                UsuarioMapper mapper,
@@ -74,7 +70,6 @@ public class UsuariosServiceImpl implements UsuariosService {
                                ServiceLogger serviceLogger) {
         this.usuarioRepository = usuarioRepository;
         this.paisRepository = paisRepository;
-        this.preguntaSecretaRepository = preguntaSecretaRepository;
         this.tokenGenerator = tokenGenerator;
         this.validator = appValidator;
         this.mapper = mapper;
@@ -160,11 +155,8 @@ public class UsuariosServiceImpl implements UsuariosService {
             mapper.updateUsuario(crearUsuario, u);
             return u;
         }).orElseGet(() -> {
-            PreguntaSecreta preguntaSecreta = this.getPreguntaSecreta(crearUsuario.getPreguntaSecreta());
             Usuario u = new Usuario();
             u.setPassword(this.tokenGenerator.generarPassword(crearUsuario.getPassword()));
-            u.setPreguntaSecreta(preguntaSecreta);
-            u.setRespuestaPreguntaSecreta(this.tokenGenerator.generarPassword(crearUsuario.getRespuestaPreguntaSecreta()));
             u.setRoles(new HashSet<>(Arrays.asList(Rol.USUARIO)));
             return u;
         });
@@ -176,11 +168,6 @@ public class UsuariosServiceImpl implements UsuariosService {
         usuarioDTO.setPais(this.paisMapper.asApi(pais));
 
         return usuarioDTO;
-    }
-
-    private PreguntaSecreta getPreguntaSecreta(String codigo) {
-        return this.preguntaSecretaRepository.findByCodigo(codigo).orElseThrow(() ->
-                new IllegalArgumentException("Secret question not found: " + codigo));
     }
 
     @Override
