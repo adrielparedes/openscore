@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     component: NoticiasComponent,
     data: {
-      title: 'Noticias'
+      title: 'News'
     }
   }
 ];

@@ -40,7 +40,7 @@ export class PronosticosComponent implements OnInit {
 
   update() {
     this.gruposService.getAll(0, 0).subscribe(res1 => {
-      this.grupos = res1.data;
+      this.grupos = this.removeNone(res1.data);
       this.partidosService.getFechas().subscribe(res2 => {
         this.fechas = res2.data;
         this.fasesService.getAll(0, 0).subscribe(res => {
@@ -79,6 +79,10 @@ export class PronosticosComponent implements OnInit {
       this.partidos = res.data;
       this.loading = false;
     });
+  }
+
+  removeNone(grupos: Grupo[]) {
+    return grupos.filter(x => x.codigo !== 'NONE');
   }
 
 

@@ -21,7 +21,6 @@ export class AddHeaderInterceptor implements HttpInterceptor {
         const token = this.authService.getToken();
 
         if (token !== undefined) {
-            console.log(token);
             const clonedRequest = req.clone({
                 setHeaders: {
                     'Authorization': 'Bearer ' + token
@@ -29,7 +28,6 @@ export class AddHeaderInterceptor implements HttpInterceptor {
             });
             return next.handle(clonedRequest);
         } else {
-            console.log('No token');
             return next.handle(req);
         }
     }

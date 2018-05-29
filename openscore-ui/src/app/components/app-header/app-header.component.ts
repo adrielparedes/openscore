@@ -24,9 +24,13 @@ export class AppHeaderComponent implements OnInit {
 
   }
 
+  settings() {
+    this.router.navigate(['/settings']);
+
+  }
+
   logout() {
     localStorage.removeItem('openscore-token');
-
     this.router.navigate(['/dashboard']);
 
   }
