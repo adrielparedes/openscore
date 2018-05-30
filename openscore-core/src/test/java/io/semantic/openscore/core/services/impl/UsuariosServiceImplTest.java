@@ -1,6 +1,8 @@
 package io.semantic.openscore.core.services.impl;
 
 import io.semantic.openscore.core.api.usuarios.CrearUsuarioDTO;
+import io.semantic.openscore.core.cache.TokenCache;
+import io.semantic.openscore.core.email.MailSender;
 import io.semantic.openscore.core.exceptions.ValidationException;
 import io.semantic.openscore.core.logging.ServiceLogger;
 import io.semantic.openscore.core.mapping.PaisMapper;
@@ -11,6 +13,7 @@ import io.semantic.openscore.core.model.Usuario;
 import io.semantic.openscore.core.repository.PaisRepository;
 import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.security.TokenGenerator;
+import io.semantic.openscore.core.services.UserInfo;
 import io.semantic.openscore.core.services.api.UsuariosService;
 import io.semantic.openscore.core.validation.ApplicationValidator;
 import io.semantic.openscore.core.validation.validators.EmailValidator;
@@ -71,6 +74,9 @@ public class UsuariosServiceImplTest {
                 new ApplicationValidator(Validation.buildDefaultValidatorFactory().getValidator()),
                 Mappers.getMapper(UsuarioMapper.class),
                 Mappers.getMapper(PaisMapper.class),
+                mock(UserInfo.class),
+                mock(TokenCache.class),
+                mock(MailSender.class),
                 emailValidators,
                 mock(ServiceLogger.class));
         when(paisRepository.findByCodigo(eq(pais.getCodigo()))).thenReturn(pais);
