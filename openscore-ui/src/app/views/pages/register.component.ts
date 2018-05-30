@@ -16,18 +16,15 @@ export class RegisterComponent {
 
   mailPattern = '.+@redhat\.com';
   paises: Pais[] = [];
-  preguntas: PreguntaSecreta[] = [];
   registro: FormGroup;
   error = false;
   errores: string[] = [];
   constructor(private usuarioService: UsuarioService,
     private fb: FormBuilder,
     private paisesService: PaisesService,
-    private preguntaSecretaService: PreguntaSecretaService,
     private router: Router) {
 
     this.paisesService.getAll(0, 0).subscribe(res => this.paises = res.data);
-    this.preguntaSecretaService.getAll(0, 0).subscribe(res => this.preguntas = res.data);
 
     this.registro = this.fb.group({
       nombre: ['', Validators.required],

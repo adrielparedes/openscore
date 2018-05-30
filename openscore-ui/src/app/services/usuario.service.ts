@@ -34,17 +34,17 @@ export class UsuarioService extends Rest<Usuario, CrearUsuario, CrearUsuario> {
 
     }
 
+    public getMyUser() {
+        return this.http
+            .get<ApiResponse<Usuario>>(this.getUrl(this.getServiceUrl()) + '/myself');
+    }
+
     public registrar(usuario: CrearUsuario) {
-        console.log(this.getUrl(this.registrarUrl));
-        console.log(usuario);
         return this.http
             .post(this.getUrl(this.registrarUrl), usuario);
     }
 
     public login(usuario: LoginUsuario) {
-        console.log(this.getUrl(this.loginUrl));
-        console.log(usuario);
-
         return this.http.post<ApiResponse<Token>>(this.getUrl(this.loginUrl), usuario);
     }
 

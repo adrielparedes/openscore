@@ -45,6 +45,11 @@ public interface UsuariosService extends SearchService<UsuarioDTO> {
     ApiResponse<UsuarioDTO> getUsuario(@PathParam("id") Long id);
 
     @GET
+    @Path("/myself")
+    @Secure
+    ApiResponse<UsuarioDTO> getMiUsuario();
+
+    @GET
     @Path("/")
     @Secure
     public ApiResponse<List<UsuarioDTO>> getAll(@QueryParam("page") int page, @QueryParam("pageSize") int pageSize, @QueryParam("filter") String filter);

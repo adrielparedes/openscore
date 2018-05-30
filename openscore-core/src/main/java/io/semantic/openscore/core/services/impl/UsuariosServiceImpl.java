@@ -184,6 +184,11 @@ public class UsuariosServiceImpl implements UsuariosService {
         return new ApiResponse<UsuarioDTO>(usuarioDTO);
     }
 
+    @Override
+    public ApiResponse<UsuarioDTO> getMiUsuario() {
+        return this.getUsuario(this.userInfo.getUserId());
+    }
+
     public Usuario getUsuario(String email) {
         Optional<Usuario> usuarioOptional = this.usuarioRepository.findByEmail(email);
         return usuarioOptional.orElseThrow(() -> new IllegalArgumentException("User not found"));
