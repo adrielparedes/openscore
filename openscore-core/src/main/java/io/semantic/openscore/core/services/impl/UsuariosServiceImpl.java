@@ -156,11 +156,14 @@ public class UsuariosServiceImpl implements UsuariosService {
             return u;
         }).orElseGet(() -> {
             Usuario u = new Usuario();
+            u.setEmail(crearUsuario.getEmail());
             u.setPassword(this.tokenGenerator.generarPassword(crearUsuario.getPassword()));
             u.setRoles(new HashSet<>(Arrays.asList(Rol.USUARIO)));
             return u;
         });
 
+        usuario.setNombre(crearUsuario.getNombre());
+        usuario.setApellido(crearUsuario.getApellido());
         usuario.setPais(pais);
         this.usuarioRepository.save(usuario);
 
