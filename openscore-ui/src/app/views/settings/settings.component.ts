@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { UpdateUsuario } from './../../model/update-usuario';
 import { Pais } from './../../model/pais';
 import { Router } from '@angular/router';
 import { PaisesService } from './../../services/paises.service';
@@ -6,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { AuthService } from '../../services/auth.service';
 import { Usuario } from '../../model/usuario';
+import { CrearUsuario } from '../../model/crear-usuario';
 
 @Component({
   selector: 'app-settings',
@@ -22,6 +25,7 @@ export class SettingsComponent implements OnInit {
     private fb: FormBuilder,
     private paisesService: PaisesService,
     private authService: AuthService,
+    private toastr: ToastrService,
     private router: Router) { }
 
   ngOnInit() {
@@ -36,7 +40,6 @@ export class SettingsComponent implements OnInit {
 
     this.usuarioService.getMyUser().subscribe(res => {
       this.usuario = res.data;
-      console.log(this.usuario);
       this.form.patchValue(this.usuario);
       this.form.controls['pais'].setValue(this.usuario.pais.codigo);
 
@@ -46,15 +49,24 @@ export class SettingsComponent implements OnInit {
   }
 
   submit() {
-
+    const formValues = <UpdateUsuario>this.form.value;
+    const updateUsuario: UpdateUsuario = {
+      nombre: formValues.nombre,
+      apellido: formValues.apellido,
+      pais: formValues.pais
+    };
+    this.usuarioService.updateUser(this.usuario.id, updateUsuario).subscribe(res => {
+      this.toastr.success('User updated succesfully');
+      this.authService.setToken(res.data.token);
+    });
   }
 
   cancelar() {
-
+    this.router.navigate(['/home']);
   }
 
   changePassword() {
-
+    this.router.navigate(['/pages/password']);
   }
 
   isInvalid(controlName: string) {

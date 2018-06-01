@@ -56,7 +56,6 @@ export class PronosticoComponent implements OnInit, OnDestroy {
   }
 
   local(partido: Partido) {
-    console.log('local');
     this.pronosticoService.local(partido.id).subscribe(this.updatePartido(partido));
   }
 

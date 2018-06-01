@@ -27,7 +27,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.ws.rs.Path;
-import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
@@ -85,16 +84,26 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     @Override
     public ApiResponse<UsuarioDTO> registrarUsuario(CrearUsuarioDTO crearUsuario) {
-        return new ApiResponse<>(this.saveOrUpdateUser(Optional.empty(), crearUsuario));
+        return new ApiResponse<>(this.saveUser(crearUsuario));
     }
 
     @Override
-    public ApiResponse<UsuarioDTO> updateUsuario(long id, CrearUsuarioDTO crearUsuario) {
+    public ApiResponse<TokenDTO> updateUsuario(long id, UpdateUsuarioDTO crearUsuario) {
         if (this.userInfo.getUserId() == id) {
-            return new ApiResponse<>(this.saveOrUpdateUser(Optional.of(id), crearUsuario));
+            return new ApiResponse<>(new TokenDTO(this.tokenGenerator.generarToken(this.updateUser(id, crearUsuario))));
         } else {
-            throw new IllegalArgumentException("Your are trying to modify an user that is not you");
+            throw new IllegalArgumentException("You are trying to modify an user that is not you");
         }
+    }
+
+    private Usuario updateUser(long id, UpdateUsuarioDTO updateUsuario) {
+        this.validator.validate(updateUsuario);
+        Usuario usuario = this.findUsuario(id);
+        Pais pais = this.paisRepository.findByCodigo(updateUsuario.getPais());
+        this.mapper.updateUsuario(updateUsuario, usuario);
+        usuario.setPais(pais);
+        this.usuarioRepository.save(usuario);
+        return usuario;
     }
 
 
@@ -142,28 +151,12 @@ public class UsuariosServiceImpl implements UsuariosService {
     }
 
 
-    private UsuarioDTO saveOrUpdateUser(Optional<Long> id, CrearUsuarioDTO crearUsuario) {
+    private UsuarioDTO saveUser(CrearUsuarioDTO crearUsuario) {
         this.validator.validate(crearUsuario);
-
         Pais pais = this.paisRepository.findByCodigo(crearUsuario.getPais());
-
-
-        Usuario usuario = id.map(i -> {
-            Usuario u = usuarioRepository.findById(i).orElseThrow(() ->
-                    new IllegalArgumentException(MessageFormat
-                            .format("User with id <<{0}>> not found", id)));
-            mapper.updateUsuario(crearUsuario, u);
-            return u;
-        }).orElseGet(() -> {
-            Usuario u = new Usuario();
-            u.setEmail(crearUsuario.getEmail());
-            u.setPassword(this.tokenGenerator.generarPassword(crearUsuario.getPassword()));
-            u.setRoles(new HashSet<>(Arrays.asList(Rol.USUARIO)));
-            return u;
-        });
-
-        usuario.setNombre(crearUsuario.getNombre());
-        usuario.setApellido(crearUsuario.getApellido());
+        Usuario usuario = this.mapper.asUsuario(crearUsuario);
+        usuario.setPassword(this.tokenGenerator.generarPassword(crearUsuario.getPassword()));
+        usuario.setRoles(new HashSet<>(Arrays.asList(Rol.USUARIO)));
         usuario.setPais(pais);
         this.usuarioRepository.save(usuario);
 
@@ -181,10 +174,14 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     @Override
     public ApiResponse<UsuarioDTO> getUsuario(Long id) {
-        Optional<Usuario> usuarioOptional = this.usuarioRepository.findById(id);
-        Usuario usuario = usuarioOptional.orElseThrow(() -> new IllegalArgumentException("User not found"));
+        Usuario usuario = findUsuario(id);
         UsuarioDTO usuarioDTO = this.mapper.asApi(usuario);
         return new ApiResponse<UsuarioDTO>(usuarioDTO);
+    }
+
+    private Usuario findUsuario(Long id) {
+        Optional<Usuario> usuarioOptional = this.usuarioRepository.findById(id);
+        return usuarioOptional.orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
     @Override

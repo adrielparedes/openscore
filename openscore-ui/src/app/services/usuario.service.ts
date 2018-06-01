@@ -1,3 +1,4 @@
+import { UpdateUsuario } from './../model/update-usuario';
 import { Token } from './../model/token';
 import { ApiResponse } from './../model/api-response';
 import { Injector } from '@angular/core/src/di/injector';
@@ -11,12 +12,14 @@ import { HttpClient } from '@angular/common/http';
 import { UsuarioCompleto } from 'app/model/usuario-completo';
 
 @Injectable()
-export class UsuarioService extends Rest<Usuario, CrearUsuario, CrearUsuario> {
+export class UsuarioService extends Rest<Usuario, CrearUsuario, UpdateUsuario> {
 
     private getAllUrl = '/usuarios';
     private getAllAdminUrl = '/admin';
     private registrarUrl = '/usuarios/registrar';
     private loginUrl = '/usuarios/login';
+    private updatePasswordUrl = '/usuarios/password';
+    private recoverPasswordUrl = '/usuarios/recover';
 
 
     constructor(protected http: HttpClient) {
@@ -34,6 +37,11 @@ export class UsuarioService extends Rest<Usuario, CrearUsuario, CrearUsuario> {
 
     }
 
+    public updateUser(id: number, storable: UpdateUsuario) {
+        return this.http
+            .post<ApiResponse<Token>>(this.getUrl(this.getServiceUrl() + '/' + id), storable);
+    }
+
     public getMyUser() {
         return this.http
             .get<ApiResponse<Usuario>>(this.getUrl(this.getServiceUrl()) + '/myself');
@@ -46,6 +54,14 @@ export class UsuarioService extends Rest<Usuario, CrearUsuario, CrearUsuario> {
 
     public login(usuario: LoginUsuario) {
         return this.http.post<ApiResponse<Token>>(this.getUrl(this.loginUrl), usuario);
+    }
+
+    public recoverPassword(recoverPassword: any) {
+        return this.http.post<ApiResponse<Token>>(this.getUrl(this.recoverPasswordUrl), {});
+    }
+
+    public updatePassword(updatePassword: any) {
+        return this.http.post<ApiResponse<Token>>(this.getUrl(this.updatePasswordUrl), updatePassword);
     }
 
 }

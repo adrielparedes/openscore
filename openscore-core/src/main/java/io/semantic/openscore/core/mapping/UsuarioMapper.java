@@ -2,6 +2,7 @@ package io.semantic.openscore.core.mapping;
 
 import io.semantic.openscore.core.api.admin.UsuarioCompletoDTO;
 import io.semantic.openscore.core.api.usuarios.CrearUsuarioDTO;
+import io.semantic.openscore.core.api.usuarios.UpdateUsuarioDTO;
 import io.semantic.openscore.core.api.usuarios.UsuarioDTO;
 import io.semantic.openscore.core.model.Usuario;
 import org.mapstruct.Mapper;
@@ -23,9 +24,8 @@ public interface UsuarioMapper {
 
     @Mappings({
             @Mapping(source = "pais", target = "pais", ignore = true),
-            @Mapping(source = "password", target = "password", ignore = true),
     })
-    void updateUsuario(CrearUsuarioDTO usuarioDTO, @MappingTarget Usuario car);
+    void updateUsuario(UpdateUsuarioDTO usuarioDTO, @MappingTarget Usuario car);
 
     UsuarioDTO asApi(Usuario usuario);
 

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
+import { AuthService } from './../../services/auth.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as JWT from 'jwt-decode';
 import { Router } from '@angular/router';
 
@@ -6,22 +8,26 @@ import { Router } from '@angular/router';
   selector: 'app-header',
   templateUrl: './app-header.component.html'
 })
-export class AppHeaderComponent implements OnInit {
+export class AppHeaderComponent implements OnInit, OnDestroy {
   nombre: string;
   apellido: string
   roles: string[] = [];
+  sub: Subscription;
 
-  ngOnInit() {
-    const token = localStorage.getItem('openscore-token');
-    const decoded = JWT(token);
-
-    this.nombre = decoded['nombre'];
-    this.apellido = decoded['apellido'];
-    this.roles = decoded['roles'];
+  constructor(private router: Router, private authService: AuthService) {
   }
 
-  constructor(private router: Router) {
+  ngOnInit() {
+    this.sub = this.authService.getToken().subscribe(token => {
+      try {
+        const decoded = JWT(token);
+        this.nombre = decoded['nombre'];
+        this.apellido = decoded['apellido'];
+        this.roles = decoded['roles'];
+      } catch (e) {
 
+      }
+    });
   }
 
   settings() {
@@ -33,5 +39,9 @@ export class AppHeaderComponent implements OnInit {
     localStorage.removeItem('openscore-token');
     this.router.navigate(['/dashboard']);
 
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

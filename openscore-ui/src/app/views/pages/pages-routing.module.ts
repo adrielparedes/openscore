@@ -1,6 +1,7 @@
+import { AuthGuard } from './../../services/auth-guard';
 import { PasswordComponent } from './password/password.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 import { P404Component } from './404.component';
 import { P500Component } from './500.component';
@@ -45,6 +46,7 @@ const routes: Routes = [
       }, {
         path: 'password',
         component: PasswordComponent,
+        canActivate: [AuthGuard],
         data: {
           title: 'Password Page'
         }

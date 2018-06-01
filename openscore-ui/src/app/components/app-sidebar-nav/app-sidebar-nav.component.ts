@@ -26,7 +26,7 @@ export class AppSidebarNavComponent {
   authService: AuthService;
 
   constructor() {
-    this.authService = new AuthService
+    this.authService = new AuthService();
   }
 
   public isDivider(item) {

@@ -13,12 +13,12 @@ import { Observable } from 'rxjs/Rx';
 export class AddHeaderInterceptor implements HttpInterceptor {
 
     constructor(private authService: AuthService) {
-        console.log('Interceptor');
+
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        const token = this.authService.getToken();
+        const token = this.authService.getLocalStorageToken();
 
         if (token !== undefined) {
             const clonedRequest = req.clone({

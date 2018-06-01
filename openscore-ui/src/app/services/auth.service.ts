@@ -1,25 +1,35 @@
 import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AuthService {
+
+
+    token: BehaviorSubject<string>;
 
     private TOKEN = 'openscore-token';
 
     constructor() {
         // Que esto quede vacio asi se puede crear con un new en caso extremo
+        this.token = new BehaviorSubject(this.getLocalStorageToken());
     }
 
     isLoggedIn() {
-        const t = this.getToken();
+        const t = this.getLocalStorageToken();
         return t !== undefined && t !== null && t.length > 0;
     }
 
     public getToken() {
+        return this.token.asObservable();
+    }
+
+    public getLocalStorageToken() {
         return localStorage.getItem(this.TOKEN);
     }
 
     public setToken(token: string) {
+        this.token.next(token);
         return localStorage.setItem(this.TOKEN, token);
     }
 
@@ -32,9 +42,12 @@ export class AuthService {
     }
 
     public containsRole(role: string) {
-        const token = this.getToken();
-        const decoded = jwt_decode(token);
-        return (<string[]>decoded['roles']).includes(role.toUpperCase());
+        try {
+            const decoded = jwt_decode(this.getLocalStorageToken());
+            return (<string[]>decoded['roles']).includes(role.toUpperCase());
+        } catch (e) {
+            return false;
+        }
     }
 
 }

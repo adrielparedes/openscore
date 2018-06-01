@@ -2,6 +2,7 @@ package io.semantic.openscore.core.api.usuarios;
 
 import io.semantic.openscore.core.validation.annotations.Matches;
 import io.semantic.openscore.core.validation.annotations.Password;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
@@ -9,15 +10,14 @@ import javax.validation.constraints.NotNull;
         @Matches(first = "password", second = "confirmacionPassword")})
 public class UpdatePassword {
 
-    @NotNull
-    @Password
+    @NotEmpty
     private String oldPassword;
 
-    @NotNull
+    @NotEmpty
     @Password
     private String password;
 
-    @NotNull
+    @NotEmpty
     @Password
     private String confirmacionPassword;
 

@@ -20,8 +20,13 @@ public interface UsuariosService extends SearchService<UsuarioDTO> {
     @POST
     @Path("/{id}")
     @Secure
-    ApiResponse<UsuarioDTO> updateUsuario(@PathParam("id") long id, CrearUsuarioDTO crearUsuario);
+    ApiResponse<TokenDTO> updateUsuario(@PathParam("id") long id, UpdateUsuarioDTO crearUsuario);
 
+
+    @POST
+    @Path("/password")
+    @Secure
+    ApiResponse<UsuarioDTO> updatePassword(UpdatePassword updatePassword);
 
     @POST
     @Path("/recover")
@@ -31,11 +36,6 @@ public interface UsuariosService extends SearchService<UsuarioDTO> {
     @Path("/token/{email}")
     ApiResponse<String> sendToken(@PathParam("email") String email);
 
-
-    @POST
-    @Path("/{id}/password")
-    @Secure
-    ApiResponse<UsuarioDTO> updatePassword(UpdatePassword updatePassword);
 
     ApiResponse<String> deleteUsuario(long id);
 
