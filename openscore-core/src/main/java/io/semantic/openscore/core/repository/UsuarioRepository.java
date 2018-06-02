@@ -34,4 +34,8 @@ public class UsuarioRepository extends Repository<Usuario> {
             return Optional.empty();
         }
     }
+
+    public boolean exist(String email) {
+        return this.findByEmail(email).isPresent();
+    }
 }

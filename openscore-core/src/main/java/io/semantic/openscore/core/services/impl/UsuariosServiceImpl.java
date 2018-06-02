@@ -27,6 +27,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.ws.rs.Path;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
@@ -123,13 +124,16 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     @Override
     public ApiResponse<String> sendToken(String email) {
+        if (!this.usuarioRepository.exist(email)) {
+            throw new IllegalArgumentException(MessageFormat.format("User with email {0} does not exist in OpenScore", email));
+        }
         String token = this.tokenGenerator.generateRandomToken();
         this.tokenCache.add(email, token);
         Map<String, Object> params = new HashMap<>();
         params.put("email", email);
         params.put("token", token);
         this.mailSender.send(email, "[OpenScore] Password Recovery", "password", params);
-        return null;
+        return ok("");
     }
 
     @Override

@@ -20,7 +20,7 @@ export class UsuarioService extends Rest<Usuario, CrearUsuario, UpdateUsuario> {
     private loginUrl = '/usuarios/login';
     private updatePasswordUrl = '/usuarios/password';
     private recoverPasswordUrl = '/usuarios/recover';
-
+    private sendRecoverEmailUrl = '/usuarios/token'
 
     constructor(protected http: HttpClient) {
         super(http);
@@ -62,6 +62,10 @@ export class UsuarioService extends Rest<Usuario, CrearUsuario, UpdateUsuario> {
 
     public updatePassword(updatePassword: any) {
         return this.http.post<ApiResponse<Token>>(this.getUrl(this.updatePasswordUrl), updatePassword);
+    }
+
+    public sendRecoverEmail(email: string) {
+        return this.http.get<ApiResponse<string>>(this.getUrl(this.sendRecoverEmailUrl) + '/' + email, {});
     }
 
 }
