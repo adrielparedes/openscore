@@ -18,7 +18,7 @@ public interface UsuariosService extends SearchService<UsuarioDTO> {
     ApiResponse<UsuarioDTO> registrarUsuario(CrearUsuarioDTO crearUsuario);
 
     @POST
-    @Path("/{id}")
+    @Path("/update/{id}")
     @Secure
     ApiResponse<TokenDTO> updateUsuario(@PathParam("id") long id, UpdateUsuarioDTO crearUsuario);
 
@@ -52,7 +52,7 @@ public interface UsuariosService extends SearchService<UsuarioDTO> {
     @GET
     @Path("/")
     @Secure
-    public ApiResponse<List<UsuarioDTO>> getAll(@QueryParam("page") int page, @QueryParam("pageSize") int pageSize, @QueryParam("filter") String filter);
+    ApiResponse<List<UsuarioDTO>> getAll(@QueryParam("page") int page, @QueryParam("pageSize") int pageSize, @QueryParam("filter") String filter);
 
     @POST
     @Path("/login")

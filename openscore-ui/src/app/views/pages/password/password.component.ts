@@ -26,8 +26,10 @@ export class PasswordComponent implements OnInit {
 
     this.activatedRoute.queryParams.subscribe(params => {
       const recover = params['recover'];
-      if (recover !== undefined) {
+      const email = params['email'];
+      if (recover !== undefined && this.email !== undefined) {
         this.token = recover;
+        this.email = email;
         this.recover = true;
       } else {
         this.recover = false;
