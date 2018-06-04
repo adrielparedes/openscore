@@ -32,9 +32,9 @@ public class CrearUsuarioAdmin implements StartupStep {
 
     @Override
     public void run() {
-        this.crearUsuarioSiNoExiste("admin@admin.com", this.crearUsuarioAdmin());
-        this.crearUsuarioSiNoExiste("john@redhat.com", this.crearUsuarioJohn());
-        this.crearUsuarioSiNoExiste("jimi@redhat.com", this.crearUsuarioJimi());
+//        this.crearUsuarioSiNoExiste("admin@admin.com", this.crearUsuarioAdmin());
+        this.crearUsuarioSiNoExiste("aparedes@redhat.com", this.crearUsuarioAparedes());
+        this.crearUsuarioSiNoExiste("lberetta@redhat.com", this.crearUsuarioLberetta());
 
     }
 
@@ -60,7 +60,7 @@ public class CrearUsuarioAdmin implements StartupStep {
         return usuario;
     }
 
-    private Usuario crearUsuarioJohn() {
+    private Usuario crearUsuarioAparedes() {
         Usuario usuario = new Usuario();
         usuario.setRoles(new HashSet<>(Arrays.asList(Rol.ADMIN, Rol.USUARIO)));
         usuario.setEmail("aparedes@redhat.com");
@@ -71,7 +71,7 @@ public class CrearUsuarioAdmin implements StartupStep {
         return usuario;
     }
 
-    private Usuario crearUsuarioJimi() {
+    private Usuario crearUsuarioLberetta() {
         Usuario usuario = new Usuario();
         usuario.setRoles(new HashSet<>(Arrays.asList(Rol.ADMIN, Rol.USUARIO)));
         usuario.setEmail("lberetta@redhat.com");
