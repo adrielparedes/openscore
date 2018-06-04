@@ -20,7 +20,7 @@ import java.util.Set;
 public class TokenGenerator {
 
     private static final String OPENSCORE_JWT_SECRET = "OPENSCORE_JWT_SECRET";
-    public static final String SECRET = System.getProperty(OPENSCORE_JWT_SECRET);
+    private final String SECRET;
     public static final String SUBJECT = "openscore";
     public static final String ISSUER = "openscore";
     public static final String USERNAME = "username";
@@ -32,6 +32,7 @@ public class TokenGenerator {
     public static final Date EXPIRACION_TOKEN = new Date(new Date().getTime() + 60 * 1000);
 
     public TokenGenerator() {
+        this.SECRET = System.getProperty(OPENSCORE_JWT_SECRET);
     }
 
     public String generarToken(Usuario usuario) {
