@@ -19,7 +19,8 @@ import java.util.Set;
 
 public class TokenGenerator {
 
-    public static final String SECRET = "7ZXjPiKE2dUYL9ENu3zcZESUM2dyOoVa";
+    private static final String OPENSCORE_JWT_SECRET = "OPENSCORE_JWT_SECRET";
+    public static final String SECRET = System.getProperty(OPENSCORE_JWT_SECRET);
     public static final String SUBJECT = "openscore";
     public static final String ISSUER = "openscore";
     public static final String USERNAME = "username";

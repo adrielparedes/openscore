@@ -205,9 +205,6 @@ public class UsuariosServiceImpl implements UsuariosService {
 
         TokenGenerator tokenGenerator = new TokenGenerator();
 
-        logger.info("Usuario->password {}", usuario.getPassword());
-        logger.info("LoginUsuario->password {}", tokenGenerator.generarPassword(loginUsuario.getPassword()));
-
         checkPassword(loginUsuario.getPassword(), usuario, tokenGenerator);
 
         UsuarioDTO usuarioDTO = this.mapper.asApi(usuario);
