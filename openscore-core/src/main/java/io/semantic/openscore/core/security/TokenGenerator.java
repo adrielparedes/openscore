@@ -32,7 +32,7 @@ public class TokenGenerator {
     public static final Date EXPIRACION_TOKEN = new Date(new Date().getTime() + 60 * 1000);
 
     public TokenGenerator() {
-        this.SECRET = System.getProperty(OPENSCORE_JWT_SECRET);
+        this.SECRET = System.getenv(OPENSCORE_JWT_SECRET);
     }
 
     public String generarToken(Usuario usuario) {
