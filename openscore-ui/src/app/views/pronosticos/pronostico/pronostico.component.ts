@@ -101,10 +101,16 @@ export class PronosticoComponent implements OnInit, OnDestroy {
     }
   }
 
-  getTimeToBlock(diff: number) {
-    const minutes = Math.floor(diff / 60000);
-    const seconds = ((diff % 60000) / 1000).toFixed(0);
-    return minutes + ':' + seconds;
+  getTimeToBlock(ms: number) {
+
+    const days = Math.floor(ms / (24 * 60 * 60 * 1000));
+    const daysms = ms % (24 * 60 * 60 * 1000);
+    const hours = Math.floor((daysms) / (60 * 60 * 1000));
+    const hoursms = ms % (60 * 60 * 1000);
+    const minutes = Math.floor((hoursms) / (60 * 1000));
+    const minutesms = ms % (60 * 1000);
+    const sec = Math.floor((minutesms) / (1000));
+    return days + ':' + hours + ':' + minutes + ':' + sec;
   }
 
   getTimeDiffToBlock(matchDate: Date) {

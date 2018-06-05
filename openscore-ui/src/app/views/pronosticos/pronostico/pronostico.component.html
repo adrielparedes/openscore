@@ -13,7 +13,7 @@
         <div class="lugar">{{partido.lugar}}</div>
         <div>{{partido.dia | date: 'dd/MM/yyyy HH:mm (O)'}}</div>
         <div *ngIf="pendiente">Time until blocked:
-          <span class="block">{{timeToBlock}} minutos</span>
+          <span class="block">{{timeToBlock}} days</span>
         </div>
       </div>
       <div class="card-footer" [ngClass]="isGanador()">
