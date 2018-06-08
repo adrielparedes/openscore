@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://xmlns.jcp.org/xml/ns/javaee" bean-discovery-mode="all">
+    <alternatives>
+        <class>io.semantic.openscore.core.email.StdoutMailSender</class>
+    </alternatives>
 </beans>
