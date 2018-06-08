@@ -4,7 +4,8 @@ import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.TokenDTO;
 import io.semantic.openscore.core.api.usuarios.*;
 import io.semantic.openscore.core.cache.TokenCache;
-import io.semantic.openscore.core.email.MailSender;
+import io.semantic.openscore.core.email.MailFactory;
+import io.semantic.openscore.core.email.MailServer;
 import io.semantic.openscore.core.logging.ServiceLogger;
 import io.semantic.openscore.core.mapping.PaisMapper;
 import io.semantic.openscore.core.mapping.UsuarioMapper;
@@ -40,7 +41,8 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     private UserInfo userInfo;
     private TokenCache tokenCache;
-    private MailSender mailSender;
+    private MailServer mailSender;
+    private MailFactory mailFactory;
     private List<EmailValidator> mailValidators;
     private ServiceLogger serviceLogger;
     private Logger logger = LoggerFactory.getLogger(UsuariosServiceImpl.class);
@@ -65,7 +67,8 @@ public class UsuariosServiceImpl implements UsuariosService {
                                PaisMapper paisMapper,
                                UserInfo userInfo,
                                TokenCache tokenCache,
-                               MailSender mailSender,
+                               MailServer mailSender,
+                               MailFactory mailFactory,
                                Instance<EmailValidator> mailValidators,
                                ServiceLogger serviceLogger) {
         this.usuarioRepository = usuarioRepository;
@@ -77,6 +80,7 @@ public class UsuariosServiceImpl implements UsuariosService {
         this.userInfo = userInfo;
         this.tokenCache = tokenCache;
         this.mailSender = mailSender;
+        this.mailFactory = mailFactory;
         this.mailValidators = StreamSupport.stream(mailValidators.spliterator(), false).collect(toList());
 
         this.serviceLogger = serviceLogger;
@@ -132,7 +136,7 @@ public class UsuariosServiceImpl implements UsuariosService {
         Map<String, Object> params = new HashMap<>();
         params.put("email", email);
         params.put("token", token);
-        this.mailSender.send(email, "[OpenScore] Password Recovery", "password", params);
+        this.mailSender.send(this.mailFactory.getRecoverPasswordEmail(email, token));
         return ok("");
     }
 

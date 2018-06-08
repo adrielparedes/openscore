@@ -1,11 +1,4 @@
 // Here you can add other styles
-@import url('https://fonts.googleapis.com/css?family=Overpass');
-
-html,
-body {
-    font-family: 'Overpass', sans-serif;
-}
-
 .btn-nuevo {
     margin-bottom: 10px;
 }
@@ -50,4 +43,14 @@ body {
     background: url("../assets/img/fondos/05.png") no-repeat center center fixed;
 }
 
-
+h1 {
+    color: #a30000;
+    font-family: 'Overpass', cursive;
+    font-weight: 800;
+    font-size: 3em;
+    text-transform: uppercase;
+    font-weight: normal;
+    line-height: 1.4;
+    margin: 0 0 18px;
+    text-shadow: 1px 0 0 #fff;
+}
