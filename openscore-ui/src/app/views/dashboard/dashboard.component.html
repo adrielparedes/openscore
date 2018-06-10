@@ -2,11 +2,14 @@
   <h1>Dashboard</h1>
 
   <div class="row">
-    <ngx-twitter-timeline [data]="{
+    <div class="col-sm-6 col-lg-3" [hidden]="true">
+      <ngx-twitter-timeline [data]="{
         sourceType: 'url',
         url: 'https://twitter.com/fifaworldcup'}" [opts]="{
-        tweetLimit: 5
+        tweetLimit: 0
     }"></ngx-twitter-timeline>
+    </div>
+
 
     <div class="col-sm-6 col-lg-3">
       <div class="card text-white bg-primary">
@@ -15,7 +18,20 @@
           <p>Days until World Cup</p>
         </div>
       </div>
+    </div>
 
+    <div class="col-sm-6 col-lg-3">
+        <div class="card text-white bg-info">
+          <div class="card-body pb-0">
+            <h4 class="mb-0">{{matches}}</h4>
+            <p>Matches today</p>
+          </div>
+        </div>
+      </div>
+
+    <div class="col-sm-6 col-lg-12">
+      <a class="twitter-grid" data-partner="tweetdeck" href="https://twitter.com/adrielparedes/timelines/1005814401990000640?ref_src=twsrc%5Etfw">WorldCup</a>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
   </div>
 </div>

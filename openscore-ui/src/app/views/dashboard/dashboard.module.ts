@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
@@ -9,10 +10,11 @@ import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 
 @NgModule({
   imports: [
+    CommonModule,
     DashboardRoutingModule,
     ChartsModule,
     NgxTwitterTimelineModule
   ],
-  declarations: [ DashboardComponent ]
+  declarations: [DashboardComponent]
 })
 export class DashboardModule { }
