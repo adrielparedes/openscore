@@ -204,7 +204,7 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     @Override
     public ApiResponse<TokenDTO> login(LoginUsuarioDTO loginUsuario) {
-        Optional<Usuario> usuarioOptional = this.usuarioRepository.findByEmail(loginUsuario.getEmail());
+        Optional<Usuario> usuarioOptional = this.usuarioRepository.findByEmail(loginUsuario.getEmail().trim());
         Usuario usuario = usuarioOptional.orElseThrow(() -> new IllegalArgumentException("User or password not found"));
 
         TokenGenerator tokenGenerator = new TokenGenerator();
