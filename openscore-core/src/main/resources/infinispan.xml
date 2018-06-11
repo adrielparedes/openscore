@@ -5,9 +5,10 @@
 
     <cache-container default-cache="local">
         <jmx duplicate-domains="true"/>
-        <transport cluster="openscore"/>
         <local-cache name="local">
-            <eviction strategy="LIRS" max-entries="100"/>
+            <memory>
+                <binary size="100" eviction="MEMORY"/>
+            </memory>
             <expiration lifespan="60000"/>
         </local-cache>
     </cache-container>
