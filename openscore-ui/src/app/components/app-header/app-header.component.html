@@ -8,11 +8,11 @@
   </button>
   <ul class="nav navbar-nav ml-auto username">
     <li class="nav-item dropdown" dropdown placement="bottom right">
-      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle
+      <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle
         (click)="false">
         {{nombre}} {{apellido}}
       </a>
-      <div class="dropdown-menu dropdown-menu-right user-menu" *dropdownMenu aria-labelledby="simple-dropdown">
+      <div class="dropdown-menu dropdown-menu-right user-menu" *dropdownMenu aria-haspopup="true" aria-expanded="false">
         <a class="dropdown-item" href="#/settings">
           <i class="fa fa-wrench"></i> Settings</a>
         <div class="divider"></div>
