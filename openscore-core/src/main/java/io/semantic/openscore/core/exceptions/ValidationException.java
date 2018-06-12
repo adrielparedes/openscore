@@ -1,6 +1,7 @@
 package io.semantic.openscore.core.exceptions;
 
 import javax.validation.ConstraintViolation;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,6 +16,11 @@ public class ValidationException extends ApplicationException {
     public ValidationException(String message, List<String> data) {
         super(message);
         this.data = data;
+    }
+
+    public ValidationException(String message, Throwable e) {
+        super(message);
+        this.data = Collections.emptyList();
     }
 
     public static String generateMessage(Set<ConstraintViolation<Object>> errors) {

@@ -57,7 +57,7 @@ export class UsuarioService extends Rest<Usuario, CrearUsuario, UpdateUsuario> {
     }
 
     public recoverPassword(recoverPassword: any) {
-        return this.http.post<ApiResponse<Token>>(this.getUrl(this.recoverPasswordUrl), {});
+        return this.http.post<ApiResponse<Token>>(this.getUrl(this.recoverPasswordUrl), recoverPassword);
     }
 
     public updatePassword(updatePassword: any) {

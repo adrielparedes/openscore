@@ -26,11 +26,16 @@ public class ApplicationValidator {
     }
 
     public void validate(Object object) {
-        Set<ConstraintViolation<Object>> errors = validator.validate(object);
-        if (!errors.isEmpty()) {
-            String message = ValidationException.generateMessage(errors);
-            logger.error(message);
-            throw new ValidationException(message, ValidationException.generateErrorsList(errors));
+        try {
+            Set<ConstraintViolation<Object>> errors = validator.validate(object);
+            if (!errors.isEmpty()) {
+                String message = ValidationException.generateMessage(errors);
+                logger.error(message);
+                throw new ValidationException(message, ValidationException.generateErrorsList(errors));
+            }
+        } catch (javax.validation.ValidationException e) {
+            logger.error(e.getLocalizedMessage(), e);
+            throw new ValidationException(e.getMessage(), e);
         }
     }
 }

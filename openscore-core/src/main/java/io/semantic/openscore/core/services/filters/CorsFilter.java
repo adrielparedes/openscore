@@ -25,8 +25,6 @@ public class CorsFilter implements ContainerResponseFilter {
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
 
-        logger.info("Cors Filter enabled");
-
         responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, PUT, DELETE, OPTIONS, HEAD".toUpperCase());
         responseContext.getHeaders().add(ACCESS_CONTROL_MAX_AGE, "-1");
