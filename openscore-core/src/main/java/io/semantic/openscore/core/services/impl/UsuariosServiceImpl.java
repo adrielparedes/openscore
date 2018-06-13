@@ -116,9 +116,13 @@ public class UsuariosServiceImpl implements UsuariosService {
     public ApiResponse<UsuarioDTO> recoverPassword(RecoverPassword updatePassword) {
         this.validator.validate(updatePassword);
 
-        Usuario user = this.tokenCache.getToken(updatePassword.getEmail())
-                .flatMap(email -> this.usuarioRepository.findByEmail(email))
+        this.tokenCache.getToken(updatePassword.getEmail())
+                .map(x -> x.equals(updatePassword.getToken()))
                 .orElseThrow(() -> new IllegalArgumentException("No token was found to update password. Please try again"));
+
+        Usuario user = this.usuarioRepository.findByEmail(updatePassword.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException(MessageFormat.format("User not found with email {0}. Please try again",
+                        updatePassword.getEmail())));
 
         user.setPassword(this.tokenGenerator.generarPassword(updatePassword.getPassword()));
         this.usuarioRepository.save(user);

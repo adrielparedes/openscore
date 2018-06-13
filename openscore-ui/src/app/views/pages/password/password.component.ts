@@ -63,7 +63,8 @@ export class PasswordComponent implements OnInit {
           password: value.password,
           confirmacionPassword: value.confirmacionPassword,
         }).subscribe(res => {
-          console.log(res);
+          this.toastr.success('Password changed successfuly');
+          this.router.navigate(['/pages/login']);
         }, err => {
           this.toastr.error(err.error.description);
         });

@@ -6,9 +6,6 @@
     <cache-container default-cache="local">
         <jmx duplicate-domains="true"/>
         <local-cache name="local">
-            <memory>
-                <binary size="100" eviction="MEMORY"/>
-            </memory>
             <expiration lifespan="60000"/>
         </local-cache>
     </cache-container>
