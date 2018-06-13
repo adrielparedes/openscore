@@ -25,7 +25,6 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
         this.apellido = decoded['apellido'];
         this.roles = decoded['roles'];
       } catch (e) {
-
       }
     });
   }
@@ -42,6 +41,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    console.log('destroyed');
     this.sub.unsubscribe();
   }
 }

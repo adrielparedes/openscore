@@ -56,8 +56,8 @@ export class SettingsComponent implements OnInit {
       pais: formValues.pais
     };
     this.usuarioService.updateUser(this.usuario.id, updateUsuario).subscribe(res => {
-      this.toastr.success('User updated succesfully');
       this.authService.setToken(res.data.token);
+      this.toastr.success('User updated succesfully');
     });
   }
 

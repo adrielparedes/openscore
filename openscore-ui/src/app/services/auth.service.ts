@@ -29,8 +29,8 @@ export class AuthService {
     }
 
     public setToken(token: string) {
+        localStorage.setItem(this.TOKEN, token);
         this.token.next(token);
-        return localStorage.setItem(this.TOKEN, token);
     }
 
     public logout() {

@@ -39,7 +39,7 @@ export class UsuarioService extends Rest<Usuario, CrearUsuario, UpdateUsuario> {
 
     public updateUser(id: number, storable: UpdateUsuario) {
         return this.http
-            .post<ApiResponse<Token>>(this.getUrl(this.getServiceUrl() + '/' + id), storable);
+            .post<ApiResponse<Token>>(this.getUrl(this.getServiceUrl() + '/update/' + id), storable);
     }
 
     public getMyUser() {
