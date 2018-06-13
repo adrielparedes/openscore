@@ -22,7 +22,7 @@ export class RankingComponent implements OnInit {
 
   update() {
     this.loading = true;
-    this.rankingService.getAll(0, 0).subscribe(
+    this.rankingService.getAll('', 0).subscribe(
       res => {
         this.unfilteredRanking = res.data;
         this.ranking = this.unfilteredRanking;

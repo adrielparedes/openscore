@@ -10,33 +10,84 @@
     }"></ngx-twitter-timeline>
     </div>
 
-
     <div class="col-sm-6 col-lg-3">
-      <div class="card text-white bg-primary">
+      <div class="card text-white bg-info">
         <div class="card-body pb-0">
-          <h4 class="mb-0">{{clock}}</h4>
-          <p>Days until World Cup</p>
+          <h4 class="mb-0">{{matches}}</h4>
+          <p>Matches today</p>
         </div>
       </div>
     </div>
 
     <div class="col-sm-6 col-lg-3">
-        <div class="card text-white bg-info">
-          <div class="card-body pb-0">
-            <h4 class="mb-0">{{matches}}</h4>
-            <p>Matches today</p>
-          </div>
+      <div class="card text-white bg-danger">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">{{finalClock}}</h4>
+          <p>Days until Final match</p>
         </div>
       </div>
+    </div>
 
-      <div class="col-sm-6 col-lg-3">
-        <div class="card text-white bg-danger">
-          <div class="card-body pb-0">
-            <h4 class="mb-0">{{finalClock}}</h4>
-            <p>Days until Final match</p>
-          </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-info">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">{{argentinos}}</h4>
+          <p>Argentineans registered</p>
+          <ol>
+            <li *ngFor="let e of arg">{{e.puntos}} - {{e.nombre}}</li>
+          </ol>
         </div>
       </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-warning">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">{{brasileros}}</h4>
+          <p>Brazilians registered</p>
+          <ol>
+            <li *ngFor="let e of bra">{{e.puntos}} - {{e.nombre}}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-success">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">{{mexicanos}}</h4>
+          <p>Mexicans registered</p>
+          <ol>
+            <li *ngFor="let e of mex">{{e.puntos}} - {{e.nombre}}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-warning">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">{{colombianos}}</h4>
+          <p>Colombians registered</p>
+          <ol>
+            <li *ngFor="let e of col">{{e.puntos}} - {{e.nombre}}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-danger">
+        <div class="card-body pb-0">
+          <h4 class="mb-0">{{chileperu}}</h4>
+          <p>Chileans/Peruvians registered</p>
+          <ol>
+            <li *ngFor="let e of cp">{{e.puntos}} - {{e.nombre}}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
 
     <div class="col-sm-6 col-lg-12">
       <a class="twitter-grid" data-partner="tweetdeck" href="https://twitter.com/adrielparedes/timelines/1005814401990000640?ref_src=twsrc%5Etfw">WorldCup</a>

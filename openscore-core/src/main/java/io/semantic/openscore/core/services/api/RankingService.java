@@ -18,7 +18,7 @@ public interface RankingService {
 
     @GET
     @Path("/")
-    ApiResponse<List<Ranking>> getAllRanking();
+    ApiResponse<List<Ranking>> getAllRanking(@QueryParam("pais") String pais, @QueryParam("size") @DefaultValue("0") int size);
 
 
 }

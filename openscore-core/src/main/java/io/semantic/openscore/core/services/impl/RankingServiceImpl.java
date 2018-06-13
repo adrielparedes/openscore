@@ -2,7 +2,9 @@ package io.semantic.openscore.core.services.impl;
 
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.ranking.Ranking;
+import io.semantic.openscore.core.model.Pais;
 import io.semantic.openscore.core.model.Usuario;
+import io.semantic.openscore.core.repository.PaisRepository;
 import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.services.api.RankingService;
 
@@ -21,13 +23,16 @@ import static java.util.stream.Collectors.toList;
 public class RankingServiceImpl implements RankingService {
 
     private UsuarioRepository usuarioRepository;
+    private PaisRepository paisRepository;
 
     public RankingServiceImpl() {
     }
 
     @Inject
-    public RankingServiceImpl(UsuarioRepository usuarioRepository) {
+    public RankingServiceImpl(UsuarioRepository usuarioRepository,
+                              PaisRepository paisRepository) {
         this.usuarioRepository = usuarioRepository;
+        this.paisRepository = paisRepository;
     }
 
     @Override
@@ -44,10 +49,27 @@ public class RankingServiceImpl implements RankingService {
     }
 
     @Override
-    public ApiResponse<List<Ranking>> getAllRanking() {
-        List<Usuario> usuarios = this.usuarioRepository.findAll();
+    public ApiResponse<List<Ranking>> getAllRanking(String pais, int size) {
+
+
+        List<Usuario> usuarios;
+
+        if (pais == null || pais.isEmpty()) {
+            usuarios = this.usuarioRepository.findAll();
+        } else {
+            usuarios = this.usuarioRepository.findByCountry(pais);
+        }
+
         List<Ranking> rankings = calcularRankings(usuarios);
-        return ok(rankings);
+        if (size > 0) {
+            int s = rankings.size();
+            if (s > size) {
+                s = size;
+            }
+            return ok(rankings.subList(0, s));
+        } else {
+            return ok(rankings);
+        }
     }
 
     @Transactional
