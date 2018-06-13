@@ -37,7 +37,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     localStorage.removeItem('openscore-token');
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/pages/login']);
 
   }
 
