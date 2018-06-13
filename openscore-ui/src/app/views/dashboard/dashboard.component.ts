@@ -9,7 +9,9 @@ export class DashboardComponent {
 
   today: Date = new Date(Date.now());
   clock: string;
+  finalClock: string;
   comienzo = new Date(2018, 5, 14);
+  final = new Date(2018, 6, 15);
   matches = 0;
 
   constructor(private pronosticoService: PronosticoService) {
@@ -17,12 +19,21 @@ export class DashboardComponent {
     setInterval(() => {
       this.clock = this.getRemainingDays();
     }, 1000);
+    this.finalClock = this.getRemainingDaysToFinal();
+    setInterval(() => {
+      this.finalClock = this.getRemainingDaysToFinal();
+    }, 1000);
     this.getTodayMatches();
 
   }
 
   getRemainingDays() {
     const time = this.comienzo.getTime() - new Date().getTime();
+    return (time / (1000 * 60 * 60 * 24)).toFixed();
+  }
+
+  getRemainingDaysToFinal() {
+    const time = this.final.getTime() - new Date().getTime();
     return (time / (1000 * 60 * 60 * 24)).toFixed();
   }
 
