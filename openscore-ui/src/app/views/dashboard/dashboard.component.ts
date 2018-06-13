@@ -90,14 +90,15 @@ export class DashboardComponent {
     this.rankingService.getAll('CHI', 0).subscribe(ch => {
       this.rankingService.getAll('PER', 0).subscribe(p => {
         this.chileperu = ch.data.length + p.data.length;
-        this.cp = ch.data.slice(0, 3);
-        this.cp.push(p.data.slice(0, 3));
-        console.log(this.cp[0]);
+        this.cp = ch.data.slice(0, 3)
+          .concat(p.data.slice(0, 3))
+          .sort((a, b) => a.puntos - b.puntos)
+          .slice(0, 3);
       });
     });
   }
   getMexicansRegistered() {
-    this.rankingService.getAll('BRA', 0).subscribe(res => {
+    this.rankingService.getAll('MEX', 0).subscribe(res => {
       this.mexicanos = res.data.length
       this.mex = res.data.slice(0, 3);
     });
