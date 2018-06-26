@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -173,6 +174,7 @@ public class PronosticosServiceImpl implements PronosticosService {
     }
 
     @Override
+    @Transactional
     public ApiResponse<PronosticoDTO> local(long idPartido) {
         verificarSiElPartidoEstaBloqueado(idPartido);
         long idUsuario = this.userInfo.getUserId();
@@ -193,6 +195,7 @@ public class PronosticosServiceImpl implements PronosticosService {
     }
 
     @Override
+    @Transactional
     public ApiResponse<PronosticoDTO> empate(long idPartido) {
         verificarSiElPartidoEstaBloqueado(idPartido);
         long idUsuario = this.userInfo.getUserId();
@@ -205,6 +208,7 @@ public class PronosticosServiceImpl implements PronosticosService {
     }
 
     @Override
+    @Transactional
     public ApiResponse<PronosticoDTO> visitante(long idPartido) {
         verificarSiElPartidoEstaBloqueado(idPartido);
         long idUsuario = this.userInfo.getUserId();

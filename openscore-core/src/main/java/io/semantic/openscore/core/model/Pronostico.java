@@ -86,4 +86,6 @@ public class Pronostico extends Storable {
     public String toString() {
         return new GsonBuilder().setPrettyPrinting().create().toJson(this);
     }
+
+
 }

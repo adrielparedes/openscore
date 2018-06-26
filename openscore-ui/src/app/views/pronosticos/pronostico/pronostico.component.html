@@ -19,7 +19,7 @@
       <div class="card-footer" [ngClass]="isGanador()">
         <div *ngIf="pendiente">
           <button class="btn" (click)="local(partido)" [ngClass]="{'btn-success': isLocal(partido.pronostico)}">{{partido.local.nombre}}</button>
-          <button class="btn" (click)="empate(partido)" [ngClass]="{'btn-success': isEmpate(partido.pronostico)}">Tie</button>
+          <button class="btn" *ngIf="isFaseGrupo()" (click)="empate(partido)" [ngClass]="{'btn-success': isEmpate(partido.pronostico)}">Tie</button>
           <button class="btn" (click)="visitante(partido)" [ngClass]="{'btn-success': isVisitante(partido.pronostico)}">{{partido.visitante.nombre}}</button>
         </div>
         <p class="pronostico" *ngIf="!pendiente && partido.pronostico == null">Too bad, you did not enter your prediction!</p>

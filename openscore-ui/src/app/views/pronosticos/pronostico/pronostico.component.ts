@@ -87,6 +87,10 @@ export class PronosticoComponent implements OnInit, OnDestroy {
     return this.partido.status === 'PENDING';
   }
 
+  isFaseGrupo() {
+    return this.partido.fase.codigo === 'GRUPO';
+  }
+
   isGanador() {
     if (this.partido.resultado !== null && this.partido.pronostico !== null) {
       if ((this.partido.resultado.local > this.partido.resultado.visitante && this.partido.pronostico.local) ||
