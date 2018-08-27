@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage("Checkout") {
             steps {
-                git branch: env.BRANCH, url: env.REPO
+                git branch: "${GIT_SOURCE_REF}", url: "${GIT_SOURCE_URL}"
             }
         }
         stage("Build") {
