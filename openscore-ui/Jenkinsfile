@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     openshift.withCluster() {
-                        openshift.withProject("openscore") {
+                        openshift.withProject() {
                             dir("openscore-ui") {
                                 sh  "npm install"
                                 sh  "./node_modules/@angular/cli/bin/ng build --prod --aot"
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     openshift.withCluster() {
-                        openshift.withProject("openscore") {
+                        openshift.withProject() {
                             if (!openshift.selector("dc", "openscore-ui").exists()) {
                                 createApp("openscore-ui", "latest");    
 
