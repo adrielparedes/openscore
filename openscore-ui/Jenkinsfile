@@ -8,14 +8,14 @@ pipeline {
     stages {
         stage("Checkout") {
             steps {
-                git branch: "${GIT_SOURCE_REF}", url: "${GIT_SOURCE_URL}"
+              git branch: env.BRANCH, url: env.REPO
             }
         }
         stage("Build") {
             steps {
                 script {
                     openshift.withCluster() {
-                        openshift.withProject() {
+                        openshift.withProject("openscore") {
                             dir("openscore-ui") {
                                 sh  "npm install"
                                 sh  "./node_modules/@angular/cli/bin/ng build --prod --aot"
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     openshift.withCluster() {
-                        openshift.withProject() {
+                        openshift.withProject("openscore") {
                             if (!openshift.selector("dc", "openscore-ui").exists()) {
                                 createApp("openscore-ui", "latest");    
 
