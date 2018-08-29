@@ -32,10 +32,11 @@ pipeline {
                                 builds.untilEach(1) { 
                                     return (it.object().status.phase == "Complete")
                                 }                                  
-                            } else {
+                            } 
+
                                 // Starts a new build and waits for its completion
                                 openshift.selector("bc", "openscore-core").startBuild("--wait=true");
-                            }
+                            
                         }
                     }
                 }
@@ -59,10 +60,10 @@ pipeline {
                                 
                                 // Removes the triggers  
                                 openshift.set("triggers", "dc/openscore-core", "--manual");                 
-                            } else {
+                            } 
                                 // Rollouts to latest version
                                 openshift.selector("dc", "openscore-core").rollout().latest();   
-                            }          
+                                     
                         }
                     }
                 }

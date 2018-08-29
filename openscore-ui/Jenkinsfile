@@ -54,11 +54,11 @@ pipeline {
                                 
                                 // Removes the triggers  
                                 openshift.set("triggers", "dc/openscore-ui", "--manual");               
-                            } else {
+                            } 
                                 // Rollouts to latest version
                                 openshift.selector("dc", "openscore-ui").rollout().latest();   
                             }          
-                        }
+                        
                     }
                 }
             }
