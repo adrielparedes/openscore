@@ -37,7 +37,7 @@ pipeline {
                             }
 
                                 // Starts a new build and waits for its completion
-                            openshift.selector("bc", "openscore-core").startBuild("--from-dir=./openscore-core/target/openscore-core.war","--wait=true");
+                            openshift.selector("bc", "openscore-core").startBuild("--from-file=./openscore-core/target/openscore-core.war","--wait=true");
                             
                         }
                     }
