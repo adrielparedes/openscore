@@ -14,13 +14,14 @@ pipeline {
         stage("Compile") {
             steps {
                 script{
-                 openshift.withCluster() {
+                    openshift.withCluster() {
+                        openshift.verbose();
                         openshift.withProject("openscore") {
                             dir("openscore-core") {
                                 sh "mvn clean package -DskipTests -Popenshift"
                             }
-            }
-        }
+                        }
+                    }
                 }
             }
         }
