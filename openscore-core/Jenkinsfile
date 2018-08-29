@@ -13,6 +13,7 @@ pipeline {
         }
         stage("Compile") {
             steps {
+                script{
                  openshift.withCluster() {
                         openshift.withProject("openscore") {
                             dir("openscore-core") {
@@ -20,6 +21,7 @@ pipeline {
                             }
             }
         }
+                }
             }
         }
         stage("Build") {
