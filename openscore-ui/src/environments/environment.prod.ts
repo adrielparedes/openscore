@@ -2,5 +2,5 @@ export const environment = {
   production: true,
   name: 'prod',
   version: require('../../package.json').version,
-  url: 'https://openscore-core-openscore.b9ad.pro-us-east-1.openshiftapps.com/openscore/api/rest'
+  url: 'http://openscore-core-openscore.192.168.42.175.nip.io/openscore/api/rest'
 };
