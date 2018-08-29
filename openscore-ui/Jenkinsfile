@@ -1,3 +1,4 @@
+//openshift/jenkins-agent-nodejs-8-centos7
 pipeline {
     agent {
         label "nodejs"
@@ -24,10 +25,11 @@ pipeline {
                             if (!openshift.selector("bc", "openscore-ui").exists()) {
                                 // Creates the application if not exists
                                 openshift.newBuild("httpd:2.4", "--binary", "--name=openscore-ui");                  
-                            } else {
-                                // Starts a new build and waits for its completion
-                                openshift.selector("bc", "openscore-ui").startBuild("--from-dir=./openscore-ui/dist", "--wait=true");
-                            }
+                            } 
+                            
+                            // Starts a new build and waits for its completion
+                            openshift.selector("bc", "openscore-ui").startBuild("--from-dir=./openscore-ui/dist", "--wait=true");
+                            
                         }
                     }
                 }

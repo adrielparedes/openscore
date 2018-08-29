@@ -14,3 +14,4 @@ oc new-app $REPO#$BRANCH --context-dir=openscore-ui --strategy=pipeline --name="
 
 oc set env bc/openscore-ui-pipeline REPO=$REPO -n openscore
 oc set env bc/openscore-ui-pipeline BRANCH=$BRANCH -n openscore
+
