@@ -6,36 +6,35 @@ pipeline {
         skipDefaultCheckout() 
     }
     stages {
+        stage("Checkout") {
+            steps {
+                git branch: env.BRANCH, url: env.REPO
+            }
+        }
+        stage("Compile") {
+            steps {
+                 openshift.withCluster() {
+                        openshift.withProject("openscore") {
+                            dir("openscore-core") {
+                                sh "mvn clean package -DskipTests -Popenshift"
+                            }
+            }
+        }
+            }
+        }
         stage("Build") {
             steps {
                 script {
                     openshift.withCluster() {
                         openshift.verbose();
                         openshift.withProject("openscore") {
+
                             if (!openshift.selector("bc", "openscore-core").exists()) {
-                                // Creates the application if not exists
-                                def bc = openshift.newBuild("wildfly:10.1~${REPO}#${BRANCH}", "--name=openscore-core", "--strategy=source").narrow("bc");
-    
-                                // Gets the Builds related to the BuildConfig
-                                def builds = bc.related("builds");
-    
-                                // Gets a map with the BuildConfig values
-                                def bcMap = bc.object();
-
-                                // Sets incremental builds
-                                bcMap.spec.strategy.sourceStrategy["incremental"] = true;
-                                
-                                // Applies the changes
-                                openshift.apply(bcMap);            
-
-                                // Waits for the Build completion
-                                builds.untilEach(1) { 
-                                    return (it.object().status.phase == "Complete")
-                                }                                  
-                            } 
+                                openshift.newBuild("--image-stream=wildfly:10.1", "--name=openscore-core", "--binary=true");                   
+                            }
 
                                 // Starts a new build and waits for its completion
-                                openshift.selector("bc", "openscore-core").startBuild("--wait=true");
+                            openshift.selector("bc", "openscore-core").startBuild("--from-dir=./openscore-core/target/ROOT.war","--wait=true");
                             
                         }
                     }
