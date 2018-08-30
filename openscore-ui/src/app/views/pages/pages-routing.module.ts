@@ -1,10 +1,13 @@
+import { AuthGuard } from './../../services/auth-guard';
+import { PasswordComponent } from './password/password.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 import { P404Component } from './404.component';
 import { P500Component } from './500.component';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
+import { RecoverComponent } from './recover/recover.component';
 
 const routes: Routes = [
   {
@@ -40,6 +43,18 @@ const routes: Routes = [
         data: {
           title: 'Register Page'
         }
+      }, {
+        path: 'password',
+        component: PasswordComponent,
+        data: {
+          title: 'Password Page'
+        }
+      }, {
+        path: 'recover',
+        component: RecoverComponent,
+        data: {
+          title: 'Recover password page'
+        }
       }
     ]
   }
@@ -49,4 +64,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }

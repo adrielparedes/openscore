@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="card-header">
+    <strong *ngIf="!id">New match</strong>
+    <strong *ngIf="id">Edit match</strong>
+  </div>
+  <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
+  <div *ngIf="!loading" class="card-body" [formGroup]="form">
+    <div *ngIf="id" class="form-group">
+      <label for="id">ID</label>
+      <input disabled type="text" class="form-control" formControlName="id" id="id">
+    </div>
+    <div class="form-group">
+      <label for="deleted">Local</label>
+      <input type="text" class="form-control" formControlName="local" id="deleted">
+    </div>
+    <div class="form-group">
+      <label for="vat">Visitor</label>
+      <input type="text" class="form-control" formControlName="visitante" id="nombre">
+    </div>
+    <div class="form-group">
+      <label for="vat">Date</label>
+      <input type="text" placeholder="Date" class="form-control" formControlName="dia" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY, HH:mm' }"
+        bsDatepicker>
+    </div>
+    <div class="form-group">
+      <label for="vat">Location</label>
+      <input type="text" class="form-control" formControlName="lugar" id="nombre">
+    </div>
+    <div class="form-group">
+      <label for="vat">Fecha</label>
+      <input type="text" class="form-control" formControlName="fecha" id="nombre">
+    </div>
+    <div class="form-group">
+      <label for="codigo">Group</label>
+      <input type="text" class="form-control" formControlName="grupo" id="codigo">
+    </div>
+    <div class="form-group">
+      <label for="Country">Phase</label>
+      <input type="text" class="form-control" formControlName="fase" id="pais">
+    </div>
+  </div>
+  <div class="card-footer">
+    <button type="submit" class="btn btn-sm btn-success" (click)="guardar()">
+      <i class="fa fa-dot-circle-o"></i>Save</button>
+    <button type="reset" class="btn btn-sm btn-danger" (click)="cancelar()">
+      <i class="fa fa-ban"></i>Cancel</button>
+  </div>
+</div>

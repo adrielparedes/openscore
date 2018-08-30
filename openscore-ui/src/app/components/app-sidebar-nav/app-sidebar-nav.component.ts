@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Renderer2, Inject } from '@angular/core';
 
 // Import navigation elements
 import { navigation } from './../../_nav';
@@ -10,10 +10,10 @@ import { navigation } from './../../_nav';
       <ul class="nav">
         <ng-template ngFor let-navitem [ngForOf]="navigation">
           <li *ngIf="isDivider(navitem)" class="nav-divider"></li>
-          <ng-template [ngIf]="isTitle(navitem)">
+          <ng-template [ngIf]="isTitle(navitem)&&isAuthorized(navitem)">
             <app-sidebar-nav-title [title]='navitem'></app-sidebar-nav-title>
           </ng-template>
-          <ng-template [ngIf]="!isDivider(navitem)&&!isTitle(navitem)">
+          <ng-template [ngIf]="!isDivider(navitem)&&!isTitle(navitem)&&isAuthorized(navitem)">
             <app-sidebar-nav-item [item]='navitem'></app-sidebar-nav-item>
           </ng-template>
         </ng-template>
@@ -23,6 +23,11 @@ import { navigation } from './../../_nav';
 export class AppSidebarNavComponent {
 
   public navigation = navigation;
+  authService: AuthService;
+
+  constructor() {
+    this.authService = new AuthService();
+  }
 
   public isDivider(item) {
     return item.divider ? true : false
@@ -32,10 +37,18 @@ export class AppSidebarNavComponent {
     return item.title ? true : false
   }
 
-  constructor() { }
+  public isAuthorized(item) {
+    if (item.role) {
+      return this.authService.containsRole(item.role);
+    } else {
+      return true;
+    }
+  }
+
 }
 
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar-nav-item',
@@ -72,7 +85,7 @@ export class AppSidebarNavItemComponent {
     return this.router.isActive(this.thisUrl(), false)
   }
 
-  constructor( private router: Router )  { }
+  constructor(private router: Router) { }
 
 }
 
@@ -163,12 +176,12 @@ export class AppSidebarNavTitleComponent implements OnInit {
 
     this.renderer.addClass(li, 'nav-title');
 
-    if ( this.title.class ) {
+    if (this.title.class) {
       const classes = this.title.class;
       this.renderer.addClass(li, classes);
     }
 
-    if ( this.title.wrapper ) {
+    if (this.title.wrapper) {
       const wrapper = this.renderer.createElement(this.title.wrapper.element);
 
       this.renderer.appendChild(wrapper, name);

@@ -1,0 +1,25 @@
+<div>
+  <button class="btn btn-info btn-nuevo" (click)="volver()">
+    <i class="fas fa-arrow-left"></i>
+    <span>Volver</span>
+  </button>
+  <button class="btn btn-success btn-nuevo" [disabled]="!isDirty" (click)="save()">
+    <span>Guardar</span>
+    <i *ngIf="saving" class="fas fa-circle-notch fa-spin"></i>
+  </button>
+
+
+  <div>
+    <div>
+      <div>
+        <label>Titulo: </label>
+        <input required [(ngModel)]="titulo" (ngModelChange)="onChange($event)" />
+      </div>
+      <div>
+        <label>Autor: </label>
+        <input required [(ngModel)]="autor" (ngModelChange)="onChange($event)" />
+      </div>
+    </div>
+    <app-ngx-editor [config]="config" [(ngModel)]="htmlContent" (ngModelChange)="onChange($event)"></app-ngx-editor>
+  </div>
+</div>

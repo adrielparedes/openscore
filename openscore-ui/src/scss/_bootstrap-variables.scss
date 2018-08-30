@@ -16,7 +16,8 @@ $gray-800:                        #29363d;
 $gray-900:                        #151b1e;
 $black:                           #000 !default;
 
-$blue:                            #20a8d8;
+// $blue:                            #20a8d8;
+$blue:                            #a30000;
 $indigo:                          #6610f2 !default;
 $purple:                          #6f42c1 !default;
 $pink:                            #e83e8c !default;
@@ -26,6 +27,7 @@ $yellow:                          #ffc107 !default;
 $green:                           #4dbd74;
 $teal:                            #20c997 !default;
 $cyan:                            #63c2de;
+// $cyan:                            red;
 
 $colors: (
   blue:                           $blue,
@@ -80,7 +82,7 @@ $theme-colors: (
 // Quickly modify global styling by enabling or disabling optional features.
 
 $enable-transitions:              true;
-$enable-rounded:                  false;
+$enable-rounded:                  true;
 
 // Body
 //

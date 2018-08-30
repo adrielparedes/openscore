@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">{{noticia.titulo}}</h3>
+    <hr/>
+    <p [innerHtml]="content"></p>
+  </div>
+  <div class="card-footer">
+    <p> Written by:
+      <span *ngIf="noticia.autor">{{noticia.autor}}</span>
+      <span *ngIf="!noticia.autor">La comunidad</span>
+    </p>
+  </div>
+</div>

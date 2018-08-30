@@ -1,21 +1,23 @@
 export const navigation = [
   {
-    name: 'Dashboard',
-    url: '/dashboard',
-    icon: 'icon-speedometer',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
+    name: 'Home',
+    url: '/home',
+    icon: 'icon-home'
   },
   {
-    name: 'Noticias',
+    name: 'Rules',
+    url: '/reglamento',
+    icon: 'icon-list'
+  },
+  {
+    name: 'Dashboard',
+    url: '/dashboard',
+    icon: 'icon-speedometer'
+  },
+  {
+    name: 'News',
     url: '/noticias',
-    icon: 'icon-book-open',
-    badge: {
-      variant: 'warning',
-      text: '1'
-    }
+    icon: 'icon-book-open'
   },
   {
     name: 'Ranking',
@@ -23,55 +25,68 @@ export const navigation = [
     icon: 'icon-trophy '
   },
   {
-    name: 'Explorar',
-    url: '/explorar',
+    name: 'Predictions',
+    url: '/pronosticos',
     icon: 'icon-compass'
-  },
-  {
-    name: 'Competiciones',
-    url: '/competiciones',
-    icon: 'icon-trophy',
-    children: [
-      {
-        name: 'Todas',
-        url: '/competiciones',
-        icon: 'icon-trophy'
-      },
-      {
-        name: 'Copa Conmebol Libertadores',
-        url: '/competiciones/1',
-        icon: 'icon-trophy'
-      }
-    ]
   },
   // ACA ABAJO VA LA PARTE DE ADMIN
   {
     title: true,
-    name: 'Admin'
+    name: 'Admin',
+    role: 'ADMIN'
   },
   {
-    name: 'Usuarios',
+    name: 'Users',
     url: '/admin/usuarios',
-    icon: 'icon-people'
+    icon: 'icon-people',
+    role: 'ADMIN'
   },
   {
-    name: 'Competiciones',
-    url: '/admin/competiciones',
-    icon: 'icon-trophy'
-  },
-  {
-    name: 'Equipos',
+    name: 'Teams',
     url: '/admin/equipos',
-    icon: 'icon-flag'
+    icon: 'icon-flag',
+    role: 'ADMIN'
+  },
+  {
+    name: 'Matches',
+    url: '/admin/partidos',
+    icon: 'icon-calendar',
+    role: 'ADMIN'
+  },
+  {
+    name: 'News',
+    url: '/admin/noticias',
+    icon: 'icon-list',
+    role: 'ADMIN'
   },
   // ACA ABAJO VA LA PARTE DE DESA PARA HACER PRUEBAS
   {
     title: true,
-    name: 'Dev'
+    name: 'Dev',
+    role: 'ADMIN'
   },
   {
-    name: 'Registro',
+    name: 'Register',
     url: '/pages/register',
-    icon: 'icon-people'
+    icon: 'icon-people',
+    role: 'ADMIN'
+  },
+  {
+    name: 'Login',
+    url: '/pages/login',
+    icon: 'icon-people',
+    role: 'ADMIN'
+  },
+  {
+    name: 'Password',
+    url: '/pages/password',
+    icon: 'icon-people',
+    role: 'ADMIN'
+  },
+  {
+    name: 'Recover',
+    url: '/pages/recover',
+    icon: 'icon-people',
+    role: 'ADMIN'
   }
 ];

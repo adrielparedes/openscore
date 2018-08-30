@@ -1,0 +1,32 @@
+<div>
+  <div class="card text-center">
+    <div>
+      <div class="card-body">
+        <div class="score">
+          <img [ngClass]="{'bloqueado': !pendiente}" src="{{partido.local.logo}}" /> -
+          <img [ngClass]="{'bloqueado': !pendiente}" src="{{partido.visitante.logo}}" />
+        </div>
+        <div class="score"> {{getResultado(partido)}} </div>
+        <div class="score" *ngIf="partido.resultado">{{partido.resultado.local}} - {{partido.resultado.visitante}}</div>
+        <div class="grupo_fase" *ngIf="partido.grupo.codigo != 'NONE'">{{partido.grupo.nombre}}</div>
+        <div class="grupo_fase" *ngIf="partido.fase.codigo != 'GRUPO'">{{partido.fase.nombre}}</div>
+        <div class="lugar">{{partido.lugar}}</div>
+        <div>{{partido.dia | date: 'dd/MM/yyyy HH:mm (O)'}}</div>
+        <div *ngIf="pendiente">Time until blocked:
+          <span class="block">{{timeToBlock}}</span>
+        </div>
+      </div>
+      <div class="card-footer" [ngClass]="isGanador()">
+        <div *ngIf="pendiente">
+          <button class="btn" (click)="local(partido)" [ngClass]="{'btn-success': isLocal(partido.pronostico)}">{{partido.local.nombre}}</button>
+          <button class="btn" *ngIf="isFaseGrupo()" (click)="empate(partido)" [ngClass]="{'btn-success': isEmpate(partido.pronostico)}">Tie</button>
+          <button class="btn" (click)="visitante(partido)" [ngClass]="{'btn-success': isVisitante(partido.pronostico)}">{{partido.visitante.nombre}}</button>
+        </div>
+        <p class="pronostico" *ngIf="!pendiente && partido.pronostico == null">Too bad, you did not enter your prediction!</p>
+        <p class="pronostico" *ngIf="!pendiente && partido.pronostico !== null">Your choice was: {{getEleccion()}}
+          <i [ngClass]="isGanador()"></i>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

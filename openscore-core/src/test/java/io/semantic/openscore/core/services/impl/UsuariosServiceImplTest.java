@@ -1,26 +1,35 @@
 package io.semantic.openscore.core.services.impl;
 
-import io.semantic.openscore.core.api.usuarios.CrearUsuarioApi;
+import io.semantic.openscore.core.api.usuarios.CrearUsuarioDTO;
+import io.semantic.openscore.core.cache.TokenCache;
+import io.semantic.openscore.core.email.MailFactory;
+import io.semantic.openscore.core.email.MailProvider;
+import io.semantic.openscore.core.email.MailServer;
 import io.semantic.openscore.core.exceptions.ValidationException;
-import io.semantic.openscore.core.mapping.DozerProducer;
+import io.semantic.openscore.core.logging.ServiceLogger;
+import io.semantic.openscore.core.mapping.PaisMapper;
+import io.semantic.openscore.core.mapping.UsuarioMapper;
 import io.semantic.openscore.core.model.Pais;
 import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.model.Usuario;
 import io.semantic.openscore.core.repository.PaisRepository;
 import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.security.TokenGenerator;
+import io.semantic.openscore.core.services.UserInfo;
 import io.semantic.openscore.core.services.api.UsuariosService;
 import io.semantic.openscore.core.validation.ApplicationValidator;
+import io.semantic.openscore.core.validation.validators.EmailValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import javax.enterprise.inject.Instance;
 import javax.validation.Validation;
-import javax.validation.Validator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -53,6 +62,9 @@ public class UsuariosServiceImplTest {
 
     private TokenGenerator tokenGenerator;
 
+    @Mock
+    Instance<EmailValidator> emailValidators;
+
     @Before
     public void setUp() {
 
@@ -62,21 +74,28 @@ public class UsuariosServiceImplTest {
                 paisRepository,
                 tokenGenerator,
                 new ApplicationValidator(Validation.buildDefaultValidatorFactory().getValidator()),
-                new DozerProducer().produceDozer());
+                Mappers.getMapper(UsuarioMapper.class),
+                Mappers.getMapper(PaisMapper.class),
+                mock(UserInfo.class),
+                mock(TokenCache.class),
+                mock(MailServer.class),
+                mock(MailFactory.class),
+                emailValidators,
+                mock(ServiceLogger.class));
         when(paisRepository.findByCodigo(eq(pais.getCodigo()))).thenReturn(pais);
     }
 
     @Test
     public void testSeGuardaUnUsuarioCorrecto() {
-        CrearUsuarioApi crearUsuarioApi = new CrearUsuarioApi();
-        crearUsuarioApi.setApellido(APELLIDO);
-        crearUsuarioApi.setNombre(NOMBRE);
-        crearUsuarioApi.setEmail(EMAIL);
-        crearUsuarioApi.setConfirmacionEmail(EMAIL);
-        crearUsuarioApi.setPassword(PASSWORD);
-        crearUsuarioApi.setConfirmacionPassword(PASSWORD);
-        crearUsuarioApi.setPais(PAIS);
-        this.usuariosService.registrarUsuario(crearUsuarioApi);
+        CrearUsuarioDTO crearUsuarioDTO = new CrearUsuarioDTO();
+        crearUsuarioDTO.setApellido(APELLIDO);
+        crearUsuarioDTO.setNombre(NOMBRE);
+        crearUsuarioDTO.setEmail(EMAIL);
+        crearUsuarioDTO.setConfirmacionEmail(EMAIL);
+        crearUsuarioDTO.setPassword(PASSWORD);
+        crearUsuarioDTO.setConfirmacionPassword(PASSWORD);
+        crearUsuarioDTO.setPais(PAIS);
+        this.usuariosService.registrarUsuario(crearUsuarioDTO);
         verify(usuarioRepository, times(1)).save(usuarioCaptor.capture());
 
         assertEquals(NOMBRE, usuarioCaptor.getValue().getNombre());
@@ -90,41 +109,41 @@ public class UsuariosServiceImplTest {
 
     @Test(expected = ValidationException.class)
     public void testProblemaAlConfirmarEmail() {
-        CrearUsuarioApi crearUsuarioApi = new CrearUsuarioApi();
-        crearUsuarioApi.setApellido(APELLIDO);
-        crearUsuarioApi.setNombre(NOMBRE);
-        crearUsuarioApi.setEmail(EMAIL);
-        crearUsuarioApi.setConfirmacionEmail(EMAIL + "IMPOSIBLE_CONFIRMAR");
-        crearUsuarioApi.setPassword(PASSWORD);
-        crearUsuarioApi.setConfirmacionPassword(PASSWORD);
-        crearUsuarioApi.setPais(PAIS);
-        this.usuariosService.registrarUsuario(crearUsuarioApi);
+        CrearUsuarioDTO crearUsuarioDTO = new CrearUsuarioDTO();
+        crearUsuarioDTO.setApellido(APELLIDO);
+        crearUsuarioDTO.setNombre(NOMBRE);
+        crearUsuarioDTO.setEmail(EMAIL);
+        crearUsuarioDTO.setConfirmacionEmail(EMAIL + "IMPOSIBLE_CONFIRMAR");
+        crearUsuarioDTO.setPassword(PASSWORD);
+        crearUsuarioDTO.setConfirmacionPassword(PASSWORD);
+        crearUsuarioDTO.setPais(PAIS);
+        this.usuariosService.registrarUsuario(crearUsuarioDTO);
     }
 
     @Test(expected = ValidationException.class)
     public void testProblemaAlConfirmarPassword() {
-        CrearUsuarioApi crearUsuarioApi = new CrearUsuarioApi();
-        crearUsuarioApi.setApellido(APELLIDO);
-        crearUsuarioApi.setNombre(NOMBRE);
-        crearUsuarioApi.setEmail(EMAIL);
-        crearUsuarioApi.setConfirmacionEmail(EMAIL);
-        crearUsuarioApi.setPassword(PASSWORD);
-        crearUsuarioApi.setConfirmacionPassword(PASSWORD + "IMPOSIBLE_CONFIRMAR");
-        crearUsuarioApi.setPais(PAIS);
-        this.usuariosService.registrarUsuario(crearUsuarioApi);
+        CrearUsuarioDTO crearUsuarioDTO = new CrearUsuarioDTO();
+        crearUsuarioDTO.setApellido(APELLIDO);
+        crearUsuarioDTO.setNombre(NOMBRE);
+        crearUsuarioDTO.setEmail(EMAIL);
+        crearUsuarioDTO.setConfirmacionEmail(EMAIL);
+        crearUsuarioDTO.setPassword(PASSWORD);
+        crearUsuarioDTO.setConfirmacionPassword(PASSWORD + "IMPOSIBLE_CONFIRMAR");
+        crearUsuarioDTO.setPais(PAIS);
+        this.usuariosService.registrarUsuario(crearUsuarioDTO);
     }
 
     @Test(expected = ValidationException.class)
     public void testProblemaAlValidarUsuarioNoNulo() {
-        CrearUsuarioApi crearUsuarioApi = new CrearUsuarioApi();
-        crearUsuarioApi.setApellido(APELLIDO);
-        crearUsuarioApi.setNombre("");
-        crearUsuarioApi.setEmail(EMAIL);
-        crearUsuarioApi.setConfirmacionEmail(EMAIL);
-        crearUsuarioApi.setPassword(PASSWORD);
-        crearUsuarioApi.setConfirmacionPassword(PASSWORD + "IMPOSIBLE_CONFIRMAR");
-        crearUsuarioApi.setPais(PAIS);
-        this.usuariosService.registrarUsuario(crearUsuarioApi);
+        CrearUsuarioDTO crearUsuarioDTO = new CrearUsuarioDTO();
+        crearUsuarioDTO.setApellido(APELLIDO);
+        crearUsuarioDTO.setNombre("");
+        crearUsuarioDTO.setEmail(EMAIL);
+        crearUsuarioDTO.setConfirmacionEmail(EMAIL);
+        crearUsuarioDTO.setPassword(PASSWORD);
+        crearUsuarioDTO.setConfirmacionPassword(PASSWORD + "IMPOSIBLE_CONFIRMAR");
+        crearUsuarioDTO.setPais(PAIS);
+        this.usuariosService.registrarUsuario(crearUsuarioDTO);
     }
 
 }

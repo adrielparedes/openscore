@@ -1,32 +1,36 @@
+import { RestConfiguration } from './rest-configuration';
 import { ApiResponse } from './../model/api-response';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injector } from '@angular/core';
 
-export abstract class Rest<T> {
+export abstract class Rest<X, Y, Z> extends RestConfiguration {
 
     protected http: HttpClient;
 
-    private baseUrl = 'http://localhost:8080/openscore/api/rest';
-
     constructor(http: HttpClient) {
+        super();
         this.http = http;
     }
 
-    getUrl(url: string) {
-        return this.baseUrl + url;
-    }
-
-    abstract getServiceUrl(): string;
+    public getAll(page: number, pageSize: number, parameters?: Array<any>) {
 
 
-    public getAll(page: number, pageSize: number) {
+        let params = new HttpParams();
+        if (parameters !== undefined) {
+            parameters.forEach(elem => {
+                params = params.set(elem.key, elem.value)
+            });
+        }
+
+
+        console.log(params.keys());
         return this.http
-            .get<ApiResponse<T[]>>(this.getUrl(this.getServiceUrl()));
+            .get<ApiResponse<X[]>>(this.getUrl(this.getServiceUrl()), { params: params });
     }
 
     public get(id: number) {
         return this.http
-            .get<ApiResponse<T>>(this.getUrl(this.getServiceUrl() + '/' + id));
+            .get<ApiResponse<X>>(this.getUrl(this.getServiceUrl() + '/' + id));
     }
 
     public delete(id: number) {
@@ -34,15 +38,15 @@ export abstract class Rest<T> {
             .delete<ApiResponse<number>>(this.getUrl(this.getServiceUrl() + '/' + id));
     }
 
-    public add(storable: T) {
+    public add(storable: Y) {
         return this.http
-            .post<ApiResponse<T>>(this.getUrl(this.getServiceUrl()), storable);
+            .post<ApiResponse<X>>(this.getUrl(this.getServiceUrl()), storable);
     }
 
 
-    public update(id: number, storable: T) {
+    public update(id: number, storable: Z) {
         return this.http
-            .post<ApiResponse<T>>(this.getUrl(this.getServiceUrl() + '/' + id), storable);
+            .post<ApiResponse<X>>(this.getUrl(this.getServiceUrl() + '/' + id), storable);
     }
 
 }

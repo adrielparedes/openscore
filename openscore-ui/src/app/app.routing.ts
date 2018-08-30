@@ -6,11 +6,12 @@ import {
   FullLayoutComponent,
   SimpleLayoutComponent
 } from './containers';
+import { AuthGuard } from './services/auth-guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
@@ -19,10 +20,19 @@ export const routes: Routes = [
     data: {
       title: 'Home'
     },
+    canActivateChild: [AuthGuard],
     children: [
       {
+        path: 'home',
+        loadChildren: './views/home/home.module#HomeModule',
+      },
+      {
+        path: 'reglamento',
+        loadChildren: './views/reglamento/reglamento.module#ReglamentoModule',
+      },
+      {
         path: 'dashboard',
-        loadChildren: './views/dashboard/dashboard.module#DashboardModule'
+        loadChildren: './views/dashboard/dashboard.module#DashboardModule',
       },
       {
         path: 'noticias',
@@ -33,20 +43,32 @@ export const routes: Routes = [
         loadChildren: './views/ranking/ranking.module#RankingModule'
       },
       {
+        path: 'pronosticos',
+        loadChildren: './views/pronosticos/pronosticos.module#PronosticosModule'
+      },
+      {
         path: 'explorar',
         loadChildren: './views/explorar/explorar.module#ExplorarModule'
+      },
+      {
+        path: 'settings',
+        loadChildren: './views/settings/settings.module#SettingsModule'
       },
       {
         path: 'admin/usuarios',
         loadChildren: './views/admin/usuarios/usuarios.module#UsuariosModule'
       },
       {
-        path: 'admin/competiciones',
-        loadChildren: './views/admin/competiciones/competiciones.module#CompeticionesModule'
-      },
-      {
         path: 'admin/equipos',
         loadChildren: './views/admin/equipos/equipos.module#EquiposModule'
+      },
+      {
+        path: 'admin/partidos',
+        loadChildren: './views/admin/partidos/partidos.module#PartidosModule'
+      },
+      {
+        path: 'admin/noticias',
+        loadChildren: './views/admin/noticias/noticias.module#NoticiasModule'
       }
     ]
   },
