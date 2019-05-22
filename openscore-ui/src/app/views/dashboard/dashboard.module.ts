@@ -5,7 +5,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
-import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
+// import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
     CommonModule,
     DashboardRoutingModule,
     ChartsModule,
-    NgxTwitterTimelineModule
+    // NgxTwitterTimelineModule
   ],
   declarations: [DashboardComponent]
 })

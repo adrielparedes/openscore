@@ -40,11 +40,6 @@ public class CrearGruposYFases implements StartupStep {
         this.crearGrupoSiNoExiste(Grupo.GRUPO_A, this.crearGrupo(Grupo.GRUPO_A, "Group A"));
         this.crearGrupoSiNoExiste(Grupo.GRUPO_B, this.crearGrupo(Grupo.GRUPO_B, "Group B"));
         this.crearGrupoSiNoExiste(Grupo.GRUPO_C, this.crearGrupo(Grupo.GRUPO_C, "Group C"));
-        this.crearGrupoSiNoExiste(Grupo.GRUPO_D, this.crearGrupo(Grupo.GRUPO_D, "Group D"));
-        this.crearGrupoSiNoExiste(Grupo.GRUPO_E, this.crearGrupo(Grupo.GRUPO_E, "Group E"));
-        this.crearGrupoSiNoExiste(Grupo.GRUPO_F, this.crearGrupo(Grupo.GRUPO_F, "Group F"));
-        this.crearGrupoSiNoExiste(Grupo.GRUPO_G, this.crearGrupo(Grupo.GRUPO_G, "Group G"));
-        this.crearGrupoSiNoExiste(Grupo.GRUPO_H, this.crearGrupo(Grupo.GRUPO_H, "Group H"));
         this.crearGrupoSiNoExiste(Grupo.NONE, this.crearGrupo(Grupo.NONE, "None"));
 
     }
