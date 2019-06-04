@@ -32,4 +32,9 @@ public class EquiposRepository extends Repository<Equipo> {
             return Optional.of(found.get(0));
         }
     }
+
+    @Override
+    public boolean exist(Equipo entity) {
+        return false;
+    }
 }

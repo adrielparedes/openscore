@@ -43,4 +43,9 @@ public class UsuarioRepository extends Repository<Usuario> {
         List<Usuario> found = this.createQuery(FIND_BY_COUNTRY).setParameter("pais", pais.toUpperCase()).getResultList();
         return found;
     }
+
+    @Override
+    public boolean exist(Usuario entity) {
+        return false;
+    }
 }

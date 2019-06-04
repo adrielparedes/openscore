@@ -32,4 +32,9 @@ public class FaseRepository extends Repository<Fase> {
             return Optional.of(results.get(0));
         }
     }
+
+    @Override
+    public boolean exist(Fase entity) {
+        return false;
+    }
 }

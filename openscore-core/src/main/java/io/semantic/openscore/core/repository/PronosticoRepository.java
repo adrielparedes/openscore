@@ -58,4 +58,8 @@ public class PronosticoRepository extends Repository<Pronostico> {
         }
     }
 
+    @Override
+    public boolean exist(Pronostico entity) {
+        return false;
+    }
 }

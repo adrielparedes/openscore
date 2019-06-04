@@ -19,9 +19,9 @@ public class PaisRepository extends Repository<Pais> {
         super(Pais.class, entityManager);
     }
 
-    public boolean exist(String codigo) {
+    public boolean exist(Pais pais) {
         TypedQuery<Pais> query = this.createQuery("select p from Pais p where p.codigo = :codigo");
-        query.setParameter("codigo", codigo);
+        query.setParameter("codigo", pais.getCodigo());
         return this.findByQuery(query).size() > 0;
     }
 

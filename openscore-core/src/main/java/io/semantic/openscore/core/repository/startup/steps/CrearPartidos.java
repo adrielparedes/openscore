@@ -1,7 +1,6 @@
 package io.semantic.openscore.core.repository.startup.steps;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.type.TypeReference;
 import io.semantic.openscore.core.model.Equipo;
 import io.semantic.openscore.core.model.Fase;
 import io.semantic.openscore.core.model.Grupo;
@@ -11,24 +10,17 @@ import io.semantic.openscore.core.repository.FaseRepository;
 import io.semantic.openscore.core.repository.GrupoRepository;
 import io.semantic.openscore.core.repository.PartidoRepository;
 import io.semantic.openscore.core.repository.startup.PartidoData;
-import io.semantic.openscore.core.repository.startup.StartupStep;
 import io.semantic.openscore.core.repository.startup.builder.DiaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class CrearPartidos implements StartupStep {
+public class CrearPartidos extends FileBasedStartupStep<PartidoData, Partido> {
 
     private Logger logger = LoggerFactory.getLogger(CrearPartidos.class);
 
-    private PartidoRepository partidoRepository;
     private EquiposRepository equiposRepository;
     private GrupoRepository grupoRepository;
     private FaseRepository faseRepository;
@@ -36,6 +28,8 @@ public class CrearPartidos implements StartupStep {
 
 
     public CrearPartidos() {
+        super(Partido.class, null, new TypeReference<List<PartidoData>>() {
+        });
     }
 
     @Inject
@@ -45,66 +39,35 @@ public class CrearPartidos implements StartupStep {
                          FaseRepository faseRepository,
                          DiaBuilder diaBuilder) {
 
-        this.partidoRepository = partidoRepository;
+        super(Partido.class, partidoRepository, new TypeReference<List<PartidoData>>() {
+        });
         this.equiposRepository = equiposRepository;
         this.grupoRepository = grupoRepository;
         this.faseRepository = faseRepository;
         this.diaBuilder = diaBuilder;
     }
 
+
     @Override
-    public void run() {
-        List<PartidoData> partidos = this.loadPartidosData("data/partidos.json");
-
-        partidos.forEach(partido -> {
-            this.crearPartidoSiNoExiste(partido.getLocal(),
-                    partido.getVisitante(),
-                    getGrupo(partido.getGrupo()),
-                    getFase(partido.getFase()),
-                    diaBuilder.getMatchDate(partido.getDia()),
-                    Integer.parseInt(partido.getFecha()),
-                    partido.getLugar());
-        });
-
-
+    public String getFileName() {
+        return "data/partidos.yml";
     }
 
-    private List<PartidoData> loadPartidosData(String location) {
-        try {
-            Gson gson = new Gson();
-            InputStreamReader reader = new InputStreamReader(CrearPartidos.class.getClassLoader().getResourceAsStream(location), "UTF-8");
-            Type listType = new TypeToken<ArrayList<PartidoData>>() {
-            }.getType();
-            List<PartidoData> partidos = gson.fromJson(reader, listType);
-            return partidos;
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-    }
+    @Override
+    protected Partido map(PartidoData partidoData) {
 
+        Equipo local = getEquipo(partidoData.getLocal());
+        Equipo visitante = getEquipo(partidoData.getVisitante());
+        Partido partido = new Partido();
+        partido.setLocal(local);
+        partido.setVisitante(visitante);
+        partido.setDia(diaBuilder.getMatchDate(partidoData.getDia()));
+        partido.setLugar(partidoData.getLugar());
+        partido.setGrupo(getGrupo(partidoData.getGrupo()));
+        partido.setFecha(partido.getFecha());
+        partido.setFase(getFase(partidoData.getFase()));
+        return partido;
 
-    private void crearPartidoSiNoExiste(String codigoLocal,
-                                        String codigoVisitante,
-                                        Grupo grupo,
-                                        Fase fase,
-                                        Date dia,
-                                        int fecha,
-                                        String lugar) {
-
-        if (!this.partidoRepository.exist(codigoLocal, codigoVisitante, grupo, fase)) {
-            Equipo local = getEquipo(codigoLocal);
-            Equipo visitante = getEquipo(codigoVisitante);
-            Partido partido = new Partido();
-            partido.setLocal(local);
-            partido.setVisitante(visitante);
-            partido.setDia(dia);
-            partido.setLugar(lugar);
-            partido.setGrupo(grupo);
-            partido.setFecha(fecha);
-            partido.setFase(fase);
-
-            this.partidoRepository.save(partido);
-        }
     }
 
     private Equipo getEquipo(String codigoLocal) {

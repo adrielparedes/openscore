@@ -167,4 +167,5 @@ public abstract class Repository<T extends Storable> {
         return formatted;
     }
 
+    public abstract boolean exist(T entity);
 }

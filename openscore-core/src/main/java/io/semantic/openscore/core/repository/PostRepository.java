@@ -21,4 +21,9 @@ public class PostRepository extends Repository<Post> {
         query.setParameter("status",postStatus);
         return this.findByQuery(query);
     }
+
+    @Override
+    public boolean exist(Post entity) {
+        return false;
+    }
 }

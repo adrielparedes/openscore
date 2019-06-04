@@ -79,4 +79,9 @@ public class PartidoRepository extends Repository<Partido> {
     public List<Integer> findAllFechas() {
         return this.entityManager.createQuery(FIND_ALL_FECHAS).getResultList();
     }
+
+    @Override
+    public boolean exist(Partido entity) {
+        return false;
+    }
 }

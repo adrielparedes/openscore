@@ -33,4 +33,9 @@ public class GrupoRepository extends Repository<Grupo> {
             return Optional.of(found.get(0));
         }
     }
+
+    @Override
+    public boolean exist(Grupo entity) {
+        return false;
+    }
 }

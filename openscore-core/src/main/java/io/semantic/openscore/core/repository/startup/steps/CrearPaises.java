@@ -27,12 +27,12 @@ public class CrearPaises implements StartupStep {
 
         logger.info("Inicializando paises");
 
-        this.guardarSiNoExiste("ARG", crearPais("ARG", "Argentina"));
-        this.guardarSiNoExiste("CHI", crearPais("CHI", "Chile"));
-        this.guardarSiNoExiste("PER", crearPais("PER", "Peru"));
-        this.guardarSiNoExiste("COL", crearPais("COL", "Colombia"));
-        this.guardarSiNoExiste("MEX", crearPais("MEX", "Mexico"));
-        this.guardarSiNoExiste("BRA", crearPais("BRA", "Brazil"));
+        this.guardarSiNoExiste(crearPais("ARG", "Argentina"));
+        this.guardarSiNoExiste(crearPais("CHI", "Chile"));
+        this.guardarSiNoExiste(crearPais("PER", "Peru"));
+        this.guardarSiNoExiste(crearPais("COL", "Colombia"));
+        this.guardarSiNoExiste(crearPais("MEX", "Mexico"));
+        this.guardarSiNoExiste(crearPais("BRA", "Brazil"));
 
         logger.info("Inicial de paises completa");
     }
@@ -42,9 +42,9 @@ public class CrearPaises implements StartupStep {
         return 0;
     }
 
-    public void guardarSiNoExiste(String codigo, Pais pais) {
-        if (!this.paisRepository.exist(codigo)) {
-            logger.info("Se crea pais no existente: " + codigo);
+    public void guardarSiNoExiste(Pais pais) {
+        if (!this.paisRepository.exist(pais)) {
+            logger.info("Se crea pais no existente: " + pais.getCodigo());
             this.paisRepository.save(pais);
         }
     }
