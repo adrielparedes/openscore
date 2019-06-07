@@ -10,4 +10,10 @@ public class TestRepository extends Repository<TestObject> {
         super(TestObject.class,
               entityManager);
     }
+
+    @Override
+    public boolean exist(TestObject entity) {
+        return false;
+    }
+
 }
