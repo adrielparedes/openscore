@@ -5,4 +5,8 @@ public interface StartupStep {
     void run();
 
     int priority();
+
+    default boolean enabled() {
+        return true;
+    }
 }

@@ -36,9 +36,11 @@ public class StartupManager {
         Collections.sort(this.steps, Comparator.comparingInt(StartupStep::priority));
         this.logger.info(MessageFormat.format("StartupSteps sorted: \n|_ {0}",
                 this.steps.stream()
-                        .map(startupStep -> startupStep.getClass().getSimpleName() + " -- p: " + startupStep.priority())
+                        .map(startupStep -> startupStep.getClass().getSimpleName() + " -- p: " + startupStep.priority() + " -- " + startupStep.enabled())
                         .collect(Collectors.joining("\n|_ "))));
-        this.steps.forEach(StartupStep::run);
+        this.steps.stream()
+                .filter(startupStep -> startupStep.enabled())
+                .forEach(StartupStep::run);
     }
 
 }

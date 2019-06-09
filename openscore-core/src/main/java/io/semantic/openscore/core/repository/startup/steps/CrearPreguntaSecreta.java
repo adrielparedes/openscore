@@ -39,4 +39,9 @@ public class CrearPreguntaSecreta extends FileBasedStartupStep<PreguntaSecretaDa
         preguntaSecreta.setPregunta(dataObject.getPregunta());
         return preguntaSecreta;
     }
+
+    @Override
+    public boolean enabled() {
+        return false;
+    }
 }
