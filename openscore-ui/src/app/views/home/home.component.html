@@ -1,3 +1,9 @@
+<h1>Welcome to Copa América!</h1>
 <p>
-  <img class="text-center" src="assets/img/RHOpenScore-fixture.png" width="100%" />
+  <!-- <img class="text-center" src="assets/img/RHOpenScore-fixture.png" width="100%" /> -->
+  
+  <ngx-twitter-timeline 
+    [data]="{sourceType: 'url', url: 'https://twitter.com/CopaAmerica'}"
+    [opts]="{tweetLimit: 10}"
+></ngx-twitter-timeline>
 </p>
