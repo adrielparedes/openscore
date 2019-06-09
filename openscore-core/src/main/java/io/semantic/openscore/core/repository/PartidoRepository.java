@@ -60,7 +60,7 @@ public class PartidoRepository extends Repository<Partido> {
 
     public List<Partido> findAllByDia(Date dia) {
         TypedQuery<Partido> query = this.createQuery(FIND_ALL_BY_DIA)
-                .setParameter("dia", dia,TemporalType.DATE);
+                .setParameter("dia", dia, TemporalType.DATE);
         return this.findByQuery(query);
     }
 
@@ -82,6 +82,9 @@ public class PartidoRepository extends Repository<Partido> {
 
     @Override
     public boolean exist(Partido entity) {
-        return false;
+        return this.exist(entity.getLocal().getCodigo(),
+                entity.getVisitante().getCodigo(),
+                entity.getGrupo(),
+                entity.getFase());
     }
 }
