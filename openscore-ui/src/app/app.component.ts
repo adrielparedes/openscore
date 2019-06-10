@@ -20,10 +20,11 @@ export class AppComponent implements OnInit {
       if (evt instanceof NavigationStart) {
         if (evt.id === 1) {
           this.infoService.securePing().subscribe(res => {
+            console.log(res.data);
             if (res.data !== 'ok') {
               this.logout();
             }
-          });
+          }, err => this.logout());
         }
       }
 

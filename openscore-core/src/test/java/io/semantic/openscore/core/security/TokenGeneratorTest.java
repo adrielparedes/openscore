@@ -1,5 +1,7 @@
 package io.semantic.openscore.core.security;
 
+import java.text.ParseException;
+
 import com.google.common.collect.Sets;
 import com.nimbusds.jwt.SignedJWT;
 import io.semantic.openscore.core.model.Rol;
@@ -7,14 +9,9 @@ import io.semantic.openscore.core.model.Usuario;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.ParseException;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-
-class TokenGeneratorTest {
+public class TokenGeneratorTest {
 
     private TokenGenerator tokenGenerator;
 
@@ -34,23 +31,27 @@ class TokenGeneratorTest {
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setEmail(email);
-        usuario.setRoles(Sets.newHashSet(Rol.ADMIN, Rol.USUARIO));
+        usuario.setRoles(Sets.newHashSet(Rol.ADMIN,
+                                         Rol.USUARIO));
         String token = this.tokenGenerator.generarToken(usuario);
 
         SignedJWT signedJWT = SignedJWT.parse(token);
 
-        assertEquals(nombre, signedJWT.getJWTClaimsSet().getStringClaim(TokenGenerator.NOMBRE));
-        assertEquals(apellido, signedJWT.getJWTClaimsSet().getStringClaim(TokenGenerator.APELLIDO));
-        assertEquals(email, signedJWT.getJWTClaimsSet().getStringClaim(TokenGenerator.EMAIL));
-        assertEquals(username, signedJWT.getJWTClaimsSet().getStringClaim(TokenGenerator.USERNAME));
+        assertEquals(nombre,
+                     signedJWT.getJWTClaimsSet().getStringClaim(TokenGenerator.NOMBRE));
+        assertEquals(apellido,
+                     signedJWT.getJWTClaimsSet().getStringClaim(TokenGenerator.APELLIDO));
+        assertEquals(email,
+                     signedJWT.getJWTClaimsSet().getStringClaim(TokenGenerator.EMAIL));
         assertNotNull(signedJWT.getJWTClaimsSet().getExpirationTime().getTime());
         assertTrue(signedJWT.getJWTClaimsSet().getStringListClaim(TokenGenerator.ROLES).contains(Rol.ADMIN.toString()));
     }
 
     @Test
-    void testCrearPassword() {
+    public void testCrearPassword() {
 
         String password = this.tokenGenerator.generarPassword("123");
-        assertEquals(64, password.length());
+        assertEquals(64,
+                     password.length());
     }
 }

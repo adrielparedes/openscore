@@ -2,6 +2,8 @@ package io.semantic.openscore.core.services.api;
 
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.information.Information;
+import io.semantic.openscore.core.model.Rol;
+import io.semantic.openscore.core.security.Secure;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -20,5 +22,6 @@ public interface InformationService {
 
     @GET
     @Path("/ping/secure")
+    @Secure({Rol.ADMIN, Rol.USUARIO})
     ApiResponse<String> securePing();
 }

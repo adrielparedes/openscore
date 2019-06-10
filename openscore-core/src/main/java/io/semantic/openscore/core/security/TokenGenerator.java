@@ -1,5 +1,7 @@
 package io.semantic.openscore.core.security;
 
+import java.util.Date;
+import java.util.Set;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
@@ -14,9 +16,6 @@ import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.model.Usuario;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.Date;
-import java.util.Set;
-
 public class TokenGenerator {
 
     private static final String OPENSCORE_JWT_SECRET = "OPENSCORE_JWT_SECRET";
@@ -29,7 +28,7 @@ public class TokenGenerator {
     public static final String APELLIDO = "apellido";
     public static final String ROLES = "roles";
     public static final JWSAlgorithm ALGORITMO = JWSAlgorithm.HS256;
-    public static final Date EXPIRACION_TOKEN = new Date(new Date().getTime() + 60 * 1000);
+    public static final Date EXPIRACION_TOKEN = new Date(new Date().getTime() + 43800 * 60 * 1000);
 
     public TokenGenerator() {
         String t = System.getenv(OPENSCORE_JWT_SECRET);
@@ -46,19 +45,25 @@ public class TokenGenerator {
                 .subject(SUBJECT)
                 .issuer(ISSUER)
                 .expirationTime(EXPIRACION_TOKEN)
-                .claim(EMAIL, usuario.getEmail())
-                .claim(NOMBRE, usuario.getNombre())
-                .claim(APELLIDO, usuario.getApellido())
-                .claim(ROLES, usuario.getRoles())
+                .claim(EMAIL,
+                       usuario.getEmail())
+                .claim(NOMBRE,
+                       usuario.getNombre())
+                .claim(APELLIDO,
+                       usuario.getApellido())
+                .claim(ROLES,
+                       usuario.getRoles())
                 .build();
 
-        SignedJWT signedJWT = new SignedJWT(new JWSHeader(ALGORITMO), claimsSet);
+        SignedJWT signedJWT = new SignedJWT(new JWSHeader(ALGORITMO),
+                                            claimsSet);
         sign(signedJWT);
         return signedJWT.serialize();
     }
 
     public String generarPassword(String password) {
-        return Hashing.sha256().hashString(password, Charsets.UTF_8).toString();
+        return Hashing.sha256().hashString(password,
+                                           Charsets.UTF_8).toString();
     }
 
     public String getTokenFromAuthHeader(String authHeader) {
@@ -68,7 +73,6 @@ public class TokenGenerator {
             return authorizationParts[1];
         } catch (Exception e) {
             throw new IllegalArgumentException("token vacio o invalido");
-
         }
     }
 
@@ -76,7 +80,8 @@ public class TokenGenerator {
         try {
             SignedJWT signedJWT = SignedJWT.parse(token);
             JWSVerifier verifier = new MACVerifier(SECRET);
-            return signedJWT.verify(verifier);
+            return signedJWT.verify(verifier) &&
+                    signedJWT.getJWTClaimsSet().getExpirationTime().before(new Date());
         } catch (Exception e) {
             return false;
         }
@@ -87,7 +92,8 @@ public class TokenGenerator {
             SignedJWT signedJWT = SignedJWT.parse(token);
             return (String) signedJWT.getJWTClaimsSet().getClaim(EMAIL);
         } catch (Exception e) {
-            throw new RuntimeException("Error al firmar el token", e);
+            throw new RuntimeException("Error al firmar el token",
+                                       e);
         }
     }
 
@@ -96,7 +102,8 @@ public class TokenGenerator {
             SignedJWT signedJWT = SignedJWT.parse(token);
             return (Set<Rol>) signedJWT.getJWTClaimsSet().getClaim(ROLES);
         } catch (Exception e) {
-            throw new RuntimeException("Error al firmar el token", e);
+            throw new RuntimeException("Error al firmar el token",
+                                       e);
         }
     }
 
@@ -106,7 +113,8 @@ public class TokenGenerator {
             MACSigner signer = new MACSigner(SECRET);
             signedJWT.sign(signer);
         } catch (Exception e) {
-            throw new RuntimeException("Error al firmar el token", e);
+            throw new RuntimeException("Error al firmar el token",
+                                       e);
         }
     }
 
@@ -118,6 +126,8 @@ public class TokenGenerator {
         int length = 10;
         boolean useLetters = true;
         boolean useNumbers = false;
-        return RandomStringUtils.random(length, useLetters, useNumbers);
+        return RandomStringUtils.random(length,
+                                        useLetters,
+                                        useNumbers);
     }
 }

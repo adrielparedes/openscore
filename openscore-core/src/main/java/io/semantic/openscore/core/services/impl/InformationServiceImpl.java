@@ -48,7 +48,6 @@ public class InformationServiceImpl implements InformationService {
     }
 
     @Override
-    @Secure({Rol.ADMIN, Rol.USUARIO})
     public ApiResponse<String> securePing() {
         return ok("ok");
     }
