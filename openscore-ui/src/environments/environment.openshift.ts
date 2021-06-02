@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  name: 'openshift',
-  version: require('../../package.json').version,
-  url: 'https://openscore-core-openscore.b9ad.pro-us-east-1.openshiftapps.com/openscore/api/rest'
+  name: "openshift",
+  version: require("../../package.json").version,
+  url: "http://openscore-core-openscore.2886795274-80-kota01.environments.katacoda.com/openscore/api/rest",
 };
