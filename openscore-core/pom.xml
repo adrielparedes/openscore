@@ -13,7 +13,7 @@
         <version.org.jboss.spec.jboss.javaee.7>1.0.3.Final</version.org.jboss.spec.jboss.javaee.7>
         <version.junit>4.12</version.junit>
         <version.org.slf4j>1.7.24</version.org.slf4j>
-        <version.ch.qos.logback>1.1.11</version.ch.qos.logback>
+        <version.ch.qos.logback>1.2.0</version.ch.qos.logback>
         <version.org.mockito>2.10.0</version.org.mockito>
         <version.org.mapstruct>1.2.0.Final</version.org.mapstruct>
     </properties>
