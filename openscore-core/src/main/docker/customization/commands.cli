@@ -1,0 +1,11 @@
+# Mark the commands below to be run as a batch
+batch
+
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql.jdbc,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+
+# Add the datasource
+data-source add --name=openscore --driver-name=postgresql --jndi-name=java:jboss/datasources/openscore --connection-url="jdbc:postgresql://private-db-postgresql-nyc3-22226-do-user-9333892-0.b.db.ondigitalocean.com:25060/openscore?sslmode=require" --user-name="doadmin" --password="famivdxpcb8ka02i"
+data-source enable --name=openscore
+
+# Execute the batch
+run-batch
