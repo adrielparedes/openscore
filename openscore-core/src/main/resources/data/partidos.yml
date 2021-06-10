@@ -1,127 +1,141 @@
 ---
 - local: BRA
-  visitante: BOL
+  visitante: VEN
   grupo: GRUPO_A
-  lugar: SÃO PAULO, ESTADIO MORUMBI
-  dia: 14-06-2019T21:30-0300
-  fecha: '1'
+  lugar: BRASILIA, ESTADIO NACIONAL DE BRASILIA
+  dia: 13-06-2021T18:00-0300
+  fecha: "1"
+  fase: GRUPO
+- local: COL
+  visitante: ECU
+  grupo: GRUPO_A
+  lugar: CUIABÁ, ARENA PANTANAL
+  dia: 13-06-2021T21:00-0300
+  fecha: "1"
+  fase: GRUPO
+- local: ARG
+  visitante: CHL
+  grupo: GRUPO_B
+  lugar: RIO DE JANEIRO, ESTADIO OLIMPICO
+  dia: 14-06-2021T18:00-0300
+  fecha: "1"
+  fase: GRUPO
+- local: PRY
+  visitante: BOL
+  grupo: GRUPO_B
+  lugar: GOIÂNIA, ESTADIO OLIMPICO PEDRO LUDOVICO
+  dia: 14-06-2021T21:00-0300
+  fecha: "1"
+  fase: GRUPO
+- local: COL
+  visitante: VEN
+  grupo: GRUPO_A
+  lugar: GOIÂNIA, ESTADIO OLIMPICO PEDRO LUDOVICO
+  dia: 17-06-2021T18:00-0300
+  fecha: "2"
+  fase: GRUPO
+- local: BRA
+  visitante: PER
+  grupo: GRUPO_A
+  lugar: RIO DE JANEIRO, ESTADIO OLIMPICO
+  dia: 17-06-2021T21:00-0300
+  fecha: "2"
+  fase: GRUPO
+- local: CHL
+  visitante: BOL
+  grupo: GRUPO_B
+  lugar: CUIABÁ, ARENA PANTANAL
+  dia: 18-06-2021T18:00-0300
+  fecha: "2"
+  fase: GRUPO
+- local: ARG
+  visitante: URY
+  grupo: GRUPO_B
+  lugar: BRASILIA, ESTADIO NACIONAL DE BRASILIA
+  dia: 18-06-2021T21:00-0300
+  fecha: "2"
+  fase: GRUPO
+- local: VEN
+  visitante: ECU
+  grupo: GRUPO_A
+  lugar: RIO DE JANEIRO, ESTADIO OLIMPICO
+  dia: 20-06-2021T18:00-0300
+  fecha: "3"
+  fase: GRUPO
+- local: COL
+  visitante: PERU
+  grupo: GRUPO_A
+  lugar: GOIÂNIA, ESTADIO OLIMPICO PEDRO LUDOVICO
+  dia: 20-06-2021T21:00-0300
+  fecha: "3"
+  fase: GRUPO
+- local: URY
+  visitante: CHL
+  grupo: GRUPO_B
+  lugar: CUIABÁ, ARENA PANTANAL
+  dia: 21-06-2021T18:00-0300
+  fecha: "3"
+  fase: GRUPO
+- local: ARG
+  visitante: PRY
+  grupo: GRUPO_B
+  lugar: BRASILIA, ESTADIO NACIONAL DE BRASILIA
+  dia: 21-06-2021T21:00-0300
+  fecha: "3"
+  fase: GRUPO
+- local: ECU
+  visitante: PER
+  grupo: GRUPO_A
+  lugar: GOIÂNIA, ESTADIO OLIMPICO PEDRO LUDOVICO
+  dia: 23-06-2021T18:00-0300
+  fecha: "4"
+  fase: GRUPO
+- local: BRA
+  visitante: COL
+  grupo: GRUPO_A
+  lugar: RIO DE JANEIRO, ESTADIO OLIMPICO
+  dia: 23-06-2021T21:00-0300
+  fecha: "4"
+  fase: GRUPO
+- local: BOL
+  visitante: URY
+  grupo: GRUPO_B
+  lugar: CUIABÁ, ARENA PANTANAL
+  dia: 24-06-2021T18:00-0300
+  fecha: "4"
+  fase: GRUPO
+- local: CHL
+  visitante: PRY
+  grupo: GRUPO_B
+  lugar: BRASILIA, ESTADIO NACIONAL DE BRASILIA
+  dia: 24-06-2021T21:00-0300
+  fecha: "4"
+  fase: GRUPO
+- local: BRA
+  visitante: ECU
+  grupo: GRUPO_A
+  lugar: GOIÂNIA, ESTADIO OLIMPICO PEDRO LUDOVICO
+  dia: 27-06-2021T18:00-0300
+  fecha: "5"
   fase: GRUPO
 - local: VEN
   visitante: PER
   grupo: GRUPO_A
-  lugar: PORTO ALEGRE, ARENA DO GRÊMIO
-  dia: 15-06-2019T16:00-0300
-  fecha: '1'
-  fase: GRUPO
-- local: ARG
-  visitante: COL
-  grupo: GRUPO_B
-  lugar: SALVADOR, ARENA FONTE NOVA
-  dia: 15-06-2019T19:00-0300
-  fecha: '1'
-  fase: GRUPO
-- local: PRY
-  visitante: QAT
-  grupo: GRUPO_B
-  lugar: RIO DE JANEIRO, ESTADIO DO MARACANÃ
-  dia: 16-06-2019T16:00-0300
-  fecha: '1'
+  lugar: BRASILIA, ESTADIO NACIONAL DE BRASILIA
+  dia: 27-06-2021T18:00-0300
+  fecha: "5"
   fase: GRUPO
 - local: URY
-  visitante: ECU
-  grupo: GRUPO_C
-  lugar: BELO HORIZONTE, ESTADIO MINEIRÃO
-  dia: 16-06-2019T16:00-0300
-  fecha: '1'
-  fase: GRUPO
-- local: JPN
-  visitante: CHL
-  grupo: GRUPO_C
-  lugar: SÃO PAULO, ESTADIO MORUMBI
-  dia: 17-06-2019T20:00-0300
-  fecha: '1'
-  fase: GRUPO
-- local: BOL
-  visitante: PER
-  grupo: GRUPO_A
-  lugar: RIO DE JANEIRO, ESTADIO DO MARACANÃ
-  dia: 18-06-2019T18:30-0300
-  fecha: '2'
-  fase: GRUPO
-- local: BRA
-  visitante: VEN
-  grupo: GRUPO_A
-  lugar: SALVADOR, ARENA FONTE NOVA
-  dia: 18-06-2019T21:30-0300
-  fecha: '2'
-  fase: GRUPO
-- local: COL
-  visitante: QAT
-  grupo: GRUPO_B
-  lugar: SÃO PAULO, ESTADIO MORUMBI
-  dia: 19-06-2019T18:30-0300
-  fecha: '2'
-  fase: GRUPO
-- local: ARG
   visitante: PRY
   grupo: GRUPO_B
-  lugar: BELO HORIZONTE, ESTADIO MINEIRÃO
-  dia: 19-06-2019T21:30-0300
-  fecha: '2'
-  fase: GRUPO
-- local: URY
-  visitante: JPN
-  grupo: GRUPO_C
-  lugar: PORTO ALEGRE, ARENA DO GRÊMIO
-  dia: 20-06-2019T20:00-0300
-  fecha: '2'
-  fase: GRUPO
-- local: ECU
-  visitante: CHL
-  grupo: GRUPO_C
-  lugar: SALVADOR, ARENA FONTE NOVA
-  dia: 21-06-2019T20:00-0300
-  fecha: '2'
+  lugar: RIO DE JANEIRO, ESTADIO OLIMPICO
+  dia: 28-06-2021T21:00-0300
+  fecha: "5"
   fase: GRUPO
 - local: BOL
-  visitante: VEN
-  grupo: GRUPO_A
-  lugar: BELO HORIZONTE, ESTADIO MINEIRÃO
-  dia: 22-06-2019T16:00-0300
-  fecha: '3'
-  fase: GRUPO
-- local: PER
-  visitante: BRA
-  grupo: GRUPO_A
-  lugar: SÃO PAULO, ARENA CORINTHIANS
-  dia: 22-06-2019T16:00-0300
-  fecha: '3'
-  fase: GRUPO
-- local: QAT
   visitante: ARG
   grupo: GRUPO_B
-  lugar: PORTO ALEGRE, ARENA DO GRÊMIO
-  dia: 23-06-2019T16:00-0300
-  fecha: '3'
-  fase: GRUPO
-- local: COL
-  visitante: PRY
-  grupo: GRUPO_B
-  lugar: SALVADOR, ARENA FONTE NOVA
-  dia: 23-06-2019T16:00-0300
-  fecha: '3'
-  fase: GRUPO
-- local: ECU
-  visitante: JPN
-  grupo: GRUPO_C
-  lugar: BELO HORIZONTE, ESTADIO MINEIRÃO
-  dia: 24-06-2019T20:00-0300
-  fecha: '3'
-  fase: GRUPO
-- local: CHL
-  visitante: URY
-  grupo: GRUPO_C
-  lugar: RIO DE JANEIRO, ESTADIO DO MARACANÃ
-  dia: 24-06-2019T20:00-0300
-  fecha: '3'
+  lugar: CUIABÁ, ARENA PANTANAL
+  dia: 28-06-2021T21:00-0300
+  fecha: "5"
   fase: GRUPO
