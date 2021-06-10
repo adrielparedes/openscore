@@ -24,8 +24,8 @@ export class DashboardComponent {
   cp = [];
   mex = [];
 
-  comienzo = new Date(2019, 5, 14);
-  final = new Date(2019, 6, 7);
+  comienzo = new Date(2021, 5, 13);
+  final = new Date(2021, 6, 10);
   matches = 0;
 
   constructor(
