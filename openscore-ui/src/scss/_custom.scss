@@ -1,65 +1,81 @@
 // Here you can add other styles
 .btn-nuevo {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .warn::ng-deep circle {
-    stroke: $blue;
+  stroke: $blue;
 }
 
 .muestra {
-    width: 30%;
+  width: 30%;
 }
 
 .app-header.navbar .navbar-brand {
-    background-size: 100px auto;
+  background-size: 100px auto;
 }
 
 .username {
-    padding-right: 20px;
+  padding-right: 20px;
 }
 
 .btn-info {
-    color: white;
+  color: white;
 }
 
 .fondo01 {
-    background: url("../assets/img/fondos/01.png") no-repeat center center fixed;
+  background: url("../assets/img/fondos/01.png") no-repeat center center fixed;
 }
 
 .fondo02 {
-    background: url("../assets/img/fondos/02.png") no-repeat center center fixed;
+  background: url("../assets/img/fondos/02.png") no-repeat center center fixed;
 }
 
 .fondo03 {
-    background: url("../assets/img/fondos/03.png") no-repeat center center fixed;
+  background: url("../assets/img/fondos/03.png") no-repeat center center fixed;
 }
 
 .fondo04 {
-    background: url("../assets/img/fondos/04.png") no-repeat center center fixed;
+  background: url("../assets/img/fondos/04.png") no-repeat center center fixed;
 }
 
 .fondo05 {
-    background: url("../assets/img/fondos/05.png") no-repeat center center fixed;
+  background: url("../assets/img/fondos/05.png") no-repeat center center fixed;
 }
 
 .fondo06 {
-    background: url("../assets/img/fondos/06.png") no-repeat center center fixed;
+  background: url("../assets/img/fondos/06.png") no-repeat center center fixed;
 }
 
-.portada{
-    background: url("../assets/img/Img-Portada-OpenScore.png") no-repeat center center fixed;
-    
+.fondo08 {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.2;
+    background: url("../assets/img/fondos/08.png") no-repeat center center fixed;
+  }
+}
+
+.portada {
+  background: url("../assets/img/Img-Portada-OpenScore.png") no-repeat center
+    center fixed;
 }
 
 h1 {
-    color: #a30000;
-    font-family: 'Overpass', cursive;
-    font-weight: 800;
-    font-size: 3em;
-    text-transform: uppercase;
-    font-weight: normal;
-    line-height: 1.4;
-    margin: 0 0 18px;
-    text-shadow: 1px 0 0 #fff;
+  color: #a30000;
+  font-family: "Overpass", cursive;
+  font-weight: 800;
+  font-size: 3em;
+  text-transform: uppercase;
+  font-weight: normal;
+  line-height: 1.4;
+  margin: 0 0 18px;
+  text-shadow: 1px 0 0 #fff;
 }
