@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
   name: openscore-core
   namespace: openscore
+  annotations:
+    cert-manager.io/issuer: "openscore-issuer"
+    kubernetes.io/ingress.class: nginx
 spec:
   selector:
     matchLabels:
@@ -14,11 +17,11 @@ spec:
         app: openscore-core
     spec:
       containers:
-      - name: core
-        image: registry.digitalocean.com/openscore/openscore-core:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
+        - name: core
+          image: registry.digitalocean.com/openscore/openscore-core:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -27,9 +30,9 @@ metadata:
   namespace: openscore
 spec:
   ports:
-  - port: 8080
-    protocol: TCP
-    targetPort: 8080
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
   selector:
     app: openscore-core
 ---
@@ -47,5 +50,9 @@ spec:
             backend:
               service:
                 name: openscore-core
-                port: 
-                  number: 8080    
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - rhopenscore.com
+      secretName: tls-secret
