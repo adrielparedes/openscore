@@ -47,7 +47,7 @@ export class DashboardComponent {
     this.getBraziliansRegistered();
     this.getColombiansRegistered();
     this.getChileansRegistered();
-    this.getPeruviansRegistered;
+    this.getPeruviansRegistered();
     this.getMexicansRegistered();
   }
 
