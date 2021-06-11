@@ -7,5 +7,5 @@ export const environment = {
   production: false,
   name: 'dev',
   version: require('../../package.json').version,
-  url: 'http://rhopenscore.com/openscore/api/rest'
+  url: 'https://rhopenscore.com/openscore/api/rest'
 };
