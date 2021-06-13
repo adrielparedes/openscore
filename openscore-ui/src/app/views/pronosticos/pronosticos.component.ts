@@ -59,7 +59,7 @@ export class PronosticosComponent implements OnInit {
 
   retrievePartidosPorDia(dia: Date) {
     const date = this.buildDate(dia);
-    this.getAll(0, 0, [{ key: 'dia', value: date }]);
+    this.getAll(0, 0, [{ key: 'dia', value: Date.now() }]);
   }
 
 

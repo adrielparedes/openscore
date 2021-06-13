@@ -7,8 +7,13 @@ import io.semantic.openscore.core.model.Partido;
 import javax.ejb.Stateless;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Stateless
 public class PartidoRepository extends Repository<Partido> {
@@ -32,7 +37,7 @@ public class PartidoRepository extends Repository<Partido> {
             "order by dia asc";
 
     private static final String FIND_ALL_BY_DIA = "from Partido where " +
-            "cast(dia as date) = :dia " +
+            "cast(dia as date) BETWEEN :dia1 AND :dia2  " +
             "order by dia asc";
 
     private static final String FIND_ALL_FECHAS = "select distinct p.fecha from Partido p group by p.fecha order by p.fecha asc";
@@ -58,9 +63,24 @@ public class PartidoRepository extends Repository<Partido> {
         return this.findByQuery(query);
     }
 
-    public List<Partido> findAllByDia(Date dia) {
+    public List<Partido> findAllByDia(long dia) {
+
+        Calendar dia1 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        dia1.setTimeInMillis(dia);
+        dia1.set(Calendar.HOUR, 6);
+        dia1.set(Calendar.MINUTE, 0);
+
+        Calendar dia2 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        dia2.setTimeInMillis(dia);
+        dia2.set(Calendar.HOUR, 6);
+        dia2.set(Calendar.MINUTE, 0);
+        dia2.add(Calendar.DATE, 1);
+        
+
+
         TypedQuery<Partido> query = this.createQuery(FIND_ALL_BY_DIA)
-                .setParameter("dia", dia, TemporalType.DATE);
+                .setParameter("dia1", dia1, TemporalType.DATE)
+                .setParameter("dia2", dia2, TemporalType.DATE);
         return this.findByQuery(query);
     }
 

@@ -25,6 +25,7 @@ import javax.transaction.Transactional;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class PronosticosServiceImpl implements PronosticosService {
                                                           int pageSize,
                                                           String grupo,
                                                           String fase,
-                                                          String dia,
+                                                          long dia,
                                                           int fecha) {
 
         List<Partido> partidos = getPartidos(grupo, dia, fase, fecha);
@@ -91,31 +92,20 @@ public class PronosticosServiceImpl implements PronosticosService {
         return ok(partidoDTOs);
     }
 
-    private List<Partido> getPartidos(String grupo, String dia, String fase, int fecha) {
+    private List<Partido> getPartidos(String grupo, long dia, String fase, int fecha) {
         if (grupo != null && !grupo.isEmpty()) {
             return this.partidoRepository.findAllByGrupo(grupo);
         } else if (fase != null && !fase.isEmpty()) {
             return this.partidoRepository.findAllByFase(fase);
         } else if (fecha > 0) {
             return this.partidoRepository.findAllByFecha(fecha);
-        } else if (dia != null && !dia.isEmpty()) {
-            Date date = getDate(dia);
-            return this.partidoRepository.findAllByDia(date);
+        } else if ( dia > s0) {
+            return this.partidoRepository.findAllByDia(dia);
         } else {
             return this.partidoRepository.findAll();
         }
     }
-
-    private Date getDate(String fecha) {
-        try {
-            Date date = new SimpleDateFormat("yyyyMMdd").parse(fecha);
-            logger.info("{}", date);
-            return date;
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("El formato de la fecha es incorrecto", e);
-        }
-    }
-
+s
     @Override
     public ApiResponse<PronosticoDTO> get(long id) {
         long idUsuario = this.userInfo.getUserId();
