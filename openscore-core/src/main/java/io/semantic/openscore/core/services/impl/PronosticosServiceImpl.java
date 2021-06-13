@@ -99,7 +99,7 @@ public class PronosticosServiceImpl implements PronosticosService {
             return this.partidoRepository.findAllByFase(fase);
         } else if (fecha > 0) {
             return this.partidoRepository.findAllByFecha(fecha);
-        } else if ( dia > s0) {
+        } else if ( dia > 0) {
             return this.partidoRepository.findAllByDia(dia);
         } else {
             return this.partidoRepository.findAll();
