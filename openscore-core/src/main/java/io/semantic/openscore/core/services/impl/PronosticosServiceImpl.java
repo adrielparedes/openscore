@@ -105,7 +105,7 @@ public class PronosticosServiceImpl implements PronosticosService {
             return this.partidoRepository.findAll();
         }
     }
-s
+
     @Override
     public ApiResponse<PronosticoDTO> get(long id) {
         long idUsuario = this.userInfo.getUserId();

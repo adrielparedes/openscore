@@ -23,7 +23,7 @@ public interface PronosticosService {
                                                    @QueryParam("pageSize") int pageSize,
                                                    @QueryParam("grupo") String grupo,
                                                    @QueryParam("fase") String fase,
-                                                   @QueryParam("dia") String dia,
+                                                   @QueryParam("dia") long dia,
                                                    @QueryParam("fecha") int fecha);
 
     @Path("/{id}")
