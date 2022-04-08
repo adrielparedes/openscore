@@ -37,7 +37,7 @@
     "flag-icon-css": "2.9.0",
     "jwt-decode": "^2.2.0",
     "load-awesome": "^1.1.0",
-    "moment": "2.20.1",
+    "moment": "2.29.2",
     "ng2-charts": "1.6.0",
     "ng2-toastr": "^4.1.2",
     "ngx-bootstrap": "^2.0.2",
