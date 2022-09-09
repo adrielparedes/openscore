@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import routes, { Route } from "../routes";
+import logo from "../images/logo-white.png";
 
 const NavItem = ({ route }: { route: Route }) => {
   const router = useRouter();
@@ -32,7 +34,7 @@ const NavDropdown = ({ route }: { route: Route }) => (
     >
       {route.name}
     </a>
-    <ul className="dropdown-menu">
+    <ul className="dropdown-menu dropdown-menu-dark">
       {route.items?.map((item) => (
         <NavDropdownItem key={item.name} route={item}></NavDropdownItem>
       ))}
@@ -59,10 +61,16 @@ const getNavItem = (route: Route) => {
 };
 
 const Navbar = () => (
-  <nav className="navbar navbar-expand-lg bg-light">
+  <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div className="container">
       <a className="navbar-brand" href="#">
-        Navbar
+        <Image
+          src={logo}
+          alt="Logo"
+          width="220"
+          height="50"
+          className="d-inline-block mt-1"
+        ></Image>
       </a>
       <button
         className="navbar-toggler"

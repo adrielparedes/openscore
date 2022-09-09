@@ -1,0 +1,8 @@
+.loading-screen {
+  margin-top: 8rem;
+
+  & .spinner-grow {
+    width: 3rem;
+    height: 3rem;
+  }
+}
