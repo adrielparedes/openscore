@@ -30,7 +30,7 @@
     "@angular/upgrade": "5.2.3",
     "@fortawesome/fontawesome-free-webfonts": "^1.0.6",
     "@types/jwt-decode": "^2.2.1",
-    "bootstrap": "4.0.0",
+    "bootstrap": "4.3.1",
     "chart.js": "2.7.1",
     "codemirror": "^5.37.0",
     "core-js": "2.5.3",
