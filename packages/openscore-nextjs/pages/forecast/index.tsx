@@ -46,7 +46,7 @@ const Forecasts: NextPageWithLayout = () => {
             ))}
           </ul>
         </div>
-        <LoadingScreen busy={true}>
+        <LoadingScreen busy={false}>
           <div className="forecast__matches">
             <MatchCard></MatchCard>
             <MatchCard></MatchCard>
