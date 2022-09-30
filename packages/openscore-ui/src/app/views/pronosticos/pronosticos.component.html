@@ -1,27 +1,55 @@
 <div class="animated fadeIn">
-
   <h1>Predictions</h1>
 
   <div class="row">
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-      <label class="btn btn-secondary" [ngClass]="{'active': isHoy()}">
-        <input type="radio" name="options" id="option1" (click)="hoy()" autocomplete="off"> Today
+      <label class="btn btn-secondary" [ngClass]="{ active: isHoy() }">
+        <input
+          type="radio"
+          name="options"
+          id="option1"
+          (click)="hoy()"
+          autocomplete="off"
+        />
+        Today
       </label>
-      <label class="btn btn-secondary" [ngClass]="{'active': isGrupo()}">
-        <input type="radio" name="options" id="option2" (click)="grupo()" autocomplete="off"> By group
+      <label class="btn btn-secondary" [ngClass]="{ active: isGrupo() }">
+        <input
+          type="radio"
+          name="options"
+          id="option2"
+          (click)="grupo()"
+          autocomplete="off"
+        />
+        By group
       </label>
-      <label class="btn btn-secondary" [ngClass]="{'active': isFase()}">
-        <input type="radio" name="options" id="option3" (click)="fase()" autocomplete="off"> By stage
+      <label class="btn btn-secondary" [ngClass]="{ active: isFase() }">
+        <input
+          type="radio"
+          name="options"
+          id="option3"
+          (click)="fase()"
+          autocomplete="off"
+        />
+        By stage
       </label>
     </div>
   </div>
 
-
   <div class="row">
     <tabset class="animated fadeIn" *ngIf="isGrupo()">
-      <tab class="animated fadeIn" heading="{{grupo.nombre}}" (select)="retrievePartidosPorGrupo(grupo.codigo)" *ngFor="let grupo of grupos">
+      <tab
+        class="animated fadeIn"
+        heading="{{ grupo.nombre }}"
+        (select)="retrievePartidosPorGrupo(grupo.codigo)"
+        *ngFor="let grupo of grupos"
+      >
         <div class="row">
-          <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
+          <mat-spinner
+            *ngIf="loading"
+            style="margin: 0 auto"
+            color="warn"
+          ></mat-spinner>
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
             <app-pronostico [partido]="partido"></app-pronostico>
           </div>
@@ -30,14 +58,21 @@
       </tab>
     </tabset>
 
-
     <tabset class="animated fadeIn" *ngIf="isFase()">
-      <tab class="animated fadeIn" heading="Stage: {{fase.nombre}}" (select)="retrievePartidosPorFase(fase)" *ngFor="let fase of fases">
+      <tab
+        class="animated fadeIn"
+        heading="Stage: {{ fase.nombre }}"
+        (select)="retrievePartidosPorFase(fase)"
+        *ngFor="let fase of fases"
+      >
         <div class="row">
-          <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
+          <mat-spinner
+            *ngIf="loading"
+            style="margin: 0 auto"
+            color="warn"
+          ></mat-spinner>
           <div class="card-body" *ngIf="!loading && partidos.length == 0">
-            <div>
-              <i class="fa fa-times"></i> No matches for this stage yet</div>
+            <div><i class="fa fa-times"></i> No matches for this stage yet</div>
           </div>
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
             <app-pronostico [partido]="partido"></app-pronostico>
@@ -48,12 +83,21 @@
     </tabset>
 
     <tabset class="animated fadeIn" *ngIf="isHoy()">
-      <tab class="animated fadeIn" heading="{{today |  date:'dd/MM/yyyy'}}" (select)="retrievePartidosPorFecha(today)">
+      <tab
+        class="animated fadeIn"
+        heading="{{ today | date: 'dd/MM/yyyy' }}"
+        (select)="retrievePartidosPorFecha(today)"
+      >
         <div class="row">
-          <mat-spinner *ngIf="loading" style="margin:0 auto;" color="warn"></mat-spinner>
+          <mat-spinner
+            *ngIf="loading"
+            style="margin: 0 auto"
+            color="warn"
+          ></mat-spinner>
           <div class="card-body" *ngIf="!loading && partidos.length == 0">
             <div>
-              <i class="fa fa-times"></i> No matches found for this date</div>
+              <i class="fa fa-times"></i> No matches found for this date
+            </div>
           </div>
           <div class="col-sm-6 col-md-4" *ngFor="let partido of partidos">
             <app-pronostico [partido]="partido"></app-pronostico>

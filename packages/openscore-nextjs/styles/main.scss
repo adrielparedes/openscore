@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Quicksand:wght@300;400;600;700&display=swap");
+
+$primary: black;
+
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+$secondary: $gray-600 !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: black;
+
+$font-family-base: "Open Sans";
+$display-font-family: "Quicksand";
+$headings-font-family: "Quicksand";
+$card-border-width: none;
+
+$dropdown-dark-bg: $dark;
+$dropdown-border-width: none;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+);
+
+@import "bootstrap";
+
+@import "components/forecast";
+@import "components/match";
+@import "components/leaderboard";
+@import "components/loading_screen";
+@import "components/empty_screen";
+@import "components/login";
+
+body {
+  background-color: $gray-200;
+}
+
+h1 {
+  margin-bottom: 2rem;
+}
