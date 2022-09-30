@@ -4,6 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class DiaBuilderImpl implements DiaBuilder {
 
     private SimpleDateFormat simpleDateFormat;

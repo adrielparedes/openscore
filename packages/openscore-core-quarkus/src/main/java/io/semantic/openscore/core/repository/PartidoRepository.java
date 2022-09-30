@@ -1,21 +1,18 @@
 package io.semantic.openscore.core.repository;
 
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
+
 import io.semantic.openscore.core.model.Fase;
 import io.semantic.openscore.core.model.Grupo;
 import io.semantic.openscore.core.model.Partido;
 
-import javax.enterprise.context.RequestScoped;
-import javax.persistence.TemporalType;
-import javax.persistence.TypedQuery;
-
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
-
-@RequestScoped
+@ApplicationScoped
 public class PartidoRepository extends Repository<Partido> {
 
     private static final String EXIST = "select e from Partido e where " +

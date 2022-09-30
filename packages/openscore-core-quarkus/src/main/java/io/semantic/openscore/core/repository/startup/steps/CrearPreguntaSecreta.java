@@ -1,12 +1,16 @@
 package io.semantic.openscore.core.repository.startup.steps;
 
+import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import com.fasterxml.jackson.core.type.TypeReference;
+
 import io.semantic.openscore.core.model.PreguntaSecreta;
 import io.semantic.openscore.core.repository.PreguntaSecretaRepository;
 
-import javax.inject.Inject;
-import java.util.List;
-
+@ApplicationScoped
 public class CrearPreguntaSecreta extends FileBasedStartupStep<PreguntaSecretaData, PreguntaSecreta> {
 
     private static final String FILENAME = "data/preguntas.yml";

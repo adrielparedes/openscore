@@ -3,9 +3,9 @@ package io.semantic.openscore.core.email;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 
-@RequestScoped
+@ApplicationScoped
 public class MailFactory {
 
     public MailTemplate getRecoverPasswordEmail(String to, String token) {

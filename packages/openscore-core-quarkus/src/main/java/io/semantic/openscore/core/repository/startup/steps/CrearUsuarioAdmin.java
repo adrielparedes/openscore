@@ -7,10 +7,12 @@ import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.repository.startup.StartupStep;
 import io.semantic.openscore.core.security.TokenGenerator;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.HashSet;
 
+@ApplicationScoped
 public class CrearUsuarioAdmin implements StartupStep {
 
     private UsuarioRepository usuarioRepository;
@@ -23,8 +25,8 @@ public class CrearUsuarioAdmin implements StartupStep {
 
     @Inject
     public CrearUsuarioAdmin(UsuarioRepository usuarioRepository,
-                             PaisRepository paisRepository,
-                             TokenGenerator tokenGenerator) {
+            PaisRepository paisRepository,
+            TokenGenerator tokenGenerator) {
         this.usuarioRepository = usuarioRepository;
         this.paisRepository = paisRepository;
         this.tokenGenerator = tokenGenerator;
@@ -32,7 +34,7 @@ public class CrearUsuarioAdmin implements StartupStep {
 
     @Override
     public void run() {
-//        this.crearUsuarioSiNoExiste("admin@admin.com", this.crearUsuarioAdmin());
+        // this.crearUsuarioSiNoExiste("admin@admin.com", this.crearUsuarioAdmin());
         this.crearUsuarioSiNoExiste("aparedes@redhat.com", this.crearUsuarioAparedes());
         this.crearUsuarioSiNoExiste("lberetta@redhat.com", this.crearUsuarioLberetta());
 

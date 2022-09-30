@@ -1,6 +1,15 @@
 package io.semantic.openscore.core.repository.startup.steps;
 
+import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.core.type.TypeReference;
+
 import io.semantic.openscore.core.model.Equipo;
 import io.semantic.openscore.core.model.Fase;
 import io.semantic.openscore.core.model.Grupo;
@@ -11,12 +20,8 @@ import io.semantic.openscore.core.repository.GrupoRepository;
 import io.semantic.openscore.core.repository.PartidoRepository;
 import io.semantic.openscore.core.repository.startup.PartidoData;
 import io.semantic.openscore.core.repository.startup.builder.DiaBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-import java.util.List;
-
+@ApplicationScoped
 public class CrearPartidos extends FileBasedStartupStep<PartidoData, Partido> {
 
     private Logger logger = LoggerFactory.getLogger(CrearPartidos.class);
@@ -26,7 +31,6 @@ public class CrearPartidos extends FileBasedStartupStep<PartidoData, Partido> {
     private FaseRepository faseRepository;
     private DiaBuilder diaBuilder;
 
-
     public CrearPartidos() {
         super(Partido.class, null, new TypeReference<List<PartidoData>>() {
         });
@@ -34,10 +38,10 @@ public class CrearPartidos extends FileBasedStartupStep<PartidoData, Partido> {
 
     @Inject
     public CrearPartidos(PartidoRepository partidoRepository,
-                         EquiposRepository equiposRepository,
-                         GrupoRepository grupoRepository,
-                         FaseRepository faseRepository,
-                         DiaBuilder diaBuilder) {
+            EquiposRepository equiposRepository,
+            GrupoRepository grupoRepository,
+            FaseRepository faseRepository,
+            DiaBuilder diaBuilder) {
 
         super(Partido.class, partidoRepository, new TypeReference<List<PartidoData>>() {
         });
@@ -46,7 +50,6 @@ public class CrearPartidos extends FileBasedStartupStep<PartidoData, Partido> {
         this.faseRepository = faseRepository;
         this.diaBuilder = diaBuilder;
     }
-
 
     @Override
     public String getFileName() {
@@ -71,20 +74,21 @@ public class CrearPartidos extends FileBasedStartupStep<PartidoData, Partido> {
     }
 
     private Equipo getEquipo(String codigoLocal) {
-        return this.equiposRepository.findByCodigo(codigoLocal).orElseThrow(() -> new IllegalArgumentException("El equipo " + codigoLocal + "no existe"));
+        return this.equiposRepository.findByCodigo(codigoLocal)
+                .orElseThrow(() -> new IllegalArgumentException("El equipo " + codigoLocal + "no existe"));
     }
-
 
     private Grupo getGrupo(String codigo) {
         logger.info(codigo);
-        return this.grupoRepository.findByCodigo(codigo).orElseThrow(() -> new IllegalArgumentException("El grupo " + codigo + "no existe"));
+        return this.grupoRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new IllegalArgumentException("El grupo " + codigo + "no existe"));
     }
 
     private Fase getFase(String codigo) {
-        return this.faseRepository.findByCodigo(codigo).orElseThrow(() -> new IllegalArgumentException("La fase " + codigo + "no existe"));
+        return this.faseRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new IllegalArgumentException("La fase " + codigo + "no existe"));
 
     }
-
 
     @Override
     public int priority() {

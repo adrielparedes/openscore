@@ -1,25 +1,25 @@
 package io.semantic.openscore.core.services.impl;
 
-import io.semantic.openscore.core.api.ApiResponse;
-import io.semantic.openscore.core.api.ranking.Ranking;
-import io.semantic.openscore.core.model.Pais;
-import io.semantic.openscore.core.model.Usuario;
-import io.semantic.openscore.core.repository.PaisRepository;
-import io.semantic.openscore.core.repository.UsuarioRepository;
-import io.semantic.openscore.core.services.api.RankingService;
+import static io.semantic.openscore.core.services.RestUtil.ok;
+import static java.util.stream.Collectors.toList;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.text.MessageFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static io.semantic.openscore.core.services.RestUtil.ok;
-import static java.util.stream.Collectors.toList;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
 
-@RequestScoped
+import io.semantic.openscore.core.api.ApiResponse;
+import io.semantic.openscore.core.api.ranking.Ranking;
+import io.semantic.openscore.core.model.Usuario;
+import io.semantic.openscore.core.repository.PaisRepository;
+import io.semantic.openscore.core.repository.UsuarioRepository;
+import io.semantic.openscore.core.services.api.RankingService;
+
+@ApplicationScoped
 public class RankingServiceImpl implements RankingService {
 
     private UsuarioRepository usuarioRepository;

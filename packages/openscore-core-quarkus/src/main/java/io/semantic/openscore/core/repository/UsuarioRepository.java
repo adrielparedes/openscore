@@ -1,14 +1,15 @@
 package io.semantic.openscore.core.repository;
 
-import io.semantic.openscore.core.model.Usuario;
-
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
-@RequestScoped
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+
+import io.semantic.openscore.core.model.Usuario;
+
+@ApplicationScoped
 public class UsuarioRepository extends Repository<Usuario> {
 
     public static final String FIND_BY_EMAIL = "from Usuario s where s.email=:email";
@@ -40,7 +41,8 @@ public class UsuarioRepository extends Repository<Usuario> {
     }
 
     public List<Usuario> findByCountry(String pais) {
-        List<Usuario> found = this.createQuery(FIND_BY_COUNTRY).setParameter("pais", pais.toUpperCase()).getResultList();
+        List<Usuario> found = this.createQuery(FIND_BY_COUNTRY).setParameter("pais", pais.toUpperCase())
+                .getResultList();
         return found;
     }
 

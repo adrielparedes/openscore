@@ -1,19 +1,21 @@
 package io.semantic.openscore.core.repository;
 
-import io.semantic.openscore.core.model.Storable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.stream.Collectors.joining;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static java.util.stream.Collectors.joining;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.semantic.openscore.core.model.Storable;
 
 public abstract class Repository<T extends Storable> {
 
@@ -29,11 +31,12 @@ public abstract class Repository<T extends Storable> {
     }
 
     public Repository(Class<T> clazz,
-                      EntityManager entityManager) {
+            EntityManager entityManager) {
         this(clazz);
         this.entityManager = entityManager;
     }
 
+    @Transactional
     public long save(T storable) {
         if (storable.getId() != 0) {
             this.entityManager.merge(storable);
@@ -52,7 +55,8 @@ public abstract class Repository<T extends Storable> {
 
         List<T> found = this.createQuery(MessageFormat.format("from {0} s where s.id=:id and s.deleted=false",
                 this.persistentClass.getSimpleName())).setParameter("id",
-                id).getResultList();
+                        id)
+                .getResultList();
 
         if (!found.isEmpty()) {
             return Optional.of(found.get(0));
@@ -65,7 +69,8 @@ public abstract class Repository<T extends Storable> {
 
         List<T> found = this.createQuery(MessageFormat.format("from {0} s where s.id=:id",
                 this.persistentClass.getSimpleName())).setParameter("id",
-                id).getResultList();
+                        id)
+                .getResultList();
 
         if (!found.isEmpty()) {
             return Optional.of(found.get(0));
@@ -75,7 +80,7 @@ public abstract class Repository<T extends Storable> {
     }
 
     public List<T> findByQuery(TypedQuery<T> query,
-                               Page page) {
+            Page page) {
 
         return query.setFirstResult(page.getPage() * page.getPageSize())
                 .setMaxResults(page.getPageSize())
@@ -87,11 +92,13 @@ public abstract class Repository<T extends Storable> {
         return query.getResultList();
     }
 
+    @Transactional
     public void hardDeleteById(long id) {
         Optional<T> storable = this.findById(id);
         storable.ifPresent(entity -> entityManager.remove(entity));
     }
 
+    @Transactional
     public void hardDeleteByQuery(TypedQuery<T> query) {
         List<T> found = this.findByQuery(query,
                 new Page(0,
@@ -109,6 +116,7 @@ public abstract class Repository<T extends Storable> {
         });
     }
 
+    @Transactional
     public void deleteById(long id) {
         Optional<T> found = this.findById(id);
         found.ifPresent(elem -> {
@@ -143,7 +151,6 @@ public abstract class Repository<T extends Storable> {
 
     private String buildQuery(Map<String, Object> parameters, Map<String, Sort> sort) {
 
-
         String queryString = "from {0} ";
 
         if (!parameters.isEmpty()) {
@@ -153,7 +160,6 @@ public abstract class Repository<T extends Storable> {
                     .map(entry -> entry.getKey() + " = :" + entry.getKey().replace(".", "_"))
                     .collect(joining(" AND "));
         }
-
 
         String formatted = MessageFormat.format(queryString,
                 this.persistentClass.getSimpleName());

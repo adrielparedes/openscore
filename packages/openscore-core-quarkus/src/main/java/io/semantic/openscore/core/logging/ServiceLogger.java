@@ -2,9 +2,9 @@ package io.semantic.openscore.core.logging;
 
 import java.text.MessageFormat;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 
-@RequestScoped
+@ApplicationScoped
 public class ServiceLogger {
 
     public String emailInvalido(String email) {

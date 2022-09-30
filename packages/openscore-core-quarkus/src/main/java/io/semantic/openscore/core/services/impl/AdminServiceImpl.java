@@ -1,5 +1,10 @@
 package io.semantic.openscore.core.services.impl;
 
+import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.admin.UsuarioCompletoDTO;
 import io.semantic.openscore.core.mapping.UsuarioMapper;
@@ -10,11 +15,7 @@ import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.services.api.AdminService;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import java.util.List;
-
-@RequestScoped
+@ApplicationScoped
 public class AdminServiceImpl implements AdminService {
 
     private UsuarioMapper mapper;

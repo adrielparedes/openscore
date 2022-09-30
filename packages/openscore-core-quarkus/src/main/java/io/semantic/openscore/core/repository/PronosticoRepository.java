@@ -1,13 +1,13 @@
 package io.semantic.openscore.core.repository;
 
-import io.semantic.openscore.core.model.Pronostico;
-
 import java.util.List;
 import java.util.Optional;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 
-@RequestScoped
+import io.semantic.openscore.core.model.Pronostico;
+
+@ApplicationScoped
 public class PronosticoRepository extends Repository<Pronostico> {
 
     private static final String FIND_BY_ID_AND_USER = "select e from Pronostico e where " +

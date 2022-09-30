@@ -1,13 +1,14 @@
 package io.semantic.openscore.core.repository;
 
-import io.semantic.openscore.core.model.Grupo;
-
-import javax.enterprise.context.RequestScoped;
-import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
-@RequestScoped
+import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.TypedQuery;
+
+import io.semantic.openscore.core.model.Grupo;
+
+@ApplicationScoped
 public class GrupoRepository extends Repository<Grupo> {
 
     private static final String FIND_ENTITY_BY_CODIGO_QUERY = "select p from Grupo p where p.codigo = :codigo";

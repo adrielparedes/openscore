@@ -3,7 +3,9 @@ package io.semantic.openscore.core.security;
 import java.util.Date;
 import java.util.Set;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
@@ -14,11 +16,11 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+
 import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.model.Usuario;
-import org.apache.commons.lang3.RandomStringUtils;
 
-@RequestScoped
+@ApplicationScoped
 public class TokenGenerator {
 
     private static final String OPENSCORE_JWT_SECRET = "OPENSCORE_JWT_SECRET";
@@ -49,24 +51,24 @@ public class TokenGenerator {
                 .issuer(ISSUER)
                 .expirationTime(EXPIRACION_TOKEN)
                 .claim(EMAIL,
-                       usuario.getEmail())
+                        usuario.getEmail())
                 .claim(NOMBRE,
-                       usuario.getNombre())
+                        usuario.getNombre())
                 .claim(APELLIDO,
-                       usuario.getApellido())
+                        usuario.getApellido())
                 .claim(ROLES,
-                       usuario.getRoles())
+                        usuario.getRoles())
                 .build();
 
         SignedJWT signedJWT = new SignedJWT(new JWSHeader(ALGORITMO),
-                                            claimsSet);
+                claimsSet);
         sign(signedJWT);
         return signedJWT.serialize();
     }
 
     public String generarPassword(String password) {
         return Hashing.sha256().hashString(password,
-                                           Charsets.UTF_8).toString();
+                Charsets.UTF_8).toString();
     }
 
     public String getTokenFromAuthHeader(String authHeader) {
@@ -96,7 +98,7 @@ public class TokenGenerator {
             return (String) signedJWT.getJWTClaimsSet().getClaim(EMAIL);
         } catch (Exception e) {
             throw new RuntimeException("Error al firmar el token",
-                                       e);
+                    e);
         }
     }
 
@@ -106,7 +108,7 @@ public class TokenGenerator {
             return (Set<Rol>) signedJWT.getJWTClaimsSet().getClaim(ROLES);
         } catch (Exception e) {
             throw new RuntimeException("Error al firmar el token",
-                                       e);
+                    e);
         }
     }
 
@@ -117,7 +119,7 @@ public class TokenGenerator {
             signedJWT.sign(signer);
         } catch (Exception e) {
             throw new RuntimeException("Error al firmar el token",
-                                       e);
+                    e);
         }
     }
 
@@ -130,7 +132,7 @@ public class TokenGenerator {
         boolean useLetters = true;
         boolean useNumbers = false;
         return RandomStringUtils.random(length,
-                                        useLetters,
-                                        useNumbers);
+                useLetters,
+                useNumbers);
     }
 }

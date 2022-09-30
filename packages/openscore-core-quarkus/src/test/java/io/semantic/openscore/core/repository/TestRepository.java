@@ -1,14 +1,14 @@
 package io.semantic.openscore.core.repository;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 
-@RequestScoped
+@ApplicationScoped
 public class TestRepository extends Repository<TestObject> {
 
     public TestRepository(EntityManager entityManager) {
         super(TestObject.class,
-              entityManager);
+                entityManager);
     }
 
     @Override

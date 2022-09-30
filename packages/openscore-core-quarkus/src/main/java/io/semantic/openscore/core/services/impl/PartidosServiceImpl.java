@@ -1,11 +1,23 @@
 package io.semantic.openscore.core.services.impl;
 
+import static io.semantic.openscore.core.services.RestUtil.ok;
+
+import java.text.MessageFormat;
+import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.partidos.CrearOUpdatePartidoDTO;
 import io.semantic.openscore.core.api.partidos.PartidoDTO;
 import io.semantic.openscore.core.api.partidos.ResultadoDTO;
 import io.semantic.openscore.core.mapping.PartidoMapper;
-import io.semantic.openscore.core.model.*;
+import io.semantic.openscore.core.model.Equipo;
+import io.semantic.openscore.core.model.Fase;
+import io.semantic.openscore.core.model.Grupo;
+import io.semantic.openscore.core.model.Partido;
+import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.repository.EquiposRepository;
 import io.semantic.openscore.core.repository.FaseRepository;
 import io.semantic.openscore.core.repository.GrupoRepository;
@@ -13,14 +25,7 @@ import io.semantic.openscore.core.repository.PartidoRepository;
 import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.services.api.PartidosService;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import java.text.MessageFormat;
-import java.util.List;
-
-import static io.semantic.openscore.core.services.RestUtil.ok;
-
-@RequestScoped
+@ApplicationScoped
 public class PartidosServiceImpl implements PartidosService {
 
 

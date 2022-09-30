@@ -1,19 +1,22 @@
 package io.semantic.openscore.core.repository.startup.steps;
 
+import java.text.MessageFormat;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import io.semantic.openscore.core.model.Equipo;
 import io.semantic.openscore.core.repository.EquiposRepository;
 import io.semantic.openscore.core.repository.startup.StartupStep;
 
-import javax.inject.Inject;
-import java.text.MessageFormat;
-
+@ApplicationScoped
 public class CrearEquipos implements StartupStep {
-
 
     private EquiposRepository equiposRepository;
 
-    //    private String baseUrl = "https://fsprdcdnpublic.azureedge.net/global-pictures/flags-fwc2018-3/";
-//    private String baseUrl = "https://www.countryflags.io/{0}/flat/64.png";
+    // private String baseUrl =
+    // "https://fsprdcdnpublic.azureedge.net/global-pictures/flags-fwc2018-3/";
+    // private String baseUrl = "https://www.countryflags.io/{0}/flat/64.png";
     private String baseUrl = "https://restcountries.eu/data/{0}.svg";
 
     public CrearEquipos() {

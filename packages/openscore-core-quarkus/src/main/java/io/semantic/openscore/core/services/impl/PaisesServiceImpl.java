@@ -1,5 +1,10 @@
 package io.semantic.openscore.core.services.impl;
 
+import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.paises.PaisDTO;
 import io.semantic.openscore.core.mapping.PaisMapper;
@@ -8,11 +13,7 @@ import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.repository.PaisRepository;
 import io.semantic.openscore.core.services.api.PaisesService;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import java.util.List;
-
-@RequestScoped
+@ApplicationScoped
 public class PaisesServiceImpl implements PaisesService {
 
 

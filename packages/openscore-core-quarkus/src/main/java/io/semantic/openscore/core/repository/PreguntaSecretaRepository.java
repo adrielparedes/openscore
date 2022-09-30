@@ -1,11 +1,11 @@
 package io.semantic.openscore.core.repository;
 
-import io.semantic.openscore.core.model.PreguntaSecreta;
-
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 
-@RequestScoped
+import io.semantic.openscore.core.model.PreguntaSecreta;
+
+@ApplicationScoped
 public class PreguntaSecretaRepository extends Repository<PreguntaSecreta> {
 
 

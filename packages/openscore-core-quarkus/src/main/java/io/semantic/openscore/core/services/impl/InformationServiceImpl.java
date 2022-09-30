@@ -1,25 +1,23 @@
 package io.semantic.openscore.core.services.impl;
 
-import io.semantic.openscore.core.api.ApiResponse;
-import io.semantic.openscore.core.api.information.Information;
-import io.semantic.openscore.core.exceptions.NoSePuedeLeerInformacionException;
-import io.semantic.openscore.core.model.Rol;
-import io.semantic.openscore.core.security.Secure;
-import io.semantic.openscore.core.services.api.InformationService;
+import static io.semantic.openscore.core.services.RestUtil.ok;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-import static io.semantic.openscore.core.services.RestUtil.ok;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
-@RequestScoped
+import io.semantic.openscore.core.api.ApiResponse;
+import io.semantic.openscore.core.api.information.Information;
+import io.semantic.openscore.core.exceptions.NoSePuedeLeerInformacionException;
+import io.semantic.openscore.core.services.api.InformationService;
+
+@ApplicationScoped
 public class InformationServiceImpl implements InformationService {
 
     @Inject

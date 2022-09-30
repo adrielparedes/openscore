@@ -1,8 +1,33 @@
 package io.semantic.openscore.core.services.impl;
 
+import static io.semantic.openscore.core.services.RestUtil.ok;
+import static java.util.stream.Collectors.toList;
+
+import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.StreamSupport;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
+import javax.ws.rs.Path;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.TokenDTO;
-import io.semantic.openscore.core.api.usuarios.*;
+import io.semantic.openscore.core.api.usuarios.CrearUsuarioDTO;
+import io.semantic.openscore.core.api.usuarios.LoginUsuarioDTO;
+import io.semantic.openscore.core.api.usuarios.RecoverPassword;
+import io.semantic.openscore.core.api.usuarios.UpdatePassword;
+import io.semantic.openscore.core.api.usuarios.UpdateUsuarioDTO;
+import io.semantic.openscore.core.api.usuarios.UsuarioDTO;
 import io.semantic.openscore.core.cache.TokenCache;
 import io.semantic.openscore.core.email.MailFactory;
 import io.semantic.openscore.core.email.MailServer;
@@ -21,22 +46,9 @@ import io.semantic.openscore.core.services.UserInfo;
 import io.semantic.openscore.core.services.api.UsuariosService;
 import io.semantic.openscore.core.validation.ApplicationValidator;
 import io.semantic.openscore.core.validation.validators.EmailValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-import javax.ws.rs.Path;
-import java.text.MessageFormat;
-import java.util.*;
-import java.util.stream.StreamSupport;
-
-import static io.semantic.openscore.core.services.RestUtil.ok;
-import static java.util.stream.Collectors.toList;
 
 @Path("/usuarios")
-@RequestScoped
+@ApplicationScoped
 public class UsuariosServiceImpl implements UsuariosService {
 
     private UserInfo userInfo;

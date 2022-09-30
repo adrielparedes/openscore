@@ -1,15 +1,17 @@
 package io.semantic.openscore.core.repository.startup.steps;
 
-import io.semantic.openscore.core.model.Pais;
-import io.semantic.openscore.core.repository.PaisRepository;
-import io.semantic.openscore.core.repository.startup.StartupStep;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
+import io.semantic.openscore.core.model.Pais;
+import io.semantic.openscore.core.repository.PaisRepository;
+import io.semantic.openscore.core.repository.startup.StartupStep;
 
+@ApplicationScoped
 public class CrearPaises implements StartupStep {
-
 
     Logger logger = LoggerFactory.getLogger(CrearPaises.class);
     private PaisRepository paisRepository;
@@ -55,6 +57,5 @@ public class CrearPaises implements StartupStep {
         pais.setNombre(nombre);
         return pais;
     }
-
 
 }

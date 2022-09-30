@@ -1,12 +1,12 @@
 package io.semantic.openscore.core.repository;
 
-import io.semantic.openscore.core.model.Pais;
-
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-@RequestScoped
+import io.semantic.openscore.core.model.Pais;
+
+@ApplicationScoped
 public class PaisRepository extends Repository<Pais> {
 
     private static final String FIND_PAIS_BY_CODIGO_QUERY = "select p from Pais p where p.codigo = :codigo";

@@ -1,17 +1,19 @@
 package io.semantic.openscore.core.repository.startup.steps;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.semantic.openscore.core.model.Storable;
-import io.semantic.openscore.core.repository.Repository;
-import io.semantic.openscore.core.repository.startup.StartupStep;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
+import io.semantic.openscore.core.model.Storable;
+import io.semantic.openscore.core.repository.Repository;
+import io.semantic.openscore.core.repository.startup.StartupStep;
 
 public abstract class FileBasedStartupStep<D, T extends Storable> implements StartupStep {
 
@@ -25,7 +27,7 @@ public abstract class FileBasedStartupStep<D, T extends Storable> implements Sta
     public FileBasedStartupStep(Class<T> type, Repository<T> existsService, TypeReference<List<D>> typeReference) {
         this.type = type;
         this.typeReference = typeReference;
-        this.objectMapper = new ObjectMapper(new JsonFactory());
+        this.objectMapper = new ObjectMapper(new YAMLFactory());
         this.existService = existsService;
     }
 
@@ -61,7 +63,5 @@ public abstract class FileBasedStartupStep<D, T extends Storable> implements Sta
     }
 
     protected abstract T map(D dataObject);
-
-
 
 }

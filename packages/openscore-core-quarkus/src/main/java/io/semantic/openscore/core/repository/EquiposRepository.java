@@ -1,13 +1,14 @@
 package io.semantic.openscore.core.repository;
 
-import io.semantic.openscore.core.model.Equipo;
-
-import javax.enterprise.context.RequestScoped;
-import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
-@RequestScoped
+import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.TypedQuery;
+
+import io.semantic.openscore.core.model.Equipo;
+
+@ApplicationScoped
 public class EquiposRepository extends Repository<Equipo> {
 
     public static final String FIND_BY_CODIGO = "select p from Equipo p where p.codigo = :codigo";
