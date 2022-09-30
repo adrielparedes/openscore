@@ -1,0 +1,25 @@
+.home {
+  &__content {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 30rem;
+
+    @include phonetablet {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__leaderboard {
+    & .card-body {
+      overflow: scroll;
+    }
+    & .card-footer {
+      & a {
+        color: white;
+        text-decoration: none;
+      }
+      background-color: $primary;
+    }
+  }
+}

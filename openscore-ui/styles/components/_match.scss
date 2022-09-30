@@ -1,0 +1,96 @@
+.match {
+  &__results {
+    display: grid;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &--blocked,
+  &--finished {
+    pointer-events: none;
+    background-color: $gray-200;
+  }
+
+  &--blocked &__flag,
+  &--finished &__flag {
+    filter: grayscale(100%);
+  }
+
+  &__score {
+    font-family: $display-font-family;
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+
+  &__flag {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > img {
+      scale: 0.25;
+    }
+  }
+
+  &__team {
+    font-family: $display-font-family;
+    margin-top: 0.5rem;
+  }
+
+  &__status {
+    font-family: $display-font-family;
+    margin-top: 0.5rem;
+  }
+
+  &__selection {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  &__result--not_finished {
+  }
+
+  &__result--hit {
+    border-color: $success !important;
+    border-style: solid;
+    border-width: 2px;
+  }
+
+  &__result--not_hit {
+    border-color: $danger !important;
+    border-style: solid;
+    border-width: 2px;
+  }
+
+  .nav-link {
+    cursor: pointer;
+    &:hover {
+      background-color: $secondary;
+    }
+    transition: all 0.5s;
+
+    & span {
+      margin-right: 0.5rem;
+      transition: all 0.5s;
+    }
+  }
+
+  .card-footer,
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

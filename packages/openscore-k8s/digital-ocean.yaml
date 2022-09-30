@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: digitalocean-dns
-  namespace: openscore
-data:
-  # insert your DO access token here
-  access-token: "BASE64 TOKEN"

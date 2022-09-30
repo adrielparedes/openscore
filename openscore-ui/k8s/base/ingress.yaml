@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openscore-ui
+  namespace: openscore
+  annotations:
+    kubernetes.io/ingress.class:  nginx
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: rhopenscore.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: openscore-ui
+                port:
+                  number: 3000
+    - host: www.rhopenscore.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: openscore-ui
+                port:
+                  number: 3000

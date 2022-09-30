@@ -1,0 +1,62 @@
+$primary: black;
+
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+$secondary: $gray-600 !default;
+$success: #0acf97;
+$info: #39afd1;
+$warning: #ffbc00;
+$danger: #fa5c7c;
+$light: $gray-100 !default;
+$dark: black;
+
+$font-family-base: "Open Sans";
+$display-font-family: "Quicksand";
+$headings-font-family: "Quicksand";
+$card-border-width: none;
+
+$dropdown-dark-bg: $dark;
+$dropdown-border-width: none;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+);
+
+@import "bootstrap";
+
+@import "abstract/mixins";
+
+@import "components/forecast";
+@import "components/match";
+@import "components/leaderboard";
+@import "components/loading_screen";
+@import "components/empty_screen";
+@import "components/login";
+@import "components/countdown";
+@import "components/table";
+@import "components/reglas";
+@import "components/standings";
+
+@import "pages/home";
+@import "pages/setresult";
+@import "pages/user";
+
+body {
+  background-color: $gray-200;
+}
+
+h1 {
+  margin-bottom: 2rem;
+}
+
+.page {
+  margin-bottom: 3rem;
+}

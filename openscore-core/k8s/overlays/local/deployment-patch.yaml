@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openscore-core
+  namespace: openscore
+spec:
+  template:
+    spec:
+      containers:
+      - name: core
+        image: localhost:5000/openscore/openscore-core:latest
+        env:
+        - name: QUARKUS_DATASOURCE_JDBC_URL
+          value: jdbc:postgresql://openscore-db:5432/postgres
+        - name: QUARKUS_DATASOURCE_PASSWORD
+          value: 0p3nsc0r3

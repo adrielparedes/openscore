@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openscore-core
+  namespace: openscore
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+  - hosts:
+    - rhopenscore.com
+    - www.rhopenscore.com
+    secretName: tls-core

@@ -1,0 +1,60 @@
+.login {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: white;
+
+  @include phone {
+    grid-template-columns: 1fr 0fr;
+  }
+
+  @include tablet {
+    grid-template-columns: 1fr 0fr;
+  }
+
+  &__error {
+    color: $danger;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+    & form {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__header {
+    position: relative;
+    & img {
+      width: 15rem;
+      padding-left: 1rem;
+      padding-top: 0.5rem;
+    }
+  }
+
+  &__left {
+    position: relative;
+    display: grid;
+    grid-template-rows: 4rem 0.8fr;
+  }
+
+  &__right {
+    position: relative;
+
+    & img {
+      filter: saturate(1.6);
+    }
+  }
+
+  & > * {
+    width: 100%;
+    height: 100%;
+  }
+}

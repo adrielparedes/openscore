@@ -33,3 +33,4 @@ dist/
 .classpath
 .project
 .settings
+.vscode
