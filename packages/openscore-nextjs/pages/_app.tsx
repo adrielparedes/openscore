@@ -1,7 +1,8 @@
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { ReactElement, ReactNode, useEffect } from "react";
-import { RecoilRoot, useSetRecoilState } from "recoil";
+import { RecoilRoot, useRecoilState } from "recoil";
+import rest from "../services/Rest";
 import { tokenState, TOKEN_KEY } from "../states/SecurityState";
 import "../styles/main.scss";
 
@@ -14,11 +15,14 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const SecurityContext = () => {
-  const setToken = useSetRecoilState(tokenState);
+  const [token, setToken] = useRecoilState(tokenState);
   useEffect(() => {
     const token = localStorage.getItem(TOKEN_KEY);
     setToken(token || "");
-  });
+  }, []);
+  useEffect(() => {
+    rest.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }, [token]);
   return <></>;
 };
 

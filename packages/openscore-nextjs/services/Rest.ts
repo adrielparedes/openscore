@@ -1,4 +1,5 @@
 import axios from "axios";
+import { TOKEN_KEY } from "../states/SecurityState";
 
 // Set config defaults when creating the instance
 const rest = axios.create({
@@ -6,8 +7,10 @@ const rest = axios.create({
 });
 
 rest.defaults.headers.common["Content-Type"] = "application/json";
+// rest.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+//   TOKEN_KEY
+// )}`;
 
 // Alter defaults after instance has been created
-// instance.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 
 export default rest;

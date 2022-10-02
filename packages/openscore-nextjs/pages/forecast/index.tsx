@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { layout } from "../../components/layout/MainLayout";
 import LoadingScreen from "../../components/LoadingScreen";
 import MatchCard from "../../components/MatchCard";
 import { PronosticoService } from "../../services/PronosticoService";
+import { forecastListState } from "../../states/ForecastState";
 import { NextPageWithLayout } from "../_app";
 
 const filters = [
@@ -22,13 +24,14 @@ const getLink = (link: string) => `/forecast?filter=${link}`;
 
 const Forecasts: NextPageWithLayout = () => {
   const router = useRouter();
+  const [forecast, setForecast] = useRecoilState(forecastListState);
   const { filter } = router.query;
   const path = router.asPath;
 
   useEffect(() => {
     const pronostico = new PronosticoService();
-    pronostico.getAll(1, 1).then((res) => console.log(res));
-  });
+    pronostico.getAll(1, 1).then((res) => setForecast(res.data.data));
+  }, []);
 
   return (
     <div className="forecast">
@@ -55,11 +58,9 @@ const Forecasts: NextPageWithLayout = () => {
         </div>
         <LoadingScreen busy={false}>
           <div className="forecast__matches">
-            <MatchCard></MatchCard>
-            <MatchCard></MatchCard>
-            <MatchCard></MatchCard>
-            <MatchCard></MatchCard>
-            <MatchCard></MatchCard>
+            {forecast.map((f) => (
+              <MatchCard key={f.id} partido={f}></MatchCard>
+            ))}
           </div>
         </LoadingScreen>
       </div>
