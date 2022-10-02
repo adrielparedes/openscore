@@ -20,11 +20,11 @@ public interface PronosticosService {
     @GET
     @Secure
     ApiResponse<List<PartidoPronosticoDTO>> getAll(@QueryParam("page") int page,
-                                                   @QueryParam("pageSize") int pageSize,
-                                                   @QueryParam("grupo") String grupo,
-                                                   @QueryParam("fase") String fase,
-                                                   @QueryParam("dia") long dia,
-                                                   @QueryParam("fecha") int fecha);
+            @QueryParam("size") int pageSize,
+            @QueryParam("grupo") String grupo,
+            @QueryParam("fase") String fase,
+            @QueryParam("dia") long dia,
+            @QueryParam("fecha") int fecha);
 
     @Path("/{id}")
     @GET
@@ -45,7 +45,7 @@ public interface PronosticosService {
     @POST
     @Secure
     ApiResponse<PronosticoDTO> update(@PathParam("id") long id,
-                                      CrearPronosticoDTO entity);
+            CrearPronosticoDTO entity);
 
     @Path("/{id}/local")
     @POST

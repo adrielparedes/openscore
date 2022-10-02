@@ -1,10 +1,12 @@
 import { Formik } from "formik";
 import type { NextPage } from "next";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import messi from "../images/messi.webp";
-import logo from "../images/logo-black.png";
+import { UsuarioService } from "../services/UsuarioService";
 
 const Login: NextPage = () => {
+  const router = useRouter();
   return (
     <div className="login">
       <div className="login__left">
@@ -27,10 +29,18 @@ const Login: NextPage = () => {
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
+              setSubmitting(true);
+
+              new UsuarioService()
+                .login(values)
+                .then((res) => {
+                  router.push("/");
+                  setSubmitting(false);
+                })
+                .catch((err) => {
+                  alert(err);
+                  setSubmitting(false);
+                });
             }}
           >
             {({

@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { layout } from "../../components/layout/MainLayout";
 import LoadingScreen from "../../components/LoadingScreen";
 import MatchCard from "../../components/MatchCard";
+import { PronosticoService } from "../../services/PronosticoService";
 import { NextPageWithLayout } from "../_app";
 
 const filters = [
@@ -22,6 +24,11 @@ const Forecasts: NextPageWithLayout = () => {
   const router = useRouter();
   const { filter } = router.query;
   const path = router.asPath;
+
+  useEffect(() => {
+    const pronostico = new PronosticoService();
+    pronostico.getAll(1, 1).then((res) => console.log(res));
+  });
 
   return (
     <div className="forecast">

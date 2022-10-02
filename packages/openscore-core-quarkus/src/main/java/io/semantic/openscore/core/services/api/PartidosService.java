@@ -1,13 +1,21 @@
 package io.semantic.openscore.core.services.api;
 
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.partidos.CrearOUpdatePartidoDTO;
 import io.semantic.openscore.core.api.partidos.PartidoDTO;
 import io.semantic.openscore.core.api.partidos.ResultadoDTO;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.util.List;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -17,11 +25,11 @@ public interface PartidosService {
     @GET
     @Path("/")
     ApiResponse<List<PartidoDTO>> getAll(@QueryParam("page") int page,
-                                         @QueryParam("pageSize") int pageSize,
-                                         @QueryParam("grupo") String grupo,
-                                         @QueryParam("fase") String fase,
-                                         @QueryParam("fecha") long fecha,
-                                         @QueryParam("equipo") String equipo);
+            @QueryParam("size") int pageSize,
+            @QueryParam("grupo") String grupo,
+            @QueryParam("fase") String fase,
+            @QueryParam("fecha") long fecha,
+            @QueryParam("equipo") String equipo);
 
     @GET
     @Path("/{id}")
@@ -47,4 +55,3 @@ public interface PartidosService {
     @Path("{id}/resultado")
     ApiResponse<PartidoDTO> setResultado(@PathParam("id") long id, ResultadoDTO resultado);
 }
-
