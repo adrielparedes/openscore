@@ -2,11 +2,24 @@ import { Formik } from "formik";
 import type { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useRecoilState, useRecoilValue } from "recoil";
 import messi from "../images/messi.webp";
 import { UsuarioService } from "../services/UsuarioService";
+import {
+  isLoggerInState,
+  tokenState,
+  TOKEN_KEY,
+} from "../states/SecurityState";
 
 const Login: NextPage = () => {
   const router = useRouter();
+  const [token, setToken] = useRecoilState(tokenState);
+  const isLoggedIn = useRecoilValue(isLoggerInState);
+
+  if (isLoggedIn) {
+    router.push("/");
+  }
+
   return (
     <div className="login">
       <div className="login__left">
@@ -34,6 +47,9 @@ const Login: NextPage = () => {
               new UsuarioService()
                 .login(values)
                 .then((res) => {
+                  const token = res.data.data.token;
+                  setToken(token);
+                  localStorage.setItem(TOKEN_KEY, token);
                   router.push("/");
                   setSubmitting(false);
                 })
