@@ -22,8 +22,9 @@ const filters = [
   },
 ];
 
+const pronostico = new PronosticoService();
+
 const refresh = (setForecast: SetterOrUpdater<Partido[]>) => {
-  const pronostico = new PronosticoService();
   pronostico.getAll(1, 1).then((res) => setForecast(res.data.data));
 };
 

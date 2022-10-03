@@ -1,4 +1,11 @@
+import { AxiosError } from "axios";
+import { PropsWithChildren } from "react";
+import { toast } from "react-toastify";
+import { ApiResponse } from "../model/ApiResponse";
 import { Partido } from "../model/Partido";
+import { PronosticoService } from "../services/PronosticoService";
+
+const pronostico = new PronosticoService();
 
 const TeamFlag = ({ src }: { src: string }) => (
   <div className="match__flag">
@@ -9,6 +16,32 @@ const TeamFlag = ({ src }: { src: string }) => (
 interface MatchCardProps {
   partido: Partido;
 }
+
+const ActiveNavLink = ({
+  id,
+  active,
+  children,
+}: { active: boolean; id: number } & PropsWithChildren) => (
+  <a
+    className={`nav-link ${active ? "active" : ""}`}
+    aria-current="page"
+    onClick={() => {
+      console.log(id);
+      pronostico
+        .local(id)
+        .then((res) => {
+          console.log(res);
+          toast.success(res.data.description);
+        })
+        .catch((err: AxiosError<ApiResponse<string>>) => {
+          console.log(err);
+          toast.error(err.response?.data.description || "");
+        });
+    }}
+  >
+    {children}
+  </a>
+);
 
 const MatchCard = ({ partido }: MatchCardProps) => (
   <div>
@@ -31,23 +64,28 @@ const MatchCard = ({ partido }: MatchCardProps) => (
         </div>
         <ul className="match__selection nav nav-pills">
           <li className="nav-item">
-            <a
-              className="nav-link active"
-              aria-current="page"
-              onClick={() => {}}
+            <ActiveNavLink
+              active={partido.pronostico?.local || false}
+              id={partido.id}
             >
               Home
-            </a>
+            </ActiveNavLink>
           </li>
           <li className="nav-item">
-            <a className="nav-link" aria-current="page" onClick={() => {}}>
+            <ActiveNavLink
+              active={partido.pronostico?.empate || false}
+              id={partido.id}
+            >
               Draw
-            </a>
+            </ActiveNavLink>
           </li>
           <li className="nav-item">
-            <a className="nav-link" aria-current="page" onClick={() => {}}>
+            <ActiveNavLink
+              active={partido.pronostico?.visitante || false}
+              id={partido.id}
+            >
               Away
-            </a>
+            </ActiveNavLink>
           </li>
         </ul>
       </div>

@@ -1,6 +1,8 @@
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { ReactElement, ReactNode, useEffect } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { RecoilRoot, useRecoilState } from "recoil";
 import rest from "../services/Rest";
 import { tokenState, TOKEN_KEY } from "../states/SecurityState";
@@ -37,6 +39,18 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <RecoilRoot>
       <SecurityContext></SecurityContext>
       <Component {...pageProps} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </RecoilRoot>
   );
 }
