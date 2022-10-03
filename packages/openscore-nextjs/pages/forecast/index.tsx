@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { SetterOrUpdater, useRecoilState } from "recoil";
 import { layout } from "../../components/layout/MainLayout";
 import LoadingScreen from "../../components/LoadingScreen";
 import MatchCard from "../../components/MatchCard";
+import { Partido } from "../../model/Partido";
 import { PronosticoService } from "../../services/PronosticoService";
 import { forecastListState } from "../../states/ForecastState";
 import { NextPageWithLayout } from "../_app";
@@ -20,6 +21,11 @@ const filters = [
   },
 ];
 
+const refresh = (setForecast: SetterOrUpdater<Partido[]>) => {
+  const pronostico = new PronosticoService();
+  pronostico.getAll(1, 1).then((res) => setForecast(res.data.data));
+};
+
 const getLink = (link: string) => `/forecast?filter=${link}`;
 
 const Forecasts: NextPageWithLayout = () => {
@@ -29,9 +35,8 @@ const Forecasts: NextPageWithLayout = () => {
   const path = router.asPath;
 
   useEffect(() => {
-    const pronostico = new PronosticoService();
-    pronostico.getAll(1, 1).then((res) => setForecast(res.data.data));
-  }, []);
+    refresh(setForecast);
+  }, [filter, setForecast]);
 
   return (
     <div className="forecast">

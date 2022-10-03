@@ -31,4 +31,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }
+
+  .nav-link {
+    cursor: pointer;
+    &:hover {
+      background-color: $info;
+    }
+  }
 }

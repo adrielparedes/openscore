@@ -15,7 +15,9 @@ const MatchCard = ({ partido }: MatchCardProps) => (
     <div className="match card border-light text-center shadow">
       <div className="card-body">
         <h5 className="card-title">FIFA World Cup - Qatar 2022</h5>
-        <h6 className="card-subtitle muted mb-3">Round Robin 0 of 3</h6>
+        <h6 className="card-subtitle muted mb-3">
+          {partido.fase.nombre} Phase {partido.fecha} of 3
+        </h6>
         <div className="match__results">
           <TeamFlag src={partido.local.codigo}></TeamFlag>
           <div className="match__score">
@@ -24,22 +26,26 @@ const MatchCard = ({ partido }: MatchCardProps) => (
           </div>
           <TeamFlag src={partido.visitante.codigo}></TeamFlag>
           <div className="match__team">{partido.local.nombre}</div>
-          <div className="match__status">36'</div>
+          <div className="match__status">{partido.status}</div>
           <div className="match__team">{partido.visitante.nombre}</div>
         </div>
         <ul className="match__selection nav nav-pills">
           <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="#">
+            <a
+              className="nav-link active"
+              aria-current="page"
+              onClick={() => {}}
+            >
               Home
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="#">
+            <a className="nav-link" aria-current="page" onClick={() => {}}>
               Draw
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="#">
+            <a className="nav-link" aria-current="page" onClick={() => {}}>
               Away
             </a>
           </li>
