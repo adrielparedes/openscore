@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { SetterOrUpdater, useRecoilState } from "recoil";
+import EmptyScreen from "../../components/EmptyScreen";
 import { layout } from "../../components/layout/MainLayout";
 import LoadingScreen from "../../components/LoadingScreen";
 import MatchCard from "../../components/MatchCard";
@@ -62,11 +63,13 @@ const Forecasts: NextPageWithLayout = () => {
           </ul>
         </div>
         <LoadingScreen busy={false}>
-          <div className="forecast__matches">
-            {forecast.map((f) => (
-              <MatchCard key={f.id} partido={f}></MatchCard>
-            ))}
-          </div>
+          <EmptyScreen isEmpty={forecast.length < 1}>
+            <div className="forecast__matches">
+              {forecast.map((f) => (
+                <MatchCard key={f.id} partido={f}></MatchCard>
+              ))}
+            </div>
+          </EmptyScreen>
         </LoadingScreen>
       </div>
     </div>
