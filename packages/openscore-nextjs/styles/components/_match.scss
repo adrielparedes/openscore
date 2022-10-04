@@ -10,6 +10,15 @@
     margin-bottom: 1rem;
   }
 
+  &--blocked {
+    pointer-events: none;
+    background-color: $gray-200;
+  }
+
+  &--blocked &__flag {
+    filter: grayscale(100%);
+  }
+
   &__flag {
     border-radius: 50%;
     overflow: hidden;
@@ -35,7 +44,13 @@
   .nav-link {
     cursor: pointer;
     &:hover {
-      background-color: $info;
+      background-color: $secondary;
+    }
+    transition: all 0.5s;
+
+    & span {
+      margin-right: 0.5rem;
+      transition: all 0.5s;
     }
   }
 }

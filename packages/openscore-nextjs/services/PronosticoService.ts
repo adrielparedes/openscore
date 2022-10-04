@@ -12,9 +12,11 @@ export class PronosticoService extends Service<
 > {
   constructor() {
     super("pronosticos");
+    console.log(this.serviceUrl);
   }
 
   local(id: number) {
+    console.log(this.serviceUrl);
     return rest.post<ApiResponse<Pronostico>>(
       `${this.serviceUrl}/${id}/local`,
       {}
@@ -22,6 +24,7 @@ export class PronosticoService extends Service<
   }
 
   empate(id: number) {
+    console.log(this.serviceUrl);
     return rest.post<ApiResponse<Pronostico>>(
       `${this.serviceUrl}/${id}/empate`,
       {}
@@ -29,6 +32,7 @@ export class PronosticoService extends Service<
   }
 
   visitante(id: number) {
+    console.log(this.serviceUrl);
     return rest.post<ApiResponse<Pronostico>>(
       `${this.serviceUrl}/${id}/visitante`,
       {}

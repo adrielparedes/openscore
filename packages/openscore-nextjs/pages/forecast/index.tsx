@@ -67,7 +67,13 @@ const Forecasts: NextPageWithLayout = () => {
           <EmptyScreen isEmpty={forecast.length < 1}>
             <div className="forecast__matches">
               {forecast.map((f) => (
-                <MatchCard key={f.id} partido={f}></MatchCard>
+                <MatchCard
+                  key={f.id}
+                  partido={f}
+                  onUpdate={() => {
+                    refresh(setForecast);
+                  }}
+                ></MatchCard>
               ))}
             </div>
           </EmptyScreen>
