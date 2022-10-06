@@ -8,7 +8,7 @@ export interface Partido {
   id: number;
   local: Equipo;
   visitante: Equipo;
-  dia: Date;
+  dia: number;
   fecha: number;
   lugar: string;
   resultado: Resultado;

@@ -75,54 +75,57 @@ const StatusIndicator = ({ children }: PropsWithChildren) => (
   </div>
 );
 
-const MatchCard = ({ partido, onUpdate }: MatchCardProps) => (
-  <div
-    className={`match card border-light text-center shadow match--${partido.status.toLowerCase()}`}
-  >
-    <div className="card-body">
-      <h5 className="card-title">FIFA World Cup - Qatar 2022</h5>
-      <h6 className="card-subtitle muted mb-3">
-        {partido.fase.nombre} Phase {partido.fecha} of 3 - {partido.dia}
-      </h6>
-      <div className="match__results">
-        <TeamFlag src={partido.local.codigo}></TeamFlag>
-        <div className="match__score">
-          {partido.resultado?.local || "-"} :{" "}
-          {partido.resultado?.visitante || "-"}
+const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
+  return (
+    <div
+      className={`match card border-light text-center shadow match--${partido.status.toLowerCase()}`}
+    >
+      <div className="card-body">
+        <h5 className="card-title">FIFA World Cup - Qatar 2022</h5>
+        <h6 className="card-subtitle muted mb-3">
+          {partido.fase.nombre} Phase {partido.fecha} of 3 -{" "}
+          {new Date(partido.dia).toLocaleString()}
+        </h6>
+        <div className="match__results">
+          <TeamFlag src={partido.local.codigo}></TeamFlag>
+          <div className="match__score">
+            {partido.resultado?.local || "-"} :{" "}
+            {partido.resultado?.visitante || "-"}
+          </div>
+          <TeamFlag src={partido.visitante.codigo}></TeamFlag>
+          <div className="match__team">{partido.local.nombre}</div>
+          <StatusIndicator>{partido.status}</StatusIndicator>
+          <div className="match__team">{partido.visitante.nombre}</div>
         </div>
-        <TeamFlag src={partido.visitante.codigo}></TeamFlag>
-        <div className="match__team">{partido.local.nombre}</div>
-        <StatusIndicator>{partido.status}</StatusIndicator>
-        <div className="match__team">{partido.visitante.nombre}</div>
+        <ul className="match__selection nav nav-pills">
+          <ActiveNavLink
+            active={partido.pronostico?.local || false}
+            id={partido.id}
+            select={(id) => pronosticoService.local(id)}
+            onUpdate={onUpdate}
+          >
+            Home
+          </ActiveNavLink>
+          <ActiveNavLink
+            active={partido.pronostico?.empate || false}
+            id={partido.id}
+            select={(id) => pronosticoService.empate(id)}
+            onUpdate={onUpdate}
+          >
+            Draw
+          </ActiveNavLink>
+          <ActiveNavLink
+            active={partido.pronostico?.visitante || false}
+            id={partido.id}
+            select={(id) => pronosticoService.visitante(id)}
+            onUpdate={onUpdate}
+          >
+            Away
+          </ActiveNavLink>
+        </ul>
       </div>
-      <ul className="match__selection nav nav-pills">
-        <ActiveNavLink
-          active={partido.pronostico?.local || false}
-          id={partido.id}
-          select={(id) => pronosticoService.local(id)}
-          onUpdate={onUpdate}
-        >
-          Home
-        </ActiveNavLink>
-        <ActiveNavLink
-          active={partido.pronostico?.empate || false}
-          id={partido.id}
-          select={(id) => pronosticoService.empate(id)}
-          onUpdate={onUpdate}
-        >
-          Draw
-        </ActiveNavLink>
-        <ActiveNavLink
-          active={partido.pronostico?.visitante || false}
-          id={partido.id}
-          select={(id) => pronosticoService.visitante(id)}
-          onUpdate={onUpdate}
-        >
-          Away
-        </ActiveNavLink>
-      </ul>
     </div>
-  </div>
-);
+  );
+};
 
 export default MatchCard;

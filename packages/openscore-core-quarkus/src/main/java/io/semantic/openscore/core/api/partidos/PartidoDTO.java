@@ -11,7 +11,7 @@ public class PartidoDTO {
     private long id;
     private EquipoDTO local;
     private EquipoDTO visitante;
-    private Date dia;
+    private Long dia;
     private int fecha;
     private GrupoDTO grupo;
     private FaseDTO fase;
@@ -43,11 +43,11 @@ public class PartidoDTO {
         this.visitante = visitante;
     }
 
-    public Date getDia() {
+    public Long getDia() {
         return dia;
     }
 
-    public void setDia(Date dia) {
+    public void setDia(Long dia) {
         this.dia = dia;
     }
 
