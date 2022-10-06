@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SetterOrUpdater, useRecoilState } from "recoil";
 import EmptyScreen from "../../components/EmptyScreen";
 import { layout } from "../../components/layout/MainLayout";
@@ -24,8 +24,21 @@ const filters = [
 
 const pronostico = new PronosticoService();
 
-const refresh = (setForecast: SetterOrUpdater<Partido[]>) => {
-  pronostico.getAll(1, 1).then((res) => setForecast(res.data.data));
+const refresh = (
+  setForecast: SetterOrUpdater<Partido[]>,
+  setBusy: SetterOrUpdater<boolean>
+) => {
+  setBusy(true);
+  pronostico
+    .getAll(1, 1)
+    .then((res) => {
+      setForecast(res.data.data);
+      setBusy(false);
+    })
+    .catch((err) => {
+      setForecast([]);
+      setBusy(false);
+    });
 };
 
 const getLink = (link: string) => `/forecast?filter=${link}`;
@@ -33,11 +46,12 @@ const getLink = (link: string) => `/forecast?filter=${link}`;
 const Forecasts: NextPageWithLayout = () => {
   const router = useRouter();
   const [forecast, setForecast] = useRecoilState(forecastListState);
+  const [busy, setBusy] = useState(false);
   const { filter } = router.query;
   const path = router.asPath;
 
   useEffect(() => {
-    refresh(setForecast);
+    refresh(setForecast, setBusy);
   }, [filter, setForecast]);
 
   return (
@@ -63,7 +77,7 @@ const Forecasts: NextPageWithLayout = () => {
             ))}
           </ul>
         </div>
-        <LoadingScreen busy={false}>
+        <LoadingScreen busy={busy}>
           <EmptyScreen isEmpty={forecast.length < 1}>
             <div className="forecast__matches">
               {forecast.map((f) => (
@@ -71,7 +85,7 @@ const Forecasts: NextPageWithLayout = () => {
                   key={f.id}
                   partido={f}
                   onUpdate={() => {
-                    refresh(setForecast);
+                    refresh(setForecast, setBusy);
                   }}
                 ></MatchCard>
               ))}
