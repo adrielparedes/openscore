@@ -67,7 +67,7 @@ public class CrearPartidos extends FileBasedStartupStep<PartidoData, Partido> {
         partido.setDia(diaBuilder.getMatchDate(partidoData.getDia()));
         partido.setLugar(partidoData.getLugar());
         partido.setGrupo(getGrupo(partidoData.getGrupo()));
-        partido.setFecha(partido.getFecha());
+        partido.setFecha(partidoData.getFecha());
         partido.setFase(getFase(partidoData.getFase()));
         return partido;
 

@@ -111,7 +111,6 @@ public class Partido extends Storable {
     }
 
     public boolean isBloqueado() {
-        System.out.println(this.getDia().toInstant(ZoneOffset.UTC).toEpochMilli());
         return this.getDia().toInstant(ZoneOffset.UTC).toEpochMilli() <= Instant.now().toEpochMilli() + 900000;
     }
 

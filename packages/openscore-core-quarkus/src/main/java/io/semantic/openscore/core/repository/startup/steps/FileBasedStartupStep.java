@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import io.semantic.openscore.core.model.Storable;
 import io.semantic.openscore.core.repository.Repository;
@@ -27,7 +27,7 @@ public abstract class FileBasedStartupStep<D, T extends Storable> implements Sta
     public FileBasedStartupStep(Class<T> type, Repository<T> existsService, TypeReference<List<D>> typeReference) {
         this.type = type;
         this.typeReference = typeReference;
-        this.objectMapper = new ObjectMapper(new YAMLFactory());
+        this.objectMapper = new YAMLMapper();
         this.existService = existsService;
     }
 

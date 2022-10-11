@@ -75,18 +75,32 @@ const StatusIndicator = ({ children }: PropsWithChildren) => (
   </div>
 );
 
+const PhaseIndicator = ({ partido }: { partido: Partido }) => {
+  if (partido.fase.codigo === "GROUP") {
+    return (
+      <h6 className="card-subtitle muted mb-3">
+        {partido.fase.nombre} Phase {partido.fecha} of 3 -{" "}
+        {new Date(partido.dia).toLocaleString()}
+      </h6>
+    );
+  } else {
+    return (
+      <h6 className="card-subtitle muted mb-3">
+        {partido.fase.nombre}
+        {new Date(partido.dia).toLocaleString()}
+      </h6>
+    );
+  }
+};
+
 const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
-  console.log(new Date(partido.dia));
   return (
     <div
       className={`match card border-light text-center shadow match--${partido.status.toLowerCase()}`}
     >
       <div className="card-body">
         <h5 className="card-title">FIFA World Cup - Qatar 2022</h5>
-        <h6 className="card-subtitle muted mb-3">
-          {partido.fase.nombre} Phase {partido.fecha} of 3 -{" "}
-          {new Date(partido.dia).toLocaleString()}
-        </h6>
+        <PhaseIndicator partido={partido}></PhaseIndicator>
         <div className="match__results">
           <TeamFlag src={partido.local.codigo}></TeamFlag>
           <div className="match__score">
