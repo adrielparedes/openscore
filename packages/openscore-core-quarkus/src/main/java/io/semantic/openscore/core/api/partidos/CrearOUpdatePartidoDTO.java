@@ -1,12 +1,10 @@
 package io.semantic.openscore.core.api.partidos;
 
-import java.util.Date;
-
 public class CrearOUpdatePartidoDTO {
 
     private String local;
     private String visitante;
-    private Date dia;
+    private long dia;
     private int fecha;
     private String lugar;
     private String grupo;
@@ -28,11 +26,11 @@ public class CrearOUpdatePartidoDTO {
         this.visitante = visitante;
     }
 
-    public Date getDia() {
+    public long getDia() {
         return dia;
     }
 
-    public void setDia(Date dia) {
+    public void setDia(long dia) {
         this.dia = dia;
     }
 

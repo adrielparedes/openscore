@@ -22,48 +22,50 @@ import io.semantic.openscore.core.repository.EquiposRepository;
 import io.semantic.openscore.core.repository.FaseRepository;
 import io.semantic.openscore.core.repository.GrupoRepository;
 import io.semantic.openscore.core.repository.PartidoRepository;
+import io.semantic.openscore.core.repository.startup.builder.DiaBuilder;
 import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.services.api.PartidosService;
 
 @ApplicationScoped
 public class PartidosServiceImpl implements PartidosService {
 
-
     private PartidoRepository partidoRepository;
     private EquiposRepository equiposRepository;
     private GrupoRepository grupoRepository;
     private FaseRepository faseRepository;
     private PartidoMapper partidoMapper;
+    private DiaBuilder diaBuilder;
 
     public PartidosServiceImpl() {
     }
 
     @Inject
     public PartidosServiceImpl(final PartidoRepository partidoRepository,
-                               final EquiposRepository equiposRepository,
-                               final GrupoRepository grupoRepository,
-                               final FaseRepository faseRepository,
-                               final PartidoMapper partidoMapper) {
+            final EquiposRepository equiposRepository,
+            final GrupoRepository grupoRepository,
+            final FaseRepository faseRepository,
+            final PartidoMapper partidoMapper,
+            final DiaBuilder diaBuilder) {
         this.partidoRepository = partidoRepository;
         this.equiposRepository = equiposRepository;
         this.grupoRepository = grupoRepository;
         this.faseRepository = faseRepository;
         this.partidoMapper = partidoMapper;
+        this.diaBuilder = diaBuilder;
     }
 
     @Override
     public ApiResponse<List<PartidoDTO>> getAll(int page,
-                                                int pageSize,
-                                                String grupo,
-                                                String fase,
-                                                long dia,
-                                                String equipo) {
+            int pageSize,
+            String grupo,
+            String fase,
+            long dia,
+            String equipo) {
 
         this.partidoRepository.findAll();
         List<Partido> partidos = this.partidoRepository.findAll();
         return ok(this.partidoMapper.asApi(partidos));
     }
-
 
     @Override
     public ApiResponse<PartidoDTO> get(long id) {
@@ -103,23 +105,23 @@ public class PartidosServiceImpl implements PartidosService {
         partido.setGrupo(this.getGrupo(entity.getGrupo()));
         partido.setFase(this.getFase(entity.getFase()));
         partido.setLugar(entity.getLugar());
-        partido.setDia(entity.getDia());
+        partido.setDia(diaBuilder.epochToDate(entity.getDia()));
         return partido;
     }
 
     private Equipo getEquipo(String codigo) {
-        return this.equiposRepository.findByCodigo(codigo).orElseThrow(() ->
-                new IllegalArgumentException(MessageFormat.format("Equipo con codigo [{0}] no encontrado", codigo)));
+        return this.equiposRepository.findByCodigo(codigo).orElseThrow(() -> new IllegalArgumentException(
+                MessageFormat.format("Equipo con codigo [{0}] no encontrado", codigo)));
     }
 
     private Grupo getGrupo(String codigo) {
-        return this.grupoRepository.findByCodigo(codigo).orElseThrow(() ->
-                new IllegalArgumentException(MessageFormat.format("Grupo con codigo [{0}] no encontrado", codigo)));
+        return this.grupoRepository.findByCodigo(codigo).orElseThrow(() -> new IllegalArgumentException(
+                MessageFormat.format("Grupo con codigo [{0}] no encontrado", codigo)));
     }
 
     private Fase getFase(String codigo) {
-        return this.faseRepository.findByCodigo(codigo).orElseThrow(() ->
-                new IllegalArgumentException(MessageFormat.format("Fase con codigo [{0}] no encontrado", codigo)));
+        return this.faseRepository.findByCodigo(codigo).orElseThrow(() -> new IllegalArgumentException(
+                MessageFormat.format("Fase con codigo [{0}] no encontrado", codigo)));
     }
 
     @Override
@@ -143,8 +145,7 @@ public class PartidosServiceImpl implements PartidosService {
     private Partido getPartido(long partidoId) {
         return this.partidoRepository
                 .findById(partidoId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException(MessageFormat
-                                .format("El partido <{0}> no fue encontrado", partidoId)));
+                .orElseThrow(() -> new IllegalArgumentException(MessageFormat
+                        .format("El partido <{0}> no fue encontrado", partidoId)));
     }
 }

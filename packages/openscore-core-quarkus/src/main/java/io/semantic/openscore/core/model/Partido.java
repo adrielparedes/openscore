@@ -1,7 +1,8 @@
 package io.semantic.openscore.core.model;
 
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ public class Partido extends Storable {
 
     @ManyToOne
     private Equipo visitante;
-    private Date dia;
+    private LocalDateTime dia;
     private String lugar;
     private int fecha;
 
@@ -44,11 +45,11 @@ public class Partido extends Storable {
         this.visitante = visitante;
     }
 
-    public Date getDia() {
+    public LocalDateTime getDia() {
         return dia;
     }
 
-    public void setDia(Date dia) {
+    public void setDia(LocalDateTime dia) {
         this.dia = dia;
     }
 
@@ -110,8 +111,8 @@ public class Partido extends Storable {
     }
 
     public boolean isBloqueado() {
-        System.out.println(this.getDia().getTime());
-        return this.getDia().getTime() <= Instant.now().toEpochMilli() + 900000;
+        System.out.println(this.getDia().toInstant(ZoneOffset.UTC).toEpochMilli());
+        return this.getDia().toInstant(ZoneOffset.UTC).toEpochMilli() <= Instant.now().toEpochMilli() + 900000;
     }
 
     public PartidoStatus getStatus() {

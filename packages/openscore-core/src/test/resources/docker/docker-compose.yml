@@ -1,9 +1,0 @@
-version: "3"
-services:
-    wildfly:
-        build:
-            context: ../../../../
-            dockerfile: ./src/test/resources/docker/Dockerfile
-        ports:
-            - "8080:8080"
-            - "9990:9990"

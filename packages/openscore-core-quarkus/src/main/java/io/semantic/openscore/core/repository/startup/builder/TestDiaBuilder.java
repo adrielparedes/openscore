@@ -1,12 +1,12 @@
 package io.semantic.openscore.core.repository.startup.builder;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.time.LocalDateTime;
+import java.util.Random;
 
 import javax.enterprise.inject.Alternative;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Alternative
 public class TestDiaBuilder implements DiaBuilder {
@@ -15,11 +15,19 @@ public class TestDiaBuilder implements DiaBuilder {
     private static final long ONE_MINUTE_IN_MILLIS = 60000;
     private Random random = new Random();
 
-    public Date getMatchDate(String fecha) {
-        Calendar date = Calendar.getInstance();
-        long t = date.getTimeInMillis();
-        Date afterAddingTenMins = new Date(t + (random.nextInt(8 * 60) * ONE_MINUTE_IN_MILLIS));
-        logger.info(afterAddingTenMins.toString());
-        return afterAddingTenMins;
+    public LocalDateTime getMatchDate(String fecha) {
+        // Calendar date = Calendar.getInstance();
+        // long t = date.getTimeInMillis();
+        // Date afterAddingTenMins = new Date(t + (random.nextInt(8 * 60) *
+        // ONE_MINUTE_IN_MILLIS));
+        // logger.info(afterAddingTenMins.toString());
+        // return afterAddingTenMins;
+        return null;
+    }
+
+    @Override
+    public LocalDateTime epochToDate(long date) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

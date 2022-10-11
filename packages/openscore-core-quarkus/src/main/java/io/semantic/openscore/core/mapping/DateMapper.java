@@ -1,17 +1,19 @@
 package io.semantic.openscore.core.mapping;
 
-import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "cdi")
 public class DateMapper {
 
-    public Long asNumber(Date date) {
-        return date.getTime();
+    public Long asNumber(LocalDateTime date) {
+        return date.toInstant(ZoneOffset.UTC).toEpochMilli();
     }
 
-    public Date asDate(Long date) {
-        return new Date(date);
+    public LocalDateTime asDate(Long date) {
+        return Instant.ofEpochMilli(date).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
     }
 }

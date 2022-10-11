@@ -76,6 +76,7 @@ const StatusIndicator = ({ children }: PropsWithChildren) => (
 );
 
 const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
+  console.log(new Date(partido.dia));
   return (
     <div
       className={`match card border-light text-center shadow match--${partido.status.toLowerCase()}`}
