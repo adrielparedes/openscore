@@ -1,15 +1,15 @@
 import { AxiosError, AxiosPromise } from "axios";
 import { PropsWithChildren, useState } from "react";
 import { toast } from "react-toastify";
-import { ApiResponse } from "../model/ApiResponse";
-import { Partido } from "../model/Partido";
-import { PronosticoService } from "../services/PronosticoService";
+import { ApiResponse } from "../../model/ApiResponse";
+import { Partido } from "../../model/Partido";
+import { PronosticoService } from "../../services/PronosticoService";
 
 const pronosticoService = new PronosticoService();
 
 const TeamFlag = ({ src }: { src: string }) => (
   <div className="match__flag">
-    <img src={`https://countryflagsapi.com/svg/${src}`}></img>
+    <img src={`https://countryflagsapi.com/png/${src}`}></img>
   </div>
 );
 
@@ -76,18 +76,18 @@ const StatusIndicator = ({ children }: PropsWithChildren) => (
 );
 
 const PhaseIndicator = ({ partido }: { partido: Partido }) => {
-  if (partido.fase.codigo === "GROUP") {
+  if (partido.fase.codigo === "GRUPO") {
     return (
       <h6 className="card-subtitle muted mb-3">
-        {partido.fase.nombre} Phase {partido.fecha} of 3 -{" "}
-        {new Date(partido.dia).toLocaleString()}
+        {` ${partido.fase.nombre} Phase ${partido.fecha} of 3 - ${new Date(
+          partido.dia
+        ).toLocaleString()}`}
       </h6>
     );
   } else {
     return (
       <h6 className="card-subtitle muted mb-3">
-        {partido.fase.nombre}
-        {new Date(partido.dia).toLocaleString()}
+        {`${partido.fase.nombre} ${new Date(partido.dia).toLocaleString()}`}
       </h6>
     );
   }

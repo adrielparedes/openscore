@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { layout } from "../components/layout/MainLayout";
+import { layout } from "../components/templates/MainLayout";
 import { NextPageWithLayout } from "./_app";
 
 const leaderboard = [

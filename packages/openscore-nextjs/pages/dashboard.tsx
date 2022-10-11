@@ -1,4 +1,4 @@
-import { layout } from "../components/layout/MainLayout";
+import { layout } from "../components/templates/MainLayout";
 import { NextPageWithLayout } from "./_app";
 
 const Dashboard: NextPageWithLayout = () => {

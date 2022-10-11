@@ -12,7 +12,10 @@ const routes: Route[] = [
   {
     name: "Admin",
     link: "/admin",
-    items: [{ name: "Matches", link: "/admin/matches" }],
+    items: [
+      { name: "Matches", link: "/admin/matches" },
+      { name: "Teams", link: "/admin/teams" },
+    ],
   },
 ];
 

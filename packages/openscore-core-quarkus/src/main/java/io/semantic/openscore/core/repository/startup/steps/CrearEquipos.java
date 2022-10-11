@@ -45,9 +45,9 @@ public class CrearEquipos implements StartupStep {
         this.crearEquipoSiNoExiste("AUS", "Australia");
         this.crearEquipoSiNoExiste("DNK", "Denmark");
         this.crearEquipoSiNoExiste("TUN", "Tunisia");
-        this.crearEquipoSiNoExiste("SPA", "Spain");
+        this.crearEquipoSiNoExiste("ESP", "Spain");
         this.crearEquipoSiNoExiste("CRI", "Costa Rica");
-        this.crearEquipoSiNoExiste("GER", "Germany");
+        this.crearEquipoSiNoExiste("DEU", "Germany");
         this.crearEquipoSiNoExiste("JPN", "Japan");
         this.crearEquipoSiNoExiste("BEL", "Belgium");
         this.crearEquipoSiNoExiste("CAN", "Canada");
@@ -57,7 +57,7 @@ public class CrearEquipos implements StartupStep {
         this.crearEquipoSiNoExiste("SRB", "Serbia");
         this.crearEquipoSiNoExiste("CHE", "Switzerland");
         this.crearEquipoSiNoExiste("CMR", "Cameroon");
-        this.crearEquipoSiNoExiste("POR", "Portugal");
+        this.crearEquipoSiNoExiste("PRT", "Portugal");
         this.crearEquipoSiNoExiste("GHA", "Ghana");
         this.crearEquipoSiNoExiste("URY", "Uruguay");
         this.crearEquipoSiNoExiste("KOR", "South Korea");

@@ -2,10 +2,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { SetterOrUpdater, useRecoilValue, useSetRecoilState } from "recoil";
-import EmptyScreen from "../../components/EmptyScreen";
-import { layout } from "../../components/layout/MainLayout";
-import LoadingScreen from "../../components/LoadingScreen";
-import MatchCard from "../../components/MatchCard";
+import EmptyScreen from "../../components/molecules/EmptyScreen";
+import { layout } from "../../components/templates/MainLayout";
+import LoadingScreen from "../../components/molecules/LoadingScreen";
+import MatchCard from "../../components/molecules/MatchCard";
 import { Partido } from "../../model/Partido";
 import { PronosticoService } from "../../services/PronosticoService";
 import {

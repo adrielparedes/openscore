@@ -1,5 +1,5 @@
-import EmptyScreen from "../components/EmptyScreen";
-import { layout } from "../components/layout/MainLayout";
+import EmptyScreen from "../components/molecules/EmptyScreen";
+import { layout } from "../components/templates/MainLayout";
 import { NextPageWithLayout } from "./_app";
 
 const Home: NextPageWithLayout = () => {

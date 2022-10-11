@@ -6,7 +6,7 @@ export default abstract class Service<X, Y, Z> {
 
   public getAll(page: number, pageSize: number, parameters?: any) {
     return rest.get<ApiResponse<X[]>>(this.serviceUrl, {
-      params: parameters,
+      params: { page: page, pageSize: pageSize, ...parameters },
     });
   }
 

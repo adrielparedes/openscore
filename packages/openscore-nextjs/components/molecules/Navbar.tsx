@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import routes, { Route } from "../routes";
-import logo from "../images/logo-white.png";
+import routes, { Route } from "../../routes";
+import logo from "../../images/logo-white.png";
 
 const NavItem = ({ route }: { route: Route }) => {
   const router = useRouter();
