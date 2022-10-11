@@ -74,19 +74,19 @@ public class CrearPartidos extends FileBasedStartupStep<PartidoData, Partido> {
     }
 
     private Equipo getEquipo(String codigoLocal) {
-        return this.equiposRepository.findByCodigo(codigoLocal)
-                .orElseThrow(() -> new IllegalArgumentException("El equipo " + codigoLocal + "no existe"));
+        return this.equiposRepository.findByCodigo(codigoLocal.trim())
+                .orElseThrow(() -> new IllegalArgumentException("El equipo " + codigoLocal + " no existe"));
     }
 
     private Grupo getGrupo(String codigo) {
         logger.info(codigo);
         return this.grupoRepository.findByCodigo(codigo)
-                .orElseThrow(() -> new IllegalArgumentException("El grupo " + codigo + "no existe"));
+                .orElseThrow(() -> new IllegalArgumentException("El grupo " + codigo + " no existe"));
     }
 
     private Fase getFase(String codigo) {
         return this.faseRepository.findByCodigo(codigo)
-                .orElseThrow(() -> new IllegalArgumentException("La fase " + codigo + "no existe"));
+                .orElseThrow(() -> new IllegalArgumentException("La fase " + codigo + " no existe"));
 
     }
 

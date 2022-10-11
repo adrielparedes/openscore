@@ -1,24 +1,30 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { SetterOrUpdater, useRecoilState } from "recoil";
+import { SetterOrUpdater, useRecoilValue, useSetRecoilState } from "recoil";
 import EmptyScreen from "../../components/EmptyScreen";
 import { layout } from "../../components/layout/MainLayout";
 import LoadingScreen from "../../components/LoadingScreen";
 import MatchCard from "../../components/MatchCard";
 import { Partido } from "../../model/Partido";
 import { PronosticoService } from "../../services/PronosticoService";
-import { forecastListState } from "../../states/ForecastState";
+import {
+  ForecastFilter,
+  forecastFilterState,
+  forecastListState,
+} from "../../states/ForecastState";
 import { NextPageWithLayout } from "../_app";
 
 const filters = [
   {
-    name: "Today",
-    link: "today",
+    name: "All",
+    link: "all",
+    filter: ForecastFilter.ALL,
   },
   {
-    name: "Remaining",
-    link: "remaining",
+    name: "Today",
+    link: "today",
+    filter: ForecastFilter.TODAY,
   },
 ];
 
@@ -45,14 +51,20 @@ const getLink = (link: string) => `/forecast?filter=${link}`;
 
 const Forecasts: NextPageWithLayout = () => {
   const router = useRouter();
-  const [forecast, setForecast] = useRecoilState(forecastListState);
+  const filteredForecast = useRecoilValue(forecastListState);
+  const setFilter = useSetRecoilState(forecastFilterState);
+  const setForecast = useSetRecoilState(forecastListState);
+
   const [busy, setBusy] = useState(false);
-  const { filter } = router.query;
-  const path = router.asPath;
+  const filter = filters.find((f) => f.link === router.query["filter"]);
 
   useEffect(() => {
+    if (router.query["filter"] === undefined) {
+      router.push(`/forecast?filter=all`);
+    }
+    setFilter(filter?.filter || ForecastFilter.ALL);
     refresh(setForecast, setBusy);
-  }, [filter, setForecast]);
+  }, [setForecast, filter]);
 
   return (
     <div className="forecast">
@@ -78,9 +90,9 @@ const Forecasts: NextPageWithLayout = () => {
           </ul>
         </div>
         <LoadingScreen busy={busy}>
-          <EmptyScreen isEmpty={forecast.length < 1}>
+          <EmptyScreen isEmpty={filteredForecast.length < 1}>
             <div className="forecast__matches">
-              {forecast.map((f) => (
+              {filteredForecast.map((f) => (
                 <MatchCard
                   key={f.id}
                   partido={f}

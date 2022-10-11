@@ -1,141 +1,336 @@
----
-- local: BRA
-  visitante: VEN
-  grupo: GRUPO_A
-  lugar: BRASILIA, ESTADIO NACIONAL DE BRASILIA
-  dia: 13-06-2023T18:00-0300
-  fecha: "1"
-  fase: GRUPO
-- local: COL
+- fecha: 1
+  dia: 20-11-22T16:0+0300
+  lugar: Al Bayt Stadium
+  local: QAT
   visitante: ECU
   grupo: GRUPO_A
-  lugar: CUIABÁ, ARENA PANTANAL
-  dia: 13-06-2021T21:00-0300
-  fecha: "1"
   fase: GRUPO
-- local: ARG
-  visitante: CHL
+- fecha: 1
+  dia: 21-11-22T13:0+0300
+  lugar: Khalifa International Stadium
+  local: GB-ENG
+  visitante: IRN
   grupo: GRUPO_B
-  lugar: RIO DE JANEIRO, ESTADIO OLIMPICO
-  dia: 14-06-2021T18:00-0300
-  fecha: "1"
   fase: GRUPO
-- local: PRY
-  visitante: BOL
-  grupo: GRUPO_B
-  lugar: GOIÂNIA, ESTADIO OLIMPICO PEDRO LUDOVICO
-  dia: 14-06-2021T21:00-0300
-  fecha: "1"
-  fase: GRUPO
-- local: COL
-  visitante: VEN
+- fecha: 1
+  dia: 21-11-22T16:0+0300
+  lugar: Al Thumama Stadium
+  local: SEN
+  visitante: NLD
   grupo: GRUPO_A
-  lugar: GOIÂNIA, ESTADIO OLIMPICO PEDRO LUDOVICO
-  dia: 17-06-2021T18:00-0300
-  fecha: "2"
   fase: GRUPO
-- local: BRA
-  visitante: PER
-  grupo: GRUPO_A
-  lugar: RIO DE JANEIRO, ESTADIO OLIMPICO
-  dia: 17-06-2021T21:00-0300
-  fecha: "2"
-  fase: GRUPO
-- local: CHL
-  visitante: BOL
+- fecha: 1
+  dia: 21-11-22T19:0+0300
+  lugar: Ahmad Bin Ali Stadium
+  local: USA
+  visitante: GB-WLS
   grupo: GRUPO_B
-  lugar: CUIABÁ, ARENA PANTANAL
-  dia: 18-06-2021T18:00-0300
-  fecha: "2"
   fase: GRUPO
-- local: ARG
+- fecha: 1
+  dia: 22-11-22T10:0+0300
+  lugar: Lusail Stadium
+  local: ARG
+  visitante: SAU
+  grupo: GRUPO_C
+  fase: GRUPO
+- fecha: 1
+  dia: 22-11-22T13:0+0300
+  lugar: Education City Stadium
+  local: DNK
+  visitante: TUN
+  grupo: GRUPO_D
+  fase: GRUPO
+- fecha: 1
+  dia: 22-11-22T16:0+0300
+  lugar: Stadium 974
+  local: MEX
+  visitante: POL
+  grupo: GRUPO_C
+  fase: GRUPO
+- fecha: 1
+  dia: 22-11-22T19:0+0300
+  lugar: Al Janoub Stadium
+  local: FRA
+  visitante: AUS
+  grupo: GRUPO_D
+  fase: GRUPO
+- fecha: 1
+  dia: 23-11-22T10:0+0300
+  lugar: Al Bayt Stadium
+  local: MAR
+  visitante: HRV
+  grupo: GRUPO_F
+  fase: GRUPO
+- fecha: 1
+  dia: 23-11-22T13:0+0300
+  lugar: Khalifa International Stadium
+  local: GER
+  visitante: JPN
+  grupo: GRUPO_E
+  fase: GRUPO
+- fecha: 1
+  dia: 23-11-22T16:0+0300
+  lugar: Al Thumama Stadium
+  local: SPA
+  visitante: CRI
+  grupo: GRUPO_E
+  fase: GRUPO
+- fecha: 1
+  dia: 23-11-22T19:0+0300
+  lugar: Ahmad Bin Ali Stadium
+  local: BEL
+  visitante: CAN
+  grupo: GRUPO_F
+  fase: GRUPO
+- fecha: 1
+  dia: 24-11-22T10:0+0300
+  lugar: Al Janoub Stadium
+  local: CHE
+  visitante: CMR
+  grupo: GRUPO_G
+  fase: GRUPO
+- fecha: 1
+  dia: 24-11-22T13:0+0300
+  lugar: Education City Stadium
+  local: URY
+  visitante: KOR
+  grupo: GRUPO_H
+  fase: GRUPO
+- fecha: 1
+  dia: 24-11-22T16:0+0300
+  lugar: Stadium 974
+  local: POR
+  visitante: GHA
+  grupo: GRUPO_H
+  fase: GRUPO
+- fecha: 1
+  dia: 24-11-22T19:0+0300
+  lugar: Lusail Stadium
+  local: BRA
+  visitante: SRB
+  grupo: GRUPO_G
+  fase: GRUPO
+- fecha: 2
+  dia: 25-11-22T10:0+0300
+  lugar: Ahmad Bin Ali Stadium
+  local: GB-WLS
+  visitante: IRN
+  grupo: GRUPO_B
+  fase: GRUPO
+- fecha: 2
+  dia: 25-11-22T13:0+0300
+  lugar: Al Thumama Stadium
+  local: QAT
+  visitante: SEN
+  grupo: GRUPO_A
+  fase: GRUPO
+- fecha: 2
+  dia: 25-11-22T16:0+0300
+  lugar: Khalifa International Stadium
+  local: NLD
+  visitante: ECU
+  grupo: GRUPO_A
+  fase: GRUPO
+- fecha: 2
+  dia: 25-11-22T19:0+0300
+  lugar: Al Bayt Stadium
+  local: GB-ENG
+  visitante: USA
+  grupo: GRUPO_B
+  fase: GRUPO
+- fecha: 2
+  dia: 26-11-22T10:0+0300
+  lugar: Al Janoub Stadium
+  local: TUN
+  visitante: AUS
+  grupo: GRUPO_D
+  fase: GRUPO
+- fecha: 2
+  dia: 26-11-22T13:0+0300
+  lugar: Education City Stadium
+  local: POL
+  visitante: SAU
+  grupo: GRUPO_C
+  fase: GRUPO
+- fecha: 2
+  dia: 26-11-22T16:0+0300
+  lugar: Stadium 974
+  local: FRA
+  visitante: DNK
+  grupo: GRUPO_D
+  fase: GRUPO
+- fecha: 2
+  dia: 26-11-22T19:0+0300
+  lugar: Lusail Stadium
+  local: ARG
+  visitante: MEX
+  grupo: GRUPO_C
+  fase: GRUPO
+- fecha: 2
+  dia: 27-11-22T10:0+0300
+  lugar: Ahmad Bin Ali Stadium
+  local: JPN
+  visitante: CRI
+  grupo: GRUPO_E
+  fase: GRUPO
+- fecha: 2
+  dia: 27-11-22T13:0+0300
+  lugar: Al Thumama Stadium
+  local: BEL
+  visitante: MAR
+  grupo: GRUPO_F
+  fase: GRUPO
+- fecha: 2
+  dia: 27-11-22T16:0+0300
+  lugar: Khalifa International Stadium
+  local: HRV
+  visitante: CAN
+  grupo: GRUPO_F
+  fase: GRUPO
+- fecha: 2
+  dia: 27-11-22T19:0+0300
+  lugar: Al Bayt Stadium
+  local: SPA
+  visitante: GER
+  grupo: GRUPO_E
+  fase: GRUPO
+- fecha: 2
+  dia: 28-11-22T10:0+0300
+  lugar: Al Janoub Stadium
+  local: CMR
+  visitante: SRB
+  grupo: GRUPO_G
+  fase: GRUPO
+- fecha: 2
+  dia: 28-11-22T13:0+0300
+  lugar: Education City Stadium
+  local: KOR
+  visitante: GHA
+  grupo: GRUPO_H
+  fase: GRUPO
+- fecha: 2
+  dia: 28-11-22T16:0+0300
+  lugar: Stadium 974
+  local: BRA
+  visitante: CHE
+  grupo: GRUPO_G
+  fase: GRUPO
+- fecha: 2
+  dia: 28-11-22T19:0+0300
+  lugar: Lusail Stadium
+  local: POR
   visitante: URY
-  grupo: GRUPO_B
-  lugar: BRASILIA, ESTADIO NACIONAL DE BRASILIA
-  dia: 18-06-2021T21:00-0300
-  fecha: "2"
+  grupo: GRUPO_H
   fase: GRUPO
-- local: VEN
-  visitante: ECU
+- fecha: 3
+  dia: 29-11-22T15:0+0300
+  lugar: Khalifa International Stadium
+  local: ECU
+  visitante: SEN
   grupo: GRUPO_A
-  lugar: RIO DE JANEIRO, ESTADIO OLIMPICO
-  dia: 20-06-2021T18:00-0300
-  fecha: "3"
   fase: GRUPO
-- local: COL
-  visitante: PER
+- fecha: 3
+  dia: 29-11-22T15:0+0300
+  lugar: Al Bayt Stadium
+  local: NLD
+  visitante: QAT
   grupo: GRUPO_A
-  lugar: GOIÂNIA, ESTADIO OLIMPICO PEDRO LUDOVICO
-  dia: 20-06-2021T21:00-0300
-  fecha: "3"
   fase: GRUPO
-- local: URY
-  visitante: CHL
+- fecha: 3
+  dia: 29-11-22T19:0+0300
+  lugar: Ahmad Bin Ali Stadium
+  local: GB-WLS
+  visitante: GB-ENG
   grupo: GRUPO_B
-  lugar: CUIABÁ, ARENA PANTANAL
-  dia: 21-06-2021T18:00-0300
-  fecha: "3"
   fase: GRUPO
-- local: ARG
-  visitante: PRY
+- fecha: 3
+  dia: 29-11-22T19:0+0300
+  lugar: Al Thumama Stadium
+  local: IRN
+  visitante: USA
   grupo: GRUPO_B
-  lugar: BRASILIA, ESTADIO NACIONAL DE BRASILIA
-  dia: 21-06-2021T21:00-0300
-  fecha: "3"
   fase: GRUPO
-- local: ECU
-  visitante: PER
-  grupo: GRUPO_A
-  lugar: GOIÂNIA, ESTADIO OLIMPICO PEDRO LUDOVICO
-  dia: 23-06-2021T18:00-0300
-  fecha: "4"
+- fecha: 3
+  dia: 30-11-22T15:0+0300
+  lugar: Al Janoub Stadium
+  local: AUS
+  visitante: DNK
+  grupo: GRUPO_D
   fase: GRUPO
-- local: BRA
-  visitante: COL
-  grupo: GRUPO_A
-  lugar: RIO DE JANEIRO, ESTADIO OLIMPICO
-  dia: 23-06-2021T21:00-0300
-  fecha: "4"
+- fecha: 3
+  dia: 30-11-22T15:0+0300
+  lugar: Education City Stadium
+  local: TUN
+  visitante: FRA
+  grupo: GRUPO_D
   fase: GRUPO
-- local: BOL
-  visitante: URY
-  grupo: GRUPO_B
-  lugar: CUIABÁ, ARENA PANTANAL
-  dia: 24-06-2021T18:00-0300
-  fecha: "4"
-  fase: GRUPO
-- local: CHL
-  visitante: PRY
-  grupo: GRUPO_B
-  lugar: BRASILIA, ESTADIO NACIONAL DE BRASILIA
-  dia: 24-06-2021T21:00-0300
-  fecha: "4"
-  fase: GRUPO
-- local: BRA
-  visitante: ECU
-  grupo: GRUPO_A
-  lugar: GOIÂNIA, ESTADIO OLIMPICO PEDRO LUDOVICO
-  dia: 27-06-2021T18:00-0300
-  fecha: "5"
-  fase: GRUPO
-- local: VEN
-  visitante: PER
-  grupo: GRUPO_A
-  lugar: BRASILIA, ESTADIO NACIONAL DE BRASILIA
-  dia: 27-06-2021T18:00-0300
-  fecha: "5"
-  fase: GRUPO
-- local: URY
-  visitante: PRY
-  grupo: GRUPO_B
-  lugar: RIO DE JANEIRO, ESTADIO OLIMPICO
-  dia: 28-06-2021T21:00-0300
-  fecha: "5"
-  fase: GRUPO
-- local: BOL
+- fecha: 3
+  dia: 30-11-22T19:0+0300
+  lugar: Stadium 974
+  local: POL
   visitante: ARG
-  grupo: GRUPO_B
-  lugar: CUIABÁ, ARENA PANTANAL
-  dia: 28-06-2021T21:00-0300
-  fecha: "5"
+  grupo: GRUPO_C
+  fase: GRUPO
+- fecha: 3
+  dia: 30-11-22T19:0+0300
+  lugar: Lusail Stadium
+  local: SAU
+  visitante: MEX
+  grupo: GRUPO_C
+  fase: GRUPO
+- fecha: 3
+  dia: 12-1-22T15:0+0300
+  lugar: Ahmad Bin Ali Stadium
+  local: HRV
+  visitante: BEL
+  grupo: GRUPO_F
+  fase: GRUPO
+- fecha: 3
+  dia: 12-1-22T15:0+0300
+  lugar: Al Thumama Stadium
+  local: CAN
+  visitante: MAR
+  grupo: GRUPO_F
+  fase: GRUPO
+- fecha: 3
+  dia: 12-1-22T19:0+0300
+  lugar: Khalifa International Stadium
+  local: JPN
+  visitante: SPA
+  grupo: GRUPO_E
+  fase: GRUPO
+- fecha: 3
+  dia: 12-1-22T19:0+0300
+  lugar: Al Bayt Stadium
+  local: CRI
+  visitante: GER
+  grupo: GRUPO_E
+  fase: GRUPO
+- fecha: 3
+  dia: 12-2-22T15:0+0300
+  lugar: Al Janoub Stadium
+  local: GHA
+  visitante: URY
+  grupo: GRUPO_H
+  fase: GRUPO
+- fecha: 3
+  dia: 12-2-22T15:0+0300
+  lugar: Education City Stadium
+  local: KOR
+  visitante: POR
+  grupo: GRUPO_H
+  fase: GRUPO
+- fecha: 3
+  dia: 12-2-22T19:0+0300
+  lugar: Stadium 974
+  local: SRB
+  visitante: CHE
+  grupo: GRUPO_G
+  fase: GRUPO
+- fecha: 3
+  dia: 12-2-22T19:0+0300
+  lugar: Lusail Stadium
+  local: CMR
+  visitante: BRA
+  grupo: GRUPO_G
   fase: GRUPO

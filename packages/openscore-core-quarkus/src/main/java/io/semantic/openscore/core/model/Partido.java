@@ -1,9 +1,11 @@
 package io.semantic.openscore.core.model;
 
+import java.time.Instant;
+import java.util.Date;
+
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import java.util.Date;
 
 @Entity
 public class Partido extends Storable {
@@ -103,13 +105,13 @@ public class Partido extends Storable {
                 pronostico.isEmpate() && Ganador.EMPATE.equals(ganador);
     }
 
-
     private int calcularPuntos() {
         return this.getFase().getPuntos();
     }
 
     public boolean isBloqueado() {
-        return this.getDia().getTime() <= new Date().getTime() + 900000;
+        System.out.println(this.getDia().getTime());
+        return this.getDia().getTime() <= Instant.now().toEpochMilli() + 900000;
     }
 
     public PartidoStatus getStatus() {

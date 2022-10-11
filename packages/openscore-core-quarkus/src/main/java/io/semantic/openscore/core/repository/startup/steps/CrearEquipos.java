@@ -30,23 +30,38 @@ public class CrearEquipos implements StartupStep {
     @Override
     public void run() {
 
-        // GRUPO A
-        this.crearEquipoSiNoExiste("BRA", "Brasil");
-        this.crearEquipoSiNoExiste("BOL", "Bolivia");
-        this.crearEquipoSiNoExiste("VEN", "Venezuela");
-        this.crearEquipoSiNoExiste("PER", "Peru");
-
-        // GRUPO B
-        this.crearEquipoSiNoExiste("ARG", "Argentina");
-        this.crearEquipoSiNoExiste("COL", "Colombia");
-        this.crearEquipoSiNoExiste("PRY", "Paraguay");
         this.crearEquipoSiNoExiste("QAT", "Qatar");
-
-        // GRUPO C
-        this.crearEquipoSiNoExiste("URY", "Uruguay");
         this.crearEquipoSiNoExiste("ECU", "Ecuador");
+        this.crearEquipoSiNoExiste("SEN", "Senegal");
+        this.crearEquipoSiNoExiste("NLD", "Netherlands");
+        this.crearEquipoSiNoExiste("GB-ENG", "England");
+        this.crearEquipoSiNoExiste("IRN", "Iran");
+        this.crearEquipoSiNoExiste("GB-WLS", "Wales");
+        this.crearEquipoSiNoExiste("ARG", "Argentina");
+        this.crearEquipoSiNoExiste("SAU", "Saudi Arabia");
+        this.crearEquipoSiNoExiste("MEX", "Mexico");
+        this.crearEquipoSiNoExiste("POL", "Poland");
+        this.crearEquipoSiNoExiste("FRA", "France");
+        this.crearEquipoSiNoExiste("AUS", "Australia");
+        this.crearEquipoSiNoExiste("DNK", "Denmark");
+        this.crearEquipoSiNoExiste("TUN", "Tunisia");
+        this.crearEquipoSiNoExiste("SPA", "Spain");
+        this.crearEquipoSiNoExiste("CRI", "Costa Rica");
+        this.crearEquipoSiNoExiste("GER", "Germany");
         this.crearEquipoSiNoExiste("JPN", "Japan");
-        this.crearEquipoSiNoExiste("CHL", "Chile");
+        this.crearEquipoSiNoExiste("BEL", "Belgium");
+        this.crearEquipoSiNoExiste("CAN", "Canada");
+        this.crearEquipoSiNoExiste("MAR", "Morocco");
+        this.crearEquipoSiNoExiste("HRV", "Croatia");
+        this.crearEquipoSiNoExiste("BRA", "Brazil");
+        this.crearEquipoSiNoExiste("SRB", "Serbia");
+        this.crearEquipoSiNoExiste("CHE", "Switzerland");
+        this.crearEquipoSiNoExiste("CMR", "Cameroon");
+        this.crearEquipoSiNoExiste("POR", "Portugal");
+        this.crearEquipoSiNoExiste("GHA", "Ghana");
+        this.crearEquipoSiNoExiste("URY", "Uruguay");
+        this.crearEquipoSiNoExiste("KOR", "South Korea");
+        this.crearEquipoSiNoExiste("USA", "USA");
     }
 
     private String getLogo(String codigo) {
