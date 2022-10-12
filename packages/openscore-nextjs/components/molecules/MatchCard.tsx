@@ -10,7 +10,7 @@ import StatusIndicator from "../atoms/StatusIndicator";
 const pronosticoService = new PronosticoService();
 
 const TeamFlag = ({ src }: { src: string }) => (
-  <div className="match__flag">
+  <div className="match__flag shadow">
     <img src={`https://countryflagsapi.com/png/${src}`}></img>
   </div>
 );
