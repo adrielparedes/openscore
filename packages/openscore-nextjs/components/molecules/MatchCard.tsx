@@ -85,18 +85,6 @@ const PhaseIndicator = ({ partido }: { partido: Partido }) => {
   }
 };
 
-const getReturnValues = (countDown: number) => {
-  // calculate time left
-  const days = Math.floor(countDown / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  const minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((countDown % (1000 * 60)) / 1000);
-
-  return [days, hours, minutes, seconds];
-};
-
 const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
   return (
     <div
@@ -108,8 +96,9 @@ const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
         <div className="match__results">
           <TeamFlag src={partido.local.codigo}></TeamFlag>
           <div className="match__score">
-            {partido.resultado?.local || "-"} :{" "}
-            {partido.resultado?.visitante || "-"}
+            {`${partido.resultado?.local || "-"} : ${
+              partido.resultado?.visitante || "-"
+            }`}
           </div>
           <TeamFlag src={partido.visitante.codigo}></TeamFlag>
           <div className="match__team">{partido.local.nombre}</div>

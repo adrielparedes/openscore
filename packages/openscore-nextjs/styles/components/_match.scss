@@ -19,6 +19,12 @@
     filter: grayscale(100%);
   }
 
+  &__score {
+    font-family: $display-font-family;
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+
   &__flag {
     border-radius: 50%;
     overflow: hidden;
@@ -31,6 +37,16 @@
     & > img {
       scale: 0.25;
     }
+  }
+
+  &__team {
+    font-family: $display-font-family;
+    margin-top: 0.5rem;
+  }
+
+  &__status {
+    font-family: $display-font-family;
+    margin-top: 0.5rem;
   }
 
   &__selection {
