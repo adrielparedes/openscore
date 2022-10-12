@@ -68,12 +68,13 @@ const ActiveNavLink = ({
 };
 
 const PhaseIndicator = ({ partido }: { partido: Partido }) => {
+  const dia = new Date(partido.dia);
   if (partido.fase.codigo === "GRUPO") {
     return (
-      <h6 className="card-subtitle muted mb-3">
-        {` ${partido.fase.nombre} Phase ${partido.fecha} of 3 - ${new Date(
-          partido.dia
-        ).toLocaleString()}`}
+      <h6 className="card-subtitle">
+        {`Round Robin: ${partido.grupo.nombre} - ${
+          partido.fecha
+        } of 3 - ${dia.toDateString()} ${dia.toLocaleTimeString()}`}
       </h6>
     );
   } else {
@@ -90,9 +91,11 @@ const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
     <div
       className={`match card border-light text-center shadow match--${partido.status.toLowerCase()}`}
     >
-      <div className="card-body">
-        <h5 className="card-title">FIFA World Cup - Qatar 2022</h5>
+      <div className="card-header">
         <PhaseIndicator partido={partido}></PhaseIndicator>
+      </div>
+      <div className="card-body">
+        {/* <h5 className="card-title">FIFA World Cup - Qatar 2022</h5> */}
         <div className="match__results">
           <TeamFlag src={partido.local.codigo}></TeamFlag>
           <div className="match__score">

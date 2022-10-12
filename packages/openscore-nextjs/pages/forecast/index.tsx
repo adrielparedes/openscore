@@ -9,6 +9,7 @@ import MatchCard from "../../components/molecules/MatchCard";
 import { Partido } from "../../model/Partido";
 import { PronosticoService } from "../../services/PronosticoService";
 import {
+  filteredForecastState,
   ForecastFilter,
   forecastFilterState,
   forecastListState,
@@ -17,14 +18,59 @@ import { NextPageWithLayout } from "../_app";
 
 const filters = [
   {
-    name: "All",
-    link: "all",
-    filter: ForecastFilter.ALL,
-  },
-  {
     name: "Today",
     link: "today",
     filter: ForecastFilter.TODAY,
+  },
+  {
+    name: "Remaining",
+    link: "remaining",
+    filter: ForecastFilter.REMAINING,
+  },
+  {
+    name: "Group A",
+    link: "group_a",
+    filter: ForecastFilter.GROUP_A,
+  },
+  {
+    name: "Group B",
+    link: "group_b",
+    filter: ForecastFilter.GROUP_B,
+  },
+  {
+    name: "Group C",
+    link: "group_c",
+    filter: ForecastFilter.GROUP_C,
+  },
+  {
+    name: "Group D",
+    link: "group_d",
+    filter: ForecastFilter.GROUP_D,
+  },
+  {
+    name: "Group E",
+    link: "group_e",
+    filter: ForecastFilter.GROUP_E,
+  },
+  {
+    name: "Group F",
+    link: "group_f",
+    filter: ForecastFilter.GROUP_F,
+  },
+  {
+    name: "Group G",
+    link: "group_g",
+    filter: ForecastFilter.GROUP_G,
+  },
+  {
+    name: "Group H",
+    link: "group_h",
+    filter: ForecastFilter.GROUP_H,
+  },
+  {
+    name: "All",
+    link: "all",
+    filter: ForecastFilter.ALL,
   },
 ];
 
@@ -51,7 +97,7 @@ const getLink = (link: string) => `/forecast?filter=${link}`;
 
 const Forecasts: NextPageWithLayout = () => {
   const router = useRouter();
-  const filteredForecast = useRecoilValue(forecastListState);
+  const filteredForecast = useRecoilValue(filteredForecastState);
   const setFilter = useSetRecoilState(forecastFilterState);
   const setForecast = useSetRecoilState(forecastListState);
 
@@ -60,7 +106,7 @@ const Forecasts: NextPageWithLayout = () => {
 
   useEffect(() => {
     if (router.query["filter"] === undefined) {
-      router.push(`/forecast?filter=all`);
+      router.push(`/forecast?filter=today`);
     }
     setFilter(filter?.filter || ForecastFilter.ALL);
     refresh(setForecast, setBusy);
