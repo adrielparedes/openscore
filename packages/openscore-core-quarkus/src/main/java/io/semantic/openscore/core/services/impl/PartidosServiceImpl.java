@@ -21,6 +21,7 @@ import io.semantic.openscore.core.model.Rol;
 import io.semantic.openscore.core.repository.EquiposRepository;
 import io.semantic.openscore.core.repository.FaseRepository;
 import io.semantic.openscore.core.repository.GrupoRepository;
+import io.semantic.openscore.core.repository.Page;
 import io.semantic.openscore.core.repository.PartidoRepository;
 import io.semantic.openscore.core.repository.startup.builder.DiaBuilder;
 import io.semantic.openscore.core.security.Secure;
@@ -62,8 +63,7 @@ public class PartidosServiceImpl implements PartidosService {
             long dia,
             String equipo) {
 
-        this.partidoRepository.findAll();
-        List<Partido> partidos = this.partidoRepository.findAll();
+        List<Partido> partidos = this.partidoRepository.findAll(new Page(page, pageSize));
         return ok(this.partidoMapper.asApi(partidos));
     }
 

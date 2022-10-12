@@ -5,9 +5,7 @@ import EmptyScreen from "../../../components/molecules/EmptyScreen";
 import LoadingScreen from "../../../components/molecules/LoadingScreen";
 import Pagination from "../../../components/molecules/Pagination";
 import { layout } from "../../../components/templates/MainLayout";
-import { Equipo } from "../../../model/Equipo";
 import { Partido } from "../../../model/Partido";
-import { EquiposService } from "../../../services/EquiposService";
 import { PartidosService } from "../../../services/PartidosService";
 import { NextPageWithLayout } from "../../_app";
 

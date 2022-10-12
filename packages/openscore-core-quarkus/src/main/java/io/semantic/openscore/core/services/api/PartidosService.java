@@ -25,7 +25,7 @@ public interface PartidosService {
     @GET
     @Path("/")
     ApiResponse<List<PartidoDTO>> getAll(@QueryParam("page") int page,
-            @QueryParam("size") int pageSize,
+            @QueryParam("pageSize") int pageSize,
             @QueryParam("grupo") String grupo,
             @QueryParam("fase") String fase,
             @QueryParam("fecha") long fecha,
