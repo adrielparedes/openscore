@@ -1,5 +1,15 @@
 package io.semantic.openscore.core.services.impl;
 
+import static io.semantic.openscore.core.services.RestUtil.ok;
+
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+import javax.ws.rs.Path;
+
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.equipos.CrearEquipoDTO;
 import io.semantic.openscore.core.api.equipos.EquipoDTO;
@@ -14,19 +24,8 @@ import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.services.api.EquiposService;
 import io.semantic.openscore.core.validation.ApplicationValidator;
 
-import javax.inject.Inject;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.UriInfo;
-import java.text.MessageFormat;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static io.semantic.openscore.core.services.RestUtil.ok;
-
 @Path("equipos")
 public class EquiposServiceImpl implements EquiposService {
-
 
     private PaisRepository paisRepository;
     private EquiposRepository equiposRepository;
@@ -38,9 +37,9 @@ public class EquiposServiceImpl implements EquiposService {
 
     @Inject
     public EquiposServiceImpl(EquiposRepository equiposRepository,
-                              PaisRepository paisRepository,
-                              ApplicationValidator validator,
-                              EquipoMapper mapper) {
+            PaisRepository paisRepository,
+            ApplicationValidator validator,
+            EquipoMapper mapper) {
         this.equiposRepository = equiposRepository;
         this.paisRepository = paisRepository;
         this.validator = validator;
@@ -60,8 +59,8 @@ public class EquiposServiceImpl implements EquiposService {
     @Override
     public ApiResponse<EquipoDTO> get(long id) {
         Equipo equipo = this.equiposRepository
-                .findById(id).orElseThrow(() ->
-                        new RuntimeException(MessageFormat.format("El equipo con el ID: {0} no fue encontrado", id)));
+                .findById(id).orElseThrow(() -> new RuntimeException(
+                        MessageFormat.format("El equipo con el ID: {0} no fue encontrado", id)));
         return ok(map(equipo));
     }
 
@@ -102,5 +101,10 @@ public class EquiposServiceImpl implements EquiposService {
 
     private EquipoDTO map(Equipo equipo) {
         return this.mapper.asApi(equipo);
+    }
+
+    @Override
+    public ApiResponse<Long> count() {
+        return ok(this.equiposRepository.count());
     }
 }

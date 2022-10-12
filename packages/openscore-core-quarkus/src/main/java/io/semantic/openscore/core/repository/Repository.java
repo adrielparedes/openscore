@@ -138,6 +138,10 @@ public abstract class Repository<T extends Storable> {
         return this.findByQuery(query);
     }
 
+    public long count() {
+        return this.findAll().size();
+    }
+
     public List<T> findAll(Map<String, Object> parameters, Map<String, Sort> sort) {
         String queryString = this.buildQuery(parameters, sort);
         TypedQuery<T> query = this.createQuery(queryString);

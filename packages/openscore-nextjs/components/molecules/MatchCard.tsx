@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { ApiResponse } from "../../model/ApiResponse";
 import { Partido } from "../../model/Partido";
 import { PronosticoService } from "../../services/PronosticoService";
+import StatusIndicator from "../atoms/StatusIndicator";
 
 const pronosticoService = new PronosticoService();
 
@@ -64,16 +65,6 @@ const ActiveNavLink = ({
     </li>
   );
 };
-
-const StatusIndicator = ({ children }: PropsWithChildren) => (
-  <div
-    className={`match__status badge rounded-pill ${
-      children === "BLOCKED" ? "text-bg-primary" : "text-bg-info"
-    }`}
-  >
-    {children}
-  </div>
-);
 
 const PhaseIndicator = ({ partido }: { partido: Partido }) => {
   if (partido.fase.codigo === "GRUPO") {

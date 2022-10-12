@@ -148,4 +148,9 @@ public class PartidosServiceImpl implements PartidosService {
                 .orElseThrow(() -> new IllegalArgumentException(MessageFormat
                         .format("El partido <{0}> no fue encontrado", partidoId)));
     }
+
+    @Override
+    public ApiResponse<Long> count() {
+        return ok(this.partidoRepository.count());
+    }
 }

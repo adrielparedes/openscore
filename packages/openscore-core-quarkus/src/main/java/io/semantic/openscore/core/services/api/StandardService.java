@@ -1,11 +1,14 @@
 package io.semantic.openscore.core.services.api;
 
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+
 import io.semantic.openscore.core.api.ApiResponse;
 
-import javax.ws.rs.*;
-
 public interface StandardService<X, Y, Z> {
-
 
     @Path("/{id}")
     @GET
@@ -22,5 +25,6 @@ public interface StandardService<X, Y, Z> {
     @Path("/{id}")
     @POST
     ApiResponse<X> update(@PathParam("id") long id,
-                          Z entity);
+            Z entity);
+
 }

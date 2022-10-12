@@ -10,6 +10,10 @@ export default abstract class Service<X, Y, Z> {
     });
   }
 
+  public count() {
+    return rest.get<ApiResponse<number>>(`${this.serviceUrl}/count`);
+  }
+
   public get(id: number) {
     return rest.get<ApiResponse<X>>(`${this.serviceUrl}/${id}`);
   }

@@ -36,6 +36,10 @@ public interface PartidosService {
     ApiResponse<PartidoDTO> get(@PathParam("id") long id);
 
     @GET
+    @Path("/count")
+    ApiResponse<Long> count();
+
+    @GET
     @Path("/fechas")
     ApiResponse<List<Integer>> getFechas();
 
