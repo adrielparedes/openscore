@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { ApiResponse } from "../../model/ApiResponse";
 import { Partido } from "../../model/Partido";
 import { PronosticoService } from "../../services/PronosticoService";
+import Countdown from "../atoms/Countdown";
 import StatusIndicator from "../atoms/StatusIndicator";
 
 const pronosticoService = new PronosticoService();
@@ -84,6 +85,18 @@ const PhaseIndicator = ({ partido }: { partido: Partido }) => {
   }
 };
 
+const getReturnValues = (countDown: number) => {
+  // calculate time left
+  const days = Math.floor(countDown / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((countDown % (1000 * 60)) / 1000);
+
+  return [days, hours, minutes, seconds];
+};
+
 const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
   return (
     <div
@@ -129,6 +142,9 @@ const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
             Away
           </ActiveNavLink>
         </ul>
+      </div>
+      <div className="card-footer">
+        <Countdown date={partido.dia}></Countdown>
       </div>
     </div>
   );

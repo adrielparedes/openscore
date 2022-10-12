@@ -1,0 +1,15 @@
+.countdown {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  &__item {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    font-family: "Quicksand";
+
+    &--active {
+      color: $danger;
+    }
+  }
+}

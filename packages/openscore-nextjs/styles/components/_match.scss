@@ -53,4 +53,10 @@
       transition: all 0.5s;
     }
   }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
