@@ -143,6 +143,33 @@ const getMatchResultCss = (partido: Partido) => {
   }
 };
 
+const Footer = ({ partido }: { partido: Partido }) => {
+  switch (getMatchResultCss(partido)) {
+    case "hit":
+      return (
+        <div className="card-footer bg-success text-bg-dark">Well done!!!</div>
+      );
+    case "not_hit":
+      return (
+        <div className="card-footer bg-danger text-bg-dark">
+          Better luck next time!
+        </div>
+      );
+    default:
+      return (
+        <div className="card-footer">
+          <Countdown date={partido.dia}></Countdown>
+        </div>
+      );
+  }
+
+  return (
+    <div className="card-footer">
+      <Countdown date={partido.dia}></Countdown>
+    </div>
+  );
+};
+
 const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
   console.log(partido.resultado);
   return (
@@ -191,9 +218,7 @@ const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
           </ActiveNavLink>
         </ul>
       </div>
-      <div className="card-footer">
-        <Countdown date={partido.dia}></Countdown>
-      </div>
+      <Footer partido={partido}></Footer>
     </div>
   );
 };

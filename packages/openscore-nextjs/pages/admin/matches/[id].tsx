@@ -16,17 +16,19 @@ import StatusIndicator from "../../../components/atoms/StatusIndicator";
 const refresh = (
   service: PartidosService,
   setItem: SetterOrUpdater<Partido | undefined>,
-  id: number,
+  id: number | undefined,
   setBusy: SetterOrUpdater<boolean>,
   setEmpty: SetterOrUpdater<boolean>
 ) => {
-  setBusy(true);
-  service.get(id).then((res) => {
-    console.log(res.data.data);
-    setItem(res.data.data);
-    setEmpty(res.data.data === undefined);
-    setBusy(false);
-  });
+  if (id !== undefined) {
+    setBusy(true);
+    service.get(id).then((res) => {
+      console.log(res.data.data);
+      setItem(res.data.data);
+      setEmpty(res.data.data === undefined);
+      setBusy(false);
+    });
+  }
 };
 
 interface FormValues {
