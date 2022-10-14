@@ -2,6 +2,7 @@ import { AxiosError, AxiosPromise } from "axios";
 import { PropsWithChildren, useState } from "react";
 import { toast } from "react-toastify";
 import { ApiResponse } from "../../model/ApiResponse";
+import Ganador from "../../model/Ganador";
 import { Partido } from "../../model/Partido";
 import { PronosticoService } from "../../services/PronosticoService";
 import Countdown from "../atoms/Countdown";
@@ -87,11 +88,68 @@ const PhaseIndicator = ({ partido }: { partido: Partido }) => {
   }
 };
 
+const getMatchResult = (partido: Partido) => {
+  var resultado = Ganador.NONE;
+
+  if (partido.resultado) {
+    const { penales, penalesLocal, penalesVisitante, local, visitante } =
+      partido.resultado;
+    if (local !== undefined && visitante !== undefined) {
+      if (
+        penales &&
+        penalesLocal !== undefined &&
+        penalesVisitante !== undefined
+      ) {
+        if (penalesLocal > penalesVisitante) {
+          resultado = Ganador.LOCAL;
+        } else if (penalesLocal < penalesVisitante) {
+          resultado = Ganador.VISITANTE;
+        } else {
+          resultado = Ganador.EMPATE;
+        }
+      } else {
+        if (local > visitante) {
+          resultado = Ganador.LOCAL;
+        } else if (local < visitante) {
+          resultado = Ganador.VISITANTE;
+        } else {
+          resultado = Ganador.EMPATE;
+        }
+      }
+    }
+  }
+
+  return resultado;
+};
+
+const getMatchResultCss = (partido: Partido) => {
+  const result = getMatchResult(partido);
+
+  if (partido.status === "FINISHED") {
+    switch (result) {
+      case Ganador.NONE:
+        return "not_finished";
+      case Ganador.EMPATE:
+        return partido.pronostico?.empate ? "hit" : "not_hit";
+      case Ganador.LOCAL:
+        return partido.pronostico?.local ? "hit" : "not_hit";
+      case Ganador.VISITANTE:
+        return partido.pronostico?.visitante ? "hit" : "not_hit";
+      default:
+        return "not_hit";
+    }
+  } else {
+    return "not_finished";
+  }
+};
+
 const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
   console.log(partido.resultado);
   return (
     <div
-      className={`match card border-light text-center shadow match--${partido.status.toLowerCase()}`}
+      className={`match card border-light text-center shadow match--${partido.status.toLowerCase()} match__result--${getMatchResultCss(
+        partido
+      )}`}
     >
       <div className="card-header">
         <PhaseIndicator partido={partido}></PhaseIndicator>

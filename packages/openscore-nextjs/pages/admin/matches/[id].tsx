@@ -10,8 +10,8 @@ import { PartidosService } from "../../../services/PartidosService";
 import { NextPageWithLayout } from "../../_app";
 
 import { Field, Form, Formik } from "formik";
-import StatusIndicator from "../../../components/atoms/StatusIndicator";
 import { useRouter } from "next/router";
+import StatusIndicator from "../../../components/atoms/StatusIndicator";
 
 const refresh = (
   service: PartidosService,
@@ -61,8 +61,8 @@ const SetResult: NextPageWithLayout = () => {
     penalesVisitante: undefined,
   };
 
-  const id: number = 1;
   const router = useRouter();
+  const { id } = router.query;
   const service = new PartidosService();
   const [item, setItem] = useState<Partido>();
   const [isEmpty, setEmpty] = useState<boolean>(false);

@@ -91,7 +91,7 @@ const Matches: NextPageWithLayout = () => {
                   <td>
                     <Link
                       className="btn btn-primary"
-                      href="/admin/matches/setresult"
+                      href={`/admin/matches/${elem.id}`}
                     >
                       <a className="btn btn-primary">Set Result</a>
                     </Link>
