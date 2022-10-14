@@ -5,6 +5,7 @@ import { ApiResponse } from "../../model/ApiResponse";
 import { Partido } from "../../model/Partido";
 import { PronosticoService } from "../../services/PronosticoService";
 import Countdown from "../atoms/Countdown";
+import Result from "../atoms/Result";
 import StatusIndicator from "../atoms/StatusIndicator";
 
 const pronosticoService = new PronosticoService();
@@ -87,6 +88,7 @@ const PhaseIndicator = ({ partido }: { partido: Partido }) => {
 };
 
 const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
+  console.log(partido.resultado);
   return (
     <div
       className={`match card border-light text-center shadow match--${partido.status.toLowerCase()}`}
@@ -98,11 +100,7 @@ const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
         {/* <h5 className="card-title">FIFA World Cup - Qatar 2022</h5> */}
         <div className="match__results">
           <TeamFlag src={partido.local.codigo}></TeamFlag>
-          <div className="match__score">
-            {`${partido.resultado?.local || "-"} : ${
-              partido.resultado?.visitante || "-"
-            }`}
-          </div>
+          <Result className="match__score" partido={partido}></Result>
           <TeamFlag src={partido.visitante.codigo}></TeamFlag>
           <div className="match__team">{partido.local.nombre}</div>
           <StatusIndicator>{partido.status}</StatusIndicator>

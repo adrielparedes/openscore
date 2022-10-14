@@ -1,5 +1,17 @@
 package io.semantic.openscore.core.services.impl;
 
+import static io.semantic.openscore.core.services.RestUtil.ok;
+
+import java.text.MessageFormat;
+import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.semantic.openscore.core.api.ApiResponse;
 import io.semantic.openscore.core.api.pronosticos.CrearPronosticoDTO;
 import io.semantic.openscore.core.api.pronosticos.PartidoPronosticoDTO;
@@ -16,20 +28,6 @@ import io.semantic.openscore.core.repository.UsuarioRepository;
 import io.semantic.openscore.core.services.UserInfo;
 import io.semantic.openscore.core.services.api.PronosticosService;
 import io.semantic.openscore.core.validation.ApplicationValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import java.text.MessageFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-
-import static io.semantic.openscore.core.services.RestUtil.ok;
 
 @ApplicationScoped
 public class PronosticosServiceImpl implements PronosticosService {
@@ -49,12 +47,12 @@ public class PronosticosServiceImpl implements PronosticosService {
 
     @Inject
     public PronosticosServiceImpl(UserInfo userInfo,
-                                  PronosticoRepository pronosticoRepository,
-                                  PartidoRepository partidoRepository,
-                                  UsuarioRepository usuarioRepository,
-                                  ApplicationValidator validator,
-                                  PartidoMapper partidoMapper,
-                                  PronosticoMapper pronosticoMapper) {
+            PronosticoRepository pronosticoRepository,
+            PartidoRepository partidoRepository,
+            UsuarioRepository usuarioRepository,
+            ApplicationValidator validator,
+            PartidoMapper partidoMapper,
+            PronosticoMapper pronosticoMapper) {
         this.userInfo = userInfo;
         this.pronosticoRepository = pronosticoRepository;
         this.partidoRepository = partidoRepository;
@@ -66,19 +64,26 @@ public class PronosticosServiceImpl implements PronosticosService {
 
     @Override
     public ApiResponse<List<PartidoPronosticoDTO>> getAll(int page,
-                                                          int pageSize,
-                                                          String grupo,
-                                                          String fase,
-                                                          long dia,
-                                                          int fecha) {
+            int pageSize,
+            String grupo,
+            String fase,
+            long dia,
+            int fecha) {
 
         List<Partido> partidos = getPartidos(grupo, dia, fase, fecha);
+
         List<Pronostico> pronosticos = this.pronosticoRepository.findByUsuario(userInfo.getUserId());
 
-        logger.info("Pronosticos encontrados para el usuario {}: {}", this.userInfo.getUsuario().get().getEmail(), pronosticos.size());
-
+        logger.info("Pronosticos encontrados para el usuario {}: {}", this.userInfo.getUsuario().get().getEmail(),
+                pronosticos.size());
 
         List<PartidoPronosticoDTO> partidoDTOs = this.pronosticoMapper.asApiPronostico(partidos);
+
+        for (PartidoPronosticoDTO partido : partidoDTOs) {
+            if (partido.getResultado() != null) {
+                logger.info("The Object {}", partido.getResultado().isPenales());
+            }
+        }
 
         partidoDTOs.forEach(partidoPronosticoDTO -> {
             pronosticos.forEach(pronostico -> {
@@ -87,7 +92,6 @@ public class PronosticosServiceImpl implements PronosticosService {
                 }
             });
         });
-
 
         return ok(partidoDTOs);
     }
@@ -99,7 +103,7 @@ public class PronosticosServiceImpl implements PronosticosService {
             return this.partidoRepository.findAllByFase(fase);
         } else if (fecha > 0) {
             return this.partidoRepository.findAllByFecha(fecha);
-        } else if ( dia > 0) {
+        } else if (dia > 0) {
             return this.partidoRepository.findAllByDia(dia);
         } else {
             return this.partidoRepository.findAll();
@@ -127,7 +131,7 @@ public class PronosticosServiceImpl implements PronosticosService {
 
     @Override
     public ApiResponse<PronosticoDTO> update(long id,
-                                             CrearPronosticoDTO entity) {
+            CrearPronosticoDTO entity) {
         long idUsuario = this.userInfo.getUserId();
         validator.validate(entity);
 
@@ -146,7 +150,7 @@ public class PronosticosServiceImpl implements PronosticosService {
     }
 
     private Pronostico getPronostico(long id,
-                                     long idUsuario) {
+            long idUsuario) {
         return this.pronosticoRepository
                 .findById(id,
                         idUsuario)
@@ -211,18 +215,18 @@ public class PronosticosServiceImpl implements PronosticosService {
     }
 
     private Pronostico getPronosticoOrCreatePronostico(long idPartido,
-                                                       long idUsuario) {
+            long idUsuario) {
         return this.pronosticoRepository.findByPartidoAndUsuario(idPartido,
                 idUsuario).orElseGet(() -> {
-            Pronostico pronostico = new Pronostico();
-            Partido partido = getPartido(idPartido);
-            pronostico.setPartido(partido);
-            Usuario usuario = getUsuario(idUsuario);
-            usuario.addPronostico(pronostico);
+                    Pronostico pronostico = new Pronostico();
+                    Partido partido = getPartido(idPartido);
+                    pronostico.setPartido(partido);
+                    Usuario usuario = getUsuario(idUsuario);
+                    usuario.addPronostico(pronostico);
 
-            this.pronosticoRepository.save(pronostico);
-            this.usuarioRepository.save(usuario);
-            return pronostico;
-        });
+                    this.pronosticoRepository.save(pronostico);
+                    this.usuarioRepository.save(usuario);
+                    return pronostico;
+                });
     }
 }

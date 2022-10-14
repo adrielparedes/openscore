@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { SetterOrUpdater } from "recoil";
+import TeamFlag from "../../../components/atoms/TeamFlag";
 import EmptyScreen from "../../../components/molecules/EmptyScreen";
 import LoadingScreen from "../../../components/molecules/LoadingScreen";
 import Pagination from "../../../components/molecules/Pagination";
@@ -7,12 +8,6 @@ import { layout } from "../../../components/templates/MainLayout";
 import { Equipo } from "../../../model/Equipo";
 import { EquiposService } from "../../../services/EquiposService";
 import { NextPageWithLayout } from "../../_app";
-
-const TeamFlag = ({ src }: { src: string }) => (
-  <div className="match__flag">
-    <img src={`https://countryflagsapi.com/png/${src}`}></img>
-  </div>
-);
 
 const refresh = (
   service: EquiposService,
@@ -73,7 +68,7 @@ const Teams: NextPageWithLayout = () => {
             </tbody>
             <tfoot>
               <tr>
-                <td>
+                <td colSpan={5}>
                   <Pagination
                     page={page}
                     setPage={(p: number) => {

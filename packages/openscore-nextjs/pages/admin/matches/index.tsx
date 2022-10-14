@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SetterOrUpdater } from "recoil";
+import Result from "../../../components/atoms/Result";
 import StatusIndicator from "../../../components/atoms/StatusIndicator";
 import EmptyScreen from "../../../components/molecules/EmptyScreen";
 import LoadingScreen from "../../../components/molecules/LoadingScreen";
@@ -81,20 +83,25 @@ const Matches: NextPageWithLayout = () => {
                   <td>{elem.fecha}</td>
                   <td>{elem.lugar}</td>
                   <td>
-                    {`${elem.resultado?.local || "-"} : ${
-                      elem.resultado?.visitante || "-"
-                    }`}
+                    <Result partido={elem}></Result>
                   </td>
                   <td>
                     <StatusIndicator>{elem.status}</StatusIndicator>
                   </td>
-                  <td></td>
+                  <td>
+                    <Link
+                      className="btn btn-primary"
+                      href="/admin/matches/setresult"
+                    >
+                      <a className="btn btn-primary">Set Result</a>
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>
             <tfoot>
               <tr>
-                <td>
+                <td colSpan={10}>
                   <Pagination
                     page={page}
                     setPage={(p: number) => {

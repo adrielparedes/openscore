@@ -1,0 +1,25 @@
+.setresult {
+  .result {
+    &__container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+    &__team {
+      display: flex;
+      flex-direction: column;
+    }
+    &__score {
+      font-family: $display-font-family;
+      font-size: 2rem;
+      display: flex;
+      flex-direction: row;
+    }
+    &__penales {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}

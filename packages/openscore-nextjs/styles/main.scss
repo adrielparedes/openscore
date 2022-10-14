@@ -41,6 +41,9 @@ $theme-colors: (
 @import "components/empty_screen";
 @import "components/login";
 @import "components/countdown";
+@import "components/table";
+
+@import "pages/setresult";
 
 body {
   background-color: $gray-200;

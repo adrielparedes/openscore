@@ -126,14 +126,14 @@ public abstract class Repository<T extends Storable> {
     }
 
     public List<T> findAll(Page page) {
-        TypedQuery<T> query = this.createQuery(MessageFormat.format("from {0}",
+        TypedQuery<T> query = this.createQuery(MessageFormat.format("from {0} ORDER BY id ASC",
                 this.persistentClass.getSimpleName()));
         return this.findByQuery(query,
                 page);
     }
 
     public List<T> findAll() {
-        TypedQuery<T> query = this.createQuery(MessageFormat.format("from {0}",
+        TypedQuery<T> query = this.createQuery(MessageFormat.format("from {0} ORDER BY id ASC",
                 this.persistentClass.getSimpleName()));
         return this.findByQuery(query);
     }
