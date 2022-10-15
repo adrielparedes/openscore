@@ -4,8 +4,6 @@ import io.semantic.openscore.core.api.equipos.EquipoDTO;
 import io.semantic.openscore.core.api.grupos.FaseDTO;
 import io.semantic.openscore.core.api.grupos.GrupoDTO;
 
-import java.util.Date;
-
 public class PartidoDTO {
 
     private long id;

@@ -8,36 +8,36 @@ import javax.persistence.OneToOne;
 public class Resultado {
 
     @Column(nullable = true)
-    private int local;
+    private Integer local;
 
     @Column(nullable = true)
-    private int visitante;
+    private Integer visitante;
 
     @Column(nullable = true)
     private boolean penales;
 
     @Column(nullable = true)
-    private int penalesLocal;
+    private Integer penalesLocal;
 
     @Column(nullable = true)
-    private int penalesVisitante;
+    private Integer penalesVisitante;
 
     @OneToOne
     private Partido partido;
 
-    public int getLocal() {
+    public Integer getLocal() {
         return local;
     }
 
-    public void setLocal(int local) {
+    public void setLocal(Integer local) {
         this.local = local;
     }
 
-    public int getVisitante() {
+    public Integer getVisitante() {
         return visitante;
     }
 
-    public void setVisitante(int visitante) {
+    public void setVisitante(Integer visitante) {
         this.visitante = visitante;
     }
 
@@ -70,19 +70,19 @@ public class Resultado {
         this.partido = partido;
     }
 
-    public int getPenalesLocal() {
+    public Integer getPenalesLocal() {
         return penalesLocal;
     }
 
-    public void setPenalesLocal(int penalesLocal) {
+    public void setPenalesLocal(Integer penalesLocal) {
         this.penalesLocal = penalesLocal;
     }
 
-    public int getPenalesVisitante() {
+    public Integer getPenalesVisitante() {
         return penalesVisitante;
     }
 
-    public void setPenalesVisitante(int penalesVisitante) {
+    public void setPenalesVisitante(Integer penalesVisitante) {
         this.penalesVisitante = penalesVisitante;
     }
 

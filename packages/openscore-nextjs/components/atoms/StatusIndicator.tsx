@@ -5,7 +5,7 @@ const getCss = (status: ReactNode) => {
     case "BLOCKER":
       return "text-bg-primary";
     case "FINISHED":
-      return "text-bg-success";
+      return "text-bg-info";
     case "PENDING":
       return "text-bg-warning";
     default:

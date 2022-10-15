@@ -2,25 +2,25 @@ package io.semantic.openscore.core.api.partidos;
 
 public class ResultadoDTO {
 
-    private int local;
-    private int visitante;
+    private Integer local;
+    private Integer visitante;
     private boolean penales;
-    private int penalesLocal;
-    private int penalesVisitante;
+    private Integer penalesLocal;
+    private Integer penalesVisitante;
 
-    public int getLocal() {
+    public Integer getLocal() {
         return local;
     }
 
-    public void setLocal(int local) {
+    public void setLocal(Integer local) {
         this.local = local;
     }
 
-    public int getVisitante() {
+    public Integer getVisitante() {
         return visitante;
     }
 
-    public void setVisitante(int visitante) {
+    public void setVisitante(Integer visitante) {
         this.visitante = visitante;
     }
 
@@ -32,19 +32,19 @@ public class ResultadoDTO {
         this.penales = penales;
     }
 
-    public int getPenalesLocal() {
+    public Integer getPenalesLocal() {
         return penalesLocal;
     }
 
-    public void setPenalesLocal(int penalesLocal) {
+    public void setPenalesLocal(Integer penalesLocal) {
         this.penalesLocal = penalesLocal;
     }
 
-    public int getPenalesVisitante() {
+    public Integer getPenalesVisitante() {
         return penalesVisitante;
     }
 
-    public void setPenalesVisitante(int penalesVisitante) {
+    public void setPenalesVisitante(Integer penalesVisitante) {
         this.penalesVisitante = penalesVisitante;
     }
 }
