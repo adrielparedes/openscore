@@ -71,7 +71,7 @@ const SetResult: NextPageWithLayout = () => {
   const [busy, setBusy] = useState<boolean>(false);
 
   useEffect(() => {
-    refresh(service, setItem, id, setBusy, setEmpty);
+    refresh(service, setItem, Number(id), setBusy, setEmpty);
   }, [setItem, setEmpty]);
 
   return (
@@ -83,7 +83,7 @@ const SetResult: NextPageWithLayout = () => {
             initialValues={item?.resultado || initialValues}
             onSubmit={(values, actions) => {
               service
-                .resultado(id, values)
+                .resultado(Number(id), values)
                 .then((res) => router.push("/admin/matches"));
               actions.setSubmitting(false);
             }}
