@@ -165,7 +165,6 @@ const Footer = ({ partido }: { partido: Partido }) => {
 };
 
 const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
-  console.log(partido.resultado);
   return (
     <div
       className={`match card border-light text-center shadow match--${partido.status.toLowerCase()} match__result--${getMatchResultCss(

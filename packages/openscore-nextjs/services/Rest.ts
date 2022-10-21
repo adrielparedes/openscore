@@ -1,5 +1,4 @@
 import axios from "axios";
-import { TOKEN_KEY } from "../states/SecurityState";
 
 // Set config defaults when creating the instance
 const rest = axios.create({

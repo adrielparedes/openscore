@@ -8,6 +8,6 @@
   "private": true,
   "scripts": {
     "build": "mvn clean package",
-    "dev": "mvn clean package quarkus:dev -Duser.timezone=UTC"
+    "dev": "mvn clean package quarkus:dev -Duser.timezone=UTC -Dquarkus.http.host=0.0.0.0"
   }
 }
