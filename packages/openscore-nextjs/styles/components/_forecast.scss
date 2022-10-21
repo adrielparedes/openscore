@@ -9,5 +9,13 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
+
+    @include phone {
+      grid-template-columns: 1fr;
+    }
+
+    @include tablet {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 }
