@@ -162,12 +162,6 @@ const Footer = ({ partido }: { partido: Partido }) => {
         </div>
       );
   }
-
-  return (
-    <div className="card-footer">
-      <Countdown date={partido.dia}></Countdown>
-    </div>
-  );
 };
 
 const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {

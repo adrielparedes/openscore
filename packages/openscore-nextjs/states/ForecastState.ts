@@ -34,7 +34,9 @@ export const filteredForecastState = selector({
     switch (filter) {
       case ForecastFilter.TODAY:
         return forecastList.filter(
-          (partido) => new Date(partido.dia).getDate() === new Date().getDate()
+          (partido) =>
+            new Date(partido.dia).getDate() === new Date().getDate() &&
+            new Date(partido.dia).getMonth() === new Date().getMonth()
         );
       case ForecastFilter.REMAINING:
         return forecastList.filter((partido) => {

@@ -14,7 +14,6 @@ const Countdown = ({ date }: CountdownProps) => {
     };
   }, []);
 
-  const d = new Date(date);
   var difference_ms = Math.abs(date - time);
 
   difference_ms = difference_ms / 1000;
@@ -25,29 +24,33 @@ const Countdown = ({ date }: CountdownProps) => {
   const hours = Math.floor(difference_ms % 24);
   const days = Math.floor(difference_ms / 24);
 
-  return (
-    <div className="countdown">
-      <div className="countdown__item countdown__item--active">
-        <div>{days}</div>
-        <div>Days</div>
+  if (date - time > 0) {
+    return (
+      <div className="countdown">
+        <div className="countdown__item countdown__item--active">
+          <div>{days}</div>
+          <div>Days</div>
+        </div>
+        <div>:</div>
+        <div className="countdown__item">
+          <div>{hours}</div>
+          <div>Hours</div>
+        </div>
+        <div>:</div>
+        <div className="countdown__item">
+          <div>{minutes}</div>
+          <div>Minutes</div>
+        </div>
+        <div>:</div>
+        <div className="countdown__item">
+          <div>{seconds}</div>
+          <div>Seconds</div>
+        </div>
       </div>
-      <div>:</div>
-      <div className="countdown__item">
-        <div>{hours}</div>
-        <div>Hours</div>
-      </div>
-      <div>:</div>
-      <div className="countdown__item">
-        <div>{minutes}</div>
-        <div>Minutes</div>
-      </div>
-      <div>:</div>
-      <div className="countdown__item">
-        <div>{seconds}</div>
-        <div>Seconds</div>
-      </div>
-    </div>
-  );
+    );
+  } else {
+    return <div className="countdown">Good Luck!</div>;
+  }
 };
 
 export default Countdown;
