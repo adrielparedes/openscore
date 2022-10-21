@@ -33,6 +33,22 @@ const refresh = (
   });
 };
 
+const Actions = ({ elem }: { elem: Partido }) => {
+  return (
+    <div className="btn-group">
+      <Link className="btn btn-primary" href={`/admin/matches/${elem.id}`}>
+        <a className="btn btn-primary">Set Result</a>
+      </Link>
+      <Link className="btn btn-primary" href={`/admin/matches/${elem.id}`}>
+        <a className="btn btn-warning">Edit</a>
+      </Link>
+      <Link className="btn btn-primary" href={`/admin/matches/${elem.id}`}>
+        <a className="btn btn-danger">Delete</a>
+      </Link>
+    </div>
+  );
+};
+
 const TableView = ({ list }: { list: Partido[] }) => {
   return (
     <table className="table table-striped">
@@ -72,12 +88,7 @@ const TableView = ({ list }: { list: Partido[] }) => {
               <StatusIndicator>{elem.status}</StatusIndicator>
             </td>
             <td>
-              <Link
-                className="btn btn-primary"
-                href={`/admin/matches/${elem.id}`}
-              >
-                <a className="btn btn-primary">Set Result</a>
-              </Link>
+              <Actions elem={elem}></Actions>
             </td>
           </tr>
         ))}
@@ -103,26 +114,7 @@ const CardView = ({ list }: { list: Partido[] }) => {
               <StatusIndicator>{elem.status}</StatusIndicator>
               <div className="match__team">{elem.visitante.nombre}</div>
             </div>
-            <div className="btn-group">
-              <Link
-                className="btn btn-primary"
-                href={`/admin/matches/${elem.id}`}
-              >
-                <a className="btn btn-primary">Set Result</a>
-              </Link>
-              <Link
-                className="btn btn-primary"
-                href={`/admin/matches/${elem.id}`}
-              >
-                <a className="btn btn-warning">Edit</a>
-              </Link>
-              <Link
-                className="btn btn-primary"
-                href={`/admin/matches/${elem.id}`}
-              >
-                <a className="btn btn-danger">Delete</a>
-              </Link>
-            </div>
+            <Actions elem={elem}></Actions>
           </div>
         </div>
       ))}
