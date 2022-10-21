@@ -5,4 +5,5 @@ export interface Usuario {
   apellido: string;
   email: string;
   pais: Pais;
+  roles: string[];
 }

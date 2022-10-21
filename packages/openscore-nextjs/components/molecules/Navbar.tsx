@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import routes, { Route } from "../../routes";
 import logo from "../../images/logo-white.png";
+import routes, { Route } from "../../routes";
+import UserIndicator from "../atoms/UserIndicator";
 
 const NavItem = ({ route }: { route: Route }) => {
   const router = useRouter();
@@ -86,6 +87,9 @@ const Navbar = () => (
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           {routes.map((r) => getNavItem(r))}
+        </ul>
+        <ul className="navbar-nav mb-2 mb-lg-0">
+          <UserIndicator></UserIndicator>
         </ul>
       </div>
     </div>

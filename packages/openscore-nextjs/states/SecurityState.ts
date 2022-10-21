@@ -1,5 +1,6 @@
 import jwtDecode, { JwtPayload } from "jwt-decode";
-import { atom, selector } from "recoil";
+import { atom, RecoilValue, selector } from "recoil";
+import { Usuario } from "../model/Usuario";
 
 const isRoleIncluded = (token: string, role: string) => {
   try {
@@ -41,6 +42,20 @@ export const isLoggerInState = selector({
     return false;
   },
 });
+
+export const userState: RecoilValue<(JwtPayload & Usuario) | undefined> =
+  selector({
+    key: "user",
+    get: ({ get }) => {
+      const token = get(tokenState);
+      try {
+        const decoded = jwtDecode<JwtPayload & Usuario>(token);
+        return decoded;
+      } catch (e) {
+        return undefined;
+      }
+    },
+  });
 
 export const isAdminState = selector({
   key: "isAdmin",

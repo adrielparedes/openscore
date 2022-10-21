@@ -1,9 +1,8 @@
-import { Pais } from './pais';
+import { Pais } from "./pais";
 export class Usuario {
-
-    id: number;
-    nombre: string;
-    apellido: string;
-    email: string;
-    pais: Pais;
+  id: number;
+  nombre: string;
+  apellido: string;
+  email: string;
+  pais: Pais;
 }
