@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { SetterOrUpdater, useRecoilValue, useSetRecoilState } from "recoil";
 import EmptyScreen from "../../components/molecules/EmptyScreen";
-import { layout } from "../../components/templates/MainLayout";
 import LoadingScreen from "../../components/molecules/LoadingScreen";
 import MatchCard from "../../components/molecules/MatchCard";
+import { layout } from "../../components/templates/MainLayout";
 import { Partido } from "../../model/Partido";
 import { PronosticoService } from "../../services/PronosticoService";
 import {
@@ -116,6 +116,19 @@ const Forecasts: NextPageWithLayout = () => {
     <div className="forecast">
       <h1>Forecast</h1>
       <div className="forecast__main">
+        <div
+          className="alert alert-warning alert-dismissible fade show"
+          role="alert"
+        >
+          The matches will be blocked <strong>15 minutes</strong> before the
+          match!
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
         <div className="forecast__tabs">
           <ul className="nav nav-pills">
             {filters.map((f) => (
