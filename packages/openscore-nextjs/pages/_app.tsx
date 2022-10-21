@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { ReactElement, ReactNode, useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RecoilRoot, useRecoilState } from "recoil";
 import rest from "../services/Rest";
@@ -31,6 +31,7 @@ const SecurityContext = () => {
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
+    require("bootstrap-icons/font/bootstrap-icons.css");
   }, []);
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);

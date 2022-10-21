@@ -12,6 +12,7 @@
     "@types/jwt-decode": "^3.1.0",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
+    "bootstrap-icons": "^1.9.1",
     "formik": "^2.2.9",
     "jwt-decode": "^3.1.2",
     "next": "12.2.5",

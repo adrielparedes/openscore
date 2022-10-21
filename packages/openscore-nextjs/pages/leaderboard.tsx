@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import TeamFlag from "../components/atoms/TeamFlag";
 import EmptyScreen from "../components/molecules/EmptyScreen";
 import LoadingScreen from "../components/molecules/LoadingScreen";
 import { layout } from "../components/templates/MainLayout";
@@ -17,10 +18,11 @@ const Leaderboard: NextPageWithLayout = () => {
     setBusy(true);
     setFilter("");
     service
-      .getAll("", 1)
+      .getAll("", 400)
       .then((res) => {
         setLeaderboard(res.data.data);
         setFilteredLeaderboard(res.data.data);
+        console.log(res.data.data);
         setBusy(false);
       })
       .catch((err) => {
@@ -46,53 +48,39 @@ const Leaderboard: NextPageWithLayout = () => {
 
       <LoadingScreen busy={busy}>
         <EmptyScreen isEmpty={leaderboard.length < 1}>
-          <div className="top__three mb-4">
-            <h5>Top 3</h5>
+          <div className="input-group mb-3">
+            <span className="input-group-text" id="basic-addon1">
+              <i className="bi bi-search"></i>
+            </span>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search..."
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+              onChange={(content) => setFilter(content.target.value)}
+            ></input>
+          </div>
+          <div className="mt-4">
             <div className="leaderboard">
               {filteredLeaderboard.map((l) => (
                 <div
                   key={l.nombre}
-                  className="card border-light leaderboard__line"
+                  className={`card border-light leaderboard__line leaderboard--${l.ranking}`}
                 >
                   <div className="card-body ">
-                    <div className="leaderboard__left">
+                    <div className="leaderboard__user">
                       <div className="leaderboard__nombre">{l.nombre}</div>
                       <div className="leaderboard__puntos">
                         Score: {l.puntos} points
                       </div>
                     </div>
-                    <div className="leaderboard__country">{l.pais}</div>
-                    <div
-                      className={`leaderboard__position leaderboard__position--${l.ranking}`}
-                    >
+                    <div className="leaderboard__country">
+                      <span>{l.pais}</span> <TeamFlag src={l.pais}></TeamFlag>
+                    </div>
+                    <div className={`leaderboard__position`}>
                       <span>{l.ranking}</span>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="others">
-            <h5>Others</h5>
-            <div className="leaderboard">
-              <input
-                placeholder="Search..."
-                onChange={(content) => setFilter(content.target.value)}
-              ></input>
-              {filteredLeaderboard.map((l) => (
-                <div
-                  key={l.nombre}
-                  className="card border-light leaderboard__line"
-                >
-                  <div className="card-body ">
-                    <div className="leaderboard__left">
-                      <div className="leaderboard__nombre">{l.nombre}</div>
-                      <div className="leaderboard__puntos">
-                        Score: {l.puntos} points
-                      </div>
-                    </div>
-                    <div className="leaderboard__country">{l.pais}</div>
-                    <div className="leaderboard__position">{l.ranking}</div>
                   </div>
                 </div>
               ))}

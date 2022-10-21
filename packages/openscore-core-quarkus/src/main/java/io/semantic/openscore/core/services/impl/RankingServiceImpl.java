@@ -30,7 +30,7 @@ public class RankingServiceImpl implements RankingService {
 
     @Inject
     public RankingServiceImpl(UsuarioRepository usuarioRepository,
-                              PaisRepository paisRepository) {
+            PaisRepository paisRepository) {
         this.usuarioRepository = usuarioRepository;
         this.paisRepository = paisRepository;
     }
@@ -50,7 +50,6 @@ public class RankingServiceImpl implements RankingService {
 
     @Override
     public ApiResponse<List<Ranking>> getAllRanking(String pais, int size) {
-
 
         List<Usuario> usuarios;
 
