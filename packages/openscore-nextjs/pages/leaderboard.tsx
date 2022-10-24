@@ -35,7 +35,11 @@ const Leaderboard: NextPageWithLayout = () => {
   useEffect(() => {
     if (filter !== undefined && filter.length > 0) {
       setFilteredLeaderboard(
-        leaderboard.filter((l) => l.nombre.includes(filter))
+        leaderboard.filter(
+          (l) =>
+            l.nombre.toLowerCase().includes(filter.toLowerCase()) ||
+            l.pais.toLowerCase().includes(filter.toLowerCase())
+        )
       );
     } else {
       setFilteredLeaderboard(leaderboard);
@@ -46,21 +50,21 @@ const Leaderboard: NextPageWithLayout = () => {
     <div>
       <h1>Leaderboard</h1>
 
+      <div className="input-group mb-3">
+        <span className="input-group-text" id="basic-addon1">
+          <i className="bi bi-search"></i>
+        </span>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search..."
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          onChange={(content) => setFilter(content.target.value)}
+        ></input>
+      </div>
       <LoadingScreen busy={busy}>
-        <EmptyScreen isEmpty={leaderboard.length < 1}>
-          <div className="input-group mb-3">
-            <span className="input-group-text" id="basic-addon1">
-              <i className="bi bi-search"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search..."
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-              onChange={(content) => setFilter(content.target.value)}
-            ></input>
-          </div>
+        <EmptyScreen isEmpty={filteredLeaderboard.length < 1}>
           <div className="mt-4">
             <div className="leaderboard">
               {filteredLeaderboard.map((l) => (
