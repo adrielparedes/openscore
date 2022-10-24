@@ -4,6 +4,10 @@
   grid-template-columns: 0.7fr 1fr;
   background-color: white;
 
+  &__error {
+    color: $danger;
+  }
+
   &__form {
     display: flex;
     flex-direction: column;

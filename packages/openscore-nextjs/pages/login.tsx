@@ -43,14 +43,12 @@ const Login: NextPage = () => {
                 const errors = {};
                 if (!values.email) {
                   // errors.email = "Required";
-                } else if (
-                  !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                ) {
+                } else if (!/^[A-Z0-9._%+-]+@redhat.com$/i.test(values.email)) {
                   // errors.email = "Invalid email address";
                 }
                 return errors;
               }}
-              onSubmit={(values, { setSubmitting }) => {
+              onSubmit={(values, { setSubmitting, setFieldError }) => {
                 setSubmitting(true);
 
                 new UsuarioService()
@@ -63,7 +61,8 @@ const Login: NextPage = () => {
                     setSubmitting(false);
                   })
                   .catch((err) => {
-                    alert(err);
+                    console.log(err);
+                    setFieldError("password", "User or password not found");
                     setSubmitting(false);
                   });
               }}
@@ -101,7 +100,9 @@ const Login: NextPage = () => {
                       value={values.password}
                       className="form-control"
                     />
-                    {errors.password && touched.password && errors.password}
+                    <span className="login__error">
+                      {errors.password && touched.password && errors.password}
+                    </span>
                   </div>
                   <button
                     type="submit"
