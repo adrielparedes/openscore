@@ -1,6 +1,7 @@
 import { Equipo } from "./Equipo";
 import { Fase } from "./Fase";
 import { Grupo } from "./Grupo";
+import MatchStatus from "./MatchStatus";
 import { Pronostico } from "./Pronostico";
 import { Resultado } from "./Resultado";
 
@@ -14,6 +15,6 @@ export interface Partido {
   resultado: Resultado;
   grupo: Grupo;
   fase: Fase;
-  status: string;
+  status: MatchStatus;
   pronostico: Pronostico;
 }

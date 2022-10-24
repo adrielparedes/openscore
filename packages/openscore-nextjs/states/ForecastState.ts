@@ -40,7 +40,9 @@ export const filteredForecastState = selector({
         );
       case ForecastFilter.REMAINING:
         return forecastList.filter((partido) => {
-          return partido.pronostico === undefined;
+          return (
+            partido.pronostico === undefined && partido.status === "PENDING"
+          );
         });
       case ForecastFilter.GROUP_A:
         return filterByGroup(forecastList, "A");
