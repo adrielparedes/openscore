@@ -105,11 +105,16 @@ const Forecasts: NextPageWithLayout = () => {
   const filter = filters.find((f) => f.link === router.query["filter"]);
 
   useEffect(() => {
-    if (router.query["filter"] === undefined) {
-      router.push(`/forecast?filter=today`);
+    setBusy(true);
+    if (router.isReady) {
+      console.log("filtro", router.query["filter"]);
+      if (router.query["filter"] === undefined) {
+        router.push(`/forecast?filter=today`);
+      }
+
+      setFilter(filter?.filter || ForecastFilter.ALL);
+      refresh(setForecast, setBusy);
     }
-    setFilter(filter?.filter || ForecastFilter.ALL);
-    refresh(setForecast, setBusy);
   }, [setForecast, filter]);
 
   return (
