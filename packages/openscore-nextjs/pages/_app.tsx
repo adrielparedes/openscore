@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import { ReactElement, ReactNode, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,14 +18,16 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const SecurityContext = () => {
+  const router = useRouter();
   const [token, setToken] = useRecoilState(tokenState);
   useEffect(() => {
     const token = localStorage.getItem(TOKEN_KEY);
     setToken(token || "");
-  }, []);
-  useEffect(() => {
     rest.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  }, [token]);
+    if (!token) {
+      router.push("/login");
+    }
+  }, []);
   return <></>;
 };
 

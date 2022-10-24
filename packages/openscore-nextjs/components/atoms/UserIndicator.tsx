@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../states/SecurityState";
 
@@ -14,7 +15,15 @@ const UserIndicator = () => {
       >
         {user?.email}
       </a>
-      <ul className="dropdown-menu dropdown-menu-dark"></ul>
+      <ul className="dropdown-menu dropdown-menu-dark">
+        <li>
+          <Link href={"/logout"}>
+            <a className="dropdown-item" href="#">
+              Logout
+            </a>
+          </Link>
+        </li>
+      </ul>
     </li>
   );
 };
