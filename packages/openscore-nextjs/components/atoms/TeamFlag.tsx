@@ -1,13 +1,19 @@
-const TeamFlag = ({ src }: { src: string | undefined }) => {
+const TeamFlag = ({
+  src,
+  className,
+}: {
+  src: string | undefined;
+  className?: string;
+}) => {
   if (src) {
     return (
-      <div className="match__flag shadow">
+      <div className={`match__flag shadow ${className}`}>
         <img src={`https://countryflagsapi.com/png/${src}`}></img>
       </div>
     );
   } else {
     return (
-      <div className="match__flag shadow">
+      <div className={`match__flag shadow ${className}`}>
         <div>NF</div>
       </div>
     );

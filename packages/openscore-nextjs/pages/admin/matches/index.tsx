@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { SetterOrUpdater } from "recoil";
+import { SetterOrUpdater, useRecoilValue } from "recoil";
 import PhaseIndicator from "../../../components/atoms/PhaseIndicator";
 import Result from "../../../components/atoms/Result";
 import StatusIndicator from "../../../components/atoms/StatusIndicator";
@@ -8,9 +8,10 @@ import EmptyScreen from "../../../components/molecules/EmptyScreen";
 import LoadingScreen from "../../../components/molecules/LoadingScreen";
 import Pagination from "../../../components/molecules/Pagination";
 import { layout } from "../../../components/templates/MainLayout";
-import useWindowDimensions from "../../../hooks/Hooks";
+import { useSecure, useWindowDimensions } from "../../../hooks/Hooks";
 import { Partido } from "../../../model/Partido";
 import { PartidosService } from "../../../services/PartidosService";
+import { isAdminState } from "../../../states/SecurityState";
 import { NextPageWithLayout } from "../../_app";
 
 const TeamFlag = ({ src }: { src: string }) => (
@@ -36,7 +37,10 @@ const refresh = (
 const Actions = ({ elem }: { elem: Partido }) => {
   return (
     <div className="btn-group">
-      <Link className="btn btn-primary" href={`/admin/matches/${elem.id}`}>
+      <Link
+        className="btn btn-primary"
+        href={`/admin/matches/results/${elem.id}`}
+      >
         <a className="btn btn-primary">Set Result</a>
       </Link>
       <Link className="btn btn-primary" href={`/admin/matches/${elem.id}`}>
@@ -123,13 +127,14 @@ const CardView = ({ list }: { list: Partido[] }) => {
 };
 
 const Matches: NextPageWithLayout = () => {
+  useSecure(["admin"], "/");
   const service = new PartidosService();
   const [list, setList] = useState<Partido[]>([]);
   const [count, setCount] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
   const [busy, setBusy] = useState<boolean>(false);
+  const isAdmin = useRecoilValue(isAdminState);
   const { width } = useWindowDimensions();
-
   useEffect(() => {
     refresh(service, setList, page, 10, setBusy);
 
@@ -142,6 +147,9 @@ const Matches: NextPageWithLayout = () => {
     <div>
       <h1>Matches</h1>
       <LoadingScreen busy={busy}>
+        <Link href={`/admin/matches/0`}>
+          <a className="btn btn-primary">Create Match</a>
+        </Link>
         <EmptyScreen isEmpty={count < 1}></EmptyScreen>
         {width > 768 ? (
           <TableView list={list}></TableView>

@@ -4,18 +4,18 @@ import TeamFlag from "../../../components/atoms/TeamFlag";
 import EmptyScreen from "../../../components/molecules/EmptyScreen";
 import LoadingScreen from "../../../components/molecules/LoadingScreen";
 import { layout } from "../../../components/templates/MainLayout";
-import { Partido } from "../../../model/Partido";
-import { Resultado } from "../../../model/Resultado";
 import { PartidosService } from "../../../services/PartidosService";
 import { NextPageWithLayout } from "../../_app";
 
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import StatusIndicator from "../../../components/atoms/StatusIndicator";
+import CreateOrEditTitle from "../../../components/atoms/CreateOrEditTitle";
+import { CrearPartido } from "../../../model/CrearPartido";
+import { useSecure } from "../../../hooks/Hooks";
 
 const refresh = (
   service: PartidosService,
-  setItem: SetterOrUpdater<Partido | undefined>,
+  setItem: SetterOrUpdater<CrearPartido | undefined>,
   id: number | undefined,
   setBusy: SetterOrUpdater<boolean>,
   setEmpty: SetterOrUpdater<boolean>
@@ -23,111 +23,107 @@ const refresh = (
   if (id !== undefined) {
     setBusy(true);
     service.get(id).then((res) => {
-      console.log(res.data.data);
-      setItem(res.data.data);
+      const partido = res.data.data;
+      setItem({
+        local: partido.local.codigo,
+        visitante: partido.visitante.codigo,
+        dia: new Date(partido.dia),
+        fase: partido.fase.codigo,
+        fecha: partido.fecha,
+        grupo: partido.grupo.codigo,
+        lugar: partido.lugar,
+      });
       setEmpty(res.data.data === undefined);
       setBusy(false);
     });
   }
 };
 
-interface FormValues {
-  finalizado: boolean;
-  resultado: Resultado;
-}
+const CreateOrUpdate: NextPageWithLayout = () => {
+  useSecure(["admin"], "/");
 
-interface PenalesProps {
-  item: Resultado | undefined;
-  id: string;
-}
-
-const Penales = ({ item, id }: PenalesProps) => {
-  if (item?.penales) {
-    return (
-      <div className="result__penales">
-        (
-        <Field id={id} name={id} className="form-control" type="number" />)
-      </div>
-    );
-  } else {
-    return <></>;
-  }
-};
-
-const SetResult: NextPageWithLayout = () => {
-  var initialValues: Resultado = {
-    local: undefined,
-    visitante: undefined,
-    penales: false,
-    penalesLocal: undefined,
-    penalesVisitante: undefined,
+  var initialValues: CrearPartido = {
+    local: "",
+    visitante: "",
+    dia: new Date(),
+    fase: "",
+    fecha: 0,
+    grupo: "",
+    lugar: "",
   };
 
   const router = useRouter();
   const { id } = router.query;
   const service = new PartidosService();
-  const [item, setItem] = useState<Partido>();
+  const [item, setItem] = useState<CrearPartido>();
   const [isEmpty, setEmpty] = useState<boolean>(false);
   const [busy, setBusy] = useState<boolean>(false);
 
+  const ident = Number(id);
+
   useEffect(() => {
-    refresh(service, setItem, Number(id), setBusy, setEmpty);
+    if (ident > 0) {
+      refresh(service, setItem, ident, setBusy, setEmpty);
+    }
   }, [setItem, setEmpty]);
 
   return (
-    <div className="setresult">
-      <h1>Set Result</h1>
+    <div className="match">
+      <CreateOrEditTitle create={ident < 1}>Match</CreateOrEditTitle>
       <LoadingScreen busy={busy}>
         <EmptyScreen isEmpty={isEmpty}>
           <Formik
-            initialValues={item?.resultado || initialValues}
+            initialValues={item || initialValues}
             onSubmit={(values, actions) => {
-              service
-                .resultado(Number(id), values)
-                .then((res) => router.push("/admin/matches"));
+              if (ident > 0) {
+                service
+                  .update(ident, values)
+                  .then((res) => router.push("/admin/matches"));
+              } else {
+                service
+                  .add(values)
+                  .then((res) => router.push("/admin/matches"));
+              }
               actions.setSubmitting(false);
             }}
           >
-            {(values) => (
+            {({ values }) => (
               <Form className="setresult__form">
-                <StatusIndicator>{item?.status}</StatusIndicator>
-                <div>
-                  <label className="form-label">Penales?</label>
-                  <Field type="checkbox" id="penales" name="penales" />
-                </div>
                 <div className="result__container">
-                  <div className="result__team">
-                    <TeamFlag src={item?.local.codigo}></TeamFlag>
-                    <label className="form-label">{item?.local.nombre}</label>
+                  <div className="row mb-1 align-items-center">
+                    <div className="col-auto">
+                      <label className="form-label">Local</label>
+                    </div>
+                    <div className="col-auto">
+                      <Field className="form-control" name="local"></Field>
+                    </div>
+                    <div className="col-auto">
+                      <TeamFlag src={values?.local}></TeamFlag>
+                    </div>
+                    <div className="col-auto">
+                      <TeamFlag src={values?.visitante}></TeamFlag>
+                    </div>
+
+                    <div className="col-auto">
+                      <Field className="form-control" name="visitante"></Field>
+                    </div>
+                    <div className="col-auto">
+                      <label className="form-label">Visitante</label>
+                    </div>
                   </div>
-                  <div className="result__score">
-                    <Field
-                      id="local"
-                      name="local"
-                      className="form-control"
-                      type="number"
-                    />
-                    <Penales id="penalesLocal" item={values.values}></Penales>
-                    :
-                    <Field
-                      id="visitante"
-                      name="visitante"
-                      className="form-control"
-                      type="number"
-                    />
-                    <Penales
-                      id="penalesVisitante"
-                      item={values.values}
-                    ></Penales>
+                  <div className="row mb-3">
+                    <label className="form-label">Lugar</label>
+                    <Field className="form-control" name="lugar"></Field>
                   </div>
-                  <div className="result__team">
-                    <TeamFlag src={item?.visitante.codigo}></TeamFlag>
-                    <label className="form-label">
-                      {item?.visitante.nombre}
-                    </label>
+                  <div className="row mb-3">
+                    <label className="form-label">Fecha</label>
+                    <Field className="form-control" name="fecha"></Field>
+                  </div>
+                  <div className="row mb-3">
+                    <label className="form-label">Dia</label>
+                    <Field className="form-control" name="dia"></Field>
                   </div>
                 </div>
-
                 <div>
                   <button type="submit" className="btn btn-primary">
                     Save
@@ -148,6 +144,6 @@ const SetResult: NextPageWithLayout = () => {
   );
 };
 
-SetResult.getLayout = layout;
+CreateOrUpdate.getLayout = layout;
 
-export default SetResult;
+export default CreateOrUpdate;

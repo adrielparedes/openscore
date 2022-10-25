@@ -21,12 +21,13 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     setBusy(true);
+    console.log(isLoggedIn);
     if (isLoggedIn) {
       router.push("/");
     } else {
       setBusy(false);
     }
-  });
+  }, [token]);
 
   return (
     <LoadingScreen busy={busy}>

@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
+import Router from "next/router";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { rolesIncludedState } from "../states/SecurityState";
 
-export default function useWindowDimensions() {
+export function useWindowDimensions() {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
@@ -18,4 +21,21 @@ export default function useWindowDimensions() {
   }, []);
 
   return { width, height };
+}
+
+export function useSecure(roles: string[], redirect: string) {
+  const userRoles = useRecoilValue(rolesIncludedState);
+
+  const rolesIncluded = (role: string) => {
+    return userRoles.map((r) => r.toUpperCase()).includes(role.toUpperCase());
+  };
+
+  useEffect(() => {
+    console.log(roles);
+    console.log(userRoles);
+    const found = roles.find((r) => rolesIncluded(r));
+    if (!found) {
+      Router.push(redirect);
+    }
+  }, []);
 }

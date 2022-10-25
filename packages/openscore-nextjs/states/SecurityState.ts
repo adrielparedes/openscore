@@ -38,8 +38,6 @@ export const isLoggerInState = selector({
       token.length > 0 &&
       isValid(token)
     );
-
-    return false;
   },
 });
 
@@ -62,5 +60,18 @@ export const isAdminState = selector({
   get: ({ get }) => {
     const token = get(tokenState);
     return isRoleIncluded(token, "admin");
+  },
+});
+
+export const rolesIncludedState = selector({
+  key: "rolesIncluded",
+  get: ({ get }) => {
+    const token = get(tokenState);
+    try {
+      const decoded = jwtDecode<JwtPayload & { roles: string[] }>(token);
+      return decoded.roles;
+    } catch (e) {
+      return [];
+    }
   },
 });

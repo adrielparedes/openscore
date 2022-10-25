@@ -1,10 +1,17 @@
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
-import { ReactElement, ReactNode, useEffect } from "react";
+import {
+  PropsWithChildren,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RecoilRoot, useRecoilState } from "recoil";
+import LoadingScreen from "../components/molecules/LoadingScreen";
 import rest from "../services/Rest";
 import { tokenState, TOKEN_KEY } from "../states/SecurityState";
 import "../styles/main.scss";
@@ -17,18 +24,35 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-const SecurityContext = () => {
+const SecurityContext = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const [token, setToken] = useRecoilState(tokenState);
+  const [busy, setBusy] = useState(false);
+
   useEffect(() => {
-    const token = localStorage.getItem(TOKEN_KEY);
-    setToken(token || "");
-    rest.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    if (!token) {
-      router.push("/login");
+    if (router.asPath === "/logout") {
+      return;
     }
-  }, []);
-  return <></>;
+
+    setBusy(true);
+    if (token.length === 0) {
+      const t = localStorage.getItem(TOKEN_KEY);
+      if (t !== null && t.length > 1) {
+        setToken(t);
+        rest.defaults.headers.common["Authorization"] = `Bearer ${t}`;
+        setBusy(false);
+      } else {
+        router.push("/login").then((value) => {
+          setBusy(false);
+        });
+      }
+    } else {
+      rest.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      setBusy(false);
+    }
+  }, [token]);
+
+  return <LoadingScreen busy={busy}>{children}</LoadingScreen>;
 };
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
@@ -41,24 +65,21 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <RecoilRoot>
-      {getLayout(
-        <>
-          <SecurityContext></SecurityContext>
-          <Component {...pageProps} />
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-          />
-        </>
-      )}
+      <SecurityContext>
+        {getLayout(<Component {...pageProps} />)}
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+      </SecurityContext>
     </RecoilRoot>
   );
 }

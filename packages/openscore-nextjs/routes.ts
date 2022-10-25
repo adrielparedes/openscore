@@ -2,6 +2,7 @@ export interface Route {
   name: string;
   link: string;
   items?: Route[];
+  roles?: string[];
 }
 
 const routes: Route[] = [
@@ -12,9 +13,10 @@ const routes: Route[] = [
   {
     name: "Admin",
     link: "/admin",
+    roles: ["admin"],
     items: [
-      { name: "Matches", link: "/admin/matches" },
-      { name: "Teams", link: "/admin/teams" },
+      { name: "Matches", link: "/admin/matches", roles: ["admin"] },
+      { name: "Teams", link: "/admin/teams", roles: ["admin"] },
     ],
   },
 ];

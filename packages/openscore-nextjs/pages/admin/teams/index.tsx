@@ -5,6 +5,7 @@ import EmptyScreen from "../../../components/molecules/EmptyScreen";
 import LoadingScreen from "../../../components/molecules/LoadingScreen";
 import Pagination from "../../../components/molecules/Pagination";
 import { layout } from "../../../components/templates/MainLayout";
+import { useSecure } from "../../../hooks/Hooks";
 import { Equipo } from "../../../model/Equipo";
 import { EquiposService } from "../../../services/EquiposService";
 import { NextPageWithLayout } from "../../_app";
@@ -24,6 +25,7 @@ const refresh = (
 };
 
 const Teams: NextPageWithLayout = () => {
+  useSecure(["admin"], "/");
   const service = new EquiposService();
   const [list, setList] = useState<Equipo[]>([]);
   const [count, setCount] = useState<number>(0);

@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useRecoilValue } from "recoil";
 import logo from "../../images/logo-white.png";
 import routes, { Route } from "../../routes";
+import { isAdminState } from "../../states/SecurityState";
 import UserIndicator from "../atoms/UserIndicator";
 
 const NavItem = ({ route }: { route: Route }) => {
@@ -53,12 +55,30 @@ const NavDropdownItem = ({ route }: { route: Route }) => (
   </li>
 );
 
-const getNavItem = (route: Route) => {
+const NavRoute = ({ route }: { route: Route }) => {
   if (route.items) {
     return <NavDropdown key={route.name} route={route}></NavDropdown>;
   } else {
     return <NavItem key={route.name} route={route}></NavItem>;
   }
+};
+
+const Nav = ({ routes }: { routes: Route[] }) => {
+  const isAdmin = useRecoilValue(isAdminState);
+
+  var filteredRoutes = routes;
+
+  if (!isAdmin) {
+    filteredRoutes = routes.filter((r) => !r.roles?.includes("admin"));
+  }
+
+  return (
+    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+      {filteredRoutes.map((r) => (
+        <NavRoute key={r.name} route={r}></NavRoute>
+      ))}
+    </ul>
+  );
 };
 
 const Navbar = () => (
@@ -85,9 +105,7 @@ const Navbar = () => (
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-          {routes.map((r) => getNavItem(r))}
-        </ul>
+        <Nav routes={routes}></Nav>
         <ul className="navbar-nav mb-2 mb-lg-0">
           <UserIndicator></UserIndicator>
         </ul>
