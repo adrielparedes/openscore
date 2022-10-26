@@ -108,7 +108,7 @@ public class StandingsServiceImpl implements StandingsService {
     }
 
     private int calculatePoints(int ganado, int empatado, int perdido) {
-        return 0;
+        return ganado * 3 + empatado * 1;
     }
 
 }
