@@ -1,13 +1,23 @@
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import TeamFlag from "../../components/atoms/TeamFlag";
 import EmptyScreen from "../../components/molecules/EmptyScreen";
 import { layout } from "../../components/templates/MainLayout";
+import Standing from "../../model/Standing";
+import { StandingsService } from "../../services/StandingsService";
 import { userState } from "../../states/SecurityState";
 import { NextPageWithLayout } from "../_app";
 
 const Home: NextPageWithLayout = () => {
   const user = useRecoilValue(userState);
+  const [standings, setStandings] = useState<Standing[]>([]);
 
+  useEffect(() => {
+    const service = new StandingsService();
+    service.getAll(0, 0).then((res) => {
+      setStandings(res.data.data);
+    });
+  }, []);
   return (
     <div>
       <h1>Standings</h1>
@@ -25,52 +35,28 @@ const Home: NextPageWithLayout = () => {
                     <th>W</th>
                     <th>D</th>
                     <th>L</th>
-                    <th>G</th>
+                    <th>G/D</th>
                     <th>Points</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      <div className="standings__position">1</div>
-                    </td>
-                    <td className="standings__team">
-                      <TeamFlag src="ARG"></TeamFlag> <span>Argentina</span>
-                    </td>
-                    <td>6</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="standings__position">2</div>
-                    </td>
-                    <td className="standings__team">
-                      <TeamFlag src="BRA"></TeamFlag> <span>Brasil</span>
-                    </td>
-                    <td>4</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="standings__position">3</div>
-                    </td>
-                    <td className="standings__team">
-                      <TeamFlag src="URY"></TeamFlag> <span>Uruguay</span>
-                    </td>
-                    <td>6</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="standings__position">4</div>
-                    </td>
-                    <td className="standings__team">
-                      <TeamFlag src="USA"></TeamFlag> <span>USA</span>
-                    </td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                  </tr>
+                  {standings.map((s) => (
+                    <tr key={s.equipo.codigo}>
+                      <td>
+                        <div className="standings__position">1</div>
+                      </td>
+                      <td className="standings__team">
+                        <TeamFlag src={s.equipo.codigo}></TeamFlag>{" "}
+                        <span>{s.equipo.nombre}</span>
+                      </td>
+                      <td>TBD</td>
+                      <td>{s.ganados}</td>
+                      <td>{s.perdidos}</td>
+                      <td>{s.empatados}</td>
+                      <td>{s.diferenciaGol}</td>
+                      <td>{s.puntos}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
