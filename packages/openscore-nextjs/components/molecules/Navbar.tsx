@@ -82,7 +82,7 @@ const Nav = ({ routes }: { routes: Route[] }) => {
 };
 
 const Navbar = () => (
-  <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow">
     <div className="container">
       <a className="navbar-brand" href="#">
         <Image

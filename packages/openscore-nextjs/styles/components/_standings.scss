@@ -1,0 +1,54 @@
+.standings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+
+  @include phone {
+    grid-template-columns: 1fr;
+  }
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
+
+  &__position {
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+  }
+
+  & .card table tbody tr:first-child &__position,
+  & .card table tbody tr:nth-child(2) &__position {
+    background-color: $success;
+    color: white;
+  }
+
+  & .card table tbody tr:nth-child(3) &__position,
+  & .card table tbody tr:nth-child(4) &__position {
+    background-color: $danger;
+    color: white;
+  }
+
+  & .card-header {
+    color: white;
+    background-color: $primary;
+  }
+
+  & table {
+    width: 100%;
+    text-align: center;
+  }
+
+  &__team {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    gap: 1rem;
+
+    &:first-child() {
+      align-self: end;
+    }
+  }
+}
