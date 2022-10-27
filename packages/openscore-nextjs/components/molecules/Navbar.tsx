@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
-import logo from "../../images/logo-white.png";
+import logo from "../../images/rhopenscore2022-logo-reverse.png";
 import routes, { Route } from "../../routes";
 import { isAdminState } from "../../states/SecurityState";
 import UserIndicator from "../atoms/UserIndicator";

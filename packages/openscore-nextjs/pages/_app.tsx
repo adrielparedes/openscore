@@ -34,6 +34,10 @@ const SecurityContext = ({ children }: PropsWithChildren) => {
       return;
     }
 
+    if (router.asPath === "/register") {
+      return;
+    }
+
     setBusy(true);
     if (token.length === 0) {
       const t = localStorage.getItem(TOKEN_KEY);

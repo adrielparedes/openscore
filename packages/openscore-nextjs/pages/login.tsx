@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import LoadingScreen from "../components/molecules/LoadingScreen";
-import messi from "../images/messi.webp";
+import messi from "../images/img-pelota.png";
 import { UsuarioService } from "../services/UsuarioService";
 import {
   isLoggerInState,
@@ -34,7 +34,7 @@ const Login: NextPage = () => {
       <div className="login">
         <div className="login__left">
           <div className="login__header">
-            <img src="/logo-black.png" alt="openscore-logo"></img>
+            <img src="/rhopenscore2022-logo.png" alt="openscore-logo"></img>
           </div>
           <div className="login__form">
             <h3>Welcome to OpenScore!</h3>
@@ -112,6 +112,12 @@ const Login: NextPage = () => {
                   >
                     Log In
                   </button>
+                  <p className="text-center">
+                    Not registered yet?{" "}
+                    <Link href={"/register"}>
+                      <a>Register</a>
+                    </Link>
+                  </p>
                 </form>
               )}
             </Formik>

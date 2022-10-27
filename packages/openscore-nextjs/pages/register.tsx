@@ -1,12 +1,13 @@
 import { Field, Formik } from "formik";
 import type { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useRecoilState, useRecoilValue } from "recoil";
 import LoadingScreen from "../components/molecules/LoadingScreen";
-import messi from "../images/messi.webp";
+import messi from "../images/img-hincha-rh.png";
 import { CrearUsuario } from "../model/CrearUsuario";
 import { Pais } from "../model/Pais";
 import { PaisesService } from "../services/PaisesService";
@@ -44,7 +45,7 @@ const Login: NextPage = () => {
       <div className="login">
         <div className="login__left">
           <div className="login__header">
-            <img src="/logo-black.png" alt="openscore-logo"></img>
+            <img src="/rhopenscore2022-logo.png" alt="openscore-logo"></img>
           </div>
           <div className="login__form">
             <h3>Welcome to OpenScore!</h3>
@@ -105,7 +106,7 @@ const Login: NextPage = () => {
               }) => (
                 <form onSubmit={handleSubmit}>
                   <div className="form-group mb-2">
-                    <label htmlFor="nombre">Nombre</label>
+                    <label htmlFor="nombre">Name</label>
                     <Field
                       type="nombre"
                       name="nombre"
@@ -116,7 +117,7 @@ const Login: NextPage = () => {
                     </span>
                   </div>
                   <div className="form-group mb-2">
-                    <label htmlFor="apellido">Apellido</label>
+                    <label htmlFor="apellido">Surname</label>
                     <Field
                       type="apellido"
                       name="apellido"
@@ -127,7 +128,7 @@ const Login: NextPage = () => {
                     </span>
                   </div>
                   <div className="form-group mb-2">
-                    <label htmlFor="pais">Pais</label>
+                    <label htmlFor="pais">Country</label>
                     {/* <Field type="pais" name="pais" className="form-control" /> */}
                     <select
                       name="pais"
@@ -204,11 +205,17 @@ const Login: NextPage = () => {
                   </div>
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-primary mb-1"
                     disabled={isSubmitting}
                   >
                     Register
                   </button>
+                  <p className="text-center">
+                    Already registered?{" "}
+                    <Link href={"/login"}>
+                      <a>Login</a>
+                    </Link>
+                  </p>
                 </form>
               )}
             </Formik>
