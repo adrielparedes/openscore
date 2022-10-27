@@ -24,18 +24,8 @@ push-ui-image: build-ui-image
 deploy-production:
 	kubectl apply -k ./packages/openscore-k8s/overlays/production
 
+reload-production:
+	kubectl delete pod --all -n openscore
+
 deploy-local:
 	kubectl apply -k ./packages/openscore-k8s/overlays/local
-
-expose-local:
-	kubectl expose deployment openscore-ui -n openscore --type=NodePort --port=3000 --name openscore-ui-local
-	kubectl expose deployment openscore-core -n openscore --type=NodePort --port=8080 --target-port=38080 --name openscore-core-local
-
-open-ui-local:
-	xdg-open $$(minikube service --url openscore-ui-local -n openscore)
-
-minikube-create:
-	minikube start --memory=8g
-	minikube addons enable registry
-	kubectl create ns openscore
-
