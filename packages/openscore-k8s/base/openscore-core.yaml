@@ -47,7 +47,7 @@ spec:
     - host: rhopenscore.com
       http:
         paths:
-          - path: /openscore/api/rest
+          - path: /api/rest
             pathType: Prefix
             backend:
               service:
