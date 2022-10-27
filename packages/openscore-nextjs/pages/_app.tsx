@@ -14,6 +14,8 @@ import { RecoilRoot, useRecoilState } from "recoil";
 import LoadingScreen from "../components/molecules/LoadingScreen";
 import rest from "../services/Rest";
 import { tokenState, TOKEN_KEY } from "../states/SecurityState";
+import "@fontsource/quicksand";
+import "@fontsource/open-sans";
 import "../styles/main.scss";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
