@@ -26,6 +26,7 @@ import io.semantic.openscore.core.repository.PartidoRepository;
 import io.semantic.openscore.core.repository.startup.builder.DiaBuilder;
 import io.semantic.openscore.core.security.Secure;
 import io.semantic.openscore.core.services.api.PartidosService;
+import io.semantic.openscore.core.services.api.StandingsService;
 
 @ApplicationScoped
 public class PartidosServiceImpl implements PartidosService {
@@ -36,6 +37,7 @@ public class PartidosServiceImpl implements PartidosService {
     private FaseRepository faseRepository;
     private PartidoMapper partidoMapper;
     private DiaBuilder diaBuilder;
+    private StandingsService standingsService;
 
     public PartidosServiceImpl() {
     }
@@ -46,12 +48,14 @@ public class PartidosServiceImpl implements PartidosService {
             final GrupoRepository grupoRepository,
             final FaseRepository faseRepository,
             final PartidoMapper partidoMapper,
+            final StandingsService standingService,
             final DiaBuilder diaBuilder) {
         this.partidoRepository = partidoRepository;
         this.equiposRepository = equiposRepository;
         this.grupoRepository = grupoRepository;
         this.faseRepository = faseRepository;
         this.partidoMapper = partidoMapper;
+        this.standingsService = standingService;
         this.diaBuilder = diaBuilder;
     }
 
@@ -138,6 +142,7 @@ public class PartidosServiceImpl implements PartidosService {
         Partido partido = this.getPartido(partidoId);
         partido.setResultado(this.partidoMapper.asResultado(resultado));
         this.partidoRepository.save(partido);
+        this.standingsService.calculate();
         return ok(this.partidoMapper.asApi(partido));
 
     }
