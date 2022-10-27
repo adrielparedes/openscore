@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import io.semantic.openscore.core.model.Standing;
@@ -28,6 +29,13 @@ public class StandingsRepository extends Repository<Standing> {
         return this.createQuery(FIND_BY_GRUPO)
                 .setParameter("grupo", grupo)
                 .getResultList();
+    }
+
+    @Override
+    public List<Standing> findAll() {
+        TypedQuery<Standing> query = this
+                .createQuery("from Standing ORDER BY puntos DESC, diferenciaGol DESC");
+        return this.findByQuery(query);
     }
 
     @Transactional

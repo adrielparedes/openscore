@@ -17,6 +17,15 @@ public class Standing extends Storable {
     private int perdidos;
     private int empatados;
     private int diferenciaGol;
+    private int partidos;
+
+    public int getPartidos() {
+        return partidos;
+    }
+
+    public void setPartidos(int partidos) {
+        this.partidos = partidos;
+    }
 
     public int getDiferenciaGol() {
         return diferenciaGol;

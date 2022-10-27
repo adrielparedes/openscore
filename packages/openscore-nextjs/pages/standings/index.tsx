@@ -3,64 +3,105 @@ import { useRecoilValue } from "recoil";
 import TeamFlag from "../../components/atoms/TeamFlag";
 import EmptyScreen from "../../components/molecules/EmptyScreen";
 import { layout } from "../../components/templates/MainLayout";
+import { Grupo } from "../../model/Grupo";
 import Standing from "../../model/Standing";
+import { GruposService } from "../../services/GruposService";
 import { StandingsService } from "../../services/StandingsService";
-import { userState } from "../../states/SecurityState";
+import { isAdminState, userState } from "../../states/SecurityState";
 import { NextPageWithLayout } from "../_app";
 
 const Home: NextPageWithLayout = () => {
   const user = useRecoilValue(userState);
+  const isAdmin = useRecoilValue(isAdminState);
   const [standings, setStandings] = useState<Standing[]>([]);
+  const [groups, setGroups] = useState<Grupo[]>([]);
+  const service = new StandingsService();
+  const groupService = new GruposService();
 
-  useEffect(() => {
-    const service = new StandingsService();
+  const refresh = () => {
+    groupService.getAll(0, 10).then((res) => {
+      setGroups(res.data.data.filter((g) => g.codigo !== "NONE"));
+    });
     service.getAll(0, 0).then((res) => {
       setStandings(res.data.data);
     });
+  };
+
+  const calculateAndRefresh = () => {
+    service.calculate().then((res) => {
+      refresh();
+    });
+  };
+
+  useEffect(() => {
+    refresh();
   }, []);
   return (
     <div>
       <h1>Standings</h1>
-      <EmptyScreen isEmpty={false}>
+      <div className="mb-3">
+        {isAdmin ? (
+          <button className="btn btn-primary" onClick={() => refresh()}>
+            Refresh
+          </button>
+        ) : (
+          <></>
+        )}
+        {isAdmin ? (
+          <button
+            className="btn btn-primary ms-3"
+            onClick={() => calculateAndRefresh()}
+          >
+            Calculate And Refresh
+          </button>
+        ) : (
+          <></>
+        )}
+      </div>
+      <EmptyScreen isEmpty={standings.length < 1}>
         <div className="standings">
-          <div className="card shadow">
-            <div className="card-header">Group A</div>
-            <div className="card-body">
-              <table>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Team</th>
-                    <th>P</th>
-                    <th>W</th>
-                    <th>D</th>
-                    <th>L</th>
-                    <th>G/D</th>
-                    <th>Points</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {standings.map((s) => (
-                    <tr key={s.equipo.codigo}>
-                      <td>
-                        <div className="standings__position">1</div>
-                      </td>
-                      <td className="standings__team">
-                        <TeamFlag src={s.equipo.codigo}></TeamFlag>{" "}
-                        <span>{s.equipo.nombre}</span>
-                      </td>
-                      <td>TBD</td>
-                      <td>{s.ganados}</td>
-                      <td>{s.perdidos}</td>
-                      <td>{s.empatados}</td>
-                      <td>{s.diferenciaGol}</td>
-                      <td>{s.puntos}</td>
+          {groups.map((g) => (
+            <div key={g.codigo} className="card shadow">
+              <div className="card-header">{g.nombre}</div>
+              <div className="card-body">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Team</th>
+                      <th>P</th>
+                      <th>W</th>
+                      <th>D</th>
+                      <th>L</th>
+                      <th>G/D</th>
+                      <th>Points</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {standings
+                      .filter((s) => s.grupo.codigo === g.codigo)
+                      .map((s, i) => (
+                        <tr key={s.equipo.codigo}>
+                          <td>
+                            <div className="standings__position">{i + 1}</div>
+                          </td>
+                          <td className="standings__team">
+                            <TeamFlag src={s.equipo.codigo}></TeamFlag>{" "}
+                            <span>{s.equipo.nombre}</span>
+                          </td>
+                          <td>{s.partidos}</td>
+                          <td>{s.ganados}</td>
+                          <td>{s.empatados}</td>
+                          <td>{s.perdidos}</td>
+                          <td>{s.diferenciaGol}</td>
+                          <td>{s.puntos}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </EmptyScreen>
     </div>

@@ -63,6 +63,7 @@ public class StandingsServiceImpl implements StandingsService {
             int perdido = 0;
             int empatado = 0;
             int diferenciaGol = 0;
+            int cantidadPartidos = 0;
             Grupo grupo = null;
 
             for (Partido partido : partidosEquipo) {
@@ -73,20 +74,26 @@ public class StandingsServiceImpl implements StandingsService {
 
                     Ganador ganador = partido.getResultado().getGanador();
 
+                    diferenciaGol += partido.getResultado().getLocal() - partido.getResultado().getVisitante();
+
                     if (ganador.equals(Ganador.LOCAL) &&
                             partido.getLocal().getCodigo().equals(equipo.getCodigo())) {
                         ganado++;
-                        diferenciaGol += partido.getResultado().getLocal() - partido.getResultado().getVisitante();
 
                     } else if (ganador.equals(Ganador.VISITANTE)
                             && partido.getVisitante().getCodigo().equals(equipo.getCodigo())) {
                         ganado++;
-                        diferenciaGol += partido.getResultado().getVisitante() - partido.getResultado().getLocal();
+                        diferenciaGol = Math.abs(diferenciaGol);
                     } else if (ganador.equals(Ganador.EMPATE)) {
                         empatado++;
                     } else {
                         perdido++;
+                        if (diferenciaGol > 0) {
+                            diferenciaGol = -1 * diferenciaGol;
+                        }
                     }
+
+                    cantidadPartidos++;
 
                 }
 
@@ -99,6 +106,7 @@ public class StandingsServiceImpl implements StandingsService {
             standing.setEmpatados(empatado);
             standing.setPerdidos(perdido);
             standing.setDiferenciaGol(diferenciaGol);
+            standing.setPartidos(cantidadPartidos);
             standing.setPuntos(calculatePoints(ganado, empatado, perdido));
             standingsRepository.save(standing);
         }

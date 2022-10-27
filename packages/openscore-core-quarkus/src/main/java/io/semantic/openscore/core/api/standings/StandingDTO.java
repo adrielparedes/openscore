@@ -7,6 +7,8 @@ public class StandingDTO {
 
     private EquipoDTO equipo;
     private GrupoDTO grupo;
+    private int partidos;
+
     private int puntos;
     private int ganados;
     private int perdidos;
@@ -67,6 +69,14 @@ public class StandingDTO {
 
     public void setDiferenciaGol(int diferenciaGol) {
         this.diferenciaGol = diferenciaGol;
+    }
+
+    public int getPartidos() {
+        return partidos;
+    }
+
+    public void setPartidos(int partidos) {
+        this.partidos = partidos;
     }
 
 }
