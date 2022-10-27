@@ -1,8 +1,16 @@
 .login {
   height: 100vh;
   display: grid;
-  grid-template-columns: 0.7fr 1fr;
+  grid-template-columns: 1fr 1fr;
   background-color: white;
+
+  @include phone {
+    grid-template-columns: 1fr 0fr;
+  }
+
+  @include tablet {
+    grid-template-columns: 1fr 0fr;
+  }
 
   &__error {
     color: $danger;
