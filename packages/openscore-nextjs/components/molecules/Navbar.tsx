@@ -88,7 +88,7 @@ const Navbar = () => (
         <Image
           src={logo}
           alt="Logo"
-          width="220"
+          width="170"
           height="50"
           className="d-inline-block mt-1"
         ></Image>
