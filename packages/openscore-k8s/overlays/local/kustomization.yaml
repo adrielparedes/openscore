@@ -1,0 +1,7 @@
+bases:
+- ../../base
+resources:
+- openscore-db.yaml
+patchesStrategicMerge:
+- openscore-core.yaml
+- openscore-ui.yaml

@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openscore-core
+  namespace: openscore
+spec:
+  template:
+    spec:
+      containers:
+        - name: core
+          env:
+          - name: QUARKUS_DATASOURCE_JDBC_URL
+            value: jdbc:postgresql://db-postgresql-nyc1-22486-do-user-9333892-0.b.db.ondigitalocean.com:25060/defaultdb?sslmode=require
+          - name: QUARKUS_DATASOURCE_PASSWORD
+            value: AVNS_4U9-oa9mLt7l6vHfBVf
+          - name: QUARKUS_DATASOURCE_USERNAME
+            value: doadmin

@@ -1,0 +1,41 @@
+REGISTRY ?= registry.digitalocean.com
+DORP ?= docker
+
+build-core:
+	mvn package -f packages/openscore-core-quarkus
+
+build-core-image: build-core
+	${DORP} build -f packages/openscore-core-quarkus/src/main/docker/Dockerfile.jvm -t openscore/openscore-core packages/openscore-core-quarkus
+
+push-core-image: build-core-image
+	${DORP} tag localhost/openscore/openscore-core ${REGISTRY}/openscore/openscore-core
+	${DORP} push ${REGISTRY}/openscore/openscore-core
+	
+build-ui:
+	@cd packages/openscore-nextjs && yarn install && yarn build && npx next build
+
+build-ui-image: build-ui
+	${DORP} build -f packages/openscore-nextjs/Dockerfile -t openscore/openscore-ui packages/openscore-nextjs
+
+push-ui-image: build-ui-image
+	${DORP} tag localhost/openscore/openscore-ui ${REGISTRY}/openscore/openscore-ui
+	${DORP} push ${REGISTRY}/openscore/openscore-ui
+
+deploy-production:
+	kubectl apply -k ./packages/openscore-k8s/overlays/production
+
+deploy-local:
+	kubectl apply -k ./packages/openscore-k8s/overlays/local
+
+expose-local:
+	kubectl expose deployment openscore-ui -n openscore --type=NodePort --port=3000 --name openscore-ui-local
+	kubectl expose deployment openscore-core -n openscore --type=NodePort --port=8080 --target-port=38080 --name openscore-core-local
+
+open-ui-local:
+	xdg-open $$(minikube service --url openscore-ui-local -n openscore)
+
+minikube-create:
+	minikube start --memory=8g
+	minikube addons enable registry
+	kubectl create ns openscore
+

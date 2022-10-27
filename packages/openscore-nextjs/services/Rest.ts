@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Set config defaults when creating the instance
 const rest = axios.create({
-  baseURL: "http://localhost:8080/api/rest",
+  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api/rest`,
 });
 
 rest.defaults.headers.common["Content-Type"] = "application/json";

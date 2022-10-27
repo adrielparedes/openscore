@@ -1,0 +1,3 @@
+resources:
+- openscore-core.yaml
+- openscore-ui.yaml

@@ -35,7 +35,7 @@ spec:
           - name: POSTGRES_USER
             value: openscore
           - name: POSTGRES_PASSWORD
-            value: openscore
+            value: 0p3nsc0r3
         ports:
         - containerPort: 5432
         volumeMounts:
