@@ -8,17 +8,17 @@ build-core-image: build-core
 	${DORP} build -f packages/openscore-core-quarkus/src/main/docker/Dockerfile.jvm -t openscore/openscore-core packages/openscore-core-quarkus
 
 push-core-image: build-core-image
-	${DORP} tag localhost/openscore/openscore-core ${REGISTRY}/openscore/openscore-core
+	${DORP} tag openscore/openscore-core ${REGISTRY}/openscore/openscore-core
 	${DORP} push ${REGISTRY}/openscore/openscore-core
 	
 build-ui:
-	@cd packages/openscore-nextjs && yarn install && yarn build && npx next build
+	@cd packages/openscore-nextjs && yarn install && yarn build && yarn next build
 
 build-ui-image: build-ui
 	${DORP} build -f packages/openscore-nextjs/Dockerfile -t openscore/openscore-ui packages/openscore-nextjs
 
 push-ui-image: build-ui-image
-	${DORP} tag localhost/openscore/openscore-ui ${REGISTRY}/openscore/openscore-ui
+	${DORP} tag openscore/openscore-ui ${REGISTRY}/openscore/openscore-ui
 	${DORP} push ${REGISTRY}/openscore/openscore-ui
 
 deploy-production:
