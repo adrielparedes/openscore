@@ -5,17 +5,17 @@ build-core:
 	mvn package -f packages/openscore-core-quarkus
 
 build-core-image: build-core
-	${DORP} build -f packages/openscore-core-quarkus/src/main/docker/Dockerfile.jvm -t openscore/openscore-core packages/openscore-core-quarkus
+	${DORP} build -f packages/openscore-core-quarkus/src/main/docker/Dockerfile.jvm --platform=linux/amd64 -t openscore/openscore-core packages/openscore-core-quarkus
 
 push-core-image: build-core-image
 	${DORP} tag openscore/openscore-core ${REGISTRY}/openscore/openscore-core
 	${DORP} push ${REGISTRY}/openscore/openscore-core
 	
 build-ui:
-	@cd packages/openscore-nextjs && yarn install && yarn build && yarn next build
+	@cd packages/openscore-nextjs && yarn install && yarn build
 
 build-ui-image: build-ui
-	${DORP} build -f packages/openscore-nextjs/Dockerfile -t openscore/openscore-ui packages/openscore-nextjs
+	${DORP} build -f packages/openscore-nextjs/Dockerfile --platform=linux/amd64 -t openscore/openscore-ui packages/openscore-nextjs
 
 push-ui-image: build-ui-image
 	${DORP} tag openscore/openscore-ui ${REGISTRY}/openscore/openscore-ui

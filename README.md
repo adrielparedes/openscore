@@ -7,10 +7,7 @@ yarn dev # Ejecuta todos los proyectos que tengan implementado el script "dev"
 
 
 
-make build-core build-ui build-core-image build-ui-image
 make push-ui-image push-core-image deploy-production reload-production
+make push-ui-image deploy-production reload-production
 
 ```
-
-
-
