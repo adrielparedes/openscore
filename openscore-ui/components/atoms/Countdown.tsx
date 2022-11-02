@@ -4,11 +4,11 @@ import { timeState } from "../../states/TimeState";
 
 export interface CountdownProps {
   date: number;
+  blocked: (blocked: boolean) => void;
 }
 
-const Countdown = ({ date }: CountdownProps) => {
+const Countdown = ({ date, blocked }: CountdownProps) => {
   const [time, setTime] = useState(Date.now());
-  const [diff, setDiff] = useState(Date.now());
   const timeToMatch = useRecoilValue(timeState);
 
   useEffect(() => {
@@ -18,15 +18,16 @@ const Countdown = ({ date }: CountdownProps) => {
     };
   }, []);
 
-  var difference_ms = Math.abs(date - time);
+  var time_to_match_ms = date - time;
+  var time_to_block_ms = date - time - 15 * 60 * 1000;
 
   if (timeToMatch) {
-    difference_ms = Math.abs(date - time + 15 * 60 * 1000);
+    difference_ms = time_to_block_ms;
   } else {
-    var difference_ms = Math.abs(date - time);
+    var difference_ms = time_to_match_ms;
   }
 
-  difference_ms = difference_ms / 1000;
+  difference_ms = Math.abs(difference_ms / 1000);
   const seconds = Math.floor(difference_ms % 60);
   difference_ms = difference_ms / 60;
   const minutes = Math.floor(difference_ms % 60);
@@ -34,7 +35,16 @@ const Countdown = ({ date }: CountdownProps) => {
   const hours = Math.floor(difference_ms % 24);
   const days = Math.floor(difference_ms / 24);
 
-  if (date - time > 0) {
+  if (time_to_block_ms < 0) {
+    blocked(true);
+  } else {
+    blocked(false);
+  }
+
+  if (
+    (!timeToMatch && time_to_match_ms > 0) ||
+    (timeToMatch && time_to_block_ms > 0)
+  ) {
     return (
       <div className="countdown">
         <div className="countdown__item countdown__item--active">

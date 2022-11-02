@@ -1,13 +1,12 @@
 import { AxiosError, AxiosPromise } from "axios";
 import { PropsWithChildren, useState } from "react";
 import { toast } from "react-toastify";
-import { SetterOrUpdater, useRecoilState, useRecoilValue } from "recoil";
+import { SetterOrUpdater, useRecoilState } from "recoil";
 import { ApiResponse } from "../../model/ApiResponse";
 import Ganador from "../../model/Ganador";
 import { Partido } from "../../model/Partido";
 import { PronosticoService } from "../../services/PronosticoService";
 import { forecastListState } from "../../states/ForecastState";
-import { timeState } from "../../states/TimeState";
 import Countdown from "../atoms/Countdown";
 import PhaseIndicator from "../atoms/PhaseIndicator";
 import Result from "../atoms/Result";
@@ -142,7 +141,13 @@ const getMatchResultCss = (partido: Partido) => {
   }
 };
 
-const Footer = ({ partido }: { partido: Partido }) => {
+const Footer = ({
+  partido,
+  blocked,
+}: {
+  partido: Partido;
+  blocked: (blocked: boolean) => void;
+}) => {
   switch (getMatchResultCss(partido)) {
     case "hit":
       return (
@@ -157,7 +162,12 @@ const Footer = ({ partido }: { partido: Partido }) => {
     default:
       return (
         <div className="card-footer">
-          <Countdown date={partido.dia}></Countdown>
+          <Countdown
+            date={partido.dia}
+            blocked={(b) => {
+              blocked(b);
+            }}
+          ></Countdown>
         </div>
       );
   }
@@ -166,11 +176,12 @@ const Footer = ({ partido }: { partido: Partido }) => {
 const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
   const [busy, setBusy] = useState(false);
   const [forecast, setForecast] = useRecoilState(forecastListState);
+  const [blocked, setBlocked] = useState(false);
   return (
     <div
       className={`match card border-light text-center shadow match--${partido.status.toLowerCase()} match__result--${getMatchResultCss(
         partido
-      )}`}
+      )} ${blocked ? "match--blocked" : ""}`}
     >
       <div className="card-header">
         <PhaseIndicator partido={partido}></PhaseIndicator>
@@ -217,7 +228,10 @@ const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
           </ActiveNavLink>
         </ul>
       </div>
-      <Footer partido={partido}></Footer>
+      <Footer
+        partido={partido}
+        blocked={(blocked) => setBlocked(blocked)}
+      ></Footer>
     </div>
   );
 };
