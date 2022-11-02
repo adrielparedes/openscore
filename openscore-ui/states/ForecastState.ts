@@ -5,6 +5,10 @@ export enum ForecastFilter {
   ALL,
   TODAY,
   REMAINING,
+  ROUND_16,
+  QUARTER,
+  SEMI,
+  FINAL,
   GROUP_A,
   GROUP_B,
   GROUP_C,
@@ -44,6 +48,17 @@ export const filteredForecastState = selector({
             partido.pronostico === undefined && partido.status === "PENDING"
           );
         });
+      case ForecastFilter.ROUND_16:
+        return filterByStage(forecastList, "OCTAVOS");
+      case ForecastFilter.QUARTER:
+        return filterByStage(forecastList, "CUARTOS");
+      case ForecastFilter.SEMI:
+        return filterByStage(forecastList, "SEMI");
+      case ForecastFilter.FINAL:
+        return [
+          ...filterByStage(forecastList, "FINAL"),
+          ...filterByStage(forecastList, "TERCER"),
+        ];
       case ForecastFilter.GROUP_A:
         return filterByGroup(forecastList, "A");
       case ForecastFilter.GROUP_B:
@@ -70,3 +85,6 @@ const filterByGroup = (list: Partido[], grupo: string) =>
   list.filter(
     (partido) => partido.grupo.nombre === `Group ${grupo.toUpperCase()}`
   );
+
+const filterByStage = (list: Partido[], fase: string) =>
+  list.filter((partido) => partido.fase.codigo === `${fase.toUpperCase()}`);

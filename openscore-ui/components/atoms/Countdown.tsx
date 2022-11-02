@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { timeState } from "../../states/TimeState";
 
 export interface CountdownProps {
   date: number;
@@ -6,6 +8,8 @@ export interface CountdownProps {
 
 const Countdown = ({ date }: CountdownProps) => {
   const [time, setTime] = useState(Date.now());
+  const [diff, setDiff] = useState(Date.now());
+  const timeToMatch = useRecoilValue(timeState);
 
   useEffect(() => {
     const interval = setInterval(() => setTime(Date.now()), 1000);
@@ -15,6 +19,12 @@ const Countdown = ({ date }: CountdownProps) => {
   }, []);
 
   var difference_ms = Math.abs(date - time);
+
+  if (timeToMatch) {
+    difference_ms = Math.abs(date - time + 15 * 60 * 1000);
+  } else {
+    var difference_ms = Math.abs(date - time);
+  }
 
   difference_ms = difference_ms / 1000;
   const seconds = Math.floor(difference_ms % 60);

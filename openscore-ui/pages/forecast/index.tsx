@@ -7,6 +7,7 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
+import Time from "../../components/atoms/Time";
 import EmptyScreen from "../../components/molecules/EmptyScreen";
 import LoadingScreen from "../../components/molecules/LoadingScreen";
 import MatchCard from "../../components/molecules/MatchCard";
@@ -31,6 +32,26 @@ const filters = [
     name: "Remaining",
     link: "remaining",
     filter: ForecastFilter.REMAINING,
+  },
+  {
+    name: "Round of 16",
+    link: "round_16",
+    filter: ForecastFilter.ROUND_16,
+  },
+  {
+    name: "Quarter Final",
+    link: "quarter",
+    filter: ForecastFilter.QUARTER,
+  },
+  {
+    name: "Semifinal",
+    link: "semi",
+    filter: ForecastFilter.SEMI,
+  },
+  {
+    name: "Final",
+    link: "final",
+    filter: ForecastFilter.FINAL,
   },
   {
     name: "Group A",
@@ -127,6 +148,7 @@ const Forecasts: NextPageWithLayout = () => {
     <div className="forecast">
       <h1>Forecast</h1>
       <div className="forecast__main">
+        <Time></Time>
         <div
           className="alert alert-warning alert-dismissible fade show"
           role="alert"
