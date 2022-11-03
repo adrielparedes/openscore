@@ -11,6 +11,8 @@ const routes: Route[] = [
   { name: "Standings", link: "/standings" },
   { name: "Forecast", link: "/forecast" },
   { name: "Rules", link: "/rules" },
+  { name: "Test Page", link: "/test", roles: ["admin"] },
+
   {
     name: "Admin",
     link: "/admin",

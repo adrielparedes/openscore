@@ -135,8 +135,6 @@ const Tabs = () => {
     }
   }, [router]);
 
-  console.log(router.query);
-
   if (width > 768) {
     return (
       <div className="forecast__tabs">

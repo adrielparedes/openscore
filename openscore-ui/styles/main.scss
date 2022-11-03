@@ -44,13 +44,19 @@ $theme-colors: (
 @import "components/table";
 @import "components/reglas";
 @import "components/standings";
+@import "components/filtered";
 
 @import "pages/home";
 @import "pages/setresult";
 @import "pages/user";
 
+html {
+  height: 100%;
+}
+
 body {
   background-color: $gray-200;
+  min-height: 100%;
 }
 
 h1 {
@@ -58,5 +64,6 @@ h1 {
 }
 
 .page {
+  min-height: 100%;
   margin-bottom: 3rem;
 }

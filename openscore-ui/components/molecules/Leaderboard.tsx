@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Ranking } from "../../model/Ranking";
 import { RankingService } from "../../services/RankingService";
@@ -16,26 +17,27 @@ const Leaderboard = ({ filter, query, results }: LeaderboardProps) => {
   const [filteredLeaderboard, setFilteredLeaderboard] = useState<Ranking[]>([]);
   const [busy, setBusy] = useState(false);
   const service = new RankingService();
+  const router = useRouter();
 
   useEffect(() => {
-    if (filter !== undefined && filter.length > 0) {
-      setFilteredLeaderboard(
-        leaderboard.filter(
-          (l) =>
-            l.nombre.toLowerCase().includes(filter.toLowerCase()) ||
-            l.pais.toLowerCase().includes(filter.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredLeaderboard(leaderboard);
+    if (!filter) {
+      return;
     }
-  }, [filter]);
 
-  useEffect(() => {
+    if (filter === "none") {
+      return;
+    }
+
     setBusy(true);
 
+    var f = filter;
+
+    if (f === "general") {
+      f = "";
+    }
+
     service
-      .getAll(query, results || 1000)
+      .getAll(f, results || 1000)
       .then((res) => {
         setLeaderboard(res.data.data);
         setFilteredLeaderboard(res.data.data);
@@ -46,6 +48,20 @@ const Leaderboard = ({ filter, query, results }: LeaderboardProps) => {
         setFilteredLeaderboard([]);
         setBusy(false);
       });
+  }, [router, filter]);
+
+  useEffect(() => {
+    if (query !== undefined && query.length > 0) {
+      setFilteredLeaderboard(
+        leaderboard.filter(
+          (l) =>
+            l.nombre.toLowerCase().includes(query.toLowerCase()) ||
+            l.pais.toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredLeaderboard(leaderboard);
+    }
   }, [query]);
 
   return (
