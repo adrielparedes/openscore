@@ -69,10 +69,14 @@ const PaisesSelector = ({ onClick }: PaisesSelectorProps) => {
           className="form-select mb-3"
           aria-label="Default select example"
           onChange={(ev) => {
+            if (ev.target.value) {
+              console.log(ev.target.value);
+            }
             router.push(getLink(ev.target.value));
           }}
           value={router.query["filter"]}
         >
+          <option value={""}>General</option>
           {paises.map((f) => (
             <option key={f.codigo} value={f.codigo}>
               {f.nombre}
