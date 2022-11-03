@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Leaderboard from "../components/molecules/Leaderboard";
 import { layout } from "../components/templates/MainLayout";
+import { useWindowDimensions } from "../hooks/Hooks";
 import { Pais } from "../model/Pais";
 import { PaisesService } from "../services/PaisesService";
 import { NextPageWithLayout } from "./_app";
@@ -17,6 +18,7 @@ const PaisesSelector = ({ onClick }: PaisesSelectorProps) => {
   const [paises, setPaises] = useState<Pais[]>([]);
   const paisesService = new PaisesService();
   const router = useRouter();
+  const { width } = useWindowDimensions();
   useEffect(() => {
     paisesService.getAll(0, 10).then((res) => {
       setPaises(res.data.data);
@@ -24,42 +26,61 @@ const PaisesSelector = ({ onClick }: PaisesSelectorProps) => {
   }, []);
 
   if (paises.length > 0) {
-    return (
-      <div className="forecast__tabs mb-3">
-        <ul className="nav nav-pills">
-          <li className="nav-item">
-            <Link href={"/leaderboard"}>
-              <a
-                className={`nav-link ${
-                  router.asPath === "/leaderboard" ? "active" : ""
-                }`}
-                aria-current="page"
-                href="#"
-                onClick={() => onClick(undefined)}
-              >
-                General
-              </a>
-            </Link>
-          </li>
-          {paises.map((f) => (
-            <li key={f.codigo} className="nav-item">
-              <Link href={getLink(f.codigo)}>
+    if (width > 768) {
+      return (
+        <div className="forecast__tabs mb-3">
+          <ul className="nav nav-pills">
+            <li className="nav-item">
+              <Link href={"/leaderboard"}>
                 <a
                   className={`nav-link ${
-                    router.asPath === getLink(f.codigo) ? "active" : ""
+                    router.asPath === "/leaderboard" ? "active" : ""
                   }`}
                   aria-current="page"
                   href="#"
-                  onClick={() => onClick(f)}
+                  onClick={() => onClick(undefined)}
                 >
-                  {f.nombre}
+                  General
                 </a>
               </Link>
             </li>
+            {paises.map((f) => (
+              <li key={f.codigo} className="nav-item">
+                <Link href={getLink(f.codigo)}>
+                  <a
+                    className={`nav-link ${
+                      router.asPath === getLink(f.codigo) ? "active" : ""
+                    }`}
+                    aria-current="page"
+                    href="#"
+                    onClick={() => onClick(f)}
+                  >
+                    {f.nombre}
+                  </a>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    } else {
+      return (
+        <select
+          className="form-select mb-3"
+          aria-label="Default select example"
+          onChange={(ev) => {
+            router.push(getLink(ev.target.value));
+          }}
+          value={router.query["filter"]}
+        >
+          {paises.map((f) => (
+            <option key={f.codigo} value={f.codigo}>
+              {f.nombre}
+            </option>
           ))}
-        </ul>
-      </div>
-    );
+        </select>
+      );
+    }
   } else {
     return <></>;
   }
@@ -74,9 +95,7 @@ const LeaderboardPage: NextPageWithLayout = () => {
   const q = router.query["filter"] || "";
 
   useEffect(() => {
-    if (typeof q === "string") {
-      setQuery(q);
-    }
+    setQuery(q as string);
   }, [q]);
 
   return (

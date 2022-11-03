@@ -12,6 +12,7 @@ import EmptyScreen from "../../components/molecules/EmptyScreen";
 import LoadingScreen from "../../components/molecules/LoadingScreen";
 import MatchCard from "../../components/molecules/MatchCard";
 import { layout } from "../../components/templates/MainLayout";
+import { useWindowDimensions } from "../../hooks/Hooks";
 import { Partido } from "../../model/Partido";
 import { PronosticoService } from "../../services/PronosticoService";
 import {
@@ -121,6 +122,61 @@ const refresh = (
 
 const getLink = (link: string) => `/forecast?filter=${link}`;
 
+const Tabs = () => {
+  const { width } = useWindowDimensions();
+  const router = useRouter();
+  const [filter, setFilter] = useState("today");
+
+  useEffect(() => {
+    if (router.isReady) {
+      if (router.query["filter"] !== undefined) {
+        setFilter(router.query["filter"] as string);
+      }
+    }
+  }, [router]);
+
+  console.log(router.query);
+
+  if (width > 768) {
+    return (
+      <div className="forecast__tabs">
+        <ul className="nav nav-pills">
+          {filters.map((f) => (
+            <li key={f.name} className="nav-item">
+              <Link href={getLink(f.link)}>
+                <a
+                  className={`nav-link ${filter === f.link ? "active" : ""}`}
+                  aria-current="page"
+                  href="#"
+                >
+                  {f.name}
+                </a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  } else {
+    return (
+      <select
+        className="form-select"
+        aria-label="Default select example"
+        onChange={(ev) => {
+          router.push(getLink(ev.target.value));
+        }}
+        value={filter}
+      >
+        {filters.map((f) => (
+          <option key={f.name} value={f.link}>
+            {f.name}
+          </option>
+        ))}
+      </select>
+    );
+  }
+};
+
 const Forecasts: NextPageWithLayout = () => {
   const router = useRouter();
   const [_, setForecast] = useRecoilState(forecastListState);
@@ -162,25 +218,7 @@ const Forecasts: NextPageWithLayout = () => {
             aria-label="Close"
           ></button>
         </div>
-        <div className="forecast__tabs">
-          <ul className="nav nav-pills">
-            {filters.map((f) => (
-              <li key={f.name} className="nav-item">
-                <Link href={getLink(f.link)}>
-                  <a
-                    className={`nav-link ${
-                      path === getLink(f.link) ? "active" : ""
-                    }`}
-                    aria-current="page"
-                    href="#"
-                  >
-                    {f.name}
-                  </a>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Tabs></Tabs>
         <LoadingScreen busy={busy}>
           <EmptyScreen isEmpty={filteredForecast.length < 1}>
             <div className="forecast__matches">

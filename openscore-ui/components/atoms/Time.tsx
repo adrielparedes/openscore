@@ -3,7 +3,6 @@ import { timeState } from "../../states/TimeState";
 
 const Time = () => {
   const [time, setTime] = useRecoilState(timeState);
-  console.log(time);
   return (
     <div className="form-check form-switch">
       <label className="form-check-label">Time to Match</label>
