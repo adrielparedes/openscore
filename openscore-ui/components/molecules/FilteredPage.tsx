@@ -19,7 +19,6 @@ export const NONE: Filter = {
 export interface FilteredPageProps extends PropsWithChildren {
   filters: Filter[];
   link: string;
-  def: Filter;
   select: SetterOrUpdater<Filter>;
 }
 
@@ -28,7 +27,6 @@ const SelectDropdown = () => {};
 const FilteredPage = ({
   children,
   filters,
-  def,
   link,
   select,
 }: FilteredPageProps) => {
@@ -38,23 +36,26 @@ const FilteredPage = ({
   const [fs, setFs] = useState<Filter[]>([]);
 
   useEffect(() => {
-    setFs([def, ...filters]);
+    if (filters.length > 0) {
+      const def = filters[0];
+      setFs([...filters]);
 
-    const code = router.query["filter"] as string;
+      const code = router.query["filter"] as string;
 
-    if (router.isReady) {
-      if (!router.asPath.includes("filter")) {
-        router.push(`${link}?filter=${def.code}`);
-        return;
-      }
+      if (router.isReady) {
+        if (!router.asPath.includes("filter")) {
+          router.push(`${link}?filter=${def.code}`);
+          return;
+        }
 
-      setQuery(code);
-      const found = filters.find((f) => f.code === code);
+        setQuery(code);
+        const found = filters.find((f) => f.code === code);
 
-      if (found) {
-        select(found);
-      } else {
-        select(def);
+        if (found) {
+          select(found);
+        } else {
+          select(filters[0]);
+        }
       }
     }
   }, [router, filters]);
@@ -62,7 +63,7 @@ const FilteredPage = ({
   if (width > 1024) {
     return (
       <div className="filtered">
-        <div className="filtered__filters border-end">
+        <div className="filtered__filters">
           <ul className="nav flex-column nav-pills">
             {fs.map((f) => (
               <li key={f.code} className="nav-item">

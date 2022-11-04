@@ -12,9 +12,11 @@ import {
 } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { RecoilRoot, useRecoilState } from "recoil";
+import { RecoilRoot, useRecoilState, useSetRecoilState } from "recoil";
 import LoadingScreen from "../components/molecules/LoadingScreen";
+import { PaisesService } from "../services/PaisesService";
 import rest from "../services/Rest";
+import { countriesState } from "../states/PaisesState";
 import { tokenState, TOKEN_KEY } from "../states/SecurityState";
 import "../styles/main.scss";
 
@@ -65,6 +67,16 @@ const SecurityContext = ({ children }: PropsWithChildren) => {
   return <LoadingScreen busy={busy}>{children}</LoadingScreen>;
 };
 
+const Initialize = () => {
+  const setCountries = useSetRecoilState(countriesState);
+  useEffect(() => {
+    new PaisesService()
+      .getAll(0, 10)
+      .then((res) => setCountries(res.data.data));
+  });
+  return <></>;
+};
+
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
@@ -76,6 +88,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <RecoilRoot>
       <SecurityContext>
+        <Initialize />
         {getLayout(<Component {...pageProps} />)}
         <ToastContainer
           position="top-right"

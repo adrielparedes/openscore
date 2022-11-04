@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import FilteredPage, { Filter } from "../components/molecules/FilteredPage";
 import Leaderboard from "../components/molecules/Leaderboard";
 import { layout } from "../components/templates/MainLayout";
-import { PaisesService } from "../services/PaisesService";
 import { leaderboardState } from "../states/FilterState";
+import { countriesState } from "../states/PaisesState";
 import { NextPageWithLayout } from "./_app";
 
 const LeaderboardPage: NextPageWithLayout = () => {
@@ -12,30 +12,23 @@ const LeaderboardPage: NextPageWithLayout = () => {
   const [selected, setSelected] = useRecoilState(leaderboardState);
 
   const [query, setQuery] = useState("");
-  const paisesService = new PaisesService();
+  const paises = useRecoilValue(countriesState);
 
   useEffect(() => {
-    paisesService.getAll(0, 10).then((res) => {
-      const f: Filter[] = res.data.data.map((p) => {
-        return {
-          code: p.codigo,
-          name: p.nombre,
-        };
-      });
-      setFilters(f);
+    const f = paises.map((p) => {
+      return {
+        code: p.codigo,
+        name: p.nombre,
+      };
     });
-  }, []);
+    setFilters([{ code: "general", name: "General" }, ...f]);
+  }, [paises]);
 
   return (
     <div>
       <h1>Leaderboard</h1>
 
-      <FilteredPage
-        link="/leaderboard"
-        def={{ code: "general", name: "General" }}
-        filters={filters}
-        select={setSelected}
-      >
+      <FilteredPage link="/leaderboard" filters={filters} select={setSelected}>
         <h3 className="mb-3">{selected?.name || "General"} Leaderboard</h3>
 
         <div className="input-group mb-3">
