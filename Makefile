@@ -2,7 +2,7 @@ REGISTRY ?= registry.digitalocean.com
 DORP ?= docker
 
 dev-core: 
-	mvn clean quarkus:dev -f openscore-core
+	mvn clean quarkus:dev -f openscore-core -Duser.timezone=UTC 
 
 dev-ui:
 	@cd openscore-ui && yarn dev

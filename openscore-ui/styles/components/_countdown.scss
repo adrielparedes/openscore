@@ -8,9 +8,27 @@
     flex-direction: column;
     font-weight: 600;
     font-family: "Quicksand";
+    align-items: center;
+    justify-content: center;
+
+    &__label {
+      text-transform: uppercase;
+      font-size: 2rem;
+    }
 
     &--active {
       color: $danger;
     }
   }
+}
+
+.worldcup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 4rem;
+  color: white;
+  background: linear-gradient(0deg, rgba(210, 10, 70, 1), rgba(138, 21, 56, 1));
 }

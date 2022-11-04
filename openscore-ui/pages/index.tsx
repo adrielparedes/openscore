@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import { useRecoilValue } from "recoil";
+import WorldCupCountdown from "../components/atoms/WorldCupCountdown";
 import EmptyScreen from "../components/molecules/EmptyScreen";
 import Leaderboard from "../components/molecules/Leaderboard";
 import LoadingScreen from "../components/molecules/LoadingScreen";
@@ -17,6 +18,7 @@ const Home: NextPageWithLayout = () => {
     <div className="home">
       <h1>Welcome {user?.nombre}!</h1>
       <EmptyScreen isEmpty={false}>
+        <WorldCupCountdown></WorldCupCountdown>
         <div className="home__content">
           <div className="card shadow">
             <TwitterTimelineEmbed
