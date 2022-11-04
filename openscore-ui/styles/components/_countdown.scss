@@ -14,6 +14,10 @@
     &__label {
       text-transform: uppercase;
       font-size: 2rem;
+
+      @include phone {
+        font-size: 0.8rem;
+      }
     }
 
     &--active {
@@ -29,6 +33,10 @@
   justify-content: center;
   gap: 2rem;
   font-size: 4rem;
+
+  @include phone {
+    font-size: 1.8rem;
+  }
   color: white;
   background: linear-gradient(0deg, rgba(210, 10, 70, 1), rgba(138, 21, 56, 1));
 }
