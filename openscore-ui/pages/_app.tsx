@@ -2,6 +2,7 @@ import "@fontsource/open-sans";
 import "@fontsource/quicksand";
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import {
   PropsWithChildren,
@@ -87,6 +88,48 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <RecoilRoot>
+      <Head>
+        <title>Red Hat Openscore - World Cup 2022</title>
+        <meta
+          name="description"
+          content="Play with your friends in this new edition of Red Hat Openscore"
+        />
+
+        <meta property="og:url" content="https://www.rhopenscore.com/" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="Red Hat Openscore - World Cup 2022"
+        />
+        <meta
+          property="og:description"
+          content="Play with your friends in this new edition of Red Hat Openscore"
+        />
+        <meta
+          property="og:image"
+          content="https://www.rhopenscore.com/rhopenscore2022-logo.png"
+        />
+        <meta
+          property="og:secure_url"
+          content="https://www.rhopenscore.com/rhopenscore2022-logo.png"
+        />
+        <meta property="og:image:type" content="image/png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="rhopenscore.com" />
+        <meta property="twitter:url" content="https://www.rhopenscore.com/" />
+        <meta
+          name="twitter:title"
+          content="Red Hat Openscore - World Cup 2022"
+        />
+        <meta
+          name="twitter:description"
+          content="Play with your friends in this new edition of Red Hat Openscore"
+        />
+        <meta
+          name="twitter:image"
+          content="https://www.rhopenscore.com/rhopenscore2022-logo.png"
+        />
+      </Head>
       <SecurityContext>
         <Initialize />
         {getLayout(<Component {...pageProps} />)}

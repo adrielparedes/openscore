@@ -17,27 +17,6 @@ const Home: NextPageWithLayout = () => {
 
   return (
     <div className="home">
-      <Head>
-        <title>Red Hat Openscore - World Cup 2022</title>
-        <meta
-          property="og:title"
-          content="Red Hat Openscore - World Cup 2022"
-        />
-        <meta
-          property="og:site_name"
-          content="Red Hat Openscore - World Cup 2022"
-        />
-        <meta
-          property="og:description"
-          content="Play with your friends in this new edition of Red Hat Openscore"
-        />
-        <meta
-          property="og:image"
-          itemProp="image"
-          content="https://www.rhopenscore.com/rhopenscore2022-logo.png"
-        />
-        <meta property="og:type" content="website" />
-      </Head>
       <h1>Welcome {user?.nombre}!</h1>
       <EmptyScreen isEmpty={false}>
         <WorldCupCountdown></WorldCupCountdown>
