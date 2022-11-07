@@ -26,7 +26,7 @@ const WorldCupCountdown = () => {
           viewBox="0 0 96 25"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="ff-mx-8 countdown_SVGGroupBallIcon__2qE31"
+          className="ff-mx-8 rotated"
         >
           <path
             fill="#ff004c"

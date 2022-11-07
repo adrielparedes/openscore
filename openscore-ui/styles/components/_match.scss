@@ -76,6 +76,10 @@
 
   .nav-link {
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     &:hover {
       background-color: $secondary;
     }
