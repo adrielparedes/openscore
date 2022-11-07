@@ -49,7 +49,7 @@ const Home: NextPageWithLayout = () => {
             />
           </div>
           <div className="home__leaderboard card shadow">
-            <div className="card-body hole__leaderboard__body">
+            <div className="card-body home__leaderboard__body">
               <div className="h3">General Leaderboard</div>
               <Leaderboard filter="general" query="" results={10}></Leaderboard>
             </div>
