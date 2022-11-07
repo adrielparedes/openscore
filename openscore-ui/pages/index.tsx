@@ -19,6 +19,18 @@ const Home: NextPageWithLayout = () => {
       <h1>Welcome {user?.nombre}!</h1>
       <EmptyScreen isEmpty={false}>
         <WorldCupCountdown></WorldCupCountdown>
+        <div className="card mb-3">
+          <div className="card-body">
+            Join our Google Workspaces Space!{" "}
+            <a
+              href="https://chat.google.com/room/AAAAo0bThwQ?cls=7"
+              target="_blank"
+              rel="noreferrer"
+            >
+              #Red Hat Openscore Community
+            </a>
+          </div>
+        </div>
         <div className="home__content">
           <div className="card shadow">
             <TwitterTimelineEmbed
@@ -37,7 +49,7 @@ const Home: NextPageWithLayout = () => {
             />
           </div>
           <div className="home__leaderboard card shadow">
-            <div className="card-body">
+            <div className="card-body hole__leaderboard__body">
               <div className="h3">General Leaderboard</div>
               <Leaderboard filter="general" query="" results={10}></Leaderboard>
             </div>
