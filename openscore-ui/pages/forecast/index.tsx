@@ -22,7 +22,13 @@ import {
 } from "../../states/ForecastState";
 import { NextPageWithLayout } from "../_app";
 
-const filters = [
+interface Menu {
+  name: string;
+  link: string;
+  filter: ForecastFilter;
+}
+
+const filters: Menu[] = [
   {
     name: "Today",
     link: "today",
@@ -34,24 +40,30 @@ const filters = [
     filter: ForecastFilter.REMAINING,
   },
   {
-    name: "Round of 16",
-    link: "round_16",
-    filter: ForecastFilter.ROUND_16,
-  },
-  {
-    name: "Quarter Final",
-    link: "quarter",
-    filter: ForecastFilter.QUARTER,
-  },
-  {
-    name: "Semifinal",
-    link: "semi",
-    filter: ForecastFilter.SEMI,
-  },
-  {
     name: "Final",
     link: "final",
     filter: ForecastFilter.FINAL,
+  },
+  {
+    name: "Third Place",
+    link: "third_place",
+    filter: ForecastFilter.FINAL,
+  },
+  {
+    name: "Semifinal",
+    link: "semifinal",
+    filter: ForecastFilter.SEMI,
+  },
+
+  {
+    name: "Quarter Finals",
+    link: "quarter_finals",
+    filter: ForecastFilter.QUARTER,
+  },
+  {
+    name: "Round of 16",
+    link: "round_of_16",
+    filter: ForecastFilter.ROUND_16,
   },
   {
     name: "Group A",
@@ -104,17 +116,36 @@ const pronostico = new PronosticoService();
 
 const refresh = (
   setForecast: SetterOrUpdater<Partido[]>,
-  setBusy: SetterOrUpdater<boolean>
+  setBusy: SetterOrUpdater<boolean>,
+  setMenu: SetterOrUpdater<Menu[]>
 ) => {
   setBusy(true);
   pronostico
     .getAll(1, 1)
     .then((res) => {
       setForecast(res.data.data);
+      setMenu(
+        filters.filter(
+          (f) =>
+            res.data.data.find((fore) => {
+              return (
+                fore.grupo.nombre.replaceAll(" ", "_").toUpperCase() ===
+                  f.link.toUpperCase() ||
+                fore.fase.nombre.replaceAll(" ", "_").toUpperCase() ===
+                  f.link.toUpperCase() ||
+                f.link === "today" ||
+                f.link === "all" ||
+                f.link === "remaining"
+              );
+            }) !== undefined
+        )
+      );
+
       setBusy(false);
     })
     .catch((err) => {
       setForecast([]);
+      setMenu([]);
       setBusy(false);
     });
 };
@@ -123,12 +154,14 @@ const getLink = (link: string) => `/forecast?filter=${link}`;
 
 const Forecasts: NextPageWithLayout = () => {
   const router = useRouter();
-  const [_, setForecast] = useRecoilState(forecastListState);
+  const [forecast, setForecast] = useRecoilState(forecastListState);
   const filteredForecast = useRecoilValue(filteredForecastState);
   const setFilter = useSetRecoilState(forecastFilterState);
-  const [path, setPath] = useState("");
+  const [_, setPath] = useState("");
   const [busy, setBusy] = useState(false);
   const filter = filters.find((f) => f.link === router.query["filter"]);
+
+  const [menu, setMenu] = useState<Menu[]>([]);
 
   useEffect(() => {
     setBusy(true);
@@ -140,9 +173,9 @@ const Forecasts: NextPageWithLayout = () => {
       setPath(router.asPath);
 
       setFilter(filter?.filter || ForecastFilter.ALL);
-      refresh(setForecast, setBusy);
+      refresh(setForecast, setBusy, setMenu);
     }
-  }, [setForecast, filter, router]);
+  }, [setForecast, filter, router, filters, setForecast]);
 
   return (
     <div className="forecast">
@@ -161,7 +194,7 @@ const Forecasts: NextPageWithLayout = () => {
         ></button>
       </div>
       <FilteredPage
-        filters={filters.map((f) => {
+        filters={menu.map((f) => {
           return { code: f.link, name: f.name };
         })}
         link="/forecast"
