@@ -1,3 +1,5 @@
+import Flag from "react-world-flags";
+
 const TeamFlag = ({
   src,
   className,
@@ -8,7 +10,7 @@ const TeamFlag = ({
   if (src) {
     return (
       <div className={`match__flag shadow ${className}`}>
-        <img src={`https://countryflagsapi.com/png/${src}`}></img>
+        <Flag code={src} height="200" />
       </div>
     );
   } else {

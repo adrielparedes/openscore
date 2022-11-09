@@ -1,5 +1,4 @@
 import TeamFlag from "../components/atoms/TeamFlag";
-import FilteredPage from "../components/molecules/FilteredPage";
 import { layout } from "../components/templates/MainLayout";
 import { NextPageWithLayout } from "./_app";
 

@@ -12,6 +12,7 @@
     "@fontsource/open-sans": "^4.5.13",
     "@fontsource/quicksand": "^4.5.11",
     "@types/jwt-decode": "^3.1.0",
+    "@types/react-world-flags": "^1.4.2",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
     "bootstrap-icons": "^1.9.1",
@@ -23,6 +24,7 @@
     "react-dom": "18.2.0",
     "react-toastify": "^9.0.8",
     "react-twitter-embed": "^4.0.4",
+    "react-world-flags": "^1.5.1",
     "recoil": "^0.7.5",
     "sass": "^1.54.8"
   },
