@@ -10,7 +10,7 @@ const TeamFlag = ({
   if (src) {
     return (
       <div className={`match__flag shadow ${className}`}>
-        <Flag code={src} height="200" />
+        <Flag code={src} fallback={<span>{src}</span>} />
       </div>
     );
   } else {
