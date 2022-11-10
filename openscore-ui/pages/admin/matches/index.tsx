@@ -5,6 +5,7 @@ import { SetterOrUpdater, useRecoilValue } from "recoil";
 import PhaseIndicator from "../../../components/atoms/PhaseIndicator";
 import Result from "../../../components/atoms/Result";
 import StatusIndicator from "../../../components/atoms/StatusIndicator";
+import TeamFlag from "../../../components/atoms/TeamFlag";
 import EmptyScreen from "../../../components/molecules/EmptyScreen";
 import LoadingScreen from "../../../components/molecules/LoadingScreen";
 import Pagination from "../../../components/molecules/Pagination";
@@ -14,12 +15,6 @@ import { Partido } from "../../../model/Partido";
 import { PartidosService } from "../../../services/PartidosService";
 import { isAdminState } from "../../../states/SecurityState";
 import { NextPageWithLayout } from "../../_app";
-
-const TeamFlag = ({ src }: { src: string }) => (
-  <div className="match__flag">
-    <img src={`https://countryflagsapi.com/png/${src}`}></img>
-  </div>
-);
 
 const service: PartidosService = new PartidosService();
 

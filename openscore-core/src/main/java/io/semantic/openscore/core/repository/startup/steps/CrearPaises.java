@@ -30,7 +30,7 @@ public class CrearPaises implements StartupStep {
         logger.info("Inicializando paises");
 
         this.guardarSiNoExiste(crearPais("ARG", "Argentina"));
-        this.guardarSiNoExiste(crearPais("CHI", "Chile"));
+        this.guardarSiNoExiste(crearPais("CHL", "Chile"));
         this.guardarSiNoExiste(crearPais("PER", "Peru"));
         this.guardarSiNoExiste(crearPais("COL", "Colombia"));
         this.guardarSiNoExiste(crearPais("MEX", "Mexico"));

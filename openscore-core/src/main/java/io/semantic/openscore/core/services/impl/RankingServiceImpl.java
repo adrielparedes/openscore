@@ -77,7 +77,7 @@ public class RankingServiceImpl implements RankingService {
                 .map(usuario -> {
                     Ranking ranking = new Ranking();
                     ranking.setNombre(usuario.getNombre() + " " + usuario.getApellido());
-                    ranking.setPais(usuario.getPais().getNombre());
+                    ranking.setPais(usuario.getPais().getCodigo());
                     ranking.setUsuario(usuario.getId());
                     ranking.setPuntos(usuario.getPuntos());
                     return ranking;
