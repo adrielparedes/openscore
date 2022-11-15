@@ -26,7 +26,9 @@ export class UsuarioService extends Service<
   }
 
   public allAdmin(page: number, pageSize: number) {
-    return rest.get<ApiResponse<UsuarioCompleto[]>>(this.getAllAdminUrl);
+    return rest.get<ApiResponse<UsuarioCompleto[]>>(this.getAllAdminUrl, {
+      params: { page, pageSize },
+    });
   }
 
   public updateUser(id: number, storable: UpdateUsuario) {
