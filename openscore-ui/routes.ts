@@ -18,6 +18,7 @@ const routes: Route[] = [
     link: "/admin",
     roles: ["admin"],
     items: [
+      { name: "Dashboard", link: "/admin/dashboard", roles: ["admin"] },
       { name: "Matches", link: "/admin/matches", roles: ["admin"] },
       { name: "Teams", link: "/admin/teams", roles: ["admin"] },
       { name: "Users", link: "/admin/users", roles: ["admin"] },

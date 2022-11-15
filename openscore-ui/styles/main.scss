@@ -50,6 +50,7 @@ $theme-colors: (
 @import "pages/home";
 @import "pages/setresult";
 @import "pages/user";
+@import "pages/dashboard";
 
 html {
   height: 100%;
@@ -66,4 +67,13 @@ h1 {
 
 .page {
   margin-bottom: 3rem;
+}
+
+.card-dark {
+  background-color: $primary;
+  color: white;
+
+  & .bi {
+    color: $danger;
+  }
 }

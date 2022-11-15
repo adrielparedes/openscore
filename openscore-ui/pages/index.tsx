@@ -20,6 +20,12 @@ const Home: NextPageWithLayout = () => {
       <h1>Welcome {user?.nombre}!</h1>
       <EmptyScreen isEmpty={false}>
         <WorldCupCountdown></WorldCupCountdown>
+        <div className="card mb-3 card-dark">
+          <div className="card-body">
+            Red Hat Open Score is a cloud based application made with{" "}
+            <i className="bi bi-heart-fill" /> by Red Hatters for Red Hatters!
+          </div>
+        </div>
         <div className="card mb-3">
           <div className="card-body">
             Join our Google Workspaces Space!{" "}
