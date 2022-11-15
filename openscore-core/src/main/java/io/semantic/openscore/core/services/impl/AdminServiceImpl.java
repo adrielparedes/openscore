@@ -26,7 +26,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Inject
     public AdminServiceImpl(UsuarioRepository usuarioRepository,
-                            UsuarioMapper mapper) {
+            UsuarioMapper mapper) {
         this.usuarioRepository = usuarioRepository;
         this.mapper = mapper;
     }
@@ -38,4 +38,5 @@ public class AdminServiceImpl implements AdminService {
         List<UsuarioCompletoDTO> usuariosApi = this.mapper.asCompletoApi(usuarios);
         return new ApiResponse<>(usuariosApi);
     }
+
 }

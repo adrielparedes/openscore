@@ -8,6 +8,14 @@ const Dashboard: NextPageWithLayout = () => {
       <div className="dashboard__people__container">
         <div className="card shadow">
           <div className="card-body dashboard__people__title">
+            <div className="dashboard__people__title">Registrados</div>
+            <div className="dashboard__people__number">51</div>
+          </div>
+        </div>
+      </div>
+      <div className="dashboard__people__container">
+        <div className="card shadow">
+          <div className="card-body dashboard__people__title">
             <div className="dashboard__people__title">Argentina</div>
             <div className="dashboard__people__number">51</div>
           </div>
