@@ -206,16 +206,20 @@ const MatchCard = ({ partido, onUpdate }: MatchCardProps) => {
           >
             Home
           </ActiveNavLink>
-          <ActiveNavLink
-            active={partido.pronostico?.empate || false}
-            id={partido.id}
-            select={(id) => pronosticoService.empate(id)}
-            onUpdate={() => onUpdate(partido)}
-            busy={busy}
-            setBusy={setBusy}
-          >
-            Draw
-          </ActiveNavLink>
+          {partido.fase.codigo === "GRUPO" ? (
+            <ActiveNavLink
+              active={partido.pronostico?.empate || false}
+              id={partido.id}
+              select={(id) => pronosticoService.empate(id)}
+              onUpdate={() => onUpdate(partido)}
+              busy={busy}
+              setBusy={setBusy}
+            >
+              Draw
+            </ActiveNavLink>
+          ) : (
+            <div></div>
+          )}
           <ActiveNavLink
             active={partido.pronostico?.visitante || false}
             id={partido.id}

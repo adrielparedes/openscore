@@ -55,14 +55,16 @@ const Home: NextPageWithLayout = () => {
                 <Link href={"/forecast"}>
                   <a>Forecast</a>
                 </Link>{" "}
-                you'll see the games that are played on the day. If you want to
-                set predictions for future games, choose "remaining" (or go by
-                groups) Once you see the boxes for each match, you just need to
-                select the option for that specific match. Click on "Home" if
-                you think that the team on the left wins, "Away" for the team on
-                the right or "Draw" if you think it will end on a tie. If you
-                want to check your selections, go to "All" or by groups.
-                Selections can be changed up to 15 min before each match.
+                you&apos;ll see the games that are played on the day. If you
+                want to set predictions for future games, choose
+                &quot;remaining&quot; (or go by groups) Once you see the boxes
+                for each match, you just need to select the option for that
+                specific match. Click on &quot;Home&quot; if you think that the
+                team on the left wins, &quot;Away&quot; for the team on the
+                right or &quot;Draw&quot; if you think it will end on a tie. If
+                you want to check your selections, go to &quot;All&quot; or by
+                groups. Selections can be changed up to 15 min before each
+                match.
               </p>
               <p className="small text-muted">
                 *<strong>Home</strong> references the team that leads the match.

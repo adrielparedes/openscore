@@ -79,7 +79,7 @@ public class StandingsServiceImpl implements StandingsService {
                     if (ganador.equals(Ganador.LOCAL) &&
                             partido.getLocal().getCodigo().equals(equipo.getCodigo())) {
                         ganado++;
-
+                        diferenciaGol = Math.abs(diferenciaGol);
                     } else if (ganador.equals(Ganador.VISITANTE)
                             && partido.getVisitante().getCodigo().equals(equipo.getCodigo())) {
                         ganado++;
