@@ -1,14 +1,20 @@
 import { auth } from "@/lib/auth";
 import { getRanking } from "@/actions/ranking";
+import { getNextMatchPronostico } from "@/actions/pronosticos";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { WorldCupCountdown } from "@/components/ui/WorldCupCountdown";
+import NextMatchCard from "@/components/forecast/NextMatchCard";
 import Link from "next/link";
 import { Trophy, TrendingUp, Globe, ArrowRight } from "lucide-react";
 
 export default async function HomePage() {
   const session = await auth();
   const nombre = (session?.user as any)?.nombre ?? session?.user?.name ?? "there";
-  const topRanking = await getRanking({ size: 5 });
+  const [topRanking, nextMatch] = await Promise.all([
+    getRanking({ size: 5 }),
+    getNextMatchPronostico(),
+  ]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -54,6 +60,23 @@ export default async function HomePage() {
           </Link>
         </div>
       </section>
+
+      {/* Countdown + Next Match */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <WorldCupCountdown />
+        {nextMatch ? (
+          <div className="flex flex-col gap-2">
+            <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide">
+              Next match
+            </h2>
+            <NextMatchCard match={nextMatch} />
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-center p-8 text-sm text-slate-400">
+            No upcoming matches scheduled.
+          </div>
+        )}
+      </div>
 
       {/* How to play */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

@@ -98,5 +98,33 @@ export async function setPronostico(
   });
 
   revalidatePath("/forecast");
+  revalidatePath("/");
   return {};
+}
+
+export async function getNextMatchPronostico(): Promise<PartidoPronostico | null> {
+  const session = await auth();
+  if (!session?.user?.id) return null;
+  const usuarioId = parseInt(session.user.id);
+
+  const cutoff = new Date(Date.now() - 15 * 60 * 1000);
+
+  const partido = await prisma.partido.findFirst({
+    where: {
+      deleted: false,
+      resultadoLocal: null,
+      dia: { gte: cutoff },
+    },
+    include: { local: true, visitante: true, fase: true, grupo: true },
+    orderBy: { dia: "asc" },
+  });
+
+  if (!partido) return null;
+
+  const pronostico =
+    (await prisma.pronostico.findUnique({
+      where: { partidoId_usuarioId: { partidoId: partido.id, usuarioId } },
+    })) ?? null;
+
+  return buildPartidoPronostico(partido, pronostico);
 }
