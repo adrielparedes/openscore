@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: openscore-ng-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: openscore
+      POSTGRES_PASSWORD: 0p3nsc0r3
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

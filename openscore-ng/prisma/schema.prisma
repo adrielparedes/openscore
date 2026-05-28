@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Pais {
+  id           Int       @id @default(autoincrement())
+  nombre       String
+  codigo       String    @unique
+  deleted      Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+  usuarios     Usuario[]
+}
+
+model Equipo {
+  id          Int        @id @default(autoincrement())
+  nombre      String
+  codigo      String     @unique
+  logo        String?
+  deleted     Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  partidosLocal    Partido[] @relation("PartidoLocal")
+  partidosVisitante Partido[] @relation("PartidoVisitante")
+  standing    Standing?
+}
+
+model Fase {
+  id       Int       @id @default(autoincrement())
+  codigo   String    @unique
+  nombre   String
+  puntos   Int
+  deleted  Boolean   @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  partidos Partido[]
+}
+
+model Grupo {
+  id        Int        @id @default(autoincrement())
+  codigo    String     @unique
+  nombre    String
+  deleted   Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  partidos  Partido[]
+  standings Standing[]
+}
+
+model Partido {
+  id              Int         @id @default(autoincrement())
+  localId         Int
+  visitanteId     Int
+  grupoId         Int?
+  faseId          Int
+  dia             DateTime
+  lugar           String?
+  fecha           Int         @default(0)
+  deleted         Boolean     @default(false)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Embedded resultado
+  resultadoLocal          Int?
+  resultadoVisitante      Int?
+  resultadoPenales        Boolean   @default(false)
+  resultadoPenalesLocal   Int?
+  resultadoPenalesVisitante Int?
+
+  local       Equipo      @relation("PartidoLocal", fields: [localId], references: [id])
+  visitante   Equipo      @relation("PartidoVisitante", fields: [visitanteId], references: [id])
+  grupo       Grupo?      @relation(fields: [grupoId], references: [id])
+  fase        Fase        @relation(fields: [faseId], references: [id])
+  pronosticos Pronostico[]
+}
+
+model Usuario {
+  id          Int          @id @default(autoincrement())
+  nombre      String
+  apellido    String
+  paisId      Int
+  email       String       @unique
+  password    String
+  deleted     Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  deletedAt   DateTime?
+
+  pais        Pais         @relation(fields: [paisId], references: [id])
+  pronosticos Pronostico[]
+  roles       UsuarioRol[]
+}
+
+model UsuarioRol {
+  usuarioId Int
+  rol       Rol
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  @@id([usuarioId, rol])
+}
+
+enum Rol {
+  USUARIO
+  ADMIN
+}
+
+model Pronostico {
+  id         Int      @id @default(autoincrement())
+  local      Boolean  @default(false)
+  visitante  Boolean  @default(false)
+  empate     Boolean  @default(false)
+  partidoId  Int
+  usuarioId  Int
+  deleted    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  partido    Partido  @relation(fields: [partidoId], references: [id])
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id])
+
+  @@unique([partidoId, usuarioId])
+}
+
+model Standing {
+  id             Int      @id @default(autoincrement())
+  equipoId       Int      @unique
+  grupoId        Int?
+  puntos         Int      @default(0)
+  ganados        Int      @default(0)
+  perdidos       Int      @default(0)
+  empatados      Int      @default(0)
+  diferenciaGol  Int      @default(0)
+  partidos       Int      @default(0)
+  deleted        Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  equipo         Equipo   @relation(fields: [equipoId], references: [id])
+  grupo          Grupo?   @relation(fields: [grupoId], references: [id])
+}
+
+model Post {
+  id        Int        @id @default(autoincrement())
+  titulo    String
+  contenido String     @db.Text
+  autor     String
+  status    PostStatus @default(DRAFT)
+  deleted   Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model PreguntaSecreta {
+  id       Int     @id @default(autoincrement())
+  codigo   String  @unique
+  pregunta String
+  deleted  Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
