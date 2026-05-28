@@ -13,7 +13,7 @@ const PHASES = [
 
 export default function RulesPage() {
   return (
-    <div className="flex flex-col gap-6 max-w-3xl">
+    <div className="flex flex-col gap-6 max-w-3xl mx-auto w-full">
       <div>
         <h1 className="text-2xl font-bold text-slate-900">Rules</h1>
         <p className="text-slate-500 text-sm mt-1">How Openscore works</p>
