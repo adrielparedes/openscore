@@ -13,6 +13,7 @@ import {
   LogOut,
   Menu,
   X,
+  ClipboardList,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -27,6 +28,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { data: session } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isAdmin = ((session?.user as any)?.roles ?? []).includes("ADMIN");
 
   return (
     <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
@@ -57,6 +59,20 @@ export default function Navbar() {
                 {label}
               </Link>
             ))}
+            {isAdmin && (
+              <Link
+                href="/admin/results"
+                className={cn(
+                  "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  pathname.startsWith("/admin")
+                    ? "bg-rose-50 text-rose-700"
+                    : "text-rose-500 hover:bg-rose-50 hover:text-rose-700"
+                )}
+              >
+                <ClipboardList className="h-4 w-4" />
+                Results
+              </Link>
+            )}
           </div>
 
           {/* User + logout */}
@@ -106,6 +122,21 @@ export default function Navbar() {
               {label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link
+              href="/admin/results"
+              onClick={() => setMobileOpen(false)}
+              className={cn(
+                "flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                pathname.startsWith("/admin")
+                  ? "bg-rose-50 text-rose-700"
+                  : "text-rose-500 hover:text-rose-700"
+              )}
+            >
+              <ClipboardList className="h-4 w-4" />
+              Results
+            </Link>
+          )}
           {session && (
             <form action={logoutAction} className="mt-2">
               <button
