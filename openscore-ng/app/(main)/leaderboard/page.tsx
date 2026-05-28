@@ -1,10 +1,17 @@
 import { getRanking } from "@/actions/ranking";
-import { getPaises } from "@/actions/usuarios";
 import { auth } from "@/lib/auth";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Trophy, Medal } from "lucide-react";
-import type { Pais } from "@/types";
+
+const LEADERBOARD_PAISES = [
+  { codigo: "ARG", nombre: "Argentina" },
+  { codigo: "BRA", nombre: "Brazil" },
+  { codigo: "CHL", nombre: "Chile" },
+  { codigo: "COL", nombre: "Colombia" },
+  { codigo: "MEX", nombre: "Mexico" },
+  { codigo: "PER", nombre: "Peru" },
+];
 
 interface LeaderboardPageProps {
   searchParams: Promise<{ pais?: string }>;
@@ -22,10 +29,7 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
   const session = await auth();
   const myId = session?.user?.id ? parseInt(session.user.id) : null;
 
-  const [ranking, paises] = await Promise.all([
-    getRanking({ pais }),
-    getPaises(),
-  ]);
+  const ranking = await getRanking({ pais });
 
   return (
     <div className="flex flex-col gap-6">
@@ -44,7 +48,7 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
         >
           All countries
         </a>
-        {(paises as Pais[]).map((p) => (
+        {LEADERBOARD_PAISES.map((p) => (
           <a
             key={p.codigo}
             href={`/leaderboard?pais=${p.codigo}`}
