@@ -3,8 +3,13 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-const GROUPS = ["GRUPO_A", "GRUPO_B", "GRUPO_C", "GRUPO_D", "GRUPO_E", "GRUPO_F", "GRUPO_G", "GRUPO_H"];
+const GROUPS = [
+  "GRUPO_A", "GRUPO_B", "GRUPO_C", "GRUPO_D",
+  "GRUPO_E", "GRUPO_F", "GRUPO_G", "GRUPO_H",
+  "GRUPO_I", "GRUPO_J", "GRUPO_K", "GRUPO_L",
+];
 const FASES = [
+  { codigo: "TREINTAIDOSAVOS", label: "Round of 32" },
   { codigo: "OCTAVOS", label: "Round of 16" },
   { codigo: "CUARTOS", label: "Quarter-finals" },
   { codigo: "SEMI", label: "Semi-finals" },

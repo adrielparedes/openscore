@@ -3,11 +3,12 @@ import { Badge } from "@/components/ui/Badge";
 
 const PHASES = [
   { name: "Group Stage", codigo: "GRUPO", points: 1, description: "Pick the winner of each group match" },
-  { name: "Round of 16", codigo: "OCTAVOS", points: 2, description: "Knock-out round, double points" },
-  { name: "Quarter-finals", codigo: "CUARTOS", points: 3, description: "Triple points" },
-  { name: "Semi-finals", codigo: "SEMI", points: 4, description: "Four times the points" },
-  { name: "3rd Place", codigo: "TERCER", points: 4, description: "Bronze match" },
-  { name: "Final", codigo: "FINAL", points: 5, description: "Maximum points — 5x!" },
+  { name: "Round of 32", codigo: "TREINTAIDOSAVOS", points: 2, description: "First knockout round, double points" },
+  { name: "Round of 16", codigo: "OCTAVOS", points: 3, description: "Triple points" },
+  { name: "Quarter-finals", codigo: "CUARTOS", points: 4, description: "Quadruple points" },
+  { name: "Semi-finals", codigo: "SEMI", points: 5, description: "Five times the points" },
+  { name: "3rd Place", codigo: "TERCER", points: 5, description: "Bronze match" },
+  { name: "Final", codigo: "FINAL", points: 6, description: "Maximum points — 6x!" },
 ];
 
 export default function RulesPage() {
