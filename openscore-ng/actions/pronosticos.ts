@@ -102,6 +102,37 @@ export async function setPronostico(
   return {};
 }
 
+const KNOCKOUT_PHASE_CODES = [
+  "TREINTAIDOSAVOS",
+  "OCTAVOS",
+  "CUARTOS",
+  "SEMI",
+  "TERCER",
+  "FINAL",
+];
+
+export async function getKnockoutPronosticos(): Promise<PartidoPronostico[]> {
+  const usuarioId = await getUserId();
+
+  const partidos = await prisma.partido.findMany({
+    where: {
+      deleted: false,
+      fase: { codigo: { in: KNOCKOUT_PHASE_CODES } },
+    },
+    include: { local: true, visitante: true, fase: true, grupo: true },
+    orderBy: { dia: "asc" },
+  });
+
+  const pronosticos = await prisma.pronostico.findMany({
+    where: { usuarioId, deleted: false },
+  });
+
+  return partidos.map((partido) => {
+    const pronostico = pronosticos.find((p) => p.partidoId === partido.id) ?? null;
+    return buildPartidoPronostico(partido, pronostico);
+  });
+}
+
 export async function getNextMatchPronostico(): Promise<PartidoPronostico | null> {
   const session = await auth();
   if (!session?.user?.id) return null;
