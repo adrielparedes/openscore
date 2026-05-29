@@ -32,31 +32,35 @@ export default function Navbar() {
   const isAdmin = ((session?.user as any)?.roles ?? []).includes("ADMIN");
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <nav className="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-xl border-b border-white/[0.08]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
+
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-rose-600 flex items-center justify-center">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="h-8 w-8 rounded-lg bg-rose-600 flex items-center justify-center shadow-lg shadow-rose-900/50">
               <Trophy className="h-5 w-5 text-white" />
             </div>
-            <span className="font-bold text-lg text-slate-900">Openscore</span>
+            <span className="text-lg tracking-tight select-none">
+              <span className="font-light text-white/75">OPEN</span>
+              <span className="font-black text-rose-500">SCORE</span>
+            </span>
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-0.5">
             {navLinks.map(({ href, label, icon: Icon }) => (
               <Link
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors border-b-2",
+                  "flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-150",
                   pathname === href
-                    ? "border-rose-500 text-rose-600"
-                    : "border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300"
+                    ? "bg-gradient-to-r from-rose-500/35 to-rose-400/10 text-white"
+                    : "text-white/50 hover:text-white hover:bg-white/10"
                 )}
               >
-                <Icon className="h-4 w-4" />
+                <Icon className="h-3.5 w-3.5" />
                 {label}
               </Link>
             ))}
@@ -64,40 +68,40 @@ export default function Navbar() {
               <Link
                 href="/admin/results"
                 className={cn(
-                  "flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors border-b-2",
+                  "flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-150",
                   pathname.startsWith("/admin")
-                    ? "border-rose-500 text-rose-600"
-                    : "border-transparent text-rose-500 hover:text-rose-700 hover:border-rose-300"
+                    ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
+                    : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
                 )}
               >
-                <ClipboardList className="h-4 w-4" />
+                <ClipboardList className="h-3.5 w-3.5" />
                 Results
               </Link>
             )}
           </div>
 
           {/* User + logout */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-0.5">
             {session && (
               <>
                 <Link
                   href="/profile"
                   className={cn(
-                    "flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm transition-colors",
+                    "flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
                     pathname === "/profile"
-                      ? "bg-slate-100 text-slate-900"
-                      : "text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+                    ? "bg-gradient-to-r from-rose-500/35 to-rose-400/10 text-white"
+                    : "text-white/50 hover:text-white hover:bg-white/10"
                   )}
                 >
-                  <UserCircle className="h-4 w-4" />
+                  <UserCircle className="h-3.5 w-3.5" />
                   {(session.user as any)?.nombre ?? session.user?.name}
                 </Link>
                 <form action={logoutAction}>
                   <button
                     type="submit"
-                    className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors"
+                    className="flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-white/50 hover:text-white hover:bg-white/10 transition-all duration-150"
                   >
-                    <LogOut className="h-4 w-4" />
+                    <LogOut className="h-3.5 w-3.5" />
                     Logout
                   </button>
                 </form>
@@ -107,7 +111,7 @@ export default function Navbar() {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100"
+            className="md:hidden p-2 rounded-lg text-white/60 hover:bg-white/10 transition-colors"
             onClick={() => setMobileOpen((o) => !o)}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -117,15 +121,17 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 pb-4 pt-2">
+        <div className="md:hidden border-t border-white/[0.08] bg-slate-950/95 backdrop-blur-xl px-4 pb-4 pt-2 space-y-0.5">
           {navLinks.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
               href={href}
               onClick={() => setMobileOpen(false)}
               className={cn(
-                "flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                pathname === href ? "bg-rose-50 text-rose-600" : "text-slate-500 hover:text-slate-900"
+                "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                pathname === href
+                  ? "bg-gradient-to-r from-rose-500/35 to-rose-400/10 text-white"
+                  : "text-white/50 hover:text-white hover:bg-white/10"
               )}
             >
               <Icon className="h-4 w-4" />
@@ -137,10 +143,10 @@ export default function Navbar() {
               href="/admin/results"
               onClick={() => setMobileOpen(false)}
               className={cn(
-                "flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
                 pathname.startsWith("/admin")
-                  ? "bg-rose-50 text-rose-600"
-                  : "text-rose-500 hover:text-rose-700"
+                  ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
+                  : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
               )}
             >
               <ClipboardList className="h-4 w-4" />
@@ -153,17 +159,19 @@ export default function Navbar() {
                 href="/profile"
                 onClick={() => setMobileOpen(false)}
                 className={cn(
-                  "flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                  pathname === "/profile" ? "bg-rose-50 text-rose-600" : "text-slate-500 hover:text-slate-900"
+                  "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                  pathname === "/profile"
+                  ? "bg-gradient-to-r from-rose-500/35 to-rose-400/10 text-white"
+                  : "text-white/50 hover:text-white hover:bg-white/10"
                 )}
               >
                 <UserCircle className="h-4 w-4" />
                 Profile
               </Link>
-              <form action={logoutAction} className="mt-2">
+              <form action={logoutAction}>
                 <button
                   type="submit"
-                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-slate-500 hover:text-slate-900"
+                  className="flex w-full items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-white/50 hover:text-white hover:bg-white/10 transition-all duration-150"
                 >
                   <LogOut className="h-4 w-4" />
                   Logout
