@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { setPronostico } from "@/actions/pronosticos";
 import type { PartidoPronostico } from "@/types";
+import type { PronosticoGanador } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { flagUrl } from "@/lib/flags";
 import { Badge } from "@/components/ui/Badge";
@@ -18,7 +19,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
   const finished = match.status === "FINISHED";
   const locked = match.status !== "PENDING";
 
-  const vote = (prediction: "local" | "visitante" | "empate") => {
+  const vote = (prediction: PronosticoGanador) => {
     if (locked) return;
     startTransition(() => {
       setPronostico(match.id, prediction);
@@ -41,13 +42,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
       ? "bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 border-transparent text-white shadow-lg shadow-pink-500/20 hover:scale-[1.02] hover:shadow-pink-500/30"
       : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900";
 
-  const userPrediction = match.pronostico
-    ? match.pronostico.local
-      ? "LOCAL"
-      : match.pronostico.visitante
-      ? "VISITANTE"
-      : "EMPATE"
-    : null;
+  const userPrediction = match.pronostico?.ganador ?? null;
   const predictionCorrect = finished && userPrediction !== null && userPrediction === match.ganador;
 
   const leftBorderColor = finished
@@ -168,22 +163,22 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
             <p className="text-xs text-slate-400 text-center">Your prediction</p>
             <div className="flex gap-2">
               <button
-                className={cn(btnBase, btnVariant(!!match.pronostico?.local))}
-                onClick={() => vote("local")}
+                className={cn(btnBase, btnVariant(match.pronostico?.ganador === "LOCAL"))}
+                onClick={() => vote("LOCAL")}
                 disabled={locked}
               >
                 Home
               </button>
               <button
-                className={cn(btnBase, btnVariant(!!match.pronostico?.empate))}
-                onClick={() => vote("empate")}
+                className={cn(btnBase, btnVariant(match.pronostico?.ganador === "EMPATE"))}
+                onClick={() => vote("EMPATE")}
                 disabled={locked}
               >
                 Draw
               </button>
               <button
-                className={cn(btnBase, btnVariant(!!match.pronostico?.visitante))}
-                onClick={() => vote("visitante")}
+                className={cn(btnBase, btnVariant(match.pronostico?.ganador === "VISITANTE"))}
+                onClick={() => vote("VISITANTE")}
                 disabled={locked}
               >
                 Away

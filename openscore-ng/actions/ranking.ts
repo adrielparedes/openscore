@@ -15,10 +15,7 @@ function calcularPuntosUsuario(pronosticos: any[]): number {
       partido.resultadoPenalesLocal,
       partido.resultadoPenalesVisitante
     );
-    const acertado =
-      (p.local && ganador === "LOCAL") ||
-      (p.visitante && ganador === "VISITANTE") ||
-      (p.empate && ganador === "EMPATE");
+    const acertado = p.ganador === ganador;
     return total + (acertado ? partido.fase.puntos : 0);
   }, 0);
 }

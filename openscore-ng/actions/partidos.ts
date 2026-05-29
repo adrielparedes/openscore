@@ -126,3 +126,25 @@ export async function setResultado(
   revalidatePath("/forecast");
   revalidatePath("/leaderboard");
 }
+
+export async function resetResultado(partidoId: number) {
+  const session = await auth();
+  const roles = (session?.user as any)?.roles ?? [];
+  if (!roles.includes("ADMIN")) throw new Error("Unauthorized");
+
+  await prisma.partido.update({
+    where: { id: partidoId },
+    data: {
+      resultadoLocal: null,
+      resultadoVisitante: null,
+      resultadoPenales: false,
+      resultadoPenalesLocal: null,
+      resultadoPenalesVisitante: null,
+    },
+  });
+
+  await calculateStandings();
+  revalidatePath("/");
+  revalidatePath("/forecast");
+  revalidatePath("/leaderboard");
+}

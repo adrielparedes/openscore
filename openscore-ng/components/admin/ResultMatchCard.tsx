@@ -1,10 +1,10 @@
 "use client";
 
-import { setResultado, setEquipos } from "@/actions/partidos";
+import { setResultado, setEquipos, resetResultado } from "@/actions/partidos";
 import type { PartidoConRelaciones, Equipo } from "@/types";
 import { flagUrl } from "@/lib/flags";
 import { Badge } from "@/components/ui/Badge";
-import { CalendarClock, Check, Loader2, Pencil } from "lucide-react";
+import { CalendarClock, Check, Loader2, Pencil, RotateCcw } from "lucide-react";
 import { useTransition, useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -37,6 +37,10 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
   const [editingTeams, setEditingTeams] = useState(false);
   const [teamsDirty, setTeamsDirty] = useState(false);
   const [teamSaved, setTeamSaved] = useState(false);
+
+  const [confirmReset, setConfirmReset] = useState(false);
+
+  const hasResult = match.resultadoLocal != null;
 
   const selectedLocal = equipos.find((e) => e.id === localId) ?? match.local;
   const selectedVisitante = equipos.find((e) => e.id === visitanteId) ?? match.visitante;
@@ -96,6 +100,24 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
         setTimeout(() => setTeamSaved(false), 3000);
       } catch {
         setError("Failed to save teams. Please try again.");
+      }
+    });
+  };
+
+  const handleReset = () => {
+    startTransition(async () => {
+      try {
+        await resetResultado(match.id);
+        setLocalScore("");
+        setVisitanteScore("");
+        setPenales(false);
+        setPenalesLocal("");
+        setPenalesVisitante("");
+        setConfirmReset(false);
+        setError(null);
+      } catch {
+        setError("Failed to reset. Please try again.");
+        setConfirmReset(false);
       }
     });
   };
@@ -333,6 +355,36 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
               {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
               Save teams
             </button>
+          )}
+          {hasResult && !confirmReset && (
+            <button
+              onClick={() => setConfirmReset(true)}
+              disabled={pending}
+              className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white hover:bg-red-50 hover:border-red-200 text-slate-500 hover:text-red-500 text-sm font-medium px-3 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+              Reset
+            </button>
+          )}
+          {confirmReset && (
+            <>
+              <span className="text-xs text-red-500 font-medium">Sure?</span>
+              <button
+                onClick={handleReset}
+                disabled={pending}
+                className="flex items-center gap-1.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-semibold px-3 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-3.5 w-3.5" />}
+                Yes, reset
+              </button>
+              <button
+                onClick={() => setConfirmReset(false)}
+                disabled={pending}
+                className="rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 text-sm font-medium px-3 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Cancel
+              </button>
+            </>
           )}
           <button
             onClick={handleSubmit}

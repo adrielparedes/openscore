@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { calcularGanador, calcularStatus, isBloqueado } from "@/lib/utils";
 import type { PartidoPronostico } from "@/types";
+import type { PronosticoGanador } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 async function getUserId(): Promise<number> {
@@ -27,11 +28,7 @@ function buildPartidoPronostico(partido: any, pronostico: any | null): PartidoPr
 
   let puntos = 0;
   if (status === "FINISHED" && pronostico && ganador) {
-    const acertado =
-      (pronostico.local && ganador === "LOCAL") ||
-      (pronostico.visitante && ganador === "VISITANTE") ||
-      (pronostico.empate && ganador === "EMPATE");
-    puntos = acertado ? partido.fase.puntos : 0;
+    puntos = pronostico.ganador === ganador ? partido.fase.puntos : 0;
   }
 
   return { ...partido, status, ganador, pronostico, puntos };
@@ -65,11 +62,9 @@ export async function getPronosticos(filters?: {
   });
 }
 
-type Prediction = "local" | "visitante" | "empate";
-
 export async function setPronostico(
   partidoId: number,
-  prediction: Prediction
+  ganador: PronosticoGanador
 ): Promise<{ error?: string }> {
   const usuarioId = await getUserId();
 
@@ -83,18 +78,8 @@ export async function setPronostico(
 
   await prisma.pronostico.upsert({
     where: { partidoId_usuarioId: { partidoId, usuarioId } },
-    create: {
-      partidoId,
-      usuarioId,
-      local: prediction === "local",
-      visitante: prediction === "visitante",
-      empate: prediction === "empate",
-    },
-    update: {
-      local: prediction === "local",
-      visitante: prediction === "visitante",
-      empate: prediction === "empate",
-    },
+    create: { partidoId, usuarioId, ganador },
+    update: { ganador },
   });
 
   revalidatePath("/forecast");

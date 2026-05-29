@@ -114,16 +114,20 @@ enum Rol {
   ADMIN
 }
 
+enum PronosticoGanador {
+  LOCAL
+  VISITANTE
+  EMPATE
+}
+
 model Pronostico {
-  id         Int      @id @default(autoincrement())
-  local      Boolean  @default(false)
-  visitante  Boolean  @default(false)
-  empate     Boolean  @default(false)
+  id         Int                @id @default(autoincrement())
+  ganador    PronosticoGanador
   partidoId  Int
   usuarioId  Int
-  deleted    Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  deleted    Boolean            @default(false)
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
 
   partido    Partido  @relation(fields: [partidoId], references: [id])
   usuario    Usuario  @relation(fields: [usuarioId], references: [id])

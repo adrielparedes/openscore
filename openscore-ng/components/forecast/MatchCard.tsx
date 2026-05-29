@@ -2,6 +2,7 @@
 
 import { setPronostico } from "@/actions/pronosticos";
 import type { PartidoPronostico } from "@/types";
+import type { PronosticoGanador } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { flagUrl } from "@/lib/flags";
 import { Badge } from "@/components/ui/Badge";
@@ -46,7 +47,7 @@ export default function MatchCard({ match }: MatchCardProps) {
   const remaining = useCountdown(locked ? 0 : lockAtMs);
   const showCountdown = !locked && remaining > 0;
 
-  const vote = (prediction: "local" | "visitante" | "empate") => {
+  const vote = (prediction: PronosticoGanador) => {
     if (locked) return;
     startTransition(() => {
       setPronostico(match.id, prediction);
@@ -152,24 +153,24 @@ export default function MatchCard({ match }: MatchCardProps) {
         )}
         <div className="flex gap-2">
           <button
-            className={cn(btnBase, btnVariant(!!match.pronostico?.local))}
-            onClick={() => vote("local")}
+            className={cn(btnBase, btnVariant(match.pronostico?.ganador === "LOCAL"))}
+            onClick={() => vote("LOCAL")}
             disabled={locked}
           >
             Home
           </button>
           {match.fase.codigo === "GRUPO" && (
             <button
-              className={cn(btnBase, btnVariant(!!match.pronostico?.empate))}
-              onClick={() => vote("empate")}
+              className={cn(btnBase, btnVariant(match.pronostico?.ganador === "EMPATE"))}
+              onClick={() => vote("EMPATE")}
               disabled={locked}
             >
               Draw
             </button>
           )}
           <button
-            className={cn(btnBase, btnVariant(!!match.pronostico?.visitante))}
-            onClick={() => vote("visitante")}
+            className={cn(btnBase, btnVariant(match.pronostico?.ganador === "VISITANTE"))}
+            onClick={() => vote("VISITANTE")}
             disabled={locked}
           >
             Away
