@@ -84,7 +84,7 @@ export default function MatchCard({ match }: MatchCardProps) {
           <span>{matchDate}</span>
         </div>
         <div className="flex items-center gap-2">
-          {match.grupo && <Badge variant="muted">{match.grupo.nombre}</Badge>}
+          {match.grupo && match.grupo.codigo !== "NONE" && <Badge variant="muted">{match.grupo.nombre}</Badge>}
           {{
             PENDING: <Badge variant="success">Open</Badge>,
             BLOCKED: <Badge variant="warning">Locked</Badge>,
@@ -149,13 +149,15 @@ export default function MatchCard({ match }: MatchCardProps) {
           >
             Home
           </button>
-          <button
-            className={cn(btnBase, btnVariant(!!match.pronostico?.empate))}
-            onClick={() => vote("empate")}
-            disabled={locked}
-          >
-            Draw
-          </button>
+          {match.fase.codigo === "GRUPO" && (
+            <button
+              className={cn(btnBase, btnVariant(!!match.pronostico?.empate))}
+              onClick={() => vote("empate")}
+              disabled={locked}
+            >
+              Draw
+            </button>
+          )}
           <button
             className={cn(btnBase, btnVariant(!!match.pronostico?.visitante))}
             onClick={() => vote("visitante")}
