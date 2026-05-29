@@ -39,10 +39,10 @@ export default function ForecastFilters({ fechas }: ForecastFiltersProps) {
 
   const btnClass = (selected: boolean) =>
     cn(
-      "px-3 py-1.5 text-xs rounded-lg font-medium transition-colors",
+      "px-4 py-2 text-xs rounded-2xl font-medium",
       selected
-        ? "bg-rose-600 text-white"
-        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+        ? "bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 text-white shadow-md shadow-pink-500/20 border border-white/20 transition-all duration-200"
+        : "bg-white/70 backdrop-blur-md text-zinc-500 border border-zinc-200/60 hover:bg-white hover:text-zinc-800 transition-all"
     );
 
   return (
@@ -65,17 +65,14 @@ export default function ForecastFilters({ fechas }: ForecastFiltersProps) {
           </button>
         ))}
 
-        {/* Divider */}
-        <span className="text-slate-300 select-none">|</span>
-
         {/* Knockout bracket */}
         <button
           onClick={navigateBracket}
           className={cn(
-            "px-3 py-1.5 text-xs rounded-lg font-medium transition-colors flex items-center gap-1.5",
+            "px-4 py-2 text-xs rounded-2xl font-medium flex items-center gap-1.5",
             isBracket
-              ? "bg-rose-600 text-white"
-              : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+              ? "bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 text-white shadow-md shadow-pink-500/20 border border-white/20 transition-all duration-200"
+              : "bg-white/70 backdrop-blur-md text-zinc-500 border border-zinc-200/60 hover:bg-white hover:text-zinc-800 transition-all"
           )}
         >
           <Trophy className="h-3 w-3" />

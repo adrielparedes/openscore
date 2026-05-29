@@ -102,11 +102,22 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900">Forecast</h1>
-        <p className="text-slate-500 text-sm mt-1">
-          Select your prediction for each match. Picks lock 15 minutes before kickoff.
-        </p>
+      {/* Hero banner — edge-to-edge of container, no card styling */}
+      <div className="relative overflow-hidden -mx-4 sm:-mx-6 lg:-mx-8 bg-gradient-to-br from-rose-50 via-white to-violet-100 px-4 sm:px-6 lg:px-8 py-12">
+        <div className="relative z-10 max-w-lg">
+          <h1 className="text-3xl font-bold text-slate-900">Forecast</h1>
+          <p className="text-slate-500 text-sm mt-2">
+            Select your prediction for each match. Picks lock 15 minutes before kickoff.
+          </p>
+        </div>
+        {/* Decorative soccer ball */}
+        <div className="pointer-events-none absolute right-8 top-1/2 -translate-y-1/2 select-none">
+          <div className="relative flex items-center justify-center">
+            <div className="absolute h-40 w-40 rounded-full bg-violet-400/30 blur-3xl" />
+            <div className="absolute h-24 w-24 rounded-full bg-rose-300/20 blur-2xl" />
+            <span className="relative text-[96px] leading-none drop-shadow-lg">⚽</span>
+          </div>
+        </div>
       </div>
 
       <ForecastFilters fechas={fechas} />

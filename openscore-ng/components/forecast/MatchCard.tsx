@@ -54,11 +54,11 @@ export default function MatchCard({ match }: MatchCardProps) {
   };
 
   const btnBase =
-    "flex-1 rounded-xl py-3 text-sm font-semibold transition-all border disabled:opacity-50 disabled:cursor-not-allowed";
+    "flex-1 rounded-2xl py-3 text-sm font-semibold transition-all duration-200 border disabled:opacity-50 disabled:cursor-not-allowed";
 
   const btnVariant = (selected: boolean) =>
     selected
-      ? "bg-rose-600 border-rose-500 text-white shadow-md shadow-rose-200/50 scale-[1.02]"
+      ? "bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 border-transparent text-white shadow-lg shadow-pink-500/20 hover:scale-[1.02] hover:shadow-pink-500/30"
       : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900";
 
   const matchDate = new Date(match.dia).toLocaleString("en-US", {
@@ -69,11 +69,18 @@ export default function MatchCard({ match }: MatchCardProps) {
     minute: "2-digit",
   });
 
+  const leftBorderColor =
+    match.status === "FINISHED"
+      ? "border-l-emerald-400"
+      : match.status === "BLOCKED"
+      ? "border-l-amber-400"
+      : "border-l-blue-400";
+
   return (
     <div
       className={cn(
-        "flex flex-col rounded-2xl border bg-white shadow-sm overflow-hidden transition-opacity",
-        locked ? "border-slate-200/50 opacity-80" : "border-slate-200",
+        "flex flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden transition-opacity border-l-4",
+        leftBorderColor,
         pending && "opacity-60 pointer-events-none"
       )}
     >
@@ -86,9 +93,9 @@ export default function MatchCard({ match }: MatchCardProps) {
         <div className="flex items-center gap-2">
           {match.grupo && match.grupo.codigo !== "NONE" && <Badge variant="muted">{match.grupo.nombre}</Badge>}
           {{
-            PENDING: <Badge variant="success">Open</Badge>,
+            PENDING: <Badge variant="info">Open</Badge>,
             BLOCKED: <Badge variant="warning">Locked</Badge>,
-            FINISHED: <Badge variant="muted">Finished</Badge>,
+            FINISHED: <Badge variant="success">Finished</Badge>,
           }[match.status]}
         </div>
       </div>

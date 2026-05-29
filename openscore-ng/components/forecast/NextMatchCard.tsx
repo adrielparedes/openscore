@@ -33,17 +33,20 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
   });
 
   const btnBase =
-    "flex-1 rounded-xl py-3 text-sm font-semibold transition-all border disabled:opacity-50 disabled:cursor-not-allowed";
+    "flex-1 rounded-2xl py-3 text-sm font-semibold transition-all duration-200 border disabled:opacity-50 disabled:cursor-not-allowed";
 
   const btnVariant = (selected: boolean) =>
     selected
-      ? "bg-rose-600 border-rose-500 text-white shadow-md shadow-rose-200/50 scale-[1.02]"
+      ? "bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 border-transparent text-white shadow-lg shadow-pink-500/20 hover:scale-[1.02] hover:shadow-pink-500/30"
       : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900";
+
+  const leftBorderColor = locked ? "border-l-amber-400" : "border-l-blue-400";
 
   return (
     <div
       className={cn(
-        "rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden",
+        "rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden border-l-4",
+        leftBorderColor,
         pending && "opacity-60 pointer-events-none"
       )}
     >
@@ -60,7 +63,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
           {locked ? (
             <Badge variant="warning">Locked</Badge>
           ) : (
-            <Badge variant="success">Open</Badge>
+            <Badge variant="info">Open</Badge>
           )}
         </div>
       </div>

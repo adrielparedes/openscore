@@ -49,10 +49,10 @@ export default function Navbar() {
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  "flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors border-b-2",
                   pathname === href
-                    ? "bg-slate-100 text-slate-900"
-                    : "text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+                    ? "border-rose-500 text-rose-600"
+                    : "border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300"
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -63,10 +63,10 @@ export default function Navbar() {
               <Link
                 href="/admin/results"
                 className={cn(
-                  "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  "flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors border-b-2",
                   pathname.startsWith("/admin")
-                    ? "bg-rose-50 text-rose-700"
-                    : "text-rose-500 hover:bg-rose-50 hover:text-rose-700"
+                    ? "border-rose-500 text-rose-600"
+                    : "border-transparent text-rose-500 hover:text-rose-700 hover:border-rose-300"
                 )}
               >
                 <ClipboardList className="h-4 w-4" />
@@ -115,7 +115,7 @@ export default function Navbar() {
               onClick={() => setMobileOpen(false)}
               className={cn(
                 "flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                pathname === href ? "bg-slate-100 text-slate-900" : "text-slate-500 hover:text-slate-900"
+                pathname === href ? "bg-rose-50 text-rose-600" : "text-slate-500 hover:text-slate-900"
               )}
             >
               <Icon className="h-4 w-4" />
@@ -129,7 +129,7 @@ export default function Navbar() {
               className={cn(
                 "flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                 pathname.startsWith("/admin")
-                  ? "bg-rose-50 text-rose-700"
+                  ? "bg-rose-50 text-rose-600"
                   : "text-rose-500 hover:text-rose-700"
               )}
             >
