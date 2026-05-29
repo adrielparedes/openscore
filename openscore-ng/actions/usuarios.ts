@@ -82,7 +82,7 @@ export async function updatePassword(formData: FormData) {
   return {};
 }
 
-export async function deletePersonalCard() {
+export async function deletePaniniCard() {
   const session = await auth();
   if (!session?.user?.id) return { error: "Not authenticated" };
 
@@ -90,16 +90,16 @@ export async function deletePersonalCard() {
     where: { id: parseInt(session.user.id) },
   });
 
-  if (usuario.personalCard) {
+  if (usuario.paniniCard) {
     const { unlink } = await import("fs/promises");
     const { join } = await import("path");
-    const filePath = join(process.cwd(), "public", usuario.personalCard);
+    const filePath = join(process.cwd(), "public", usuario.paniniCard);
     await unlink(filePath).catch(() => {});
   }
 
   await prisma.usuario.update({
     where: { id: parseInt(session.user.id) },
-    data: { personalCard: null },
+    data: { paniniCard: null },
   });
 
   revalidatePath("/profile");

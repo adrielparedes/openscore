@@ -86,7 +86,7 @@ model Usuario {
   paisId      Int
   email       String       @unique
   password    String
-  personalCard String?
+  paniniCard   String?
   deleted     Boolean      @default(false)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
