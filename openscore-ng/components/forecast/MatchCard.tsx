@@ -140,6 +140,11 @@ export default function MatchCard({ match }: MatchCardProps) {
             +{match.puntos} pts earned ✓
           </div>
         )}
+        {match.status === "FINISHED" && match.pronostico && match.puntos === 0 && (
+          <div className="text-center text-xs font-semibold text-rose-600 mt-1">
+            ✗ Better luck next time! — 0 pts
+          </div>
+        )}
       </div>
     </div>
   );
