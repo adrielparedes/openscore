@@ -38,7 +38,6 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
       <PageHero
         title="Leaderboard"
         description="Global standings based on prediction accuracy."
-        emoji="🏆"
       />
       <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
 

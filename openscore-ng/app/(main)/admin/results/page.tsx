@@ -18,7 +18,6 @@ export default async function AdminResultsPage() {
       <PageHero
         title="Match Results"
         description="Enter or update scores for each match."
-        emoji="📋"
       />
       <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
 

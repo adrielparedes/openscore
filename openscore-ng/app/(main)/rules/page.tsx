@@ -18,7 +18,6 @@ export default function RulesPage() {
       <PageHero
         title="Rules"
         description="How Openscore works."
-        emoji="📋"
       />
       <div className="mx-auto w-full max-w-3xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
 
