@@ -82,6 +82,30 @@ export async function updatePassword(formData: FormData) {
   return {};
 }
 
+export async function deletePersonalCard() {
+  const session = await auth();
+  if (!session?.user?.id) return { error: "Not authenticated" };
+
+  const usuario = await prisma.usuario.findUniqueOrThrow({
+    where: { id: parseInt(session.user.id) },
+  });
+
+  if (usuario.personalCard) {
+    const { unlink } = await import("fs/promises");
+    const { join } = await import("path");
+    const filePath = join(process.cwd(), "public", usuario.personalCard);
+    await unlink(filePath).catch(() => {});
+  }
+
+  await prisma.usuario.update({
+    where: { id: parseInt(session.user.id) },
+    data: { personalCard: null },
+  });
+
+  revalidatePath("/profile");
+  return {};
+}
+
 export async function getPaises() {
   return prisma.pais.findMany({
     where: { deleted: false },

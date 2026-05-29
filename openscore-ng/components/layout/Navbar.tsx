@@ -14,6 +14,7 @@ import {
   Menu,
   X,
   ClipboardList,
+  UserCircle,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -79,9 +80,18 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             {session && (
               <>
-                <span className="text-sm text-slate-500">
+                <Link
+                  href="/profile"
+                  className={cn(
+                    "flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm transition-colors",
+                    pathname === "/profile"
+                      ? "bg-slate-100 text-slate-900"
+                      : "text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+                  )}
+                >
+                  <UserCircle className="h-4 w-4" />
                   {(session.user as any)?.nombre ?? session.user?.name}
-                </span>
+                </Link>
                 <form action={logoutAction}>
                   <button
                     type="submit"
@@ -138,15 +148,28 @@ export default function Navbar() {
             </Link>
           )}
           {session && (
-            <form action={logoutAction} className="mt-2">
-              <button
-                type="submit"
-                className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-slate-500 hover:text-slate-900"
+            <>
+              <Link
+                href="/profile"
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                  pathname === "/profile" ? "bg-rose-50 text-rose-600" : "text-slate-500 hover:text-slate-900"
+                )}
               >
-                <LogOut className="h-4 w-4" />
-                Logout
-              </button>
-            </form>
+                <UserCircle className="h-4 w-4" />
+                Profile
+              </Link>
+              <form action={logoutAction} className="mt-2">
+                <button
+                  type="submit"
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-slate-500 hover:text-slate-900"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Logout
+                </button>
+              </form>
+            </>
           )}
         </div>
       )}
