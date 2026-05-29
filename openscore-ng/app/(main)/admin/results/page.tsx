@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import { getPartidos } from "@/actions/partidos";
+import { getPartidos, getEquipos } from "@/actions/partidos";
 import ResultMatchCard from "@/components/admin/ResultMatchCard";
 import { redirect } from "next/navigation";
 import { ClipboardList } from "lucide-react";
@@ -11,7 +11,7 @@ export default async function AdminResultsPage() {
   const roles = (session.user as any)?.roles ?? [];
   if (!roles.includes("ADMIN")) redirect("/");
 
-  const partidos = await getPartidos();
+  const [partidos, equipos] = await Promise.all([getPartidos(), getEquipos()]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -29,7 +29,7 @@ export default async function AdminResultsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {partidos.map((partido) => (
-          <ResultMatchCard key={partido.id} match={partido} />
+          <ResultMatchCard key={partido.id} match={partido} equipos={equipos} />
         ))}
       </div>
 

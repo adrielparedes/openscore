@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { calcularGanador, calcularStatus } from "@/lib/utils";
-import type { PartidoConRelaciones } from "@/types";
+import type { PartidoConRelaciones, Equipo } from "@/types";
 import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { calculateStandings } from "@/actions/standings";
@@ -59,6 +59,31 @@ export async function getPartido(id: number): Promise<PartidoConRelaciones> {
     include,
   });
   return enrichPartido(partido);
+}
+
+export async function getEquipos(): Promise<Equipo[]> {
+  return prisma.equipo.findMany({
+    where: { deleted: false },
+    orderBy: { nombre: "asc" },
+  });
+}
+
+export async function setEquipos(
+  partidoId: number,
+  data: { localId: number; visitanteId: number }
+) {
+  const session = await auth();
+  const roles = (session?.user as any)?.roles ?? [];
+  if (!roles.includes("ADMIN")) throw new Error("Unauthorized");
+
+  await prisma.partido.update({
+    where: { id: partidoId },
+    data: { localId: data.localId, visitanteId: data.visitanteId },
+  });
+
+  revalidatePath("/");
+  revalidatePath("/forecast");
+  revalidatePath("/admin/results");
 }
 
 export async function getFechas(): Promise<number[]> {
