@@ -68,7 +68,7 @@ export default function ForecastFilters({ fechas }: ForecastFiltersProps) {
         {/* Divider */}
         <span className="text-slate-300 select-none">|</span>
 
-        {/* Bracket view */}
+        {/* Knockout bracket */}
         <button
           onClick={navigateBracket}
           className={cn(

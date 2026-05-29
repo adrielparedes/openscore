@@ -2,7 +2,7 @@ import { getPronosticos, getKnockoutPronosticos } from "@/actions/pronosticos";
 import { getFechas } from "@/actions/partidos";
 import MatchCard from "@/components/forecast/MatchCard";
 import ForecastFilters from "@/components/forecast/ForecastFilters";
-import KnockoutBracket from "@/components/forecast/KnockoutBracket";
+import KnockoutTree from "@/components/forecast/KnockoutTree";
 import { Suspense } from "react";
 import type { PartidoPronostico } from "@/types";
 
@@ -92,7 +92,7 @@ async function MatchList({
 
 async function KnockoutBracketSection() {
   const matches = await getKnockoutPronosticos();
-  return <KnockoutBracket matches={matches} />;
+  return <KnockoutTree matches={matches} />;
 }
 
 export default async function ForecastPage({ searchParams }: ForecastPageProps) {
