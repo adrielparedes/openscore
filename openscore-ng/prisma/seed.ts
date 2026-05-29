@@ -197,12 +197,65 @@ async function main() {
   console.log(`  ✔ ${equiposData.length} teams`);
 
   // ---------------------------------------------------------------------------
-  // Partidos — all 72 group stage matches
-  // Dates in UTC (source times are EST; converted by adding 5 h).
+  // Placeholder teams for knockout stage positions
   // ---------------------------------------------------------------------------
-  const partidoCount = await prisma.partido.count();
-  if (partidoCount > 0) {
-    console.log(`  ℹ Partidos already seeded (${partidoCount}), skipping`);
+  const knockoutTeamsData = [
+    // Group winners
+    ...["A","B","C","D","E","F","G","H","I","J","K","L"].map((g) => ({
+      codigo: `1${g}`, nombre: `Winner Group ${g}`, logo: "",
+    })),
+    // Group runners-up
+    ...["A","B","C","D","E","F","G","H","I","J","K","L"].map((g) => ({
+      codigo: `2${g}`, nombre: `Runner-up Group ${g}`, logo: "",
+    })),
+    // Best 3rd-placed team slots (one per group-winner match that needs a 3rd)
+    { codigo: "3T74", nombre: "Best 3rd (A/B/C/D/F)", logo: "" },
+    { codigo: "3T77", nombre: "Best 3rd (C/D/F/G/H)", logo: "" },
+    { codigo: "3T79", nombre: "Best 3rd (C/E/F/H/I)", logo: "" },
+    { codigo: "3T80", nombre: "Best 3rd (E/H/I/J/K)", logo: "" },
+    { codigo: "3T81", nombre: "Best 3rd (B/E/F/I/J)", logo: "" },
+    { codigo: "3T82", nombre: "Best 3rd (A/E/H/I/J)", logo: "" },
+    { codigo: "3T85", nombre: "Best 3rd (E/F/G/I/J)", logo: "" },
+    { codigo: "3T87", nombre: "Best 3rd (D/E/I/J/L)", logo: "" },
+    // Round of 32 winners → used as participants in Round of 16
+    ...[73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88].map((n) => ({
+      codigo: `W${n}`, nombre: `Winner Match ${n}`, logo: "",
+    })),
+    // Round of 16 winners → used as participants in Quarter-finals
+    ...[89,90,91,92,93,94,95,96].map((n) => ({
+      codigo: `W${n}`, nombre: `Winner Match ${n}`, logo: "",
+    })),
+    // Quarter-final winners → used as participants in Semi-finals
+    ...[97,98,99,100].map((n) => ({
+      codigo: `W${n}`, nombre: `Winner Match ${n}`, logo: "",
+    })),
+    // Semi-final winners → Final participants
+    { codigo: "W101", nombre: "Winner Match 101", logo: "" },
+    { codigo: "W102", nombre: "Winner Match 102", logo: "" },
+    // Semi-final losers → 3rd Place match participants
+    { codigo: "L101", nombre: "Loser Match 101", logo: "" },
+    { codigo: "L102", nombre: "Loser Match 102", logo: "" },
+  ];
+
+  for (const e of knockoutTeamsData) {
+    await prisma.equipo.upsert({
+      where: { codigo: e.codigo },
+      update: {},
+      create: e,
+    });
+  }
+  console.log(`  ✔ ${knockoutTeamsData.length} knockout placeholder teams`);
+
+  // ---------------------------------------------------------------------------
+  // Partidos — all 72 group stage matches
+  // Dates in UTC (source times are EDT; converted by adding 4 h).
+  // ---------------------------------------------------------------------------
+  const faseGrupo = await prisma.fase.findUnique({ where: { codigo: "GRUPO" } });
+  if (!faseGrupo) throw new Error("Fase GRUPO not found");
+
+  const grupoStageCount = await prisma.partido.count({ where: { faseId: faseGrupo.id } });
+  if (grupoStageCount > 0) {
+    console.log(`  ℹ Group stage matches already seeded (${grupoStageCount}), skipping`);
   } else {
     // Fetch lookup maps
     const equipoMap = await prisma.equipo
@@ -211,8 +264,6 @@ async function main() {
     const grupoMap = await prisma.grupo
       .findMany()
       .then((gs) => Object.fromEntries(gs.map((g) => [g.codigo, g])));
-    const faseGrupo = await prisma.fase.findUnique({ where: { codigo: "GRUPO" } });
-    if (!faseGrupo) throw new Error("Fase GRUPO not found");
 
     type PartidoInput = {
       local: string;
@@ -353,6 +404,119 @@ async function main() {
       })),
     });
     console.log(`  ✔ ${createdPartidos.count} group stage matches`);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Partidos — knockout stage (Round of 32 → Final) with placeholder teams
+  // All times UTC (EDT +4 h). Sources: FIFA.com, Wikipedia, KickoffAdventures.
+  // ---------------------------------------------------------------------------
+  const knockoutCount = await prisma.partido.count({
+    where: { fase: { codigo: { not: "GRUPO" } } },
+  });
+  if (knockoutCount > 0) {
+    console.log(`  ℹ Knockout stage matches already seeded (${knockoutCount}), skipping`);
+  } else {
+    const allEquipoMap = await prisma.equipo
+      .findMany()
+      .then((es) => Object.fromEntries(es.map((e) => [e.codigo, e])));
+    const faseMap = await prisma.fase
+      .findMany()
+      .then((fs) => Object.fromEntries(fs.map((f) => [f.codigo, f])));
+    const noneGrupo = await prisma.grupo.findUnique({ where: { codigo: "NONE" } });
+    if (!noneGrupo) throw new Error("Grupo NONE not found");
+
+    type KnockoutInput = {
+      local: string;
+      visitante: string;
+      fase: string;
+      dia: Date;
+      lugar: string;
+    };
+
+    // ── Round of 32 (matches 73–88) ──────────────────────────────────────────
+    const r32Data: KnockoutInput[] = [
+      // Jun 28
+      { local: "2A",   visitante: "2B",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-28T19:00:00Z"), lugar: "SoFi Stadium, Los Angeles" },
+      // Jun 29
+      { local: "1C",   visitante: "2F",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-29T17:00:00Z"), lugar: "NRG Stadium, Houston" },
+      { local: "1E",   visitante: "3T74", fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-29T20:30:00Z"), lugar: "Gillette Stadium, Boston" },
+      { local: "1F",   visitante: "2C",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-30T01:00:00Z"), lugar: "Estadio BBVA, Monterrey" },
+      // Jun 30
+      { local: "2E",   visitante: "2I",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-30T17:00:00Z"), lugar: "AT&T Stadium, Dallas" },
+      { local: "1I",   visitante: "3T77", fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-30T21:00:00Z"), lugar: "MetLife Stadium, New York/New Jersey" },
+      { local: "1A",   visitante: "3T79", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T01:00:00Z"), lugar: "Estadio Azteca, Mexico City" },
+      // Jul 1
+      { local: "1L",   visitante: "3T80", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T16:00:00Z"), lugar: "Mercedes-Benz Stadium, Atlanta" },
+      { local: "1G",   visitante: "3T82", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T20:00:00Z"), lugar: "Lumen Field, Seattle" },
+      { local: "1D",   visitante: "3T81", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T00:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area" },
+      // Jul 2
+      { local: "1H",   visitante: "2J",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T19:00:00Z"), lugar: "SoFi Stadium, Los Angeles" },
+      { local: "2K",   visitante: "2L",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T23:00:00Z"), lugar: "BMO Field, Toronto" },
+      { local: "1B",   visitante: "3T85", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T03:00:00Z"), lugar: "BC Place, Vancouver" },
+      // Jul 3
+      { local: "2D",   visitante: "2G",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T18:00:00Z"), lugar: "AT&T Stadium, Dallas" },
+      { local: "1J",   visitante: "2H",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T22:00:00Z"), lugar: "Hard Rock Stadium, Miami" },
+      { local: "1K",   visitante: "3T87", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-04T01:30:00Z"), lugar: "GEHA Field at Arrowhead, Kansas City" },
+    ];
+
+    // ── Round of 16 (matches 89–96) ───────────────────────────────────────────
+    // Bracket: W74 vs W76 → M89, W73 vs W75 → M90, W79 vs W80 → M91,
+    //          W77 vs W78 → M92, W83 vs W84 → M93, W85 vs W86 → M94,
+    //          W81 vs W82 → M95, W87 vs W88 → M96
+    const r16Data: KnockoutInput[] = [
+      // Jul 4
+      { local: "W74", visitante: "W76", fase: "OCTAVOS", dia: new Date("2026-07-04T17:00:00Z"), lugar: "NRG Stadium, Houston" },
+      { local: "W73", visitante: "W75", fase: "OCTAVOS", dia: new Date("2026-07-04T21:00:00Z"), lugar: "MetLife Stadium, New York/New Jersey" },
+      // Jul 5
+      { local: "W79", visitante: "W80", fase: "OCTAVOS", dia: new Date("2026-07-05T19:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area" },
+      { local: "W77", visitante: "W78", fase: "OCTAVOS", dia: new Date("2026-07-06T00:00:00Z"), lugar: "Estadio Azteca, Mexico City" },
+      // Jul 6
+      { local: "W83", visitante: "W84", fase: "OCTAVOS", dia: new Date("2026-07-06T19:00:00Z"), lugar: "AT&T Stadium, Dallas" },
+      { local: "W85", visitante: "W86", fase: "OCTAVOS", dia: new Date("2026-07-07T00:00:00Z"), lugar: "Lumen Field, Seattle" },
+      // Jul 7
+      { local: "W81", visitante: "W82", fase: "OCTAVOS", dia: new Date("2026-07-07T19:00:00Z"), lugar: "Mercedes-Benz Stadium, Atlanta" },
+      { local: "W87", visitante: "W88", fase: "OCTAVOS", dia: new Date("2026-07-08T00:00:00Z"), lugar: "Lincoln Financial Field, Philadelphia" },
+    ];
+
+    // ── Quarter-finals (matches 97–100) ───────────────────────────────────────
+    // QF1 = W89 vs W90, QF2 = W93 vs W94, QF3 = W91 vs W92, QF4 = W95 vs W96
+    const qfData: KnockoutInput[] = [
+      { local: "W89", visitante: "W90", fase: "CUARTOS", dia: new Date("2026-07-09T20:00:00Z"), lugar: "Gillette Stadium, Boston" },
+      { local: "W93", visitante: "W94", fase: "CUARTOS", dia: new Date("2026-07-10T19:00:00Z"), lugar: "SoFi Stadium, Los Angeles" },
+      { local: "W91", visitante: "W92", fase: "CUARTOS", dia: new Date("2026-07-11T21:00:00Z"), lugar: "Hard Rock Stadium, Miami" },
+      { local: "W95", visitante: "W96", fase: "CUARTOS", dia: new Date("2026-07-12T01:00:00Z"), lugar: "GEHA Field at Arrowhead, Kansas City" },
+    ];
+
+    // ── Semi-finals (matches 101–102) ─────────────────────────────────────────
+    const sfData: KnockoutInput[] = [
+      { local: "W97",  visitante: "W98",  fase: "SEMI", dia: new Date("2026-07-15T01:00:00Z"), lugar: "AT&T Stadium, Dallas" },
+      { local: "W99",  visitante: "W100", fase: "SEMI", dia: new Date("2026-07-16T01:00:00Z"), lugar: "Mercedes-Benz Stadium, Atlanta" },
+    ];
+
+    // ── 3rd Place (match 103) ─────────────────────────────────────────────────
+    const thirdData: KnockoutInput[] = [
+      { local: "L101", visitante: "L102", fase: "TERCER", dia: new Date("2026-07-18T19:00:00Z"), lugar: "Hard Rock Stadium, Miami" },
+    ];
+
+    // ── Final (match 104) ─────────────────────────────────────────────────────
+    const finalData: KnockoutInput[] = [
+      { local: "W101", visitante: "W102", fase: "FINAL", dia: new Date("2026-07-19T19:00:00Z"), lugar: "MetLife Stadium, East Rutherford" },
+    ];
+
+    const allKnockout = [...r32Data, ...r16Data, ...qfData, ...sfData, ...thirdData, ...finalData];
+
+    const createdKnockout = await prisma.partido.createMany({
+      data: allKnockout.map((m) => ({
+        localId: allEquipoMap[m.local].id,
+        visitanteId: allEquipoMap[m.visitante].id,
+        grupoId: noneGrupo.id,
+        faseId: faseMap[m.fase].id,
+        dia: m.dia,
+        lugar: m.lugar,
+        fecha: 1,
+      })),
+    });
+    console.log(`  ✔ ${createdKnockout.count} knockout stage matches`);
   }
 
   // ---------------------------------------------------------------------------

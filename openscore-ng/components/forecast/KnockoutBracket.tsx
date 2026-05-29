@@ -122,7 +122,9 @@ function realNode(
     position: { x, y },
     data: { match, side },
     draggable: false,
-    selectable: false,
+    // Do NOT set selectable: false here — combined with draggable: false it triggers
+    // pointer-events: none on the wrapper, which kills button clicks inside the node.
+    // elementsSelectable={false} on the ReactFlow root already prevents selection highlighting.
   };
 }
 
@@ -324,6 +326,9 @@ export default function KnockoutBracket({ matches }: KnockoutBracketProps) {
           nodesDraggable={false}
           nodesConnectable={false}
           elementsSelectable={false}
+          // Required: without onNodeClick, hasPointerEvents=false and React Flow sets
+          // pointer-events:none on every node wrapper, blocking all button clicks inside nodes.
+          onNodeClick={() => {}}
           proOptions={{ hideAttribution: false }}
         >
           <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#e2e8f0" />

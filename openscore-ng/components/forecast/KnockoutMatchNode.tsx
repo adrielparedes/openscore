@@ -87,8 +87,9 @@ export default function KnockoutMatchNode({ data }: NodeProps<KnockoutMatchNodeT
         </div>
       </div>
 
-      {/* Prediction buttons */}
-      <div className="px-3 pb-3 flex gap-1.5">
+      {/* Prediction buttons — nopan + stopPropagation prevent React Flow from swallowing events */}
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+      <div className="nopan px-3 pb-3 flex gap-1.5" onMouseDown={(e) => e.stopPropagation()}>
         <button className={cn(btnBase, btnVariant(!!match.pronostico?.local))}     onClick={() => vote("local")}     disabled={locked}>Home</button>
         <button className={cn(btnBase, btnVariant(!!match.pronostico?.empate))}    onClick={() => vote("empate")}    disabled={locked}>Draw</button>
         <button className={cn(btnBase, btnVariant(!!match.pronostico?.visitante))} onClick={() => vote("visitante")} disabled={locked}>Away</button>
