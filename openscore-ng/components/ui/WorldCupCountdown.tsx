@@ -38,7 +38,7 @@ function Unit({ value, label }: { value: number; label: string }) {
   );
 }
 
-export function WorldCupCountdown() {
+export function WorldCupCountdown({ className }: { className?: string }) {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(getTimeLeft());
   const [mounted, setMounted] = useState(false);
 
@@ -51,7 +51,7 @@ export function WorldCupCountdown() {
   const started = OPENING_MATCH.getTime() <= Date.now();
 
   return (
-    <div className="rounded-2xl bg-gradient-to-br from-rose-600 to-rose-800 p-6 shadow-lg flex flex-col items-center justify-center">
+    <div className={`rounded-2xl bg-gradient-to-br from-rose-600 to-rose-800 p-6 shadow-lg flex flex-col items-center justify-center${className ? ` ${className}` : ""}`}>
       <div className="flex items-center justify-center gap-2 mb-1">
         <Clock className="h-4 w-4 text-rose-200" />
         <span className="text-xs font-semibold text-rose-200 uppercase tracking-widest">
