@@ -27,6 +27,7 @@ export interface RankingEntry {
   pais: string;
   puntos: number;
   ranking: number;
+  paniniCard?: string | null;
 }
 
 export interface StandingConRelaciones extends Standing {

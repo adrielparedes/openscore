@@ -2,17 +2,17 @@ import { auth } from "@/lib/auth";
 import { getRanking } from "@/actions/ranking";
 import { getNextMatchPronostico } from "@/actions/pronosticos";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
 import { WorldCupCountdown } from "@/components/ui/WorldCupCountdown";
 import NextMatchCard from "@/components/forecast/NextMatchCard";
+import PaniniCardDisplay from "@/components/profile/PaniniCardDisplay";
 import Link from "next/link";
-import { Trophy, TrendingUp, Globe, ArrowRight } from "lucide-react";
+import { Trophy, TrendingUp, Globe, ArrowRight, Sparkles } from "lucide-react";
 
 export default async function HomePage() {
   const session = await auth();
   const nombre = (session?.user as any)?.nombre ?? session?.user?.name ?? "there";
   const [topRanking, nextMatch] = await Promise.all([
-    getRanking({ size: 5 }),
+    getRanking({ size: 3 }),
     getNextMatchPronostico(),
   ]);
 
@@ -78,7 +78,41 @@ export default async function HomePage() {
         )}
       </div>
 
-      {/* How to play */}
+      {/* Panini Card CTA */}
+      <div className="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 p-6 flex flex-col sm:flex-row items-center gap-5">
+        <div className="shrink-0 h-14 w-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-sm">
+          <span className="text-2xl">⚽</span>
+        </div>
+        <div className="flex-1 text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+            <Sparkles className="h-4 w-4 text-amber-500" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-amber-600">New — Free</span>
+          </div>
+          <h2 className="text-lg font-bold text-slate-900">Create your own World Cup Panini card!</h2>
+          <p className="text-sm text-slate-500 mt-0.5">
+            Upload your photo, pick your country and stats — download your card in high resolution. Free, no sign-up needed.
+          </p>
+        </div>
+        <div className="shrink-0 flex flex-col sm:flex-row items-center gap-2">
+          <a
+            href="https://mundialhub.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 transition-colors px-5 py-2.5 text-white font-semibold text-sm shadow-sm group"
+          >
+            Create mine
+            <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+          </a>
+          <Link
+            href="/profile"
+            className="flex items-center gap-1.5 rounded-xl border border-amber-300 bg-white hover:bg-amber-50 transition-colors px-5 py-2.5 text-amber-700 font-semibold text-sm shadow-sm"
+          >
+            Upload to profile
+          </Link>
+        </div>
+      </div>
+
+      {/* Top 3 + How to play */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -94,11 +128,11 @@ export default async function HomePage() {
           </CardContent>
         </Card>
 
-        {/* Top 5 leaderboard */}
+        {/* Top 3 leaderboard with panini cards */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>Top 5</CardTitle>
+              <CardTitle>Top 3</CardTitle>
               <Link href="/leaderboard" className="text-xs text-rose-400 hover:underline flex items-center gap-1">
                 View all <ArrowRight className="h-3 w-3" />
               </Link>
@@ -108,20 +142,18 @@ export default async function HomePage() {
             {topRanking.length === 0 ? (
               <p className="text-sm text-slate-400">No rankings yet — be the first to predict!</p>
             ) : (
-              <ol className="space-y-2">
+              <div className="grid grid-cols-3 gap-3">
                 {topRanking.map((entry) => (
-                  <li key={entry.usuario} className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-3">
-                      <Badge variant={entry.ranking <= 3 ? "warning" : "muted"}>
-                        #{entry.ranking}
-                      </Badge>
-                      <span className="text-slate-700">{entry.nombre}</span>
-                      <span className="text-xs text-slate-400 uppercase">{entry.pais}</span>
-                    </div>
-                    <span className="font-semibold text-rose-600">{entry.puntos} pts</span>
-                  </li>
+                  <PaniniCardDisplay
+                    key={entry.usuario}
+                    nombre={entry.nombre}
+                    pais={entry.pais}
+                    puntos={entry.puntos}
+                    ranking={entry.ranking}
+                    paniniCard={entry.paniniCard}
+                  />
                 ))}
-              </ol>
+              </div>
             )}
           </CardContent>
         </Card>
