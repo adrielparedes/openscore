@@ -112,3 +112,36 @@ export async function getPaises() {
     orderBy: { nombre: "asc" },
   });
 }
+
+export async function getAllUsuarios() {
+  const session = await auth();
+  const roles = (session?.user as any)?.roles ?? [];
+  if (!roles.includes("ADMIN")) throw new Error("Forbidden");
+
+  return prisma.usuario.findMany({
+    where: { deleted: false },
+    include: { pais: true, roles: true },
+    orderBy: { createdAt: "desc" },
+  });
+}
+
+export async function adminResetPassword(formData: FormData) {
+  const session = await auth();
+  const roles = (session?.user as any)?.roles ?? [];
+  if (!roles.includes("ADMIN")) return { error: "Forbidden" };
+
+  const usuarioId = parseInt(formData.get("usuarioId") as string);
+  const newPassword = formData.get("newPassword") as string | null;
+
+  if (!newPassword || newPassword.length < 6) {
+    return { error: "Password must be at least 6 characters" };
+  }
+
+  await prisma.usuario.update({
+    where: { id: usuarioId },
+    data: { password: await hashPassword(newPassword) },
+  });
+
+  revalidatePath("/admin/usuarios");
+  return { success: true };
+}

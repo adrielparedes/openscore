@@ -1,6 +1,6 @@
 "use client";
 
-import { registerAction } from "@/actions/auth";
+import { registerAction, getPreguntasSecretas } from "@/actions/auth";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Link from "next/link";
@@ -9,8 +9,11 @@ import { Trophy } from "lucide-react";
 import { getPaises } from "@/actions/usuarios";
 import type { Pais } from "@/types";
 
+type PreguntaSecreta = { id: number; pregunta: string };
+
 export default function RegisterPage() {
   const [paises, setPaises] = useState<Pais[]>([]);
+  const [preguntas, setPreguntas] = useState<PreguntaSecreta[]>([]);
   const [state, formAction, pending] = useActionState(
     async (_prev: any, formData: FormData) => registerAction(formData),
     null
@@ -18,6 +21,7 @@ export default function RegisterPage() {
 
   useEffect(() => {
     getPaises().then(setPaises);
+    getPreguntasSecretas().then(setPreguntas);
   }, []);
 
   return (
@@ -80,6 +84,40 @@ export default function RegisterPage() {
                   </option>
                 ))}
               </select>
+            </div>
+
+            <div className="border-t border-slate-100 pt-4 mt-1 flex flex-col gap-4">
+              <p className="text-xs text-slate-500">
+                Choose a security question for account recovery.
+              </p>
+
+              <div className="flex flex-col gap-1">
+                <label htmlFor="preguntaSecretaId" className="text-sm font-medium text-slate-700">
+                  Security question
+                </label>
+                <select
+                  id="preguntaSecretaId"
+                  name="preguntaSecretaId"
+                  required
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                >
+                  <option value="">Select a question…</option>
+                  {preguntas.map((q) => (
+                    <option key={q.id} value={q.id}>
+                      {q.pregunta}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <Input
+                id="respuestaSecreta"
+                name="respuestaSecreta"
+                label="Your answer"
+                placeholder="Answer (not case-sensitive)"
+                required
+                autoComplete="off"
+              />
             </div>
 
             <Button type="submit" loading={pending} size="lg" className="w-full mt-2">

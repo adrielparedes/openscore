@@ -15,6 +15,7 @@ import {
   X,
   ClipboardList,
   UserCircle,
+  Users,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -65,18 +66,32 @@ export default function Navbar() {
               </Link>
             ))}
             {isAdmin && (
-              <Link
-                href="/admin/results"
-                className={cn(
-                  "flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-150",
-                  pathname.startsWith("/admin")
-                    ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
-                    : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
-                )}
-              >
-                <ClipboardList className="h-3.5 w-3.5" />
-                Results
-              </Link>
+              <>
+                <Link
+                  href="/admin/results"
+                  className={cn(
+                    "flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-150",
+                    pathname === "/admin/results"
+                      ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
+                      : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
+                  )}
+                >
+                  <ClipboardList className="h-3.5 w-3.5" />
+                  Results
+                </Link>
+                <Link
+                  href="/admin/usuarios"
+                  className={cn(
+                    "flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-150",
+                    pathname === "/admin/usuarios"
+                      ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
+                      : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
+                  )}
+                >
+                  <Users className="h-3.5 w-3.5" />
+                  Users
+                </Link>
+              </>
             )}
           </div>
 
@@ -139,19 +154,34 @@ export default function Navbar() {
             </Link>
           ))}
           {isAdmin && (
-            <Link
-              href="/admin/results"
-              onClick={() => setMobileOpen(false)}
-              className={cn(
-                "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
-                pathname.startsWith("/admin")
-                  ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
-                  : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
-              )}
-            >
-              <ClipboardList className="h-4 w-4" />
-              Results
-            </Link>
+            <>
+              <Link
+                href="/admin/results"
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                  pathname === "/admin/results"
+                    ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
+                    : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
+                )}
+              >
+                <ClipboardList className="h-4 w-4" />
+                Results
+              </Link>
+              <Link
+                href="/admin/usuarios"
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                  pathname === "/admin/usuarios"
+                    ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
+                    : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
+                )}
+              >
+                <Users className="h-4 w-4" />
+                Users
+              </Link>
+            </>
           )}
           {session && (
             <>

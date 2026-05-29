@@ -520,6 +520,26 @@ async function main() {
   }
 
   // ---------------------------------------------------------------------------
+  // Preguntas Secretas (Secret Questions)
+  // ---------------------------------------------------------------------------
+  const preguntasData = [
+    { codigo: "PRIMERA_MASCOTA", pregunta: "What was the name of your first pet?" },
+    { codigo: "CIUDAD_NACIMIENTO", pregunta: "In what city were you born?" },
+    { codigo: "APELLIDO_MADRE", pregunta: "What is your mother's maiden name?" },
+    { codigo: "EQUIPO_FAVORITO", pregunta: "What is your favorite sports team?" },
+    { codigo: "APODO_INFANCIA", pregunta: "What was your childhood nickname?" },
+    { codigo: "PELICULA_FAVORITA", pregunta: "What is your favorite movie?" },
+  ];
+  for (const q of preguntasData) {
+    await prisma.preguntaSecreta.upsert({
+      where: { codigo: q.codigo },
+      update: {},
+      create: q,
+    });
+  }
+  console.log(`  ✔ ${preguntasData.length} secret questions`);
+
+  // ---------------------------------------------------------------------------
   // Admin user
   // ---------------------------------------------------------------------------
   const adminPais = await prisma.pais.findUnique({ where: { codigo: "ARG" } });

@@ -1,6 +1,0 @@
-bases:
-- ../../base
-resources:
-- db.yaml
-patchesStrategicMerge:
-- deployment-patch.yaml

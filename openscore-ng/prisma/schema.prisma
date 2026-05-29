@@ -80,21 +80,24 @@ model Partido {
 }
 
 model Usuario {
-  id          Int          @id @default(autoincrement())
-  nombre      String
-  apellido    String
-  paisId      Int
-  email       String       @unique
-  password    String
-  paniniCard   String?
-  deleted     Boolean      @default(false)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  deletedAt   DateTime?
+  id                 Int               @id @default(autoincrement())
+  nombre             String
+  apellido           String
+  paisId             Int
+  email              String            @unique
+  password           String
+  paniniCard         String?
+  preguntaSecretaId  Int?
+  respuestaSecreta   String?
+  deleted            Boolean           @default(false)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  deletedAt          DateTime?
 
-  pais        Pais         @relation(fields: [paisId], references: [id])
-  pronosticos Pronostico[]
-  roles       UsuarioRol[]
+  pais               Pais              @relation(fields: [paisId], references: [id])
+  preguntaSecreta    PreguntaSecreta?  @relation(fields: [preguntaSecretaId], references: [id])
+  pronosticos        Pronostico[]
+  roles              UsuarioRol[]
 }
 
 model UsuarioRol {
@@ -163,10 +166,11 @@ enum PostStatus {
 }
 
 model PreguntaSecreta {
-  id       Int     @id @default(autoincrement())
-  codigo   String  @unique
-  pregunta String
-  deleted  Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  codigo    String    @unique
+  pregunta  String
+  deleted   Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  usuarios  Usuario[]
 }
