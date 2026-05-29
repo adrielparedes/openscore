@@ -1,8 +1,9 @@
 "use client";
 
-import { adminResetPassword } from "@/actions/usuarios";
+import { adminResetPassword, getUserPaniniCard } from "@/actions/usuarios";
 import { useState, useTransition } from "react";
-import { User, Globe, Shield, RotateCcw, ChevronDown, ChevronUp, CheckCircle, Wand2, Copy, Check, Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
+import { User, Globe, Shield, RotateCcw, ChevronDown, ChevronUp, CheckCircle, Wand2, Copy, Check, Eye, EyeOff, CreditCard, Loader2 } from "lucide-react";
 
 type Rol = { rol: string };
 type Pais = { nombre: string };
@@ -35,6 +36,10 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [isPending, startTransition] = useTransition();
+
+  const [cardOpen, setCardOpen] = useState(false);
+  const [paniniCard, setPaniniCard] = useState<string | null | undefined>(undefined);
+  const [cardLoading, setCardLoading] = useState(false);
 
   const isAdmin = usuario.roles.some((r) => r.rol === "ADMIN");
 
@@ -81,6 +86,19 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
     });
   }
 
+  async function handleToggleCard() {
+    if (cardOpen) {
+      setCardOpen(false);
+      return;
+    }
+    setCardOpen(true);
+    if (paniniCard !== undefined) return;
+    setCardLoading(true);
+    const result = await getUserPaniniCard(usuario.id);
+    setPaniniCard("paniniCard" in result ? result.paniniCard : null);
+    setCardLoading(false);
+  }
+
   return (
     <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
       <div className="flex items-center gap-4 px-5 py-4">
@@ -109,15 +127,45 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
           </div>
         </div>
 
-        <button
-          onClick={handleOpen}
-          className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors shrink-0"
-        >
-          <RotateCcw className="h-3.5 w-3.5" />
-          Reset
-          {open ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
-        </button>
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            onClick={handleToggleCard}
+            className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
+          >
+            <CreditCard className="h-3.5 w-3.5" />
+            Card
+            {cardOpen ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+          </button>
+          <button
+            onClick={handleOpen}
+            className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
+          >
+            <RotateCcw className="h-3.5 w-3.5" />
+            Reset
+            {open ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+          </button>
+        </div>
       </div>
+
+      {cardOpen && (
+        <div className="border-t border-slate-100 bg-slate-50 px-5 py-4 flex items-center justify-center min-h-[80px]">
+          {cardLoading ? (
+            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+          ) : paniniCard ? (
+            <div className="relative w-32 aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+              <Image
+                src={paniniCard}
+                alt={`${usuario.nombre}'s Panini card`}
+                fill
+                className="object-cover"
+                unoptimized
+              />
+            </div>
+          ) : (
+            <p className="text-sm text-slate-400 italic">No Panini card uploaded</p>
+          )}
+        </div>
+      )}
 
       {open && (
         <div className="border-t border-slate-100 bg-slate-50 px-5 py-4">

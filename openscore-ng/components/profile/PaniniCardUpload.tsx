@@ -33,7 +33,7 @@ export default function PaniniCardUpload({ currentCard }: Props) {
         setError(data.error ?? "Upload failed");
         return;
       }
-      setPreview(`${data.url}?t=${Date.now()}`);
+      setPreview(data.url);
       router.refresh();
     } catch {
       setError("Upload failed. Please try again.");

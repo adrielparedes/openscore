@@ -86,17 +86,6 @@ export async function deletePaniniCard() {
   const session = await auth();
   if (!session?.user?.id) return { error: "Not authenticated" };
 
-  const usuario = await prisma.usuario.findUniqueOrThrow({
-    where: { id: parseInt(session.user.id) },
-  });
-
-  if (usuario.paniniCard) {
-    const { unlink } = await import("fs/promises");
-    const { join } = await import("path");
-    const filePath = join(process.cwd(), "public", usuario.paniniCard);
-    await unlink(filePath).catch(() => {});
-  }
-
   await prisma.usuario.update({
     where: { id: parseInt(session.user.id) },
     data: { paniniCard: null },
@@ -120,9 +109,23 @@ export async function getAllUsuarios() {
 
   return prisma.usuario.findMany({
     where: { deleted: false },
+    omit: { paniniCard: true },
     include: { pais: true, roles: true },
     orderBy: { createdAt: "desc" },
   });
+}
+
+export async function getUserPaniniCard(usuarioId: number) {
+  const session = await auth();
+  const roles = (session?.user as any)?.roles ?? [];
+  if (!roles.includes("ADMIN")) return { error: "Forbidden" };
+
+  const usuario = await prisma.usuario.findUnique({
+    where: { id: usuarioId },
+    select: { paniniCard: true },
+  });
+
+  return { paniniCard: usuario?.paniniCard ?? null };
 }
 
 export async function adminResetPassword(formData: FormData) {
