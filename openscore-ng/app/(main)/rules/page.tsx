@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import PageHero from "@/components/ui/PageHero";
 
 const PHASES = [
   { name: "Group Stage", codigo: "GRUPO", points: 1, description: "Pick the winner of each group match" },
@@ -13,11 +14,13 @@ const PHASES = [
 
 export default function RulesPage() {
   return (
-    <div className="flex flex-col gap-6 max-w-3xl mx-auto w-full">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900">Rules</h1>
-        <p className="text-slate-500 text-sm mt-1">How Openscore works</p>
-      </div>
+    <div className="flex flex-col">
+      <PageHero
+        title="Rules"
+        description="How Openscore works."
+        emoji="📋"
+      />
+      <div className="mx-auto w-full max-w-3xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
 
       <Card>
         <CardHeader>
@@ -98,6 +101,7 @@ export default function RulesPage() {
           </p>
         </CardContent>
       </Card>
+    </div>
     </div>
   );
 }

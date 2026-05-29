@@ -2,6 +2,8 @@ import { getRanking } from "@/actions/ranking";
 import { auth } from "@/lib/auth";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import PageHero from "@/components/ui/PageHero";
+import FilterPill from "@/components/ui/FilterPill";
 import { Trophy, Medal } from "lucide-react";
 
 const LEADERBOARD_PAISES = [
@@ -32,34 +34,27 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
   const ranking = await getRanking({ pais });
 
   return (
-    <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900">Leaderboard</h1>
-        <p className="text-slate-500 text-sm mt-1">Global standings based on prediction accuracy</p>
-      </div>
+    <div className="flex flex-col">
+      <PageHero
+        title="Leaderboard"
+        description="Global standings based on prediction accuracy."
+        emoji="🏆"
+      />
+      <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
 
       {/* Country filter */}
       <div className="flex gap-2 flex-wrap text-sm">
-        <a
-          href="/leaderboard"
-          className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
-            !pais ? "bg-rose-600 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-          }`}
-        >
+        <FilterPill href="/leaderboard" active={!pais}>
           All countries
-        </a>
+        </FilterPill>
         {LEADERBOARD_PAISES.map((p) => (
-          <a
+          <FilterPill
             key={p.codigo}
             href={`/leaderboard?pais=${p.codigo}`}
-            className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
-              pais === p.codigo
-                ? "bg-rose-600 text-white"
-                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-            }`}
+            active={pais === p.codigo}
           >
             {p.nombre}
-          </a>
+          </FilterPill>
         ))}
       </div>
 
@@ -121,6 +116,7 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
           )}
         </CardContent>
       </Card>
+    </div>
     </div>
   );
 }

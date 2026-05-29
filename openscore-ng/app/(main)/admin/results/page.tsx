@@ -1,8 +1,8 @@
 import { auth } from "@/lib/auth";
 import { getPartidos, getEquipos } from "@/actions/partidos";
 import ResultMatchCard from "@/components/admin/ResultMatchCard";
+import PageHero from "@/components/ui/PageHero";
 import { redirect } from "next/navigation";
-import { ClipboardList } from "lucide-react";
 
 export default async function AdminResultsPage() {
   const session = await auth();
@@ -14,18 +14,13 @@ export default async function AdminResultsPage() {
   const [partidos, equipos] = await Promise.all([getPartidos(), getEquipos()]);
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-xl bg-rose-100 flex items-center justify-center shrink-0">
-          <ClipboardList className="h-5 w-5 text-rose-600" />
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900">Match Results</h1>
-          <p className="text-slate-500 text-sm mt-0.5">
-            Enter or update scores for each match
-          </p>
-        </div>
-      </div>
+    <div className="flex flex-col">
+      <PageHero
+        title="Match Results"
+        description="Enter or update scores for each match."
+        emoji="📋"
+      />
+      <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {partidos.map((partido) => (
@@ -38,6 +33,7 @@ export default async function AdminResultsPage() {
           No matches found.
         </div>
       )}
+    </div>
     </div>
   );
 }

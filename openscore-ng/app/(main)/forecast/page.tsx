@@ -3,6 +3,7 @@ import { getFechas } from "@/actions/partidos";
 import MatchCard from "@/components/forecast/MatchCard";
 import ForecastFilters from "@/components/forecast/ForecastFilters";
 import KnockoutTree from "@/components/forecast/KnockoutTree";
+import PageHero from "@/components/ui/PageHero";
 import { Suspense } from "react";
 import type { PartidoPronostico } from "@/types";
 
@@ -101,48 +102,38 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
   const isBracket = params.view === "bracket";
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Hero banner — edge-to-edge of container, no card styling */}
-      <div className="relative overflow-hidden -mx-4 sm:-mx-6 lg:-mx-8 bg-gradient-to-br from-rose-50 via-white to-violet-100 px-4 sm:px-6 lg:px-8 py-12">
-        <div className="relative z-10 max-w-lg">
-          <h1 className="text-3xl font-bold text-slate-900">Forecast</h1>
-          <p className="text-slate-500 text-sm mt-2">
-            Select your prediction for each match. Picks lock 15 minutes before kickoff.
-          </p>
-        </div>
-        {/* Decorative soccer ball */}
-        <div className="pointer-events-none absolute right-8 top-1/2 -translate-y-1/2 select-none">
-          <div className="relative flex items-center justify-center">
-            <div className="absolute h-40 w-40 rounded-full bg-violet-400/30 blur-3xl" />
-            <div className="absolute h-24 w-24 rounded-full bg-rose-300/20 blur-2xl" />
-            <span className="relative text-[96px] leading-none drop-shadow-lg">⚽</span>
-          </div>
-        </div>
+    <div className="flex flex-col">
+      <PageHero
+        title="Forecast"
+        description="Select your prediction for each match. Picks lock 15 minutes before kickoff."
+      />
+
+      {/* Padded content below hero */}
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-6 mt-6 pb-8">
+        <ForecastFilters fechas={fechas} />
+
+        {isBracket ? (
+          <Suspense
+            fallback={
+              <div className="w-full rounded-xl border border-slate-200 bg-slate-50 animate-pulse" style={{ height: "75vh", minHeight: 500 }} />
+            }
+          >
+            <KnockoutBracketSection />
+          </Suspense>
+        ) : (
+          <Suspense
+            fallback={
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="h-44 rounded-xl bg-slate-100 animate-pulse" />
+                ))}
+              </div>
+            }
+          >
+            <MatchList searchParams={params} />
+          </Suspense>
+        )}
       </div>
-
-      <ForecastFilters fechas={fechas} />
-
-      {isBracket ? (
-        <Suspense
-          fallback={
-            <div className="w-full rounded-xl border border-slate-200 bg-slate-50 animate-pulse" style={{ height: "75vh", minHeight: 500 }} />
-          }
-        >
-          <KnockoutBracketSection />
-        </Suspense>
-      ) : (
-        <Suspense
-          fallback={
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="h-44 rounded-xl bg-slate-100 animate-pulse" />
-              ))}
-            </div>
-          }
-        >
-          <MatchList searchParams={params} />
-        </Suspense>
-      )}
     </div>
   );
 }

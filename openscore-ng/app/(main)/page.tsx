@@ -17,7 +17,7 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="mx-auto w-full max-w-7xl flex flex-col gap-8 px-4 sm:px-6 lg:px-8 py-8">
       {/* Hero */}
       <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-rose-50 to-slate-100 p-8">
         <div className="flex items-center gap-3 mb-4">
