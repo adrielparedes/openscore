@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Clock } from "lucide-react";
 
-const OPENING_MATCH = new Date("2026-06-11T20:00:00Z");
+const OPENING_MATCH = new Date("2026-06-11T19:00:00Z");
 
 interface TimeLeft {
   days: number;
