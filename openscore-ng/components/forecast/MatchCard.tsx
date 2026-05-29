@@ -72,7 +72,7 @@ export default function MatchCard({ match }: MatchCardProps) {
   return (
     <div
       className={cn(
-        "rounded-2xl border bg-white shadow-sm overflow-hidden transition-opacity",
+        "flex flex-col rounded-2xl border bg-white shadow-sm overflow-hidden transition-opacity",
         locked ? "border-slate-200/50 opacity-80" : "border-slate-200",
         pending && "opacity-60 pointer-events-none"
       )}
@@ -137,7 +137,7 @@ export default function MatchCard({ match }: MatchCardProps) {
       </div>
 
       {/* Prediction buttons */}
-      <div className="px-5 pb-5 flex flex-col gap-2">
+      <div className="mt-auto px-5 pb-5 flex flex-col gap-2">
         {!locked && (
           <p className="text-xs text-slate-400 text-center">Your prediction</p>
         )}
