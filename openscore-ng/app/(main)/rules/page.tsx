@@ -29,7 +29,7 @@ export default function RulesPage() {
         <CardContent>
           <ol className="list-decimal list-inside space-y-3 text-sm text-slate-600">
             <li>
-              Navigate to <strong className="text-slate-900">Forecast</strong> to see all matches.
+              Navigate to <strong className="text-slate-900">Predictions</strong> to see all matches.
             </li>
             <li>
               For each match, select one of three outcomes:{" "}

@@ -20,7 +20,7 @@ import { useState } from "react";
 
 const navLinks = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/forecast", label: "Forecast", icon: TrendingUp },
+  { href: "/forecast", label: "Predictions", icon: TrendingUp },
   { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/rules", label: "Rules", icon: BookOpen },
 ];

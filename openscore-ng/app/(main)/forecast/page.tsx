@@ -104,7 +104,7 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
   return (
     <div className="flex flex-col">
       <PageHero
-        title="Forecast"
+        title="Predictions"
         description="Select your prediction for each match. Picks lock 15 minutes before kickoff."
       />
 

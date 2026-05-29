@@ -53,7 +53,7 @@ export default async function HomePage() {
             <TrendingUp className="h-5 w-5 text-white" />
           </div>
           <div>
-            <div className="font-bold text-slate-900">Forecast</div>
+            <div className="font-bold text-slate-900">Predictions</div>
             <div className="text-xs text-slate-500 mt-0.5">Predict match results</div>
           </div>
           <ArrowRight className="h-4 w-4 text-rose-500 mt-4 group-hover:translate-x-1 transition-transform" />
@@ -120,7 +120,7 @@ export default async function HomePage() {
           <ol className="space-y-3 text-sm text-slate-600">
             <li className="flex gap-2.5">
               <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center">1</span>
-              <span>Go to <Link href="/forecast" className="text-rose-600 hover:underline">Forecast</Link> to see upcoming matches</span>
+              <span>Go to <Link href="/forecast" className="text-rose-600 hover:underline">Predictions</Link> to see upcoming matches</span>
             </li>
             <li className="flex gap-2.5">
               <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center">2</span>
