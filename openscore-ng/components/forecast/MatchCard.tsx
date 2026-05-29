@@ -5,8 +5,34 @@ import type { PartidoPronostico } from "@/types";
 import { cn } from "@/lib/utils";
 import { flagUrl } from "@/lib/flags";
 import { Badge } from "@/components/ui/Badge";
-import { CalendarClock } from "lucide-react";
-import { useTransition } from "react";
+import { CalendarClock, Timer } from "lucide-react";
+import { useTransition, useEffect, useState } from "react";
+
+const LOCK_OFFSET_MS = 15 * 60 * 1000;
+
+function useCountdown(targetMs: number) {
+  const [remaining, setRemaining] = useState(() => Math.max(0, targetMs - Date.now()));
+
+  useEffect(() => {
+    if (remaining <= 0) return;
+    const id = setInterval(() => {
+      const diff = Math.max(0, targetMs - Date.now());
+      setRemaining(diff);
+      if (diff === 0) clearInterval(id);
+    }, 60_000);
+    return () => clearInterval(id);
+  }, [targetMs]);
+
+  return remaining;
+}
+
+function formatCountdown(ms: number): string {
+  const totalSecs = Math.floor(ms / 1000);
+  const d = Math.floor(totalSecs / 86400);
+  const h = Math.floor((totalSecs % 86400) / 3600);
+  const m = Math.floor((totalSecs % 3600) / 60);
+  return `${d}d:${h.toString().padStart(2, "0")}h:${m.toString().padStart(2, "0")}m`;
+}
 
 interface MatchCardProps {
   match: PartidoPronostico;
@@ -15,6 +41,10 @@ interface MatchCardProps {
 export default function MatchCard({ match }: MatchCardProps) {
   const [pending, startTransition] = useTransition();
   const locked = match.status !== "PENDING";
+
+  const lockAtMs = new Date(match.dia).getTime() - LOCK_OFFSET_MS;
+  const remaining = useCountdown(locked ? 0 : lockAtMs);
+  const showCountdown = !locked && remaining > 0;
 
   const vote = (prediction: "local" | "visitante" | "empate") => {
     if (locked) return;
@@ -143,6 +173,18 @@ export default function MatchCard({ match }: MatchCardProps) {
         {match.status === "FINISHED" && match.pronostico && match.puntos === 0 && (
           <div className="text-center text-xs font-semibold text-rose-600 mt-1">
             ✗ Better luck next time! — 0 pts
+          </div>
+        )}
+
+        {showCountdown && (
+          <div className={cn(
+            "flex items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold tabular-nums mt-1",
+            remaining < 5 * 60 * 1000
+              ? "bg-rose-50 text-rose-600"
+              : "bg-amber-50 text-amber-600"
+          )}>
+            <Timer className="h-3.5 w-3.5" />
+            <span>Locks in {formatCountdown(remaining)}</span>
           </div>
         )}
       </div>
