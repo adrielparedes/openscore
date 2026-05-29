@@ -6,7 +6,7 @@ import type { PartidoPronostico } from "@/types";
 import { cn } from "@/lib/utils";
 import { flagUrl } from "@/lib/flags";
 import { Badge } from "@/components/ui/Badge";
-import { ArrowRight, CalendarClock } from "lucide-react";
+import { ArrowRight, CalendarClock, CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
 
 interface NextMatchCardProps {
@@ -15,6 +15,7 @@ interface NextMatchCardProps {
 
 export default function NextMatchCard({ match }: NextMatchCardProps) {
   const [pending, startTransition] = useTransition();
+  const finished = match.status === "FINISHED";
   const locked = match.status !== "PENDING";
 
   const vote = (prediction: "local" | "visitante" | "empate") => {
@@ -40,7 +41,22 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
       ? "bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 border-transparent text-white shadow-lg shadow-pink-500/20 hover:scale-[1.02] hover:shadow-pink-500/30"
       : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900";
 
-  const leftBorderColor = locked ? "border-l-amber-400" : "border-l-blue-400";
+  const userPrediction = match.pronostico
+    ? match.pronostico.local
+      ? "LOCAL"
+      : match.pronostico.visitante
+      ? "VISITANTE"
+      : "EMPATE"
+    : null;
+  const predictionCorrect = finished && userPrediction !== null && userPrediction === match.ganador;
+
+  const leftBorderColor = finished
+    ? predictionCorrect
+      ? "border-l-emerald-500"
+      : "border-l-rose-500"
+    : locked
+    ? "border-l-amber-400"
+    : "border-l-blue-400";
 
   return (
     <div
@@ -60,7 +76,9 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
           {match.grupo && (
             <Badge variant="muted">{match.grupo.nombre}</Badge>
           )}
-          {locked ? (
+          {finished ? (
+            <Badge variant="success">Finished</Badge>
+          ) : locked ? (
             <Badge variant="warning">Locked</Badge>
           ) : (
             <Badge variant="info">Open</Badge>
@@ -68,7 +86,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
         </div>
       </div>
 
-      {/* Teams */}
+      {/* Teams + score */}
       <div className="flex items-center justify-between gap-4 px-6 py-6">
         {/* Local */}
         <div className="flex-1 flex flex-col items-center gap-2">
@@ -85,7 +103,20 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
           <span className="text-xs text-slate-400 uppercase">{match.local.codigo}</span>
         </div>
 
-        <div className="text-2xl font-bold text-slate-300 select-none">VS</div>
+        {finished ? (
+          <div className="flex flex-col items-center gap-1">
+            <div className="text-3xl font-black text-slate-800 tracking-tight tabular-nums">
+              {match.resultadoLocal} – {match.resultadoVisitante}
+            </div>
+            {match.resultadoPenales && (
+              <span className="text-xs text-slate-400">
+                ({match.resultadoPenalesLocal} – {match.resultadoPenalesVisitante} pens)
+              </span>
+            )}
+          </div>
+        ) : (
+          <div className="text-2xl font-bold text-slate-300 select-none">VS</div>
+        )}
 
         {/* Visitante */}
         <div className="flex-1 flex flex-col items-center gap-2">
@@ -103,9 +134,32 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
         </div>
       </div>
 
-      {/* Prediction buttons */}
+      {/* Bottom section */}
       <div className="px-5 pb-5 flex flex-col gap-3">
-        {locked ? (
+        {finished ? (
+          userPrediction ? (
+            <div className={cn(
+              "flex items-center justify-center gap-2 rounded-xl py-2 px-4 text-sm font-semibold",
+              predictionCorrect
+                ? "bg-emerald-50 text-emerald-700"
+                : "bg-rose-50 text-rose-700"
+            )}>
+              {predictionCorrect ? (
+                <CheckCircle2 className="h-4 w-4" />
+              ) : (
+                <XCircle className="h-4 w-4" />
+              )}
+              {predictionCorrect
+                ? `Correct! +${match.puntos} pts`
+                : `Wrong prediction`}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-2 rounded-xl py-2 px-4 text-sm font-semibold bg-rose-50 text-rose-700">
+              <XCircle className="h-4 w-4" />
+              No prediction made
+            </div>
+          )
+        ) : locked ? (
           <p className="text-center text-sm text-slate-400 py-1">
             Predictions are locked for this match.
           </p>

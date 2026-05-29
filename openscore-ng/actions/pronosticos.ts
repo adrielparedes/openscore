@@ -143,7 +143,6 @@ export async function getNextMatchPronostico(): Promise<PartidoPronostico | null
   const partido = await prisma.partido.findFirst({
     where: {
       deleted: false,
-      resultadoLocal: null,
       dia: { gte: cutoff },
     },
     include: { local: true, visitante: true, fase: true, grupo: true },

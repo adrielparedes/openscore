@@ -69,14 +69,11 @@ export default function MatchCard({ match }: MatchCardProps) {
     minute: "2-digit",
   });
 
-  const predictionFailed =
-    match.status === "FINISHED" && match.pronostico !== null && match.puntos === 0;
-
   const leftBorderColor =
     match.status === "FINISHED"
-      ? predictionFailed
-        ? "border-l-rose-400"
-        : "border-l-emerald-400"
+      ? match.puntos > 0
+        ? "border-l-emerald-400"
+        : "border-l-rose-400"
       : match.status === "BLOCKED"
       ? "border-l-amber-400"
       : "border-l-blue-400";
@@ -187,6 +184,11 @@ export default function MatchCard({ match }: MatchCardProps) {
         {match.status === "FINISHED" && match.pronostico && match.puntos === 0 && (
           <div className="text-center text-xs font-semibold text-rose-600 mt-1">
             ✗ Better luck next time! — 0 pts
+          </div>
+        )}
+        {match.status === "FINISHED" && !match.pronostico && (
+          <div className="text-center text-xs font-semibold text-rose-600 mt-1">
+            ✗ No prediction made — 0 pts
           </div>
         )}
 
