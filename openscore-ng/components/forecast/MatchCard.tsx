@@ -69,9 +69,14 @@ export default function MatchCard({ match }: MatchCardProps) {
     minute: "2-digit",
   });
 
+  const predictionFailed =
+    match.status === "FINISHED" && match.pronostico !== null && match.puntos === 0;
+
   const leftBorderColor =
     match.status === "FINISHED"
-      ? "border-l-emerald-400"
+      ? predictionFailed
+        ? "border-l-rose-400"
+        : "border-l-emerald-400"
       : match.status === "BLOCKED"
       ? "border-l-amber-400"
       : "border-l-blue-400";
