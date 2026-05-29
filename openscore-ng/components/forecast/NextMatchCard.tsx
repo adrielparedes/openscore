@@ -32,6 +32,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    timeZoneName: "short",
   });
 
   const btnBase =
@@ -65,7 +66,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
       <div className="flex items-center justify-between px-5 py-3">
         <div className="flex items-center gap-2 text-xs text-slate-500">
           <CalendarClock className="h-3.5 w-3.5" />
-          <span>{matchDate}</span>
+          <span suppressHydrationWarning>{matchDate}</span>
         </div>
         <div className="flex items-center gap-2">
           {match.grupo && (
