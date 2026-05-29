@@ -6,23 +6,41 @@ import Input from "@/components/ui/Input";
 import Link from "next/link";
 import { useActionState, useEffect, useState } from "react";
 import { Trophy } from "lucide-react";
-import { getPaises } from "@/actions/usuarios";
-import type { Pais } from "@/types";
 
 type PreguntaSecreta = { id: number; pregunta: string };
 
+const PAISES = [
+  { codigo: "ARG", nombre: "Argentina" },
+  { codigo: "BRA", nombre: "Brazil" },
+  { codigo: "CHL", nombre: "Chile" },
+  { codigo: "COL", nombre: "Colombia" },
+  { codigo: "MEX", nombre: "Mexico" },
+  { codigo: "PER", nombre: "Peru" },
+];
+
 export default function RegisterPage() {
-  const [paises, setPaises] = useState<Pais[]>([]);
   const [preguntas, setPreguntas] = useState<PreguntaSecreta[]>([]);
+  const [fields, setFields] = useState({
+    nombre: "",
+    apellido: "",
+    email: "",
+    password: "",
+    pais: "",
+    preguntaSecretaId: "",
+    respuestaSecreta: "",
+  });
   const [state, formAction, pending] = useActionState(
     async (_prev: any, formData: FormData) => registerAction(formData),
     null
   );
 
   useEffect(() => {
-    getPaises().then(setPaises);
     getPreguntasSecretas().then(setPreguntas);
   }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-10">
@@ -44,8 +62,8 @@ export default function RegisterPage() {
             )}
 
             <div className="grid grid-cols-2 gap-4">
-              <Input id="nombre" name="nombre" label="First name" placeholder="John" required />
-              <Input id="apellido" name="apellido" label="Last name" placeholder="Doe" required />
+              <Input id="nombre" name="nombre" label="First name" placeholder="John" required value={fields.nombre} onChange={handleChange} />
+              <Input id="apellido" name="apellido" label="Last name" placeholder="Doe" required value={fields.apellido} onChange={handleChange} />
             </div>
 
             <Input
@@ -53,8 +71,10 @@ export default function RegisterPage() {
               name="email"
               type="email"
               label="Email"
-              placeholder="you@example.com"
+              placeholder="you@redhat.com"
               required
+              value={fields.email}
+              onChange={handleChange}
             />
 
             <Input
@@ -65,6 +85,8 @@ export default function RegisterPage() {
               placeholder="Min 6 characters"
               required
               minLength={6}
+              value={fields.password}
+              onChange={handleChange}
             />
 
             <div className="flex flex-col gap-1">
@@ -75,10 +97,12 @@ export default function RegisterPage() {
                 id="pais"
                 name="pais"
                 required
+                value={fields.pais}
+                onChange={handleChange}
                 className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-500"
               >
                 <option value="">Select a country…</option>
-                {paises.map((p) => (
+                {PAISES.map((p) => (
                   <option key={p.codigo} value={p.codigo}>
                     {p.nombre}
                   </option>
@@ -99,6 +123,8 @@ export default function RegisterPage() {
                   id="preguntaSecretaId"
                   name="preguntaSecretaId"
                   required
+                  value={fields.preguntaSecretaId}
+                  onChange={handleChange}
                   className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-500"
                 >
                   <option value="">Select a question…</option>
@@ -117,6 +143,8 @@ export default function RegisterPage() {
                 placeholder="Answer (not case-sensitive)"
                 required
                 autoComplete="off"
+                value={fields.respuestaSecreta}
+                onChange={handleChange}
               />
             </div>
 

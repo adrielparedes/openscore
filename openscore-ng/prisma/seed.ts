@@ -19,7 +19,10 @@ async function main() {
 
   // ---------------------------------------------------------------------------
   // Paises (all 48 nations + a few extras)
+  // Countries with registroPermitido=true are the only ones users can register with.
   // ---------------------------------------------------------------------------
+  const REGISTRO_PERMITIDO = new Set(["ARG", "BRA", "CHL", "COL", "MEX", "PER"]);
+
   const paisesData = [
     { codigo: "MEX", nombre: "Mexico" },
     { codigo: "ZAF", nombre: "South Africa" },
@@ -69,16 +72,20 @@ async function main() {
     { codigo: "HRV", nombre: "Croatia" },
     { codigo: "GHA", nombre: "Ghana" },
     { codigo: "PAN", nombre: "Panama" },
+    // Registration-allowed countries not in the World Cup
+    { codigo: "CHL", nombre: "Chile" },
+    { codigo: "PER", nombre: "Peru" },
   ];
 
   for (const p of paisesData) {
+    const registroPermitido = REGISTRO_PERMITIDO.has(p.codigo);
     await prisma.pais.upsert({
       where: { codigo: p.codigo },
-      update: {},
-      create: p,
+      update: { registroPermitido },
+      create: { ...p, registroPermitido },
     });
   }
-  console.log(`  ✔ ${paisesData.length} countries`);
+  console.log(`  ✔ ${paisesData.length} countries (${REGISTRO_PERMITIDO.size} with registration enabled)`);
 
   // ---------------------------------------------------------------------------
   // Fases

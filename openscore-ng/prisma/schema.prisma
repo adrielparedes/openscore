@@ -7,14 +7,15 @@ datasource db {
 }
 
 model Pais {
-  id           Int       @id @default(autoincrement())
-  nombre       String
-  codigo       String    @unique
-  deleted      Boolean   @default(false)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  deletedAt    DateTime?
-  usuarios     Usuario[]
+  id                 Int       @id @default(autoincrement())
+  nombre             String
+  codigo             String    @unique
+  registroPermitido  Boolean   @default(false)
+  deleted            Boolean   @default(false)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  deletedAt          DateTime?
+  usuarios           Usuario[]
 }
 
 model Equipo {

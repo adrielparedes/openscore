@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 const registerSchema = z.object({
   nombre: z.string().min(2),
   apellido: z.string().min(2),
-  email: z.string().email(),
+  email: z.string().email().endsWith("@redhat.com", { message: "Only @redhat.com emails are allowed" }),
   password: z.string().min(6),
   pais: z.string().min(2),
   preguntaSecretaId: z.coerce.number().int().positive(),
