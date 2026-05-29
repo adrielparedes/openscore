@@ -85,7 +85,7 @@ export default function MatchCard({ match }: MatchCardProps) {
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-slate-50">
+      <div className="flex items-center justify-between px-5 py-3">
         <div className="flex items-center gap-2 text-xs text-slate-500">
           <CalendarClock className="h-3.5 w-3.5" />
           <span>{matchDate}</span>
