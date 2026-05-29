@@ -93,7 +93,7 @@ export async function getFechas(): Promise<number[]> {
     distinct: ["fecha"],
     orderBy: { fecha: "asc" },
   });
-  return rows.map((r) => r.fecha);
+  return rows.map((r: { fecha: number }) => r.fecha);
 }
 
 export async function setResultado(
