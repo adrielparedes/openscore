@@ -1,9 +1,9 @@
 "use client";
 
-import { adminResetPassword, getUserPaniniCard } from "@/actions/usuarios";
+import { adminResetPassword, getUserPaniniCard, toggleAdminRole } from "@/actions/usuarios";
 import { useState, useTransition } from "react";
 import Image from "next/image";
-import { User, Globe, Shield, RotateCcw, ChevronDown, ChevronUp, CheckCircle, Wand2, Copy, Check, Eye, EyeOff, CreditCard, Loader2 } from "lucide-react";
+import { User, Globe, Shield, ShieldOff, RotateCcw, ChevronDown, ChevronUp, CheckCircle, Wand2, Copy, Check, Eye, EyeOff, CreditCard, Loader2 } from "lucide-react";
 
 type Rol = { rol: string };
 type Pais = { nombre: string };
@@ -41,7 +41,9 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
   const [paniniCard, setPaniniCard] = useState<string | null | undefined>(undefined);
   const [cardLoading, setCardLoading] = useState(false);
 
-  const isAdmin = usuario.roles.some((r) => r.rol === "ADMIN");
+  const [isAdmin, setIsAdmin] = useState(usuario.roles.some((r) => r.rol === "ADMIN"));
+  const [adminPending, startAdminTransition] = useTransition();
+  const [adminError, setAdminError] = useState<string | null>(null);
 
   function handleOpen() {
     const isOpening = !open;
@@ -99,6 +101,18 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
     setCardLoading(false);
   }
 
+  function handleToggleAdmin() {
+    setAdminError(null);
+    startAdminTransition(async () => {
+      const result = await toggleAdminRole(usuario.id);
+      if (result.error) {
+        setAdminError(result.error);
+      } else {
+        setIsAdmin(result.isAdmin!);
+      }
+    });
+  }
+
   return (
     <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
       <div className="flex items-center gap-4 px-5 py-4">
@@ -129,6 +143,25 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
 
         <div className="flex items-center gap-2 shrink-0">
           <button
+            onClick={handleToggleAdmin}
+            disabled={adminPending}
+            title={isAdmin ? "Revoke admin" : "Grant admin"}
+            className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors disabled:opacity-60 ${
+              isAdmin
+                ? "border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 hover:border-rose-300"
+                : "border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300"
+            }`}
+          >
+            {adminPending ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            ) : isAdmin ? (
+              <ShieldOff className="h-3.5 w-3.5" />
+            ) : (
+              <Shield className="h-3.5 w-3.5" />
+            )}
+            {isAdmin ? "Revoke admin" : "Make admin"}
+          </button>
+          <button
             onClick={handleToggleCard}
             className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
           >
@@ -146,6 +179,11 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
           </button>
         </div>
       </div>
+      {adminError && (
+        <div className="border-t border-rose-100 bg-rose-50 px-5 py-2 text-xs text-rose-600">
+          {adminError}
+        </div>
+      )}
 
       {cardOpen && (
         <div className="border-t border-slate-100 bg-slate-50 px-5 py-4 flex items-center justify-center min-h-[80px]">

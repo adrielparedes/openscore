@@ -128,6 +128,33 @@ export async function getUserPaniniCard(usuarioId: number) {
   return { paniniCard: usuario?.paniniCard ?? null };
 }
 
+export async function toggleAdminRole(usuarioId: number) {
+  const session = await auth();
+  const roles = (session?.user as any)?.roles ?? [];
+  if (!roles.includes("ADMIN")) return { error: "Forbidden" };
+
+  if (parseInt(session!.user!.id!) === usuarioId) {
+    return { error: "You cannot modify your own admin role" };
+  }
+
+  const existing = await prisma.usuarioRol.findUnique({
+    where: { usuarioId_rol: { usuarioId, rol: "ADMIN" } },
+  });
+
+  if (existing) {
+    await prisma.usuarioRol.delete({
+      where: { usuarioId_rol: { usuarioId, rol: "ADMIN" } },
+    });
+  } else {
+    await prisma.usuarioRol.create({
+      data: { usuarioId, rol: "ADMIN" },
+    });
+  }
+
+  revalidatePath("/admin/usuarios");
+  return { isAdmin: !existing };
+}
+
 export async function adminResetPassword(formData: FormData) {
   const session = await auth();
   const roles = (session?.user as any)?.roles ?? [];
