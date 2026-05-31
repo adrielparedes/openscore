@@ -11,18 +11,30 @@ import { useTransition, useEffect, useState } from "react";
 
 const LOCK_OFFSET_MS = 15 * 60 * 1000;
 
+const FIVE_MINUTES_MS = 5 * 60 * 1000;
+
 function useCountdown(targetMs: number) {
   const [remaining, setRemaining] = useState(() => Math.max(0, targetMs - Date.now()));
 
   useEffect(() => {
     if (remaining <= 0) return;
-    const id = setInterval(() => {
+
+    const tick = () => {
       const diff = Math.max(0, targetMs - Date.now());
       setRemaining(diff);
+      return diff;
+    };
+
+    // Use 1-second intervals under 5 minutes, 60-second intervals otherwise
+    const interval = remaining <= FIVE_MINUTES_MS ? 1_000 : 60_000;
+    const id = setInterval(() => {
+      const diff = tick();
       if (diff === 0) clearInterval(id);
-    }, 60_000);
+    }, interval);
+
     return () => clearInterval(id);
-  }, [targetMs]);
+    // Re-run when crossing the 5-minute threshold to switch interval resolution
+  }, [targetMs, remaining <= FIVE_MINUTES_MS]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return remaining;
 }
@@ -32,6 +44,11 @@ function formatCountdown(ms: number): string {
   const d = Math.floor(totalSecs / 86400);
   const h = Math.floor((totalSecs % 86400) / 3600);
   const m = Math.floor((totalSecs % 3600) / 60);
+  const s = totalSecs % 60;
+
+  if (ms < FIVE_MINUTES_MS) {
+    return `${m.toString().padStart(2, "0")}m:${s.toString().padStart(2, "0")}s`;
+  }
   return `${d}d:${h.toString().padStart(2, "0")}h:${m.toString().padStart(2, "0")}m`;
 }
 
@@ -197,7 +214,7 @@ export default function MatchCard({ match }: MatchCardProps) {
         {showCountdown && (
           <div className={cn(
             "flex items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold tabular-nums mt-1",
-            remaining < 5 * 60 * 1000
+            remaining < FIVE_MINUTES_MS
               ? "bg-rose-50 text-rose-600"
               : "bg-amber-50 text-amber-600"
           )}>
