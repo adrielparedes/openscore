@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { calcularGanador, calcularStatus } from "@/lib/utils";
 import type { PartidoConRelaciones, Equipo } from "@/types";
 import { auth } from "@/lib/auth";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { calculateStandings } from "@/actions/standings";
 
 function enrichPartido(p: any): PartidoConRelaciones {
@@ -122,6 +122,7 @@ export async function setResultado(
   });
 
   await calculateStandings();
+  revalidateTag("ranking");
   revalidatePath("/");
   revalidatePath("/forecast");
   revalidatePath("/leaderboard");
@@ -144,6 +145,7 @@ export async function resetResultado(partidoId: number) {
   });
 
   await calculateStandings();
+  revalidateTag("ranking");
   revalidatePath("/");
   revalidatePath("/forecast");
   revalidatePath("/leaderboard");
