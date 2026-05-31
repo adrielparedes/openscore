@@ -122,7 +122,7 @@ export async function setResultado(
   });
 
   await calculateStandings();
-  revalidateTag("ranking");
+  revalidateTag("ranking", "max");
   revalidatePath("/");
   revalidatePath("/forecast");
   revalidatePath("/leaderboard");
@@ -145,7 +145,7 @@ export async function resetResultado(partidoId: number) {
   });
 
   await calculateStandings();
-  revalidateTag("ranking");
+  revalidateTag("ranking", "max");
   revalidatePath("/");
   revalidatePath("/forecast");
   revalidatePath("/leaderboard");
