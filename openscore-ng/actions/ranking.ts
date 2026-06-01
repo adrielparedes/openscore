@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { unstable_cache } from "next/cache";
 import { calcularGanador } from "@/lib/utils";
+import { rankingDuration, rankingUsersScored } from "@/lib/metrics";
 import type { RankingEntry } from "@/types";
 
 function calcularPuntosUsuario(pronosticos: any[]): number {
@@ -25,6 +26,9 @@ async function fetchRanking(filters?: {
   pais?: string;
   size?: number;
 }): Promise<RankingEntry[]> {
+  const start = performance.now();
+  const filtered = !!filters?.pais;
+
   const where: any = { deleted: false };
   if (filters?.pais) where.pais = { codigo: filters.pais };
 
@@ -54,6 +58,10 @@ async function fetchRanking(filters?: {
     }))
     .sort((a, b) => b.puntos - a.puntos)
     .map((r, i) => ({ ...r, ranking: i + 1 }));
+
+  const elapsed = (performance.now() - start) / 1000;
+  rankingDuration()?.record(elapsed, { filtered: String(filtered) });
+  rankingUsersScored()?.record(rankings.length);
 
   if (filters?.size && filters.size > 0) {
     return rankings.slice(0, filters.size);

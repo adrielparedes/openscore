@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { calcularGanador, calcularStatus } from "@/lib/utils";
+import { recordAction } from "@/lib/withMetrics";
 import type { PartidoConRelaciones, Equipo } from "@/types";
 import { auth } from "@/lib/auth";
 import { revalidatePath, revalidateTag } from "next/cache";
@@ -34,37 +35,43 @@ export async function getPartidos(filters?: {
   fase?: string;
   fecha?: number;
 }): Promise<PartidoConRelaciones[]> {
-  const where: any = { deleted: false };
+  return recordAction("getPartidos", async () => {
+    const where: any = { deleted: false };
 
-  if (filters?.grupo) {
-    where.grupo = { codigo: filters.grupo };
-  } else if (filters?.fase) {
-    where.fase = { codigo: filters.fase };
-  } else if (filters?.fecha) {
-    where.fecha = filters.fecha;
-  }
+    if (filters?.grupo) {
+      where.grupo = { codigo: filters.grupo };
+    } else if (filters?.fase) {
+      where.fase = { codigo: filters.fase };
+    } else if (filters?.fecha) {
+      where.fecha = filters.fecha;
+    }
 
-  const partidos = await prisma.partido.findMany({
-    where,
-    include,
-    orderBy: { dia: "asc" },
+    const partidos = await prisma.partido.findMany({
+      where,
+      include,
+      orderBy: { dia: "asc" },
+    });
+
+    return partidos.map(enrichPartido);
   });
-
-  return partidos.map(enrichPartido);
 }
 
 export async function getPartido(id: number): Promise<PartidoConRelaciones> {
-  const partido = await prisma.partido.findUniqueOrThrow({
-    where: { id, deleted: false },
-    include,
+  return recordAction("getPartido", async () => {
+    const partido = await prisma.partido.findUniqueOrThrow({
+      where: { id, deleted: false },
+      include,
+    });
+    return enrichPartido(partido);
   });
-  return enrichPartido(partido);
 }
 
 export async function getEquipos(): Promise<Equipo[]> {
-  return prisma.equipo.findMany({
-    where: { deleted: false },
-    orderBy: { nombre: "asc" },
+  return recordAction("getEquipos", async () => {
+    return prisma.equipo.findMany({
+      where: { deleted: false },
+      orderBy: { nombre: "asc" },
+    });
   });
 }
 
@@ -72,28 +79,32 @@ export async function setEquipos(
   partidoId: number,
   data: { localId: number; visitanteId: number }
 ) {
-  const session = await auth();
-  const roles = (session?.user as any)?.roles ?? [];
-  if (!roles.includes("ADMIN")) throw new Error("Unauthorized");
+  return recordAction("setEquipos", async () => {
+    const session = await auth();
+    const roles = (session?.user as any)?.roles ?? [];
+    if (!roles.includes("ADMIN")) throw new Error("Unauthorized");
 
-  await prisma.partido.update({
-    where: { id: partidoId },
-    data: { localId: data.localId, visitanteId: data.visitanteId },
+    await prisma.partido.update({
+      where: { id: partidoId },
+      data: { localId: data.localId, visitanteId: data.visitanteId },
+    });
+
+    revalidatePath("/");
+    revalidatePath("/forecast");
+    revalidatePath("/admin/results");
   });
-
-  revalidatePath("/");
-  revalidatePath("/forecast");
-  revalidatePath("/admin/results");
 }
 
 export async function getFechas(): Promise<number[]> {
-  const rows = await prisma.partido.findMany({
-    where: { deleted: false },
-    select: { fecha: true },
-    distinct: ["fecha"],
-    orderBy: { fecha: "asc" },
+  return recordAction("getFechas", async () => {
+    const rows = await prisma.partido.findMany({
+      where: { deleted: false },
+      select: { fecha: true },
+      distinct: ["fecha"],
+      orderBy: { fecha: "asc" },
+    });
+    return rows.map((r: { fecha: number }) => r.fecha);
   });
-  return rows.map((r: { fecha: number }) => r.fecha);
 }
 
 export async function setResultado(
@@ -106,47 +117,51 @@ export async function setResultado(
     penalesVisitante?: number;
   }
 ) {
-  const session = await auth();
-  const roles = (session?.user as any)?.roles ?? [];
-  if (!roles.includes("ADMIN")) throw new Error("Unauthorized");
+  return recordAction("setResultado", async () => {
+    const session = await auth();
+    const roles = (session?.user as any)?.roles ?? [];
+    if (!roles.includes("ADMIN")) throw new Error("Unauthorized");
 
-  await prisma.partido.update({
-    where: { id: partidoId },
-    data: {
-      resultadoLocal: data.local,
-      resultadoVisitante: data.visitante,
-      resultadoPenales: data.penales ?? false,
-      resultadoPenalesLocal: data.penalesLocal ?? null,
-      resultadoPenalesVisitante: data.penalesVisitante ?? null,
-    },
+    await prisma.partido.update({
+      where: { id: partidoId },
+      data: {
+        resultadoLocal: data.local,
+        resultadoVisitante: data.visitante,
+        resultadoPenales: data.penales ?? false,
+        resultadoPenalesLocal: data.penalesLocal ?? null,
+        resultadoPenalesVisitante: data.penalesVisitante ?? null,
+      },
+    });
+
+    await calculateStandings();
+    revalidateTag("ranking", "max");
+    revalidatePath("/");
+    revalidatePath("/forecast");
+    revalidatePath("/leaderboard");
   });
-
-  await calculateStandings();
-  revalidateTag("ranking", "max");
-  revalidatePath("/");
-  revalidatePath("/forecast");
-  revalidatePath("/leaderboard");
 }
 
 export async function resetResultado(partidoId: number) {
-  const session = await auth();
-  const roles = (session?.user as any)?.roles ?? [];
-  if (!roles.includes("ADMIN")) throw new Error("Unauthorized");
+  return recordAction("resetResultado", async () => {
+    const session = await auth();
+    const roles = (session?.user as any)?.roles ?? [];
+    if (!roles.includes("ADMIN")) throw new Error("Unauthorized");
 
-  await prisma.partido.update({
-    where: { id: partidoId },
-    data: {
-      resultadoLocal: null,
-      resultadoVisitante: null,
-      resultadoPenales: false,
-      resultadoPenalesLocal: null,
-      resultadoPenalesVisitante: null,
-    },
+    await prisma.partido.update({
+      where: { id: partidoId },
+      data: {
+        resultadoLocal: null,
+        resultadoVisitante: null,
+        resultadoPenales: false,
+        resultadoPenalesLocal: null,
+        resultadoPenalesVisitante: null,
+      },
+    });
+
+    await calculateStandings();
+    revalidateTag("ranking", "max");
+    revalidatePath("/");
+    revalidatePath("/forecast");
+    revalidatePath("/leaderboard");
   });
-
-  await calculateStandings();
-  revalidateTag("ranking", "max");
-  revalidatePath("/");
-  revalidatePath("/forecast");
-  revalidatePath("/leaderboard");
 }

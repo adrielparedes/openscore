@@ -9,6 +9,10 @@ declare global {
   var __otelExporter: PrometheusExporter | undefined
   // eslint-disable-next-line no-var
   var __otelMeterProvider: MeterProvider | undefined
+  // eslint-disable-next-line no-var
+  var __pgPool:
+    | { totalCount: number; idleCount: number; waitingCount: number }
+    | undefined
 }
 
 export function initOtel() {
@@ -19,6 +23,21 @@ export function initOtel() {
 
   globalThis.__otelExporter = exporter
   globalThis.__otelMeterProvider = meterProvider
+
+  // Observable gauge that lazily reads the pg Pool once lib/prisma.ts has loaded.
+  // The callback runs on every scrape, so the pool will be present by then.
+  meterProvider
+    .getMeter('openscore')
+    .createObservableGauge('openscore_db_pool_connections', {
+      description: 'pg connection pool size by state',
+    })
+    .addCallback((obs) => {
+      const p = globalThis.__pgPool
+      if (!p) return
+      obs.observe(p.totalCount, { state: 'total' })
+      obs.observe(p.idleCount, { state: 'idle' })
+      obs.observe(p.waitingCount, { state: 'waiting' })
+    })
 }
 
 export async function collectMetrics(): Promise<string> {

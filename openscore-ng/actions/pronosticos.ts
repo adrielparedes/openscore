@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { calcularGanador, calcularStatus, isBloqueado } from "@/lib/utils";
+import { recordAction } from "@/lib/withMetrics";
 import type { PartidoPronostico } from "@/types";
 import type { PronosticoGanador } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -39,26 +40,28 @@ export async function getPronosticos(filters?: {
   fase?: string;
   fecha?: number;
 }): Promise<PartidoPronostico[]> {
-  const usuarioId = await getUserId();
+  return recordAction("getPronosticos", async () => {
+    const usuarioId = await getUserId();
 
-  const where: any = { deleted: false };
-  if (filters?.grupo) where.grupo = { codigo: filters.grupo };
-  else if (filters?.fase) where.fase = { codigo: filters.fase };
-  else if (filters?.fecha) where.fecha = filters.fecha;
+    const where: any = { deleted: false };
+    if (filters?.grupo) where.grupo = { codigo: filters.grupo };
+    else if (filters?.fase) where.fase = { codigo: filters.fase };
+    else if (filters?.fecha) where.fecha = filters.fecha;
 
-  const partidos = await prisma.partido.findMany({
-    where,
-    include: { local: true, visitante: true, fase: true, grupo: true },
-    orderBy: { dia: "asc" },
-  });
+    const partidos = await prisma.partido.findMany({
+      where,
+      include: { local: true, visitante: true, fase: true, grupo: true },
+      orderBy: { dia: "asc" },
+    });
 
-  const pronosticos = await prisma.pronostico.findMany({
-    where: { usuarioId, deleted: false },
-  });
+    const pronosticos = await prisma.pronostico.findMany({
+      where: { usuarioId, deleted: false },
+    });
 
-  return partidos.map((partido) => {
-    const pronostico = pronosticos.find((p) => p.partidoId === partido.id) ?? null;
-    return buildPartidoPronostico(partido, pronostico);
+    return partidos.map((partido) => {
+      const pronostico = pronosticos.find((p) => p.partidoId === partido.id) ?? null;
+      return buildPartidoPronostico(partido, pronostico);
+    });
   });
 }
 
@@ -66,25 +69,27 @@ export async function setPronostico(
   partidoId: number,
   ganador: PronosticoGanador
 ): Promise<{ error?: string }> {
-  const usuarioId = await getUserId();
+  return recordAction("setPronostico", async () => {
+    const usuarioId = await getUserId();
 
-  const partido = await prisma.partido.findUniqueOrThrow({
-    where: { id: partidoId },
+    const partido = await prisma.partido.findUniqueOrThrow({
+      where: { id: partidoId },
+    });
+
+    if (isBloqueado(partido.dia)) {
+      return { error: "Match is locked — predictions closed 15 min before kickoff" };
+    }
+
+    await prisma.pronostico.upsert({
+      where: { partidoId_usuarioId: { partidoId, usuarioId } },
+      create: { partidoId, usuarioId, ganador },
+      update: { ganador },
+    });
+
+    revalidatePath("/forecast");
+    revalidatePath("/");
+    return {};
   });
-
-  if (isBloqueado(partido.dia)) {
-    return { error: "Match is locked — predictions closed 15 min before kickoff" };
-  }
-
-  await prisma.pronostico.upsert({
-    where: { partidoId_usuarioId: { partidoId, usuarioId } },
-    create: { partidoId, usuarioId, ganador },
-    update: { ganador },
-  });
-
-  revalidatePath("/forecast");
-  revalidatePath("/");
-  return {};
 }
 
 const KNOCKOUT_PHASE_CODES = [
@@ -97,49 +102,53 @@ const KNOCKOUT_PHASE_CODES = [
 ];
 
 export async function getKnockoutPronosticos(): Promise<PartidoPronostico[]> {
-  const usuarioId = await getUserId();
+  return recordAction("getKnockoutPronosticos", async () => {
+    const usuarioId = await getUserId();
 
-  const partidos = await prisma.partido.findMany({
-    where: {
-      deleted: false,
-      fase: { codigo: { in: KNOCKOUT_PHASE_CODES } },
-    },
-    include: { local: true, visitante: true, fase: true, grupo: true },
-    orderBy: { dia: "asc" },
-  });
+    const partidos = await prisma.partido.findMany({
+      where: {
+        deleted: false,
+        fase: { codigo: { in: KNOCKOUT_PHASE_CODES } },
+      },
+      include: { local: true, visitante: true, fase: true, grupo: true },
+      orderBy: { dia: "asc" },
+    });
 
-  const pronosticos = await prisma.pronostico.findMany({
-    where: { usuarioId, deleted: false },
-  });
+    const pronosticos = await prisma.pronostico.findMany({
+      where: { usuarioId, deleted: false },
+    });
 
-  return partidos.map((partido) => {
-    const pronostico = pronosticos.find((p) => p.partidoId === partido.id) ?? null;
-    return buildPartidoPronostico(partido, pronostico);
+    return partidos.map((partido) => {
+      const pronostico = pronosticos.find((p) => p.partidoId === partido.id) ?? null;
+      return buildPartidoPronostico(partido, pronostico);
+    });
   });
 }
 
 export async function getNextMatchPronostico(): Promise<PartidoPronostico | null> {
-  const session = await auth();
-  if (!session?.user?.id) return null;
-  const usuarioId = parseInt(session.user.id);
+  return recordAction("getNextMatchPronostico", async () => {
+    const session = await auth();
+    if (!session?.user?.id) return null;
+    const usuarioId = parseInt(session.user.id);
 
-  const cutoff = new Date(Date.now() - 15 * 60 * 1000);
+    const cutoff = new Date(Date.now() - 15 * 60 * 1000);
 
-  const partido = await prisma.partido.findFirst({
-    where: {
-      deleted: false,
-      dia: { gte: cutoff },
-    },
-    include: { local: true, visitante: true, fase: true, grupo: true },
-    orderBy: { dia: "asc" },
+    const partido = await prisma.partido.findFirst({
+      where: {
+        deleted: false,
+        dia: { gte: cutoff },
+      },
+      include: { local: true, visitante: true, fase: true, grupo: true },
+      orderBy: { dia: "asc" },
+    });
+
+    if (!partido) return null;
+
+    const pronostico =
+      (await prisma.pronostico.findUnique({
+        where: { partidoId_usuarioId: { partidoId: partido.id, usuarioId } },
+      })) ?? null;
+
+    return buildPartidoPronostico(partido, pronostico);
   });
-
-  if (!partido) return null;
-
-  const pronostico =
-    (await prisma.pronostico.findUnique({
-      where: { partidoId_usuarioId: { partidoId: partido.id, usuarioId } },
-    })) ?? null;
-
-  return buildPartidoPronostico(partido, pronostico);
 }

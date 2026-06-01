@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { hashPassword } from "@/lib/password";
+import { recordAction } from "@/lib/withMetrics";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 
@@ -18,160 +19,178 @@ const passwordSchema = z.object({
 });
 
 export async function getMiUsuario() {
-  const session = await auth();
-  if (!session?.user?.id) throw new Error("Not authenticated");
+  return recordAction("getMiUsuario", async () => {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("Not authenticated");
 
-  return prisma.usuario.findUniqueOrThrow({
-    where: { id: parseInt(session.user.id) },
-    include: { pais: true, roles: true },
+    return prisma.usuario.findUniqueOrThrow({
+      where: { id: parseInt(session.user.id) },
+      include: { pais: true, roles: true },
+    });
   });
 }
 
 export async function updateUsuario(formData: FormData) {
-  const session = await auth();
-  if (!session?.user?.id) return { error: "Not authenticated" };
+  return recordAction("updateUsuario", async () => {
+    const session = await auth();
+    if (!session?.user?.id) return { error: "Not authenticated" };
 
-  const parsed = updateSchema.safeParse({
-    nombre: formData.get("nombre"),
-    apellido: formData.get("apellido"),
-    pais: formData.get("pais"),
+    const parsed = updateSchema.safeParse({
+      nombre: formData.get("nombre"),
+      apellido: formData.get("apellido"),
+      pais: formData.get("pais"),
+    });
+    if (!parsed.success) return { error: parsed.error.issues[0].message };
+
+    const paisRecord = await prisma.pais.findUnique({
+      where: { codigo: parsed.data.pais },
+    });
+    if (!paisRecord) return { error: "Country not found" };
+
+    await prisma.usuario.update({
+      where: { id: parseInt(session.user.id) },
+      data: {
+        nombre: parsed.data.nombre,
+        apellido: parsed.data.apellido,
+        paisId: paisRecord.id,
+      },
+    });
+
+    revalidatePath("/");
+    return {};
   });
-  if (!parsed.success) return { error: parsed.error.issues[0].message };
-
-  const paisRecord = await prisma.pais.findUnique({
-    where: { codigo: parsed.data.pais },
-  });
-  if (!paisRecord) return { error: "Country not found" };
-
-  await prisma.usuario.update({
-    where: { id: parseInt(session.user.id) },
-    data: {
-      nombre: parsed.data.nombre,
-      apellido: parsed.data.apellido,
-      paisId: paisRecord.id,
-    },
-  });
-
-  revalidatePath("/");
-  return {};
 }
 
 export async function updatePassword(formData: FormData) {
-  const session = await auth();
-  if (!session?.user?.id) return { error: "Not authenticated" };
+  return recordAction("updatePassword", async () => {
+    const session = await auth();
+    if (!session?.user?.id) return { error: "Not authenticated" };
 
-  const parsed = passwordSchema.safeParse({
-    oldPassword: formData.get("oldPassword"),
-    password: formData.get("password"),
+    const parsed = passwordSchema.safeParse({
+      oldPassword: formData.get("oldPassword"),
+      password: formData.get("password"),
+    });
+    if (!parsed.success) return { error: parsed.error.issues[0].message };
+
+    const usuario = await prisma.usuario.findUniqueOrThrow({
+      where: { id: parseInt(session.user.id) },
+    });
+
+    if (usuario.password !== await hashPassword(parsed.data.oldPassword)) {
+      return { error: "Old password does not match" };
+    }
+
+    await prisma.usuario.update({
+      where: { id: usuario.id },
+      data: { password: await hashPassword(parsed.data.password) },
+    });
+
+    return {};
   });
-  if (!parsed.success) return { error: parsed.error.issues[0].message };
-
-  const usuario = await prisma.usuario.findUniqueOrThrow({
-    where: { id: parseInt(session.user.id) },
-  });
-
-  if (usuario.password !== await hashPassword(parsed.data.oldPassword)) {
-    return { error: "Old password does not match" };
-  }
-
-  await prisma.usuario.update({
-    where: { id: usuario.id },
-    data: { password: await hashPassword(parsed.data.password) },
-  });
-
-  return {};
 }
 
 export async function deletePaniniCard() {
-  const session = await auth();
-  if (!session?.user?.id) return { error: "Not authenticated" };
+  return recordAction("deletePaniniCard", async () => {
+    const session = await auth();
+    if (!session?.user?.id) return { error: "Not authenticated" };
 
-  await prisma.usuario.update({
-    where: { id: parseInt(session.user.id) },
-    data: { paniniCard: null },
+    await prisma.usuario.update({
+      where: { id: parseInt(session.user.id) },
+      data: { paniniCard: null },
+    });
+
+    revalidatePath("/profile");
+    return {};
   });
-
-  revalidatePath("/profile");
-  return {};
 }
 
 export async function getPaises() {
-  return prisma.pais.findMany({
-    where: { deleted: false },
-    orderBy: { nombre: "asc" },
+  return recordAction("getPaises", async () => {
+    return prisma.pais.findMany({
+      where: { deleted: false },
+      orderBy: { nombre: "asc" },
+    });
   });
 }
 
 export async function getAllUsuarios() {
-  const session = await auth();
-  const roles = (session?.user as any)?.roles ?? [];
-  if (!roles.includes("ADMIN")) throw new Error("Forbidden");
+  return recordAction("getAllUsuarios", async () => {
+    const session = await auth();
+    const roles = (session?.user as any)?.roles ?? [];
+    if (!roles.includes("ADMIN")) throw new Error("Forbidden");
 
-  return prisma.usuario.findMany({
-    where: { deleted: false },
-    omit: { paniniCard: true },
-    include: { pais: true, roles: true },
-    orderBy: { createdAt: "desc" },
+    return prisma.usuario.findMany({
+      where: { deleted: false },
+      omit: { paniniCard: true },
+      include: { pais: true, roles: true },
+      orderBy: { createdAt: "desc" },
+    });
   });
 }
 
 export async function getUserPaniniCard(usuarioId: number) {
-  const session = await auth();
-  const roles = (session?.user as any)?.roles ?? [];
-  if (!roles.includes("ADMIN")) return { error: "Forbidden" };
+  return recordAction("getUserPaniniCard", async () => {
+    const session = await auth();
+    const roles = (session?.user as any)?.roles ?? [];
+    if (!roles.includes("ADMIN")) return { error: "Forbidden" };
 
-  const usuario = await prisma.usuario.findUnique({
-    where: { id: usuarioId },
-    select: { paniniCard: true },
+    const usuario = await prisma.usuario.findUnique({
+      where: { id: usuarioId },
+      select: { paniniCard: true },
+    });
+
+    return { paniniCard: usuario?.paniniCard ?? null };
   });
-
-  return { paniniCard: usuario?.paniniCard ?? null };
 }
 
 export async function toggleAdminRole(usuarioId: number) {
-  const session = await auth();
-  const roles = (session?.user as any)?.roles ?? [];
-  if (!roles.includes("ADMIN")) return { error: "Forbidden" };
+  return recordAction("toggleAdminRole", async () => {
+    const session = await auth();
+    const roles = (session?.user as any)?.roles ?? [];
+    if (!roles.includes("ADMIN")) return { error: "Forbidden" };
 
-  if (parseInt(session!.user!.id!) === usuarioId) {
-    return { error: "You cannot modify your own admin role" };
-  }
+    if (parseInt(session!.user!.id!) === usuarioId) {
+      return { error: "You cannot modify your own admin role" };
+    }
 
-  const existing = await prisma.usuarioRol.findUnique({
-    where: { usuarioId_rol: { usuarioId, rol: "ADMIN" } },
-  });
-
-  if (existing) {
-    await prisma.usuarioRol.delete({
+    const existing = await prisma.usuarioRol.findUnique({
       where: { usuarioId_rol: { usuarioId, rol: "ADMIN" } },
     });
-  } else {
-    await prisma.usuarioRol.create({
-      data: { usuarioId, rol: "ADMIN" },
-    });
-  }
 
-  revalidatePath("/admin/usuarios");
-  return { isAdmin: !existing };
+    if (existing) {
+      await prisma.usuarioRol.delete({
+        where: { usuarioId_rol: { usuarioId, rol: "ADMIN" } },
+      });
+    } else {
+      await prisma.usuarioRol.create({
+        data: { usuarioId, rol: "ADMIN" },
+      });
+    }
+
+    revalidatePath("/admin/usuarios");
+    return { isAdmin: !existing };
+  });
 }
 
 export async function adminResetPassword(formData: FormData) {
-  const session = await auth();
-  const roles = (session?.user as any)?.roles ?? [];
-  if (!roles.includes("ADMIN")) return { error: "Forbidden" };
+  return recordAction("adminResetPassword", async () => {
+    const session = await auth();
+    const roles = (session?.user as any)?.roles ?? [];
+    if (!roles.includes("ADMIN")) return { error: "Forbidden" };
 
-  const usuarioId = parseInt(formData.get("usuarioId") as string);
-  const newPassword = formData.get("newPassword") as string | null;
+    const usuarioId = parseInt(formData.get("usuarioId") as string);
+    const newPassword = formData.get("newPassword") as string | null;
 
-  if (!newPassword || newPassword.length < 6) {
-    return { error: "Password must be at least 6 characters" };
-  }
+    if (!newPassword || newPassword.length < 6) {
+      return { error: "Password must be at least 6 characters" };
+    }
 
-  await prisma.usuario.update({
-    where: { id: usuarioId },
-    data: { password: await hashPassword(newPassword) },
+    await prisma.usuario.update({
+      where: { id: usuarioId },
+      data: { password: await hashPassword(newPassword) },
+    });
+
+    revalidatePath("/admin/usuarios");
+    return { success: true };
   });
-
-  revalidatePath("/admin/usuarios");
-  return { success: true };
 }
