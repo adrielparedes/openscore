@@ -23,7 +23,7 @@ export async function getMiUsuario() {
     const session = await auth();
     if (!session?.user?.id) throw new Error("Not authenticated");
 
-    return prisma.usuario.findUniqueOrThrow({
+    return prisma.usuario.findUnique({
       where: { id: parseInt(session.user.id) },
       include: { pais: true, roles: true },
     });
@@ -89,14 +89,14 @@ export async function updatePassword(formData: FormData) {
   });
 }
 
-export async function deletePaniniCard() {
-  return recordAction("deletePaniniCard", async () => {
+export async function deleteStickerCard() {
+  return recordAction("deleteStickerCard", async () => {
     const session = await auth();
     if (!session?.user?.id) return { error: "Not authenticated" };
 
     await prisma.usuario.update({
       where: { id: parseInt(session.user.id) },
-      data: { paniniCard: null },
+      data: { stickerCard: null },
     });
 
     revalidatePath("/profile");
@@ -121,25 +121,25 @@ export async function getAllUsuarios() {
 
     return prisma.usuario.findMany({
       where: { deleted: false },
-      omit: { paniniCard: true },
+      omit: { stickerCard: true },
       include: { pais: true, roles: true },
       orderBy: { createdAt: "desc" },
     });
   });
 }
 
-export async function getUserPaniniCard(usuarioId: number) {
-  return recordAction("getUserPaniniCard", async () => {
+export async function getUserStickerCard(usuarioId: number) {
+  return recordAction("getUserStickerCard", async () => {
     const session = await auth();
     const roles = (session?.user as any)?.roles ?? [];
     if (!roles.includes("ADMIN")) return { error: "Forbidden" };
 
     const usuario = await prisma.usuario.findUnique({
       where: { id: usuarioId },
-      select: { paniniCard: true },
+      select: { stickerCard: true },
     });
 
-    return { paniniCard: usuario?.paniniCard ?? null };
+    return { stickerCard: usuario?.stickerCard ?? null };
   });
 }
 

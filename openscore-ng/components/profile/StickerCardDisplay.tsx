@@ -7,7 +7,7 @@ interface Props {
   pais: string;
   puntos: number;
   ranking: number;
-  paniniCard?: string | null;
+  stickerCard?: string | null;
 }
 
 function RankIcon({ rank }: { rank: number }) {
@@ -42,7 +42,7 @@ const rankLabelColor: Record<number, string> = {
   3: "text-amber-700",
 };
 
-export default function PaniniCardDisplay({ nombre, pais, puntos, ranking, paniniCard }: Props) {
+export default function StickerCardDisplay({ nombre, pais, puntos, ranking, stickerCard }: Props) {
   const borderColor = rankBorderColor[ranking] ?? "border-slate-200 shadow-slate-100";
   const labelColor = rankLabelColor[ranking] ?? "text-slate-400";
 
@@ -50,10 +50,10 @@ export default function PaniniCardDisplay({ nombre, pais, puntos, ranking, panin
     <div className="flex flex-col items-center gap-3">
       <div className={`relative w-full aspect-[3/4] rounded-xl overflow-hidden border-2 ${borderColor} shadow-lg bg-slate-100`}>
         <RankIcon rank={ranking} />
-        {paniniCard ? (
+        {stickerCard ? (
           <Image
-            src={paniniCard}
-            alt={`${nombre}'s Panini card`}
+            src={stickerCard}
+            alt={`${nombre}'s sticker card`}
             fill
             className="object-cover"
             unoptimized

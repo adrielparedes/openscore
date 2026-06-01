@@ -438,7 +438,7 @@
     {
       "id": 17,
       "type": "row",
-      "title": "Upload (Panini Cards)",
+      "title": "Upload (Sticker Cards)",
       "gridPos": { "h": 1, "w": 24, "x": 0, "y": 31 },
       "collapsed": false
     },
@@ -476,7 +476,7 @@
       "id": 19,
       "type": "timeseries",
       "title": "Upload file size — P50 / P95",
-      "description": "Distribution of uploaded Panini card sizes in bytes by MIME type. Helps verify the 5 MB cap is working and understand typical image sizes.",
+      "description": "Distribution of uploaded sticker card sizes in bytes by MIME type. Helps verify the 5 MB cap is working and understand typical image sizes.",
       "gridPos": { "h": 8, "w": 7, "x": 10, "y": 32 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
       "targets": [

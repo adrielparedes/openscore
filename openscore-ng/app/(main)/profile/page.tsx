@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { getMiUsuario } from "@/actions/usuarios";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import PaniniCardUpload from "@/components/profile/PaniniCardUpload";
+import StickerCardUpload from "@/components/profile/StickerCardUpload";
 import { redirect } from "next/navigation";
 import { User, Mail, Globe, CreditCard } from "lucide-react";
 
@@ -10,12 +10,13 @@ export default async function ProfilePage() {
   if (!session?.user?.id) redirect("/login");
 
   const usuario = await getMiUsuario();
+  if (!usuario) redirect("/api/auth/signout");
 
   return (
     <div className="mx-auto w-full max-w-2xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
       <div>
         <h1 className="text-2xl font-bold text-slate-900">My Profile</h1>
-        <p className="text-slate-500 text-sm mt-1">Manage your account details and Panini card</p>
+        <p className="text-slate-500 text-sm mt-1">Manage your account details and sticker card</p>
       </div>
 
       {/* Account info */}
@@ -58,19 +59,19 @@ export default async function ProfilePage() {
         </CardContent>
       </Card>
 
-      {/* Panini card */}
+      {/* Sticker card */}
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
             <CreditCard className="h-5 w-5 text-rose-500" />
-            <CardTitle>Panini Card</CardTitle>
+            <CardTitle>Sticker Card</CardTitle>
           </div>
           <p className="text-sm text-slate-500 mt-1">
-            Upload your Panini sticker card — it will appear on your profile and leaderboard.
+            Upload your sticker card — it will appear on your profile and leaderboard.
           </p>
         </CardHeader>
         <CardContent>
-          <PaniniCardUpload currentCard={usuario.paniniCard ?? null} />
+          <StickerCardUpload currentCard={usuario.stickerCard ?? null} />
         </CardContent>
       </Card>
     </div>

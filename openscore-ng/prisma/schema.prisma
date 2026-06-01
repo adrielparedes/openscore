@@ -87,7 +87,7 @@ model Usuario {
   paisId             Int
   email              String            @unique
   password           String
-  paniniCard         String?
+  stickerCard        String?
   preguntaSecretaId  Int?
   respuestaSecreta   String?
   deleted            Boolean           @default(false)

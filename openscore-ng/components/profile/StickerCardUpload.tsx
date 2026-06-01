@@ -3,14 +3,14 @@
 import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import { Upload, X, ImageIcon, Loader2 } from "lucide-react";
-import { deletePaniniCard } from "@/actions/usuarios";
+import { deleteStickerCard } from "@/actions/usuarios";
 import { useRouter } from "next/navigation";
 
 interface Props {
   currentCard: string | null;
 }
 
-export default function PaniniCardUpload({ currentCard }: Props) {
+export default function StickerCardUpload({ currentCard }: Props) {
   const [preview, setPreview] = useState<string | null>(currentCard);
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -66,7 +66,7 @@ export default function PaniniCardUpload({ currentCard }: Props) {
   const handleDelete = async () => {
     setDeleting(true);
     setError(null);
-    const result = await deletePaniniCard();
+    const result = await deleteStickerCard();
     if (result?.error) {
       setError(result.error);
     } else {
@@ -83,7 +83,7 @@ export default function PaniniCardUpload({ currentCard }: Props) {
           <div className="relative w-full max-w-xs mx-auto aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 bg-slate-50 shadow-sm">
             <Image
               src={preview}
-              alt="Panini card"
+              alt="Sticker card"
               fill
               className="object-cover"
               unoptimized
@@ -137,7 +137,7 @@ export default function PaniniCardUpload({ currentCard }: Props) {
               </div>
               <div className="text-center">
                 <p className="text-sm font-medium text-slate-700">
-                  Drop your Panini card here
+                  Drop your sticker card here
                 </p>
                 <p className="text-xs text-slate-400 mt-0.5">
                   or click to browse — JPEG, PNG, WebP up to 5 MB

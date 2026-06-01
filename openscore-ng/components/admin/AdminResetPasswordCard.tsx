@@ -1,6 +1,6 @@
 "use client";
 
-import { adminResetPassword, getUserPaniniCard, toggleAdminRole } from "@/actions/usuarios";
+import { adminResetPassword, getUserStickerCard, toggleAdminRole } from "@/actions/usuarios";
 import { useState, useTransition } from "react";
 import Image from "next/image";
 import { User, Globe, Shield, ShieldOff, RotateCcw, ChevronDown, ChevronUp, CheckCircle, Wand2, Copy, Check, Eye, EyeOff, CreditCard, Loader2 } from "lucide-react";
@@ -38,7 +38,7 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
   const [isPending, startTransition] = useTransition();
 
   const [cardOpen, setCardOpen] = useState(false);
-  const [paniniCard, setPaniniCard] = useState<string | null | undefined>(undefined);
+  const [stickerCard, setStickerCard] = useState<string | null | undefined>(undefined);
   const [cardLoading, setCardLoading] = useState(false);
 
   const [isAdmin, setIsAdmin] = useState(usuario.roles.some((r) => r.rol === "ADMIN"));
@@ -94,10 +94,10 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
       return;
     }
     setCardOpen(true);
-    if (paniniCard !== undefined) return;
+    if (stickerCard !== undefined) return;
     setCardLoading(true);
-    const result = await getUserPaniniCard(usuario.id);
-    setPaniniCard("paniniCard" in result ? result.paniniCard : null);
+    const result = await getUserStickerCard(usuario.id);
+    setStickerCard("stickerCard" in result ? result.stickerCard : null);
     setCardLoading(false);
   }
 
@@ -189,18 +189,18 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
         <div className="border-t border-slate-100 bg-slate-50 px-5 py-4 flex items-center justify-center min-h-[80px]">
           {cardLoading ? (
             <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
-          ) : paniniCard ? (
+          ) : stickerCard ? (
             <div className="relative w-32 aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 shadow-sm">
               <Image
-                src={paniniCard}
-                alt={`${usuario.nombre}'s Panini card`}
+                src={stickerCard}
+                alt={`${usuario.nombre}'s sticker card`}
                 fill
                 className="object-cover"
                 unoptimized
               />
             </div>
           ) : (
-            <p className="text-sm text-slate-400 italic">No Panini card uploaded</p>
+            <p className="text-sm text-slate-400 italic">No sticker card uploaded</p>
           )}
         </div>
       )}

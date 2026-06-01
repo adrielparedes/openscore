@@ -3,10 +3,10 @@ import { getRanking } from "@/actions/ranking";
 import { getNextMatchPronostico } from "@/actions/pronosticos";
 import { WorldCupCountdown } from "@/components/ui/WorldCupCountdown";
 import NextMatchCard from "@/components/forecast/NextMatchCard";
-import PaniniCardDisplay from "@/components/profile/PaniniCardDisplay";
+import StickerCardDisplay from "@/components/profile/StickerCardDisplay";
 import Image from "next/image";
 import Link from "next/link";
-import { TrendingUp, Globe, ArrowRight, Sparkles, BookOpen } from "lucide-react";
+import { TrendingUp, Globe, ArrowRight, BookOpen } from "lucide-react";
 
 export default async function HomePage() {
   const session = await auth();
@@ -98,13 +98,13 @@ export default async function HomePage() {
           ) : (
             <div className="grid grid-cols-3 gap-3 flex-1">
               {topRanking.map((entry) => (
-                <PaniniCardDisplay
+                <StickerCardDisplay
                   key={entry.usuario}
                   nombre={entry.nombre}
                   pais={entry.pais}
                   puntos={entry.puntos}
                   ranking={entry.ranking}
-                  paniniCard={entry.paniniCard}
+                  stickerCard={entry.stickerCard}
                 />
               ))}
             </div>
@@ -137,14 +137,10 @@ export default async function HomePage() {
           </ol>
         </div>
 
-        {/* ── Panini Card CTA ─────────────────── col-span-1 */}
+        {/* ── Sticker Card CTA ────────────────── col-span-1 */}
         <div className="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 p-6 flex flex-col justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="h-4 w-4 text-amber-500" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-amber-600">New — Free</span>
-            </div>
-            <h2 className="font-bold text-slate-900 leading-snug">Your World Cup Panini card</h2>
+            <h2 className="font-bold text-slate-900 leading-snug">Your World Cup sticker card</h2>
             <p className="text-xs text-slate-500 mt-1">
               Upload your photo &amp; pick your country — download in high res.
             </p>

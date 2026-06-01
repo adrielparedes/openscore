@@ -60,7 +60,7 @@ export const standingsDuration = () =>
 // Upload
 export const uploadBytes = () =>
   meter()?.createHistogram("openscore_upload_bytes", {
-    description: "Panini card upload file size",
+    description: "Sticker card upload file size",
     unit: "By",
     advice: {
       explicitBucketBoundaries: [
@@ -71,7 +71,7 @@ export const uploadBytes = () =>
 
 export const uploadDuration = () =>
   meter()?.createHistogram("openscore_upload_duration_seconds", {
-    description: "Panini card upload handler wall-clock duration",
+    description: "Sticker card upload handler wall-clock duration",
     unit: "s",
     advice: { explicitBucketBoundaries: [0.05, 0.1, 0.25, 0.5, 1, 2.5] },
   });

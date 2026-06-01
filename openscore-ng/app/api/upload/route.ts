@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
 
     await prisma.usuario.update({
       where: { id: parseInt(session.user.id) },
-      data: { paniniCard: dataUrl },
+      data: { stickerCard: dataUrl },
     });
 
     outcome = "success";

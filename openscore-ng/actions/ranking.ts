@@ -54,7 +54,7 @@ async function fetchRanking(filters?: {
       pais: u.pais.codigo,
       puntos: calcularPuntosUsuario(u.pronosticos),
       ranking: 0,
-      paniniCard: u.paniniCard ?? null,
+      stickerCard: u.stickerCard ?? null,
     }))
     .sort((a, b) => b.puntos - a.puntos)
     .map((r, i) => ({ ...r, ranking: i + 1 }));
