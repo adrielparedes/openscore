@@ -1,0 +1,540 @@
+{
+  "uid": "openscore-perf",
+  "title": "Openscore-ng · Performance",
+  "description": "Server action latency, database, expensive computations, and upload metrics",
+  "tags": ["openscore", "performance"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "time": { "from": "now-1h", "to": "now" },
+  "templating": {
+    "list": [
+      {
+        "name": "datasource",
+        "type": "datasource",
+        "pluginId": "prometheus",
+        "label": "Datasource",
+        "hide": 0,
+        "current": {}
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Actions inflight",
+      "description": "Total server action invocations currently executing.",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "sum(openscore_actions_inflight)",
+          "legendFormat": "inflight",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 10 },
+              { "color": "red", "value": 30 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Action error rate",
+      "description": "Server action errors per second over the last 5 minutes.",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "sum(rate(openscore_action_errors_total[5m]))",
+          "legendFormat": "errors/s",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "area"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.1 },
+              { "color": "red", "value": 1 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "DB error rate",
+      "description": "Prisma query errors per second over the last 5 minutes.",
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "sum(rate(openscore_db_errors_total[5m]))",
+          "legendFormat": "errors/s",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "area"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.05 },
+              { "color": "red", "value": 0.5 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Ranking P95 duration",
+      "description": "95th-percentile of fetchRanking computation time over the last 5 minutes.",
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(openscore_ranking_computation_duration_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p95",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.5 },
+              { "color": "red", "value": 1 }
+            ]
+          }
+        }
+      }
+    },
+
+    {
+      "id": 5,
+      "type": "row",
+      "title": "Server Actions",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 4 },
+      "collapsed": false
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Action latency — P50 / P95",
+      "description": "Quantile latency per server action. P95 helps spot tail latency; P50 is the typical user experience.",
+      "gridPos": { "h": 8, "w": 14, "x": 0, "y": 5 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(openscore_action_duration_seconds_bucket[5m])) by (le, action))",
+          "legendFormat": "p95 · {{action}}",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(openscore_action_duration_seconds_bucket[5m])) by (le, action))",
+          "legendFormat": "p50 · {{action}}",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"] }
+      }
+    },
+    {
+      "id": 7,
+      "type": "timeseries",
+      "title": "Actions inflight",
+      "description": "Concurrent in-flight invocations per action. Sustained values above a few units indicate queuing or blocking.",
+      "gridPos": { "h": 8, "w": 5, "x": 14, "y": 5 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "sum(openscore_actions_inflight) by (action)",
+          "legendFormat": "{{action}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "custom": { "fillOpacity": 10 }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      }
+    },
+    {
+      "id": 8,
+      "type": "timeseries",
+      "title": "Action error rate",
+      "description": "Errors per second by action and error type. Spikes indicate unhandled exceptions in server actions.",
+      "gridPos": { "h": 8, "w": 5, "x": 19, "y": 5 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "sum(rate(openscore_action_errors_total[5m])) by (action, error_type)",
+          "legendFormat": "{{action}} · {{error_type}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "min": 0,
+          "color": { "fixedColor": "red", "mode": "fixed" }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      }
+    },
+
+    {
+      "id": 9,
+      "type": "row",
+      "title": "Database",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 13 },
+      "collapsed": false
+    },
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "DB query latency — P95 by model + operation",
+      "description": "95th-percentile query time measured by the Prisma $extends hook. Identify slow model/operation pairs.",
+      "gridPos": { "h": 8, "w": 14, "x": 0, "y": 14 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(openscore_db_query_duration_seconds_bucket[5m])) by (le, model, operation))",
+          "legendFormat": "{{model}}.{{operation}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"] }
+      }
+    },
+    {
+      "id": 11,
+      "type": "timeseries",
+      "title": "DB pool connections",
+      "description": "pg connection pool: total allocated, idle, and waiting. Waiting > 0 means the pool is saturated.",
+      "gridPos": { "h": 8, "w": 5, "x": 14, "y": 14 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "openscore_db_pool_connections",
+          "legendFormat": "{{state}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "waiting" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "idle" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "total" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "blue", "mode": "fixed" } }]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 12,
+      "type": "timeseries",
+      "title": "DB error rate",
+      "description": "Prisma errors per second by model, operation, and Prisma error code (P2002, P2025, …).",
+      "gridPos": { "h": 8, "w": 5, "x": 19, "y": 14 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "sum(rate(openscore_db_errors_total[5m])) by (model, operation, error_code)",
+          "legendFormat": "{{model}}.{{operation}} [{{error_code}}]",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "min": 0,
+          "color": { "fixedColor": "red", "mode": "fixed" }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      }
+    },
+
+    {
+      "id": 13,
+      "type": "row",
+      "title": "Expensive Computations",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 },
+      "collapsed": false
+    },
+    {
+      "id": 14,
+      "type": "timeseries",
+      "title": "Ranking computation duration — P50 / P95",
+      "description": "Time for fetchRanking() to load all users+predictions and compute scores in-memory. Grows as more matches finish. Label 'filtered=true' means a country filter was applied.",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 23 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(openscore_ranking_computation_duration_seconds_bucket[5m])) by (le, filtered))",
+          "legendFormat": "p95 · filtered={{filtered}}",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(openscore_ranking_computation_duration_seconds_bucket[5m])) by (le, filtered))",
+          "legendFormat": "p50 · filtered={{filtered}}",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"] }
+      }
+    },
+    {
+      "id": 15,
+      "type": "timeseries",
+      "title": "Standings rebuild duration",
+      "description": "Time for calculateStandings() to delete all rows and recompute the group table. Triggered on every admin result save.",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 23 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(openscore_standings_rebuild_duration_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p95",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(openscore_standings_rebuild_duration_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p50",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": { "lineWidth": 2, "fillOpacity": 5 }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 16,
+      "type": "timeseries",
+      "title": "Ranking users scored per computation",
+      "description": "Number of users iterated in each fetchRanking() call. Paired with the duration panel this reveals per-user computation cost.",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 23 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(openscore_ranking_users_scored_bucket[5m])) by (le))",
+          "legendFormat": "p95 users",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(openscore_ranking_users_scored_bucket[5m])) by (le))",
+          "legendFormat": "p50 users",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": { "fillOpacity": 8 }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi" }
+      }
+    },
+
+    {
+      "id": 17,
+      "type": "row",
+      "title": "Upload (Panini Cards)",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 31 },
+      "collapsed": false
+    },
+    {
+      "id": 18,
+      "type": "timeseries",
+      "title": "Upload handler duration by outcome",
+      "description": "Wall-clock time of the full POST /api/upload handler. Outcome label tracks success vs each rejection reason.",
+      "gridPos": { "h": 8, "w": 10, "x": 0, "y": 32 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(openscore_upload_duration_seconds_bucket[5m])) by (le, outcome))",
+          "legendFormat": "p95 · {{outcome}}",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(openscore_upload_duration_seconds_bucket[5m])) by (le, outcome))",
+          "legendFormat": "p50 · {{outcome}}",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"] }
+      }
+    },
+    {
+      "id": 19,
+      "type": "timeseries",
+      "title": "Upload file size — P50 / P95",
+      "description": "Distribution of uploaded Panini card sizes in bytes by MIME type. Helps verify the 5 MB cap is working and understand typical image sizes.",
+      "gridPos": { "h": 8, "w": 7, "x": 10, "y": 32 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(openscore_upload_bytes_bucket[5m])) by (le, mime_type))",
+          "legendFormat": "p95 · {{mime_type}}",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(openscore_upload_bytes_bucket[5m])) by (le, mime_type))",
+          "legendFormat": "p50 · {{mime_type}}",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "decbytes",
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      }
+    },
+    {
+      "id": 20,
+      "type": "timeseries",
+      "title": "Upload request rate by outcome",
+      "description": "Upload attempts per second broken down by outcome. Sustained invalid_type or too_large values indicate client-side validation is missing.",
+      "gridPos": { "h": 8, "w": 7, "x": 17, "y": 32 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "sum(rate(openscore_upload_duration_seconds_count[5m])) by (outcome)",
+          "legendFormat": "{{outcome}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "min": 0,
+          "custom": { "fillOpacity": 8 }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "success" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byRegexp", "options": "invalid.*|too_large|unauthenticated|error" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }]
+          }
+        ]
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      }
+    }
+  ]
+}
