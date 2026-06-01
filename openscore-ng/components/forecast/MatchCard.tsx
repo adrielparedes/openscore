@@ -76,7 +76,7 @@ export default function MatchCard({ match }: MatchCardProps) {
 
   const btnVariant = (selected: boolean) =>
     selected
-      ? "bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 border-transparent text-white shadow-lg shadow-pink-500/20 hover:scale-[1.02] hover:shadow-pink-500/30"
+      ? "bg-gradient-to-br from-rh to-rose-700 border-transparent text-white shadow-lg shadow-rh/20 hover:scale-[1.02] hover:shadow-rh/30"
       : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900";
 
   const matchDate = new Date(match.dia).toLocaleString("en-US", {
@@ -92,7 +92,7 @@ export default function MatchCard({ match }: MatchCardProps) {
     match.status === "FINISHED"
       ? match.puntos > 0
         ? "border-l-emerald-400"
-        : "border-l-rose-400"
+        : "border-l-rh"
       : match.status === "BLOCKED"
       ? "border-l-amber-400"
       : "border-l-blue-400";
@@ -201,12 +201,12 @@ export default function MatchCard({ match }: MatchCardProps) {
           </div>
         )}
         {match.status === "FINISHED" && match.pronostico && match.puntos === 0 && (
-          <div className="text-center text-xs font-semibold text-rose-600 mt-1">
+          <div className="text-center text-xs font-semibold text-rh mt-1">
             ✗ Better luck next time! — 0 pts
           </div>
         )}
         {match.status === "FINISHED" && !match.pronostico && (
-          <div className="text-center text-xs font-semibold text-rose-600 mt-1">
+          <div className="text-center text-xs font-semibold text-rh mt-1">
             ✗ No prediction made — 0 pts
           </div>
         )}
@@ -215,7 +215,7 @@ export default function MatchCard({ match }: MatchCardProps) {
           <div className={cn(
             "flex items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold tabular-nums mt-1",
             remaining < FIVE_MINUTES_MS
-              ? "bg-rose-50 text-rose-600"
+              ? "bg-rh/10 text-rh"
               : "bg-amber-50 text-amber-600"
           )}>
             <Timer className="h-3.5 w-3.5" />

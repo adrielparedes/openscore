@@ -24,7 +24,7 @@ const pillClass = (active: boolean) =>
   cn(
     "px-4 py-2 text-xs rounded-2xl font-medium inline-flex items-center gap-1.5 transition-all duration-200",
     active
-      ? "bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 text-white shadow-md shadow-pink-500/20 border border-white/20"
+      ? "bg-gradient-to-br from-rh to-rose-700 text-white shadow-md shadow-rh/20 border border-white/20"
       : "bg-white/70 backdrop-blur-md text-zinc-500 border border-zinc-200/60 hover:bg-white hover:text-zinc-800"
   );
 

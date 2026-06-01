@@ -40,7 +40,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
 
   const btnVariant = (selected: boolean) =>
     selected
-      ? "bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 border-transparent text-white shadow-lg shadow-pink-500/20 hover:scale-[1.02] hover:shadow-pink-500/30"
+      ? "bg-gradient-to-br from-rh to-rose-700 border-transparent text-white shadow-lg shadow-rh/20 hover:scale-[1.02] hover:shadow-rh/30"
       : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900";
 
   const userPrediction = match.pronostico?.ganador ?? null;
@@ -49,7 +49,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
   const leftBorderColor = finished
     ? predictionCorrect
       ? "border-l-emerald-500"
-      : "border-l-rose-500"
+      : "border-l-rh"
     : locked
     ? "border-l-amber-400"
     : "border-l-blue-400";
@@ -138,7 +138,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
               "flex items-center justify-center gap-2 rounded-xl py-2 px-4 text-sm font-semibold",
               predictionCorrect
                 ? "bg-emerald-50 text-emerald-700"
-                : "bg-rose-50 text-rose-700"
+                : "bg-rh/10 text-rh"
             )}>
               {predictionCorrect ? (
                 <CheckCircle2 className="h-4 w-4" />
@@ -150,7 +150,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
                 : `Wrong prediction`}
             </div>
           ) : (
-            <div className="flex items-center justify-center gap-2 rounded-xl py-2 px-4 text-sm font-semibold bg-rose-50 text-rose-700">
+            <div className="flex items-center justify-center gap-2 rounded-xl py-2 px-4 text-sm font-semibold bg-rh/10 text-rh">
               <XCircle className="h-4 w-4" />
               No prediction made
             </div>
@@ -190,7 +190,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
 
         <Link
           href="/forecast"
-          className="flex items-center justify-center gap-1 text-xs text-rose-500 hover:text-rose-700 transition-colors mt-1"
+          className="flex items-center justify-center gap-1 text-xs text-rh hover:text-rh/80 transition-colors mt-1"
         >
           See all matches <ArrowRight className="h-3 w-3" />
         </Link>

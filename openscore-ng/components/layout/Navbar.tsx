@@ -39,12 +39,12 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg bg-rose-600 flex items-center justify-center shadow-lg shadow-rose-900/50">
+            <div className="h-8 w-8 rounded-lg bg-rh flex items-center justify-center shadow-lg shadow-rh/50">
               <Trophy className="h-5 w-5 text-white" />
             </div>
             <span className="text-lg tracking-tight select-none">
               <span className="font-light text-white/75">OPEN</span>
-              <span className="font-black text-rose-500">SCORE</span>
+              <span className="font-black text-rh">SCORE</span>
             </span>
           </Link>
 
@@ -57,7 +57,7 @@ export default function Navbar() {
                 className={cn(
                   "flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-150",
                   pathname === href
-                    ? "bg-gradient-to-r from-rose-500/35 to-rose-400/10 text-white"
+                    ? "bg-gradient-to-r from-rh/35 to-rh/10 text-white"
                     : "text-white/50 hover:text-white hover:bg-white/10"
                 )}
               >
@@ -72,8 +72,8 @@ export default function Navbar() {
                   className={cn(
                     "flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-150",
                     pathname === "/admin/results"
-                      ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
-                      : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
+                      ? "bg-gradient-to-r from-rh/40 to-rh/15 text-rh/80"
+                      : "text-rh/60 hover:text-rh/80 hover:bg-rh/15"
                   )}
                 >
                   <ClipboardList className="h-3.5 w-3.5" />
@@ -84,8 +84,8 @@ export default function Navbar() {
                   className={cn(
                     "flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-150",
                     pathname === "/admin/usuarios"
-                      ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
-                      : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
+                      ? "bg-gradient-to-r from-rh/40 to-rh/15 text-rh/80"
+                      : "text-rh/60 hover:text-rh/80 hover:bg-rh/15"
                   )}
                 >
                   <Users className="h-3.5 w-3.5" />
@@ -104,7 +104,7 @@ export default function Navbar() {
                   className={cn(
                     "flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
                     pathname === "/profile"
-                    ? "bg-gradient-to-r from-rose-500/35 to-rose-400/10 text-white"
+                    ? "bg-gradient-to-r from-rh/35 to-rh/10 text-white"
                     : "text-white/50 hover:text-white hover:bg-white/10"
                   )}
                 >
@@ -145,7 +145,7 @@ export default function Navbar() {
               className={cn(
                 "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
                 pathname === href
-                  ? "bg-gradient-to-r from-rose-500/35 to-rose-400/10 text-white"
+                  ? "bg-gradient-to-r from-rh/35 to-rh/10 text-white"
                   : "text-white/50 hover:text-white hover:bg-white/10"
               )}
             >
@@ -161,8 +161,8 @@ export default function Navbar() {
                 className={cn(
                   "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
                   pathname === "/admin/results"
-                    ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
-                    : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
+                    ? "bg-gradient-to-r from-rh/40 to-rh/15 text-rh/80"
+                    : "text-rh/60 hover:text-rh/80 hover:bg-rh/15"
                 )}
               >
                 <ClipboardList className="h-4 w-4" />
@@ -174,8 +174,8 @@ export default function Navbar() {
                 className={cn(
                   "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
                   pathname === "/admin/usuarios"
-                    ? "bg-gradient-to-r from-rose-500/40 to-rose-600/15 text-rose-200"
-                    : "text-rose-400/60 hover:text-rose-300 hover:bg-rose-500/15"
+                    ? "bg-gradient-to-r from-rh/40 to-rh/15 text-rh/80"
+                    : "text-rh/60 hover:text-rh/80 hover:bg-rh/15"
                 )}
               >
                 <Users className="h-4 w-4" />
@@ -191,7 +191,7 @@ export default function Navbar() {
                 className={cn(
                   "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
                   pathname === "/profile"
-                  ? "bg-gradient-to-r from-rose-500/35 to-rose-400/10 text-white"
+                  ? "bg-gradient-to-r from-rh/35 to-rh/10 text-white"
                   : "text-white/50 hover:text-white hover:bg-white/10"
                 )}
               >
