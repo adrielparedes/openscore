@@ -1,26 +1,36 @@
 "use client";
 
-import { loginAction } from "@/actions/auth";
+import { signIn } from "next-auth/react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Link from "next/link";
-import { useActionState, useEffect } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Trophy } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [state, formAction, pending] = useActionState(
-    async (_prev: any, formData: FormData) => loginAction(formData),
-    null
-  );
+  const [error, setError] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
 
-  useEffect(() => {
-    if ((state as any)?.success) {
-      router.refresh();
-      router.push("/");
-    }
-  }, [state, router]);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    startTransition(async () => {
+      const result = await signIn("credentials", {
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Invalid email or password");
+      } else {
+        router.push("/");
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
@@ -35,10 +45,10 @@ export default function LoginPage() {
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-          <form action={formAction} className="flex flex-col gap-5">
-            {state?.error && (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            {error && (
               <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
-                {state.error}
+                {error}
               </div>
             )}
 

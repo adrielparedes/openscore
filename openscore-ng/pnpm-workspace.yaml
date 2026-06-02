@@ -2,7 +2,6 @@ allowBuilds:
   '@prisma/engines': true
   esbuild: true
   prisma: true
-  protobufjs: set this to true or false
   sharp: true
   unrs-resolver: true
 onlyBuiltDependencies:
@@ -11,4 +10,3 @@ onlyBuiltDependencies:
   - prisma
   - sharp
   - unrs-resolver
-storeDir: /Users/aparedes/Library/pnpm/store/v11

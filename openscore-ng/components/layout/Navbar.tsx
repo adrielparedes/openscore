@@ -28,7 +28,7 @@ const navLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
   const isAdmin = ((session?.user as any)?.roles ?? []).includes("ADMIN");
 
@@ -97,7 +97,10 @@ export default function Navbar() {
 
           {/* User + logout */}
           <div className="hidden md:flex items-center gap-0.5">
-            {session && (
+            {status === "loading" && (
+              <div className="h-8 w-32 rounded-full bg-white/10 animate-pulse" />
+            )}
+            {status === "authenticated" && session && (
               <>
                 <Link
                   href="/profile"
@@ -183,7 +186,7 @@ export default function Navbar() {
               </Link>
             </>
           )}
-          {session && (
+          {status === "authenticated" && session && (
             <>
               <Link
                 href="/profile"
