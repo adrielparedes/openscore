@@ -34,3 +34,5 @@ dist/
 .project
 .settings
 .vscode
+
+.env.prod
