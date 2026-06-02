@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { Trophy } from "lucide-react";
+import { CalendarDays, LayoutGrid, Trophy } from "lucide-react";
 import FilterPill from "@/components/ui/FilterPill";
 
 const GROUPS = [
@@ -26,6 +26,8 @@ export default function ForecastFilters({ fechas }: ForecastFiltersProps) {
   };
 
   const isBracket = active.view === "bracket";
+  const isUpcoming = !active.grupo && !active.fase && !active.fecha && !active.view;
+  const isAll = active.view === "all" && !active.grupo && !active.fase && !active.fecha;
 
   function navigate(key: string, value: string | null) {
     const p = new URLSearchParams();
@@ -35,18 +37,28 @@ export default function ForecastFilters({ fechas }: ForecastFiltersProps) {
 
   return (
     <div className="flex flex-col gap-3 text-sm">
-      {/* Top row: All / Rounds / Bracket */}
+      {/* Top row: Upcoming / All / Rounds / Bracket */}
       <div className="flex gap-2 flex-wrap items-center">
         <FilterPill
-          active={!active.grupo && !active.fase && !active.fecha && !isBracket}
-          onClick={() => navigate("fase", null)}
+          active={isUpcoming}
+          onClick={() => router.push("/forecast")}
         >
+          <CalendarDays className="h-3 w-3" />
+          Upcoming
+        </FilterPill>
+
+        <FilterPill
+          active={isAll}
+          onClick={() => navigate("view", "all")}
+        >
+          <LayoutGrid className="h-3 w-3" />
           All matches
         </FilterPill>
+
         {fechas.map((f) => (
           <FilterPill
             key={f}
-            active={!isBracket && active.fecha === String(f)}
+            active={!isBracket && !isUpcoming && active.fecha === String(f)}
             onClick={() => navigate("fecha", String(f))}
           >
             Round {f}
@@ -63,8 +75,8 @@ export default function ForecastFilters({ fechas }: ForecastFiltersProps) {
         </FilterPill>
       </div>
 
-      {/* Groups — hidden when bracket view is active */}
-      {!isBracket && (
+      {/* Groups — hidden when bracket or upcoming view is active */}
+      {!isBracket && !isUpcoming && (
         <div className="flex gap-2 flex-wrap">
           {GROUPS.map((g) => (
             <FilterPill

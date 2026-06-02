@@ -125,6 +125,60 @@ export async function getKnockoutPronosticos(): Promise<PartidoPronostico[]> {
   });
 }
 
+export async function getUpcomingPronosticos(): Promise<{
+  today: PartidoPronostico[];
+  nextDay: PartidoPronostico[];
+  nextDayDate: Date | null;
+}> {
+  return recordAction("getUpcomingPronosticos", async () => {
+    const session = await auth();
+    if (!session?.user?.id) return { today: [], nextDay: [], nextDayDate: null };
+    const usuarioId = parseInt(session.user.id);
+
+    const now = new Date();
+    const todayStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+    const todayEnd = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1));
+
+    const allUpcoming = await prisma.partido.findMany({
+      where: {
+        deleted: false,
+        dia: { gte: todayStart },
+      },
+      include: { local: true, visitante: true, fase: true, grupo: true },
+      orderBy: { dia: "asc" },
+    });
+
+    const pronosticos = await prisma.pronostico.findMany({
+      where: { usuarioId, deleted: false },
+    });
+
+    const toPronostico = (p: any) => {
+      const pronostico = pronosticos.find((pr) => pr.partidoId === p.id) ?? null;
+      return buildPartidoPronostico(p, pronostico);
+    };
+
+    const todayMatches = allUpcoming.filter((p) => p.dia < todayEnd);
+
+    const afterToday = allUpcoming.filter((p) => p.dia >= todayEnd);
+    let nextDayMatches: typeof allUpcoming = [];
+    let nextDayDate: Date | null = null;
+
+    if (afterToday.length > 0) {
+      const first = afterToday[0];
+      const nextStart = new Date(Date.UTC(first.dia.getUTCFullYear(), first.dia.getUTCMonth(), first.dia.getUTCDate()));
+      const nextEnd = new Date(nextStart.getTime() + 24 * 60 * 60 * 1000);
+      nextDayMatches = afterToday.filter((p) => p.dia >= nextStart && p.dia < nextEnd).slice(0, 4);
+      nextDayDate = nextStart;
+    }
+
+    return {
+      today: todayMatches.map(toPronostico),
+      nextDay: nextDayMatches.map(toPronostico),
+      nextDayDate,
+    };
+  });
+}
+
 export async function getNextMatchPronostico(): Promise<PartidoPronostico | null> {
   return recordAction("getNextMatchPronostico", async () => {
     const session = await auth();
