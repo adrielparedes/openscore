@@ -5,7 +5,7 @@ import { auth } from "@/lib/auth";
 import { hashPassword } from "@/lib/password";
 import { recordAction } from "@/lib/withMetrics";
 import { z } from "zod";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 const updateSchema = z.object({
   nombre: z.string().min(2),
@@ -57,6 +57,7 @@ export async function updateUsuario(formData: FormData) {
     });
 
     revalidatePath("/");
+    revalidateTag("ranking", "max");
     return {};
   });
 }
@@ -193,6 +194,7 @@ export async function toggleBlockUsuario(usuarioId: number) {
     });
 
     revalidatePath("/admin/usuarios");
+    revalidateTag("ranking", "max");
     return { blocked };
   });
 }
@@ -213,6 +215,7 @@ export async function deleteUsuario(usuarioId: number) {
     });
 
     revalidatePath("/admin/usuarios");
+    revalidateTag("ranking", "max");
     return { success: true };
   });
 }

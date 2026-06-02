@@ -7,6 +7,7 @@ import { recordAction } from "@/lib/withMetrics";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
 
 const registerSchema = z.object({
   nombre: z.string().min(2),
@@ -83,6 +84,7 @@ export async function registerAction(formData: FormData) {
       },
     });
 
+    revalidateTag("ranking", "max");
     redirect("/login");
   });
 }
