@@ -5,7 +5,7 @@ import { calcularGanador, calcularStatus } from "@/lib/utils";
 import { recordAction } from "@/lib/withMetrics";
 import type { PartidoConRelaciones, Equipo } from "@/types";
 import { auth } from "@/lib/auth";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import { calculateStandings } from "@/actions/standings";
 
 function enrichPartido(p: any): PartidoConRelaciones {
@@ -89,14 +89,15 @@ export async function setEquipos(
       data: { localId: data.localId, visitanteId: data.visitanteId },
     });
 
+    revalidateTag("matches");
     revalidatePath("/");
     revalidatePath("/forecast");
     revalidatePath("/admin/results");
   });
 }
 
-export async function getFechas(): Promise<number[]> {
-  return recordAction("getFechas", async () => {
+const cachedGetFechas = unstable_cache(
+  async () => {
     const rows = await prisma.partido.findMany({
       where: { deleted: false },
       select: { fecha: true },
@@ -104,7 +105,13 @@ export async function getFechas(): Promise<number[]> {
       orderBy: { fecha: "asc" },
     });
     return rows.map((r: { fecha: number }) => r.fecha);
-  });
+  },
+  ["fechas"],
+  { tags: ["matches"] }
+);
+
+export async function getFechas(): Promise<number[]> {
+  return recordAction("getFechas", cachedGetFechas);
 }
 
 export async function setResultado(
@@ -134,6 +141,7 @@ export async function setResultado(
     });
 
     await calculateStandings();
+    revalidateTag("matches");
     revalidateTag("ranking", "max");
     revalidatePath("/");
     revalidatePath("/forecast");
@@ -159,6 +167,7 @@ export async function resetResultado(partidoId: number) {
     });
 
     await calculateStandings();
+    revalidateTag("matches");
     revalidateTag("ranking", "max");
     revalidatePath("/");
     revalidatePath("/forecast");
