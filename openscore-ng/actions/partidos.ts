@@ -5,7 +5,7 @@ import { calcularGanador, calcularStatus } from "@/lib/utils";
 import { recordAction } from "@/lib/withMetrics";
 import type { PartidoConRelaciones, Equipo } from "@/types";
 import { auth } from "@/lib/auth";
-import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
+import { revalidatePath, revalidateTag, updateTag, unstable_cache } from "next/cache";
 import { calculateStandings } from "@/actions/standings";
 
 function enrichPartido(p: any): PartidoConRelaciones {
@@ -89,7 +89,7 @@ export async function setEquipos(
       data: { localId: data.localId, visitanteId: data.visitanteId },
     });
 
-    revalidateTag("matches");
+    updateTag("matches");
     revalidatePath("/");
     revalidatePath("/forecast");
     revalidatePath("/admin/results");
@@ -141,7 +141,7 @@ export async function setResultado(
     });
 
     await calculateStandings();
-    revalidateTag("matches");
+    updateTag("matches");
     revalidateTag("ranking", "max");
     revalidatePath("/");
     revalidatePath("/forecast");
@@ -167,7 +167,7 @@ export async function resetResultado(partidoId: number) {
     });
 
     await calculateStandings();
-    revalidateTag("matches");
+    updateTag("matches");
     revalidateTag("ranking", "max");
     revalidatePath("/");
     revalidatePath("/forecast");

@@ -6,7 +6,7 @@ import { calcularGanador, calcularStatus, isBloqueado } from "@/lib/utils";
 import { recordAction } from "@/lib/withMetrics";
 import type { PartidoPronostico } from "@/types";
 import type { PronosticoGanador } from "@prisma/client";
-import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
+import { revalidatePath, updateTag, unstable_cache } from "next/cache";
 
 async function getUserId(): Promise<number> {
   const session = await auth();
@@ -163,7 +163,7 @@ export async function setPronostico(
       update: { ganador },
     });
 
-    revalidateTag(`pronosticos-${usuarioId}`);
+    updateTag(`pronosticos-${usuarioId}`);
     revalidatePath("/forecast");
     revalidatePath("/");
     return {};

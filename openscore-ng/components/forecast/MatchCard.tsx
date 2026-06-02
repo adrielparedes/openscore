@@ -7,37 +7,12 @@ import { cn } from "@/lib/utils";
 import { flagUrl } from "@/lib/flags";
 import { Badge } from "@/components/ui/Badge";
 import { CalendarClock, Timer } from "lucide-react";
-import { useTransition, useEffect, useState } from "react";
+import { useTransition } from "react";
+import { useNow } from "@/components/providers/CountdownProvider";
 
 const LOCK_OFFSET_MS = 15 * 60 * 1000;
 
 const FIVE_MINUTES_MS = 5 * 60 * 1000;
-
-function useCountdown(targetMs: number) {
-  const [remaining, setRemaining] = useState(() => Math.max(0, targetMs - Date.now()));
-
-  useEffect(() => {
-    if (remaining <= 0) return;
-
-    const tick = () => {
-      const diff = Math.max(0, targetMs - Date.now());
-      setRemaining(diff);
-      return diff;
-    };
-
-    // Use 1-second intervals under 5 minutes, 60-second intervals otherwise
-    const interval = remaining <= FIVE_MINUTES_MS ? 1_000 : 60_000;
-    const id = setInterval(() => {
-      const diff = tick();
-      if (diff === 0) clearInterval(id);
-    }, interval);
-
-    return () => clearInterval(id);
-    // Re-run when crossing the 5-minute threshold to switch interval resolution
-  }, [targetMs, remaining <= FIVE_MINUTES_MS]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  return remaining;
-}
 
 function formatCountdown(ms: number): string {
   const totalSecs = Math.floor(ms / 1000);
@@ -59,9 +34,10 @@ interface MatchCardProps {
 export default function MatchCard({ match }: MatchCardProps) {
   const [pending, startTransition] = useTransition();
   const locked = match.status !== "PENDING";
+  const now = useNow();
 
   const lockAtMs = new Date(match.dia).getTime() - LOCK_OFFSET_MS;
-  const remaining = useCountdown(locked ? 0 : lockAtMs);
+  const remaining = locked ? 0 : Math.max(0, lockAtMs - now);
   const showCountdown = !locked && remaining > 0;
 
   const vote = (prediction: PronosticoGanador) => {
