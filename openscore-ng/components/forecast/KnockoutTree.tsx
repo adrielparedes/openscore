@@ -11,7 +11,8 @@ const H_GAP    = 40;    // horizontal gap between adjacent columns
 const V_GAP    = 24;    // vertical gap between cards within a column
 const COL_W    = CARD_W + H_GAP;   // 300 — x stride per column
 const SLOT_H   = CARD_H + V_GAP;   // 316 — y stride per slot in the outermost column
-const HEADER_H = 40;
+const HEADER_H   = 64;
+const CONTENT_PAD = 24;   // gap between header bottom and first card
 
 // ─── Phase metadata ───────────────────────────────────────────────────────────
 /** Expected number of matches per wing (left OR right half) in each knockout phase. */
@@ -217,11 +218,10 @@ export default function KnockoutTree({ matches }: KnockoutTreeProps) {
   const layout = useMemo(() => buildLayout(matches), [matches]);
 
   return (
-    <div className="w-full rounded-xl border border-slate-200 overflow-hidden shadow-sm bg-slate-50">
-      <div className="overflow-x-auto overflow-y-auto" style={{ maxHeight: "82vh" }}>
+    <div className="overflow-x-auto flex">
         <div
-          className="relative"
-          style={{ width: layout.totalWidth, height: layout.totalHeight + HEADER_H }}
+          className="relative mx-auto"
+          style={{ width: layout.totalWidth, height: layout.totalHeight + HEADER_H + CONTENT_PAD }}
         >
           {/* ── Phase column headers ─────────────────────────────────────────── */}
           <div
@@ -246,7 +246,7 @@ export default function KnockoutTree({ matches }: KnockoutTreeProps) {
           {/* ── SVG connector lines + Match cards ────────────────────────────── */}
           <div
             className="absolute"
-            style={{ top: HEADER_H, left: 0, width: layout.totalWidth, height: layout.totalHeight }}
+            style={{ top: HEADER_H + CONTENT_PAD, left: 0, width: layout.totalWidth, height: layout.totalHeight }}
           >
             <svg
               className="absolute inset-0 pointer-events-none"
@@ -289,7 +289,6 @@ export default function KnockoutTree({ matches }: KnockoutTreeProps) {
             ))}
           </div>
         </div>
-      </div>
     </div>
   );
 }

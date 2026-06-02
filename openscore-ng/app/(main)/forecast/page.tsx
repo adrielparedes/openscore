@@ -182,8 +182,10 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
       {/* Padded content below hero */}
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-6 mt-6 pb-8">
         <ForecastFilters fechas={fechas} />
+      </div>
 
-        {isBracket ? (
+      {isBracket ? (
+        <div className="w-full px-4 sm:px-6 lg:px-8 pb-8">
           <Suspense
             fallback={
               <div className="w-full rounded-xl border border-slate-200 bg-slate-50 animate-pulse" style={{ height: "75vh", minHeight: 500 }} />
@@ -191,16 +193,20 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
           >
             <KnockoutBracketSection />
           </Suspense>
-        ) : isUpcoming ? (
-          <Suspense fallback={matchGridFallback}>
-            <UpcomingMatchList />
-          </Suspense>
-        ) : (
-          <Suspense fallback={matchGridFallback}>
-            <MatchList searchParams={params} />
-          </Suspense>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pb-8">
+          {isUpcoming ? (
+            <Suspense fallback={matchGridFallback}>
+              <UpcomingMatchList />
+            </Suspense>
+          ) : (
+            <Suspense fallback={matchGridFallback}>
+              <MatchList searchParams={params} />
+            </Suspense>
+          )}
+        </div>
+      )}
     </div>
   );
 }

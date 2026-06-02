@@ -65,14 +65,16 @@ export default function ForecastFilters({ fechas }: ForecastFiltersProps) {
           </FilterPill>
         ))}
 
-        {/* Knockout bracket */}
-        <FilterPill
-          active={isBracket}
-          onClick={() => router.push("/forecast?view=bracket")}
-        >
-          <Trophy className="h-3 w-3" />
-          Knockout Bracket
-        </FilterPill>
+        {/* Knockout bracket — large screens only */}
+        <div className="hidden lg:block">
+          <FilterPill
+            active={isBracket}
+            onClick={() => router.push("/forecast?view=bracket")}
+          >
+            <Trophy className="h-3 w-3" />
+            Knockout Bracket
+          </FilterPill>
+        </div>
       </div>
 
       {/* Groups — hidden when bracket or upcoming view is active */}
