@@ -1,6 +1,7 @@
 import { getPronosticos, getKnockoutPronosticos, getUpcomingPronosticos } from "@/actions/pronosticos";
 import { getFechas } from "@/actions/partidos";
 import MatchCard from "@/components/forecast/MatchCard";
+import UpcomingDateGroups from "@/components/forecast/UpcomingDateGroups";
 import ForecastFilters from "@/components/forecast/ForecastFilters";
 import KnockoutTree from "@/components/forecast/KnockoutTree";
 import PageHero from "@/components/ui/PageHero";
@@ -145,11 +146,7 @@ async function UpcomingMatchList() {
             <div className="flex-1 h-px bg-slate-200" />
             <span className="text-xs text-slate-400 font-medium">{nextDay.length} match{nextDay.length !== 1 ? "es" : ""}</span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {nextDay.map((match) => (
-              <MatchCard key={match.id} match={match} />
-            ))}
-          </div>
+          <UpcomingDateGroups matches={nextDay} />
         </div>
       )}
     </div>
