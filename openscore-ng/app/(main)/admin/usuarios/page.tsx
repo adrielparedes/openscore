@@ -17,7 +17,7 @@ export default async function AdminUsuariosPage() {
     <div className="flex flex-col">
       <PageHero
         title="User Management"
-        description="View users and reset passwords when needed."
+        description="View, block, delete users and reset passwords."
       />
       <div className="mx-auto w-full max-w-4xl flex flex-col gap-4 px-4 sm:px-6 lg:px-8 py-8">
         {usuarios.map((usuario) => (

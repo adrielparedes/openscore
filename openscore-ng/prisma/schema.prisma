@@ -90,6 +90,7 @@ model Usuario {
   stickerCard        String?
   preguntaSecretaId  Int?
   respuestaSecreta   String?
+  blocked            Boolean           @default(false)
   deleted            Boolean           @default(false)
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt

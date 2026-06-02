@@ -26,6 +26,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         });
 
         if (!usuario) return null;
+        if (usuario.blocked) return null;
         if (usuario.password !== await hashPassword(password)) return null;
 
         return {

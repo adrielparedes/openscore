@@ -123,7 +123,7 @@ export async function getAllUsuarios() {
       where: { deleted: false },
       omit: { stickerCard: true },
       include: { pais: true, roles: true },
-      orderBy: { createdAt: "desc" },
+      orderBy: [{ blocked: "desc" }, { createdAt: "desc" }],
     });
   });
 }
@@ -169,6 +169,51 @@ export async function toggleAdminRole(usuarioId: number) {
 
     revalidatePath("/admin/usuarios");
     return { isAdmin: !existing };
+  });
+}
+
+export async function toggleBlockUsuario(usuarioId: number) {
+  return recordAction("toggleBlockUsuario", async () => {
+    const session = await auth();
+    const roles = (session?.user as any)?.roles ?? [];
+    if (!roles.includes("ADMIN")) return { error: "Forbidden" };
+
+    if (parseInt(session!.user!.id!) === usuarioId) {
+      return { error: "You cannot block yourself" };
+    }
+
+    const usuario = await prisma.usuario.findUniqueOrThrow({
+      where: { id: usuarioId },
+    });
+
+    const blocked = !usuario.blocked;
+    await prisma.usuario.update({
+      where: { id: usuarioId },
+      data: { blocked },
+    });
+
+    revalidatePath("/admin/usuarios");
+    return { blocked };
+  });
+}
+
+export async function deleteUsuario(usuarioId: number) {
+  return recordAction("deleteUsuario", async () => {
+    const session = await auth();
+    const roles = (session?.user as any)?.roles ?? [];
+    if (!roles.includes("ADMIN")) return { error: "Forbidden" };
+
+    if (parseInt(session!.user!.id!) === usuarioId) {
+      return { error: "You cannot delete yourself" };
+    }
+
+    await prisma.usuario.update({
+      where: { id: usuarioId },
+      data: { deleted: true, deletedAt: new Date() },
+    });
+
+    revalidatePath("/admin/usuarios");
+    return { success: true };
   });
 }
 
