@@ -228,10 +228,8 @@ export async function getUpcomingPronosticos(): Promise<{
 
     if (afterToday.length > 0) {
       const firstDia = new Date(afterToday[0].dia);
-      const nextStart = new Date(Date.UTC(firstDia.getUTCFullYear(), firstDia.getUTCMonth(), firstDia.getUTCDate()));
-      const nextEnd = new Date(nextStart.getTime() + 24 * 60 * 60 * 1000);
-      nextDayMatches = afterToday.filter((p) => { const d = new Date(p.dia); return d >= nextStart && d < nextEnd; }).slice(0, 4);
-      nextDayDate = nextStart;
+      nextDayDate = new Date(Date.UTC(firstDia.getUTCFullYear(), firstDia.getUTCMonth(), firstDia.getUTCDate()));
+      nextDayMatches = afterToday.slice(0, 6);
     }
 
     return {

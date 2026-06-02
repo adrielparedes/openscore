@@ -112,7 +112,7 @@ async function UpcomingMatchList() {
   }
 
   const description = hasToday && hasNextDay
-    ? `Showing today's ${today.length} match${today.length !== 1 ? "es" : ""} and ${nextDay.length} from ${nextDayDate ? formatUpcomingDate(nextDayDate) : "the next day"}.`
+    ? `Showing today's ${today.length} match${today.length !== 1 ? "es" : ""} and the next ${nextDay.length} upcoming.`
     : hasToday
     ? `Showing all of today's ${today.length} match${today.length !== 1 ? "es" : ""}.`
     : `No matches today — showing the next ${nextDay.length} upcoming match${nextDay.length !== 1 ? "es" : ""}.`;
@@ -140,7 +140,7 @@ async function UpcomingMatchList() {
         <div>
           <div className="flex items-center gap-3 mb-4">
             <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">
-              {nextDayDate ? formatUpcomingDate(nextDayDate) : "Next day"}
+              {nextDayDate ? `From ${formatUpcomingDate(nextDayDate)}` : "Upcoming"}
             </h2>
             <div className="flex-1 h-px bg-slate-200" />
             <span className="text-xs text-slate-400 font-medium">{nextDay.length} match{nextDay.length !== 1 ? "es" : ""}</span>
