@@ -57,6 +57,17 @@ export const standingsDuration = () =>
     advice: { explicitBucketBoundaries: [0.05, 0.1, 0.25, 0.5, 1, 2.5] },
   });
 
+// Cache (unstable_cache hit / miss tracking)
+export const cacheRequests = () =>
+  meter()?.createCounter("openscore_cache_requests_total", {
+    description: "Cache lookups by cache name (hit + miss combined)",
+  });
+
+export const cacheMisses = () =>
+  meter()?.createCounter("openscore_cache_misses_total", {
+    description: "Cache misses — times the underlying fetch fn was invoked",
+  });
+
 // Upload
 export const uploadBytes = () =>
   meter()?.createHistogram("openscore_upload_bytes", {

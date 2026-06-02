@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { calcularGanador, calcularStatus } from "@/lib/utils";
 import { recordAction } from "@/lib/withMetrics";
+import { cacheRequests, cacheMisses } from "@/lib/metrics";
 import type { PartidoConRelaciones, Equipo } from "@/types";
 import { auth } from "@/lib/auth";
 import { revalidatePath, revalidateTag, updateTag, unstable_cache } from "next/cache";
@@ -96,8 +97,9 @@ export async function setEquipos(
   });
 }
 
-const cachedGetFechas = unstable_cache(
+const _cachedGetFechas = unstable_cache(
   async () => {
+    cacheMisses()?.add(1, { cache: "fechas" });
     const rows = await prisma.partido.findMany({
       where: { deleted: false },
       select: { fecha: true },
@@ -109,6 +111,11 @@ const cachedGetFechas = unstable_cache(
   ["fechas"],
   { tags: ["matches"] }
 );
+
+const cachedGetFechas = async () => {
+  cacheRequests()?.add(1, { cache: "fechas" });
+  return _cachedGetFechas();
+};
 
 export async function getFechas(): Promise<number[]> {
   return recordAction("getFechas", cachedGetFechas);

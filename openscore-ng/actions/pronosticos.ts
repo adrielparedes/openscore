@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { calcularGanador, calcularStatus, isBloqueado } from "@/lib/utils";
 import { recordAction } from "@/lib/withMetrics";
+import { cacheRequests, cacheMisses } from "@/lib/metrics";
 import type { PartidoPronostico } from "@/types";
 import type { PronosticoGanador } from "@prisma/client";
 import { revalidatePath, updateTag, unstable_cache } from "next/cache";
@@ -64,8 +65,10 @@ function cachedPartidos(filters?: { grupo?: string; fase?: string; fecha?: numbe
     filters?.fase ?? "",
     String(filters?.fecha ?? ""),
   ];
+  cacheRequests()?.add(1, { cache: "matches" });
   return unstable_cache(
     async () => {
+      cacheMisses()?.add(1, { cache: "matches" });
       const where: any = { deleted: false };
       if (filters?.grupo) where.grupo = { codigo: filters.grupo };
       else if (filters?.fase) where.fase = { codigo: filters.fase };
@@ -82,16 +85,19 @@ function cachedPartidos(filters?: { grupo?: string; fase?: string; fecha?: numbe
 }
 
 function cachedKnockoutPartidos() {
+  cacheRequests()?.add(1, { cache: "matches" });
   return unstable_cache(
-    async () =>
-      prisma.partido.findMany({
+    async () => {
+      cacheMisses()?.add(1, { cache: "matches" });
+      return prisma.partido.findMany({
         where: {
           deleted: false,
           fase: { codigo: { in: KNOCKOUT_PHASE_CODES } },
         },
         include: { local: true, visitante: true, fase: true, grupo: true },
         orderBy: { dia: "asc" },
-      }),
+      });
+    },
     ["partidos-knockout"],
     { tags: ["matches"] }
   )();
@@ -101,24 +107,30 @@ function cachedKnockoutPartidos() {
 // for the entire calendar day while still being busted by admin mutations.
 function cachedUpcomingPartidos(todayStart: Date) {
   const dateKey = todayStart.toISOString().slice(0, 10);
+  cacheRequests()?.add(1, { cache: "matches" });
   return unstable_cache(
-    async () =>
-      prisma.partido.findMany({
+    async () => {
+      cacheMisses()?.add(1, { cache: "matches" });
+      return prisma.partido.findMany({
         where: { deleted: false, dia: { gte: todayStart } },
         include: { local: true, visitante: true, fase: true, grupo: true },
         orderBy: { dia: "asc" },
-      }),
+      });
+    },
     ["partidos-upcoming", dateKey],
     { tags: ["matches"], revalidate: 60 }
   )();
 }
 
 function cachedPronosticos(usuarioId: number) {
+  cacheRequests()?.add(1, { cache: "pronosticos" });
   return unstable_cache(
-    async () =>
-      prisma.pronostico.findMany({
+    async () => {
+      cacheMisses()?.add(1, { cache: "pronosticos" });
+      return prisma.pronostico.findMany({
         where: { usuarioId, deleted: false },
-      }),
+      });
+    },
     [`pronosticos-${usuarioId}`],
     { tags: [`pronosticos-${usuarioId}`] }
   )();

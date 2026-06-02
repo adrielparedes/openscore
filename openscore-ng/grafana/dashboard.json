@@ -535,6 +535,141 @@
       "options": {
         "tooltip": { "mode": "multi", "sort": "desc" }
       }
+    },
+
+    {
+      "id": 21,
+      "type": "row",
+      "title": "Cache (unstable_cache)",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 40 },
+      "collapsed": false
+    },
+    {
+      "id": 22,
+      "type": "stat",
+      "title": "Overall cache hit rate",
+      "description": "Fraction of Next.js unstable_cache lookups served from cache (no DB call). A value close to 1 means the cache is doing its job; drops indicate frequent invalidations or cold starts.",
+      "gridPos": { "h": 4, "w": 5, "x": 0, "y": 41 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "1 - sum(rate(openscore_cache_misses_total[5m])) / sum(rate(openscore_cache_requests_total[5m]))",
+          "legendFormat": "hit rate",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "auto"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "yellow", "value": 0.5 },
+              { "color": "green", "value": 0.8 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 23,
+      "type": "stat",
+      "title": "Cache miss rate",
+      "description": "Underlying fetch invocations per second across all caches. Each miss means a real DB query was executed.",
+      "gridPos": { "h": 4, "w": 5, "x": 5, "y": 41 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "sum(rate(openscore_cache_misses_total[5m]))",
+          "legendFormat": "misses/s",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "area"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.5 },
+              { "color": "red", "value": 2 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 24,
+      "type": "timeseries",
+      "title": "Cache hit rate by cache name",
+      "description": "Per-cache hit rate over time. 'ranking' and 'matches' should stay high between invalidations; 'pronosticos' is per-user and invalidated on every prediction, so it will be lower.",
+      "gridPos": { "h": 8, "w": 14, "x": 10, "y": 41 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "1 - (rate(openscore_cache_misses_total[5m]) / rate(openscore_cache_requests_total[5m]))",
+          "legendFormat": "{{cache}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "custom": { "lineWidth": 2 }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "mean"] }
+      }
+    },
+    {
+      "id": 25,
+      "type": "timeseries",
+      "title": "Cache requests & misses per second",
+      "description": "Raw request and miss rates per cache. The gap between the two lines is the hit volume. Overlapping lines means the cache is always cold.",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 49 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "sum(rate(openscore_cache_requests_total[5m])) by (cache)",
+          "legendFormat": "requests · {{cache}}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate(openscore_cache_misses_total[5m])) by (cache)",
+          "legendFormat": "misses · {{cache}}",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "min": 0,
+          "custom": { "lineWidth": 2, "fillOpacity": 5 }
+        }
+      },
+      "options": {
+        "tooltip": { "mode": "multi", "sort": "desc" },
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"] }
+      }
     }
   ]
 }

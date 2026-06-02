@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { unstable_cache } from "next/cache";
 import { calcularGanador } from "@/lib/utils";
-import { rankingDuration, rankingUsersScored } from "@/lib/metrics";
+import { rankingDuration, rankingUsersScored, cacheRequests, cacheMisses } from "@/lib/metrics";
 import type { RankingEntry } from "@/types";
 
 function calcularPuntosUsuario(pronosticos: any[]): number {
@@ -26,6 +26,7 @@ async function fetchRanking(filters?: {
   pais?: string;
   size?: number;
 }): Promise<RankingEntry[]> {
+  cacheMisses()?.add(1, { cache: "ranking" });
   const start = performance.now();
   const filtered = !!filters?.pais;
 
@@ -73,17 +74,33 @@ async function fetchRanking(filters?: {
 async function fetchRankingForUsuario(
   usuarioId: number
 ): Promise<RankingEntry | null> {
+  cacheMisses()?.add(1, { cache: "ranking-usuario" });
   const all = await fetchRanking();
   return all.find((r) => r.usuario === usuarioId) ?? null;
 }
 
-export const getRanking = unstable_cache(fetchRanking, ["ranking"], {
+const _cachedGetRanking = unstable_cache(fetchRanking, ["ranking"], {
   tags: ["ranking"],
   revalidate: 60,
 });
 
-export const getRankingForUsuario = unstable_cache(
+const _cachedGetRankingForUsuario = unstable_cache(
   fetchRankingForUsuario,
   ["ranking-usuario"],
   { tags: ["ranking"], revalidate: 60 }
 );
+
+export async function getRanking(filters?: {
+  pais?: string;
+  size?: number;
+}): Promise<RankingEntry[]> {
+  cacheRequests()?.add(1, { cache: "ranking" });
+  return _cachedGetRanking(filters);
+}
+
+export async function getRankingForUsuario(
+  usuarioId: number
+): Promise<RankingEntry | null> {
+  cacheRequests()?.add(1, { cache: "ranking-usuario" });
+  return _cachedGetRankingForUsuario(usuarioId);
+}
