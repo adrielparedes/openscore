@@ -11,9 +11,10 @@ import { TrendingUp, Globe, ArrowRight, BookOpen } from "lucide-react";
 export default async function HomePage() {
   const session = await auth();
   const nombre = (session?.user as any)?.nombre ?? session?.user?.name ?? "there";
+  const usuarioId = session?.user?.id ? parseInt(session.user.id) : undefined;
   const [topRanking, nextMatch] = await Promise.all([
     getRanking({ size: 3 }),
-    getNextMatchPronostico(),
+    getNextMatchPronostico(usuarioId),
   ]);
 
   return (

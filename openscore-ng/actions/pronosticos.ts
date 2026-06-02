@@ -230,11 +230,18 @@ export async function getUpcomingPronosticos(): Promise<{
   });
 }
 
-export async function getNextMatchPronostico(): Promise<PartidoPronostico | null> {
+export async function getNextMatchPronostico(
+  prefetchedUsuarioId?: number
+): Promise<PartidoPronostico | null> {
   return recordAction("getNextMatchPronostico", async () => {
-    const session = await auth();
-    if (!session?.user?.id) return null;
-    const usuarioId = parseInt(session.user.id);
+    let usuarioId: number;
+    if (prefetchedUsuarioId !== undefined) {
+      usuarioId = prefetchedUsuarioId;
+    } else {
+      const session = await auth();
+      if (!session?.user?.id) return null;
+      usuarioId = parseInt(session.user.id);
+    }
 
     const cutoff = new Date(Date.now() - 15 * 60 * 1000);
 
