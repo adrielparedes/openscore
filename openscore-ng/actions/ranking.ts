@@ -79,10 +79,17 @@ async function fetchRankingForUsuario(
   return all.find((r) => r.usuario === usuarioId) ?? null;
 }
 
-const _cachedGetRanking = unstable_cache(fetchRanking, ["ranking"], {
-  tags: ["ranking"],
-  revalidate: 60,
-});
+const _cachedGetAllRanking = unstable_cache(
+  (size?: number) => fetchRanking({ size }),
+  ["ranking", "all"],
+  { tags: ["ranking"], revalidate: 60 }
+);
+
+const _cachedGetRankingByPais = unstable_cache(
+  (pais: string) => fetchRanking({ pais }),
+  ["ranking", "pais"],
+  { tags: ["ranking"], revalidate: 60 }
+);
 
 const _cachedGetRankingForUsuario = unstable_cache(
   fetchRankingForUsuario,
@@ -95,7 +102,10 @@ export async function getRanking(filters?: {
   size?: number;
 }): Promise<RankingEntry[]> {
   cacheRequests()?.add(1, { cache: "ranking" });
-  return _cachedGetRanking(filters);
+  if (filters?.pais) {
+    return _cachedGetRankingByPais(filters.pais);
+  }
+  return _cachedGetAllRanking(filters?.size);
 }
 
 export async function getRankingForUsuario(
