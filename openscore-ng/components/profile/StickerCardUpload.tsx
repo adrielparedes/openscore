@@ -47,6 +47,10 @@ export default function StickerCardUpload({ currentCard }: Props) {
       setError("Only image files are allowed.");
       return;
     }
+    if (file.size > 5 * 1024 * 1024) {
+      setError("File too large. Maximum size is 5 MB.");
+      return;
+    }
     uploadFile(file);
   }, [uploadFile]);
 
