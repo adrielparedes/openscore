@@ -10,11 +10,7 @@ const GROUPS = [
   "GRUPO_I", "GRUPO_J", "GRUPO_K", "GRUPO_L",
 ];
 
-interface ForecastFiltersProps {
-  fechas: number[];
-}
-
-export default function ForecastFilters({ fechas }: ForecastFiltersProps) {
+export default function ForecastFilters() {
   const router = useRouter();
   const params = useSearchParams();
 
@@ -54,16 +50,6 @@ export default function ForecastFilters({ fechas }: ForecastFiltersProps) {
           <LayoutGrid className="h-3 w-3" />
           All matches
         </FilterPill>
-
-        {fechas.map((f) => (
-          <FilterPill
-            key={f}
-            active={!isBracket && !isUpcoming && active.fecha === String(f)}
-            onClick={() => navigate("fecha", String(f))}
-          >
-            Round {f}
-          </FilterPill>
-        ))}
 
         {/* Knockout bracket — large screens only */}
         <div className="hidden lg:block">

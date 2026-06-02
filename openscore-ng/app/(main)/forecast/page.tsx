@@ -1,5 +1,4 @@
 import { getPronosticos, getKnockoutPronosticos, getUpcomingPronosticos } from "@/actions/pronosticos";
-import { getFechas } from "@/actions/partidos";
 import MatchCard from "@/components/forecast/MatchCard";
 import UpcomingDateGroups from "@/components/forecast/UpcomingDateGroups";
 import ForecastFilters from "@/components/forecast/ForecastFilters";
@@ -160,7 +159,6 @@ async function KnockoutBracketSection() {
 
 export default async function ForecastPage({ searchParams }: ForecastPageProps) {
   const params = await searchParams;
-  const fechas = await getFechas();
   const isBracket = params.view === "bracket";
   const isUpcoming = !params.grupo && !params.fase && !params.fecha && !params.view;
 
@@ -181,7 +179,7 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
 
       {/* Padded content below hero */}
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-6 mt-6 pb-8">
-        <ForecastFilters fechas={fechas} />
+        <ForecastFilters />
       </div>
 
       {isBracket ? (
