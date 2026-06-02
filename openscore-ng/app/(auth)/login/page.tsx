@@ -4,14 +4,23 @@ import { loginAction } from "@/actions/auth";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Trophy } from "lucide-react";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [state, formAction, pending] = useActionState(
     async (_prev: any, formData: FormData) => loginAction(formData),
     null
   );
+
+  useEffect(() => {
+    if ((state as any)?.success) {
+      router.refresh();
+      router.push("/");
+    }
+  }, [state, router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
