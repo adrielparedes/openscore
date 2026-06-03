@@ -10,6 +10,11 @@ Openscore is a sports prediction (prode) platform. The repo contains three modul
 - **`openscore-ui`** — Next.js 12 / React 18 / TypeScript frontend *(legacy, consumes openscore-core)*
 - **`openscore-ng`** — Next.js 16 / React 19 full-stack rewrite (App Router, Prisma 7, NextAuth v5, Tailwind v4)
 
+## Git instructions
+
+- Use conventional commits
+- Don't add yourself as co-author
+
 ## Development Commands
 
 ### Backend (openscore-core)
@@ -132,3 +137,5 @@ Architecture replaces the Java REST layer with Next.js 16 App Router server-side
 **Scoring logic** (ported from Java): match points = `fase.puntos` if prediction matches `ganador`; `ganador` for penalty matches uses the shootout score, not the 90-min score. A match locks 15 minutes before `dia`.
 
 **Environment variables required:** `DATABASE_URL`, `AUTH_SECRET`.
+
+
