@@ -181,8 +181,8 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
             <img
               src={flagUrl(selectedLocal.codigo, 80)}
               alt={selectedLocal.codigo}
-              width={48}
-              height={34}
+              width={56}
+              height={40}
               className="rounded object-cover shadow-sm"
             />
           )}
@@ -296,8 +296,8 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
             <img
               src={flagUrl(selectedVisitante.codigo, 80)}
               alt={selectedVisitante.codigo}
-              width={48}
-              height={34}
+              width={56}
+              height={40}
               className="rounded object-cover shadow-sm"
             />
           )}
