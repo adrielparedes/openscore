@@ -2,7 +2,7 @@ db-drop:
 	docker rm -f openscore-ng-db
 
 db-create:
-	docker run --name openscore-ng-db -p 5433:5432 \
+	docker run --name openscore-ng-db -p 5432:5432 \
 		-e POSTGRES_USER=openscore \
 		-e POSTGRES_PASSWORD=0p3nsc0r3 \
 		-e POSTGRES_DB=openscore_ng \
@@ -15,3 +15,6 @@ db-create:
 		echo "Created .env"; \
 	fi
 	pnpm db:push && pnpm db:seed
+
+db-seed:
+	pnpm db:generate && pnpm db:push && pnpm db:seed

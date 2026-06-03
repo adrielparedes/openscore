@@ -71,6 +71,7 @@ function cachedPartidos(filters?: { grupo?: string; fase?: string; fecha?: numbe
       cacheMisses()?.add(1, { cache: "matches" });
       const where: any = { deleted: false };
       if (filters?.grupo) where.grupo = { codigo: filters.grupo };
+      else if (filters?.fase === "TERCER_FINAL") where.fase = { codigo: { in: ["TERCER", "FINAL"] } };
       else if (filters?.fase) where.fase = { codigo: filters.fase };
       else if (filters?.fecha) where.fecha = filters.fecha;
       return prisma.partido.findMany({

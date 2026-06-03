@@ -4,10 +4,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { CalendarDays, LayoutGrid, Trophy } from "lucide-react";
 import FilterPill from "@/components/ui/FilterPill";
 
-const GROUPS = [
-  "GRUPO_A", "GRUPO_B", "GRUPO_C", "GRUPO_D",
-  "GRUPO_E", "GRUPO_F", "GRUPO_G", "GRUPO_H",
-  "GRUPO_I", "GRUPO_J", "GRUPO_K", "GRUPO_L",
+const STAGES = [
+  { code: "GRUPO", label: "Group Stage" },
+  { code: "TREINTAIDOSAVOS", label: "Round of 32" },
+  { code: "OCTAVOS", label: "Round of 16" },
+  { code: "CUARTOS", label: "Quarter Finals" },
+  { code: "SEMI", label: "Semi-Finals" },
+  { code: "TERCER_FINAL", label: "Third Place & Final" },
 ];
 
 export default function ForecastFilters() {
@@ -33,7 +36,7 @@ export default function ForecastFilters() {
 
   return (
     <div className="flex flex-col gap-3 text-sm">
-      {/* Top row: Upcoming / All / Rounds / Bracket */}
+      {/* Top row: Upcoming / All / Bracket */}
       <div className="flex gap-2 flex-wrap items-center">
         <FilterPill
           active={isUpcoming}
@@ -63,20 +66,21 @@ export default function ForecastFilters() {
         </div>
       </div>
 
-      {/* Groups — hidden when bracket or upcoming view is active */}
-      {!isBracket && !isUpcoming && (
+      {/* Stage filters */}
+      {!isBracket && (
         <div className="flex gap-2 flex-wrap">
-          {GROUPS.map((g) => (
+          {STAGES.map((stage) => (
             <FilterPill
-              key={g}
-              active={active.grupo === g}
-              onClick={() => navigate("grupo", active.grupo === g ? null : g)}
+              key={stage.code}
+              active={active.fase === stage.code}
+              onClick={() => navigate("fase", active.fase === stage.code ? null : stage.code)}
             >
-              {g.replace("GRUPO_", "Group ")}
+              {stage.label}
             </FilterPill>
           ))}
         </div>
       )}
+
     </div>
   );
 }
