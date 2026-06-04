@@ -8,10 +8,12 @@ import { useBracket } from "./BracketContext";
 import type { PartidoPronostico } from "@/types";
 
 // ─── View configs ─────────────────────────────────────────────────────────────
-const CONFIGS = {
+type ViewMode = "condensed" | "normal";
+
+const CONFIGS: Record<ViewMode, { CARD_W: number; CARD_H: number; H_GAP: number; V_GAP: number; HEADER_H: number; CONTENT_PAD: number }> = {
   condensed: { CARD_W: 200, CARD_H: 76,  H_GAP: 32, V_GAP: 12, HEADER_H: 48, CONTENT_PAD: 16 },
   normal:    { CARD_W: 260, CARD_H: 292, H_GAP: 40, V_GAP: 24, HEADER_H: 64, CONTENT_PAD: 24 },
-} as const;
+};
 
 // ─── Phase metadata ───────────────────────────────────────────────────────────
 const PER_WING: Record<string, number> = {
