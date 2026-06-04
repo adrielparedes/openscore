@@ -12,6 +12,28 @@ import { useNow } from "@/components/providers/CountdownProvider";
 
 const LOCK_OFFSET_MS = 15 * 60 * 1000;
 
+function TeamName({ nombre, codigo }: { nombre: string; codigo: string }) {
+  const hasFlag = !!flagUrl(codigo);
+  if (hasFlag) {
+    return (
+      <>
+        <span className="font-bold text-slate-900 text-center text-sm">{nombre}</span>
+        <span className="text-xs text-slate-400 uppercase">{codigo}</span>
+      </>
+    );
+  }
+  const sp = nombre.indexOf(" ");
+  const line1 = sp !== -1 ? nombre.slice(0, sp) : nombre;
+  const line2 = sp !== -1 ? nombre.slice(sp + 1) : null;
+  const noBreak = (s: string) => s.replace(/-/g, "‑");
+  return (
+    <>
+      <span className="font-bold text-slate-900 text-center text-sm whitespace-nowrap">{noBreak(line1)}</span>
+      {line2 && <span className="text-xs text-slate-400 text-center whitespace-nowrap">{noBreak(line2)}</span>}
+    </>
+  );
+}
+
 const FIVE_MINUTES_MS = 5 * 60 * 1000;
 
 function formatCountdown(ms: number): string {
@@ -82,12 +104,12 @@ export default function MatchCard({ match }: MatchCardProps) {
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3">
-        <div className="flex items-center gap-2 text-xs text-slate-500">
-          <CalendarClock className="h-3.5 w-3.5" />
-          <span suppressHydrationWarning>{matchDate}</span>
+      <div className="flex items-center justify-between gap-3 px-5 py-3">
+        <div className="flex items-center gap-2 text-xs text-slate-500 min-w-0 overflow-hidden">
+          <CalendarClock className="h-3.5 w-3.5 shrink-0" />
+          <span suppressHydrationWarning className="whitespace-nowrap">{matchDate}</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           {match.grupo && match.grupo.codigo !== "NONE" && <Badge variant="muted">{match.grupo.nombre}</Badge>}
           {{
             PENDING: <Badge variant="info">Open</Badge>,
@@ -110,8 +132,7 @@ export default function MatchCard({ match }: MatchCardProps) {
               />
             </div>
           )}
-          <span className="font-bold text-slate-900 text-center text-sm">{match.local.nombre}</span>
-          <span className="text-xs text-slate-400 uppercase">{match.local.codigo}</span>
+          <TeamName nombre={match.local.nombre} codigo={match.local.codigo} />
         </div>
 
         <div className="flex flex-col items-center gap-1 px-2">
@@ -135,8 +156,7 @@ export default function MatchCard({ match }: MatchCardProps) {
               />
             </div>
           )}
-          <span className="font-bold text-slate-900 text-center text-sm">{match.visitante.nombre}</span>
-          <span className="text-xs text-slate-400 uppercase">{match.visitante.codigo}</span>
+          <TeamName nombre={match.visitante.nombre} codigo={match.visitante.codigo} />
         </div>
       </div>
 

@@ -3,9 +3,24 @@
 import { useMemo, useState } from "react";
 import MatchCard from "./MatchCard";
 import { flagUrl } from "@/lib/flags";
-import { X } from "lucide-react";
+import { X, Timer } from "lucide-react";
 import { useBracket } from "./BracketContext";
+import { useNow } from "@/components/providers/CountdownProvider";
+import { cn } from "@/lib/utils";
 import type { PartidoPronostico } from "@/types";
+
+const LOCK_OFFSET_MS = 15 * 60 * 1000;
+const FIVE_MINUTES_MS = 5 * 60 * 1000;
+
+function formatCountdown(ms: number): string {
+  const totalSecs = Math.floor(ms / 1000);
+  const d = Math.floor(totalSecs / 86400);
+  const h = Math.floor((totalSecs % 86400) / 3600);
+  const m = Math.floor((totalSecs % 3600) / 60);
+  const s = totalSecs % 60;
+  if (ms < FIVE_MINUTES_MS) return `${m.toString().padStart(2, "0")}m:${s.toString().padStart(2, "0")}s`;
+  return `${d}d:${h.toString().padStart(2, "0")}h:${m.toString().padStart(2, "0")}m`;
+}
 
 // ─── View configs ─────────────────────────────────────────────────────────────
 type ViewMode = "condensed" | "normal";
@@ -169,8 +184,35 @@ function buildLayout(matches: PartidoPronostico[], cfg: typeof CONFIGS[ViewMode]
   return { slots, paths, totalWidth, totalHeight, headers };
 }
 
+// ─── Team cell inside compact node ────────────────────────────────────────────
+function NodeTeam({ codigo, nombre }: { codigo: string; nombre: string }) {
+  const flag = flagUrl(codigo, 40);
+  if (flag) {
+    return (
+      <div className="flex flex-col items-center gap-0.5 flex-1 min-w-0">
+        <div className="w-6 h-4 rounded overflow-hidden shrink-0">
+          <img src={flag} alt={codigo} className="w-full h-full object-cover" />
+        </div>
+        <span className="font-bold text-slate-800 text-[11px]">{codigo}</span>
+      </div>
+    );
+  }
+  // Placeholder: "Winner Group A" → "Winner" / "Group A"
+  const sp = nombre.indexOf(" ");
+  const line1 = sp !== -1 ? nombre.slice(0, sp) : nombre;
+  const line2 = sp !== -1 ? nombre.slice(sp + 1) : null;
+  return (
+    <div className="flex-1 min-w-0 flex flex-col items-center leading-tight">
+      <span className="font-semibold text-slate-700 text-[10px] whitespace-nowrap">{line1.replace(/-/g, '‑')}</span>
+      {line2 && <span className="text-slate-400 text-[10px] whitespace-nowrap">{line2.replace(/-/g, '‑')}</span>}
+    </div>
+  );
+}
+
 // ─── Compact node (condensed view) ────────────────────────────────────────────
 function KnockoutNode({ slot, cardH, onClick }: { slot: Slot; cardH: number; onClick: () => void }) {
+  const now = useNow();
+
   if (!slot.match) {
     return (
       <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 flex items-center justify-center" style={{ height: cardH }}>
@@ -187,37 +229,49 @@ function KnockoutNode({ slot, cardH, onClick }: { slot: Slot; cardH: number; onC
     pick === "VISITANTE" ? m.visitante.codigo :
     pick === "EMPATE"    ? "Draw" : null;
 
+  const lockAtMs = new Date(m.dia).getTime() - LOCK_OFFSET_MS;
+  const remaining = m.status !== "PENDING" ? 0 : Math.max(0, lockAtMs - now);
+  const showLock = m.status === "PENDING" && remaining > 0;
+  const isUrgent = remaining < FIVE_MINUTES_MS;
+
   return (
     <button
       onClick={onClick}
       className="w-full rounded-xl border border-slate-200 bg-white hover:border-rose-300 hover:shadow-md transition-all text-left flex flex-col justify-center gap-1.5 px-2.5 py-2 cursor-pointer"
       style={{ height: cardH }}
     >
-      <div className="flex items-center gap-1.5 text-xs">
-        {flagUrl(m.local.codigo, 40) && (
-          <div className="w-6 h-4 rounded overflow-hidden shrink-0">
-            <img src={flagUrl(m.local.codigo, 40)} alt={m.local.codigo} className="w-full h-full object-cover" />
-          </div>
-        )}
-        <span className="font-semibold text-slate-800 truncate flex-1">{m.local.nombre}</span>
-        <span className="shrink-0 font-bold text-slate-400 text-[11px] w-10 text-center">
+      <div className="flex items-center justify-center gap-1">
+        <NodeTeam codigo={m.local.codigo} nombre={m.local.nombre} />
+        <span className="shrink-0 font-bold text-slate-300 text-[10px] w-8 text-center">
           {finished ? `${m.resultadoLocal}–${m.resultadoVisitante}` : "vs"}
         </span>
-        <span className="font-semibold text-slate-800 truncate flex-1 text-right">{m.visitante.nombre}</span>
-        {flagUrl(m.visitante.codigo, 40) && (
-          <div className="w-6 h-4 rounded overflow-hidden shrink-0">
-            <img src={flagUrl(m.visitante.codigo, 40)} alt={m.visitante.codigo} className="w-full h-full object-cover" />
-          </div>
-        )}
+        <NodeTeam codigo={m.visitante.codigo} nombre={m.visitante.nombre} />
       </div>
-      <div className="text-[10px] text-center leading-none">
-        {pickLabel ? (
-          <span className="text-rose-500 font-semibold">Your pick: {pickLabel}</span>
-        ) : m.status === "PENDING" ? (
-          <span className="text-slate-400">Tap to predict</span>
-        ) : (
-          <span className="text-slate-300">No prediction</span>
-        )}
+      <div className="flex items-center">
+        {showLock ? (
+          <div className="group relative shrink-0">
+            <Timer className={cn("h-3 w-3 translate-y-[1px]", isUrgent ? "text-rh" : "text-amber-500")} />
+            <div className="pointer-events-none absolute bottom-full left-0 mb-1.5 hidden group-hover:block z-20">
+              <div className={cn(
+                "flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-semibold whitespace-nowrap shadow-md",
+                isUrgent ? "bg-rh/10 text-rh" : "bg-amber-50 text-amber-600"
+              )}>
+                <Timer className="h-2.5 w-2.5" />
+                Locks in {formatCountdown(remaining)}
+              </div>
+            </div>
+          </div>
+        ) : <div className="w-3" />}
+        <div className="flex-1 text-[10px] text-center leading-none">
+          {pickLabel ? (
+            <span className="text-rose-500 font-semibold">Your pick: {pickLabel}</span>
+          ) : m.status === "PENDING" ? (
+            <span className="text-slate-400">Tap to predict</span>
+          ) : (
+            <span className="text-slate-300">No prediction</span>
+          )}
+        </div>
+        <div className="w-3" />
       </div>
     </button>
   );
@@ -239,27 +293,29 @@ function FullNode({ slot, cardH }: { slot: Slot; cardH: number }) {
   return <MatchCard match={slot.match} />;
 }
 
-// ─── Drawer ────────────────────────────────────────────────────────────────────
-function MatchDrawer({ match, onClose }: { match: PartidoPronostico; onClose: () => void }) {
+// ─── Modal ─────────────────────────────────────────────────────────────────────
+function MatchModal({ match, onClose }: { match: PartidoPronostico; onClose: () => void }) {
   return (
     <>
-      <div className="fixed inset-0 bg-black/40 z-40" onClick={onClose} />
-      <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white shadow-2xl flex flex-col">
-        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 shrink-0">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
-              {PHASE_LABEL[match.fase.codigo] ?? match.fase.codigo}
-            </p>
-            <p className="text-sm font-bold text-slate-900">
-              {match.local.nombre} vs {match.visitante.nombre}
-            </p>
+      <div className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40" onClick={onClose} />
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm flex flex-col max-h-[90vh]" onClick={e => e.stopPropagation()}>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 shrink-0">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                {PHASE_LABEL[match.fase.codigo] ?? match.fase.codigo}
+              </p>
+              <p className="text-sm font-bold text-slate-900">
+                {match.local.nombre} vs {match.visitante.nombre}
+              </p>
+            </div>
+            <button onClick={onClose} className="h-8 w-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-500 transition-colors">
+              <X className="h-4 w-4" />
+            </button>
           </div>
-          <button onClick={onClose} className="h-8 w-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-500 transition-colors">
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-        <div className="flex-1 overflow-y-auto p-4">
-          <MatchCard match={match} />
+          <div className="overflow-y-auto p-4">
+            <MatchCard match={match} />
+          </div>
         </div>
       </div>
     </>
@@ -272,8 +328,16 @@ interface KnockoutTreeProps {
 }
 
 export default function KnockoutTree({ matches }: KnockoutTreeProps) {
-  const { mode, zoom } = useBracket();
-  const [selected, setSelected] = useState<PartidoPronostico | null>(null);
+  const { mode, zoom, mounted } = useBracket();
+
+  if (!mounted) {
+    return (
+      <div className="w-full rounded-xl border border-slate-200 bg-slate-50 animate-pulse" style={{ height: "60vh", minHeight: 400 }} />
+    );
+  }
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  // Deriva siempre del array actualizado — así refleja la predicción recién guardada
+  const selected = selectedId != null ? (matches.find(m => m.id === selectedId) ?? null) : null;
 
   const cfg = CONFIGS[mode];
   const layout = useMemo(() => buildLayout(matches, cfg), [matches, cfg]);
@@ -323,7 +387,7 @@ export default function KnockoutTree({ matches }: KnockoutTreeProps) {
                       <KnockoutNode
                         slot={slot}
                         cardH={cfg.CARD_H}
-                        onClick={() => slot.match && setSelected(slot.match)}
+                        onClick={() => slot.match && setSelectedId(slot.match.id)}
                       />
                     ) : (
                       <FullNode slot={slot} cardH={cfg.CARD_H} />
@@ -338,7 +402,7 @@ export default function KnockoutTree({ matches }: KnockoutTreeProps) {
       </div>
 
       {selected && mode === "condensed" && (
-        <MatchDrawer match={selected} onClose={() => setSelected(null)} />
+        <MatchModal match={selected} onClose={() => setSelectedId(null)} />
       )}
     </div>
   );

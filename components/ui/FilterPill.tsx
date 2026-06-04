@@ -38,7 +38,7 @@ export default function FilterPill({ active = false, children, className, href, 
   }
 
   return (
-    <button onClick={onClick} className={cn(pillClass(active), className)}>
+    <button onClick={onClick} className={cn(pillClass(active), "cursor-pointer", className)}>
       {children}
     </button>
   );
