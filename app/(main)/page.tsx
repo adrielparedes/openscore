@@ -165,6 +165,30 @@ export default async function HomePage() {
               </div>
             )}
           </div>
+          <a
+            href="https://redhat.enterprise.slack.com/archives/C0B7WVA16H5"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group rounded-2xl border border-purple-200 bg-linear-to-br from-purple-50 via-violet-50 to-indigo-50 p-6 flex items-center gap-4 shadow-sm hover:border-purple-400 hover:shadow-md transition-all"
+          >
+            <div className="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center shadow-sm border border-purple-100">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52z" fill="#E01E5A"/>
+                <path d="M6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313z" fill="#E01E5A"/>
+                <path d="M8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834z" fill="#36C5F0"/>
+                <path d="M8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312z" fill="#36C5F0"/>
+                <path d="M18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834z" fill="#2EB67D"/>
+                <path d="M17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312z" fill="#2EB67D"/>
+                <path d="M15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52z" fill="#ECB22E"/>
+                <path d="M15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z" fill="#ECB22E"/>
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="font-bold text-slate-900">Join the conversation</div>
+              <div className="text-xs text-slate-500 mt-0.5 truncate">#openscore on Slack</div>
+            </div>
+            <ArrowRight className="h-4 w-4 text-purple-500 shrink-0 group-hover:translate-x-1 transition-transform" />
+          </a>
         </div>
 
       </div>
@@ -226,6 +250,30 @@ export default async function HomePage() {
             </li>
           </ol>
         </div>
+        <a
+          href="https://redhat.enterprise.slack.com/archives/C0B7WVA16H5"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group rounded-2xl border border-purple-200 bg-linear-to-br from-purple-50 via-violet-50 to-indigo-50 p-6 flex items-center gap-4 shadow-sm hover:border-purple-400 hover:shadow-md transition-all"
+        >
+          <div className="h-11 w-11 shrink-0 rounded-xl bg-purple-600 flex items-center justify-center shadow-sm">
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52z" fill="#E01E5A"/>
+                <path d="M6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313z" fill="#E01E5A"/>
+                <path d="M8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834z" fill="#36C5F0"/>
+                <path d="M8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312z" fill="#36C5F0"/>
+                <path d="M18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834z" fill="#2EB67D"/>
+                <path d="M17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312z" fill="#2EB67D"/>
+                <path d="M15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52z" fill="#ECB22E"/>
+                <path d="M15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z" fill="#ECB22E"/>
+              </svg>
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="font-bold text-slate-900">Join the conversation</div>
+            <div className="text-xs text-slate-500 mt-0.5 truncate">#openscore on Slack</div>
+          </div>
+          <ArrowRight className="h-4 w-4 text-purple-500 shrink-0 group-hover:translate-x-1 transition-transform" />
+        </a>
         <div className="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 p-6 flex flex-col justify-between gap-4 shadow-sm">
           <div>
             <h2 className="font-bold text-slate-900 leading-snug">Your World Cup sticker card</h2>
