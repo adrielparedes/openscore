@@ -74,7 +74,7 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
                     <th className="pb-3 text-left font-medium text-slate-500 w-12">Rank</th>
                     <th className="pb-3 text-left font-medium text-slate-500">Player</th>
                     <th className="pb-3 text-left font-medium text-slate-500 hidden sm:table-cell">Country</th>
-                    <th className="pb-3 text-right font-medium text-slate-500">Points</th>
+                    <th className="pb-3 pr-2 text-right font-medium text-slate-500">Points</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -103,7 +103,7 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
                         <td className="py-3 hidden sm:table-cell">
                           <Badge variant="muted">{entry.pais.toUpperCase()}</Badge>
                         </td>
-                        <td className="py-3 text-right font-bold text-rose-600">
+                        <td className="py-3 pr-2 text-right font-bold text-rose-600">
                           {entry.puntos} pts
                         </td>
                       </tr>

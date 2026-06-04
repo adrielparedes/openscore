@@ -87,13 +87,13 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
         {/* Local */}
         <div className="flex-1 flex flex-col items-center gap-2">
           {flagUrl(match.local.codigo) && (
-            <img
-              src={flagUrl(match.local.codigo, 80)}
-              alt={match.local.codigo}
-              width={56}
-              height={40}
-              className="rounded object-cover shadow-sm"
-            />
+            <div className="w-14 h-10 rounded overflow-hidden shadow-sm shrink-0">
+              <img
+                src={flagUrl(match.local.codigo, 80)}
+                alt={match.local.codigo}
+                className="w-full h-full object-cover"
+              />
+            </div>
           )}
           <span className="font-bold text-slate-900 text-center">{match.local.nombre}</span>
           <span className="text-xs text-slate-400 uppercase">{match.local.codigo}</span>
@@ -117,13 +117,13 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
         {/* Visitante */}
         <div className="flex-1 flex flex-col items-center gap-2">
           {flagUrl(match.visitante.codigo) && (
-            <img
-              src={flagUrl(match.visitante.codigo, 80)}
-              alt={match.visitante.codigo}
-              width={56}
-              height={40}
-              className="rounded object-cover shadow-sm"
-            />
+            <div className="w-14 h-10 rounded overflow-hidden shadow-sm shrink-0">
+              <img
+                src={flagUrl(match.visitante.codigo, 80)}
+                alt={match.visitante.codigo}
+                className="w-full h-full object-cover"
+              />
+            </div>
           )}
           <span className="font-bold text-slate-900 text-center">{match.visitante.nombre}</span>
           <span className="text-xs text-slate-400 uppercase">{match.visitante.codigo}</span>
