@@ -178,13 +178,9 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
         {/* Local team */}
         <div className="flex-1 flex flex-col items-center gap-2 min-w-0">
           {flagUrl(selectedLocal.codigo) && (
-            <img
-              src={flagUrl(selectedLocal.codigo, 80)}
-              alt={selectedLocal.codigo}
-              width={56}
-              height={40}
-              className="rounded object-cover shadow-sm"
-            />
+            <div className="w-14 h-10 rounded overflow-hidden shadow-sm shrink-0">
+              <img src={flagUrl(selectedLocal.codigo, 80)} alt={selectedLocal.codigo} className="w-full h-full object-cover" />
+            </div>
           )}
           {editingTeams ? (
             <div className="w-full flex items-center gap-1">
@@ -293,13 +289,9 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
         {/* Visitante team */}
         <div className="flex-1 flex flex-col items-center gap-2 min-w-0">
           {flagUrl(selectedVisitante.codigo) && (
-            <img
-              src={flagUrl(selectedVisitante.codigo, 80)}
-              alt={selectedVisitante.codigo}
-              width={56}
-              height={40}
-              className="rounded object-cover shadow-sm"
-            />
+            <div className="w-14 h-10 rounded overflow-hidden shadow-sm shrink-0">
+              <img src={flagUrl(selectedVisitante.codigo, 80)} alt={selectedVisitante.codigo} className="w-full h-full object-cover" />
+            </div>
           )}
           {editingTeams ? (
             <div className="w-full flex items-center gap-1">
@@ -390,7 +382,7 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
           <button
             onClick={handleSubmit}
             disabled={pending}
-            className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 text-white shadow-sm shadow-pink-500/20 text-sm font-semibold px-4 py-2 transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 rounded-xl bg-gradient-to-br from-rh to-rose-700 text-white shadow-sm shadow-rh/20 text-sm font-semibold px-4 py-2 transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {pending ? (
               <>
