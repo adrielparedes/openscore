@@ -48,28 +48,33 @@ export default function StickerCardDisplay({ nombre, pais, puntos, ranking, stic
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <div className={`relative w-full aspect-[3/4] rounded-xl overflow-hidden border-2 ${borderColor} shadow-lg bg-slate-100`}>
-        <RankIcon rank={ranking} />
-        {stickerCard ? (
-          <Image
-            src={stickerCard}
-            alt={`${nombre}'s sticker card`}
-            fill
-            className="object-cover"
-            unoptimized
-          />
-        ) : (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-slate-100 to-slate-200">
-            <div className="h-16 w-16 rounded-full bg-slate-300 flex items-center justify-center">
-              <User className="h-8 w-8 text-slate-500" />
+      {/* outer: relative sin overflow-hidden para que el RankIcon pueda salir */}
+      <div className={`relative w-full aspect-[3/4] rounded-xl border-2 ${borderColor} shadow-lg bg-slate-100`}>
+        {/* inner: clip separado para imagen y gradiente */}
+        <div className="absolute inset-0 rounded-[10px] overflow-hidden">
+          {stickerCard ? (
+            <Image
+              src={stickerCard}
+              alt={`${nombre}'s sticker card`}
+              fill
+              className="object-cover"
+              unoptimized
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-slate-100 to-slate-200">
+              <div className="h-16 w-16 rounded-full bg-slate-300 flex items-center justify-center">
+                <User className="h-8 w-8 text-slate-500" />
+              </div>
+              <span className="text-xs text-slate-400 font-medium px-2 text-center">{nombre}</span>
             </div>
-            <span className="text-xs text-slate-400 font-medium px-2 text-center">{nombre}</span>
+          )}
+          <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-3 pt-6">
+            <p className="text-white font-bold text-sm leading-tight truncate">{nombre}</p>
+            <p className="text-white/70 text-xs uppercase tracking-wide">{pais}</p>
           </div>
-        )}
-        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-3 pt-6">
-          <p className="text-white font-bold text-sm leading-tight truncate">{nombre}</p>
-          <p className="text-white/70 text-xs uppercase tracking-wide">{pais}</p>
         </div>
+        {/* icon fuera del clip, puede sobresalir */}
+        <RankIcon rank={ranking} />
       </div>
 
       <div className="flex items-center gap-2">

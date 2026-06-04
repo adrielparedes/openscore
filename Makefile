@@ -10,8 +10,8 @@ db-create:
 	@echo "Waiting for PostgreSQL to be ready..."
 	@until docker exec openscore-ng-db pg_isready -U openscore -d openscore_ng; do sleep 1; done
 	@if [ ! -f .env ]; then \
-		echo "DATABASE_URL=postgresql://openscore:0p3nsc0r3@localhost:5433/openscore_ng" > .env; \
-		echo "AUTH_SECRET=changeme" >> .env; \
+		echo "DATABASE_URL=postgresql://openscore:0p3nsc0r3@localhost:5432/openscore_ng" > .env; \
+		echo "AUTH_SECRET=eF7aYIvMx1e1IJwVF/Mml/vXMBhnB34IpUVDINmRHwI=" >> .env; \
 		echo "Created .env"; \
 	fi
 	pnpm db:push && pnpm db:seed
