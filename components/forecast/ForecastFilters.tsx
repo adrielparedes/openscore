@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { CalendarDays, LayoutGrid, Trophy } from "lucide-react";
+import { CalendarDays, LayoutGrid, Trophy, LayoutList } from "lucide-react";
 import FilterPill from "@/components/ui/FilterPill";
+import { useBracket } from "./BracketContext";
 
 const STAGES = [
   { code: "GRUPO", label: "Group Stage" },
@@ -13,9 +14,14 @@ const STAGES = [
   { code: "TERCER_FINAL", label: "Third Place & Final" },
 ];
 
+const MIN_ZOOM = 0.4;
+const MAX_ZOOM = 1.5;
+const ZOOM_STEP = 0.1;
+
 export default function ForecastFilters() {
   const router = useRouter();
   const params = useSearchParams();
+  const { mode, setMode, zoom, setZoom } = useBracket();
 
   const active = {
     grupo: params.get("grupo"),
@@ -36,34 +42,68 @@ export default function ForecastFilters() {
 
   return (
     <div className="flex flex-col gap-3 text-sm">
-      {/* Top row: Upcoming / All / Bracket */}
-      <div className="flex gap-2 flex-wrap items-center">
-        <FilterPill
-          active={isUpcoming}
-          onClick={() => router.push("/forecast")}
-        >
-          <CalendarDays className="h-3 w-3" />
-          Upcoming
-        </FilterPill>
-
-        <FilterPill
-          active={isAll}
-          onClick={() => navigate("view", "all")}
-        >
-          <LayoutGrid className="h-3 w-3" />
-          All matches
-        </FilterPill>
-
-        {/* Knockout bracket — large screens only */}
-        <div className="hidden lg:block">
-          <FilterPill
-            active={isBracket}
-            onClick={() => router.push("/forecast?view=bracket")}
-          >
-            <Trophy className="h-3 w-3" />
-            Knockout Bracket
+      {/* Top row: Upcoming / All / Bracket + bracket toolbar */}
+      <div className="flex gap-2 flex-wrap items-center justify-between">
+        <div className="flex gap-2 flex-wrap items-center">
+          <FilterPill active={isUpcoming} onClick={() => router.push("/forecast")}>
+            <CalendarDays className="h-3 w-3" />
+            Upcoming
           </FilterPill>
+
+          <FilterPill active={isAll} onClick={() => navigate("view", "all")}>
+            <LayoutGrid className="h-3 w-3" />
+            All matches
+          </FilterPill>
+
+          <div className="hidden lg:block">
+            <FilterPill active={isBracket} onClick={() => router.push("/forecast?view=bracket")}>
+              <Trophy className="h-3 w-3" />
+              Knockout Bracket
+            </FilterPill>
+          </div>
         </div>
+
+        {/* Bracket toolbar — only when in bracket view */}
+        {isBracket && (
+          <div className="flex items-center gap-3">
+            {/* View toggle */}
+            <div className="flex items-center rounded-lg border border-slate-200 bg-white overflow-hidden">
+              <button
+                onClick={() => setMode("condensed")}
+                className={`h-7 px-2.5 flex items-center gap-1.5 text-xs font-medium transition-colors ${
+                  mode === "condensed" ? "bg-slate-900 text-white" : "text-slate-500 hover:bg-slate-50"
+                }`}
+              >
+                <LayoutList className="h-3.5 w-3.5" />
+                Condensed
+              </button>
+              <button
+                onClick={() => setMode("normal")}
+                className={`h-7 px-2.5 flex items-center gap-1.5 text-xs font-medium transition-colors ${
+                  mode === "normal" ? "bg-slate-900 text-white" : "text-slate-500 hover:bg-slate-50"
+                }`}
+              >
+                <LayoutGrid className="h-3.5 w-3.5" />
+                Normal
+              </button>
+            </div>
+
+            {/* Zoom */}
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={() => setZoom(Math.max(MIN_ZOOM, parseFloat((zoom - ZOOM_STEP).toFixed(1))))}
+                disabled={zoom <= MIN_ZOOM}
+                className="h-7 w-7 rounded border border-slate-200 bg-white text-slate-600 flex items-center justify-center hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed font-bold text-base leading-none"
+              >−</button>
+              <span className="text-xs text-slate-500 w-10 text-center tabular-nums">{Math.round(zoom * 100)}%</span>
+              <button
+                onClick={() => setZoom(Math.min(MAX_ZOOM, parseFloat((zoom + ZOOM_STEP).toFixed(1))))}
+                disabled={zoom >= MAX_ZOOM}
+                className="h-7 w-7 rounded border border-slate-200 bg-white text-slate-600 flex items-center justify-center hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed font-bold text-base leading-none"
+              >+</button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Stage filters */}
@@ -80,7 +120,6 @@ export default function ForecastFilters() {
           ))}
         </div>
       )}
-
     </div>
   );
 }

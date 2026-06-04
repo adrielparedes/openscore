@@ -3,6 +3,7 @@ import MatchCard from "@/components/forecast/MatchCard";
 import UpcomingDateGroups from "@/components/forecast/UpcomingDateGroups";
 import ForecastFilters from "@/components/forecast/ForecastFilters";
 import KnockoutTree from "@/components/forecast/KnockoutTree";
+import { BracketProvider } from "@/components/forecast/BracketContext";
 import PageHero from "@/components/ui/PageHero";
 import { Suspense } from "react";
 import type { PartidoPronostico } from "@/types";
@@ -171,40 +172,41 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
   );
 
   return (
-    <div className="flex flex-col">
-      <PageHero
-        title="Predictions"
-        description="Select your prediction for each match. Picks lock 15 minutes before kickoff."
-      />
+    <BracketProvider>
+      <div className="flex flex-col">
+        <PageHero
+          title="Predictions"
+          description="Select your prediction for each match. Picks lock 15 minutes before kickoff."
+        />
 
-      {/* Padded content below hero */}
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-6 mt-6 pb-8">
-        <ForecastFilters />
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-6 mt-6 pb-8">
+          <ForecastFilters />
+        </div>
+
+        {isBracket ? (
+          <div className="w-full px-4 sm:px-6 lg:px-8 pb-8">
+            <Suspense
+              fallback={
+                <div className="w-full rounded-xl border border-slate-200 bg-slate-50 animate-pulse" style={{ height: "75vh", minHeight: 500 }} />
+              }
+            >
+              <KnockoutBracketSection />
+            </Suspense>
+          </div>
+        ) : (
+          <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pb-8">
+            {isUpcoming ? (
+              <Suspense fallback={matchGridFallback}>
+                <UpcomingMatchList />
+              </Suspense>
+            ) : (
+              <Suspense fallback={matchGridFallback}>
+                <MatchList searchParams={params} />
+              </Suspense>
+            )}
+          </div>
+        )}
       </div>
-
-      {isBracket ? (
-        <div className="w-full px-4 sm:px-6 lg:px-8 pb-8">
-          <Suspense
-            fallback={
-              <div className="w-full rounded-xl border border-slate-200 bg-slate-50 animate-pulse" style={{ height: "75vh", minHeight: 500 }} />
-            }
-          >
-            <KnockoutBracketSection />
-          </Suspense>
-        </div>
-      ) : (
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pb-8">
-          {isUpcoming ? (
-            <Suspense fallback={matchGridFallback}>
-              <UpcomingMatchList />
-            </Suspense>
-          ) : (
-            <Suspense fallback={matchGridFallback}>
-              <MatchList searchParams={params} />
-            </Suspense>
-          )}
-        </div>
-      )}
-    </div>
+    </BracketProvider>
   );
 }
