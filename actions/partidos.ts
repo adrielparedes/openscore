@@ -153,6 +153,7 @@ export async function setResultado(
     revalidatePath("/");
     revalidatePath("/forecast");
     revalidatePath("/leaderboard");
+    revalidatePath("/standings");
   });
 }
 
@@ -179,5 +180,6 @@ export async function resetResultado(partidoId: number) {
     revalidatePath("/");
     revalidatePath("/forecast");
     revalidatePath("/leaderboard");
+    revalidatePath("/standings");
   });
 }
