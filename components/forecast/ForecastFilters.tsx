@@ -14,6 +14,11 @@ const STAGES = [
   { code: "TERCER_FINAL", label: "Third Place & Final" },
 ];
 
+const GROUPS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"].map((l) => ({
+  code: `GRUPO_${l}`,
+  label: `Group ${l}`,
+}));
+
 const MIN_ZOOM = 0.4;
 const MAX_ZOOM = 1.5;
 const ZOOM_STEP = 0.1;
@@ -37,6 +42,13 @@ export default function ForecastFilters() {
   function navigate(key: string, value: string | null) {
     const p = new URLSearchParams();
     if (value) p.set(key, value);
+    router.push(`/forecast?${p.toString()}`);
+  }
+
+  function navigateGroup(code: string) {
+    const p = new URLSearchParams();
+    p.set("fase", "GRUPO");
+    if (active.grupo !== code) p.set("grupo", code);
     router.push(`/forecast?${p.toString()}`);
   }
 
@@ -116,6 +128,21 @@ export default function ForecastFilters() {
               onClick={() => navigate("fase", active.fase === stage.code ? null : stage.code)}
             >
               {stage.label}
+            </FilterPill>
+          ))}
+        </div>
+      )}
+
+      {/* Group filters — only when Group Stage is selected */}
+      {!isBracket && active.fase === "GRUPO" && (
+        <div className="flex gap-2 flex-wrap">
+          {GROUPS.map((group) => (
+            <FilterPill
+              key={group.code}
+              active={active.grupo === group.code}
+              onClick={() => navigateGroup(group.code)}
+            >
+              {group.label}
             </FilterPill>
           ))}
         </div>

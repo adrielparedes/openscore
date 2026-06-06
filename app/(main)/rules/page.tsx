@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import PageHero from "@/components/ui/PageHero";
 
 const PHASES = [
   { name: "Group Stage", codigo: "GRUPO", points: 1, description: "Pick the winner of each group match" },
@@ -14,13 +13,13 @@ const PHASES = [
 
 export default function RulesPage() {
   return (
-    <div className="flex flex-col">
-      <PageHero
-        title="Rules"
-        description="How Openscore works."
-      />
-      <div className="mx-auto w-full max-w-3xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
+    <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
+      <div>
+        <h1 className="text-2xl font-bold text-slate-900">Rules</h1>
+        <p className="text-slate-500 text-sm mt-1">How Openscore works.</p>
+      </div>
 
+      {/* Making Predictions — full width */}
       <Card>
         <CardHeader>
           <CardTitle>Making Predictions</CardTitle>
@@ -49,58 +48,66 @@ export default function RulesPage() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Scoring System</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-slate-500 mb-4">
-            Points increase with the importance of the round:
-          </p>
-          <div className="space-y-2">
-            {PHASES.map((phase) => (
-              <div
-                key={phase.codigo}
-                className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3"
-              >
-                <div>
-                  <div className="font-medium text-slate-700">{phase.name}</div>
-                  <div className="text-xs text-slate-400">{phase.description}</div>
-                </div>
-                <Badge variant={phase.points >= 4 ? "warning" : "default"}>
-                  {phase.points} {phase.points === 1 ? "pt" : "pts"}
-                </Badge>
+      {/* Two-column layout: Scoring System | Penalty Shootouts + Leaderboard */}
+      <div className="flex flex-col md:flex-row gap-6 items-start">
+        {/* Left column: Scoring System */}
+        <div className="flex-1">
+          <Card>
+            <CardHeader>
+              <CardTitle>Scoring System</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-slate-500 mb-4">
+                Points increase with the importance of the round:
+              </p>
+              <div className="space-y-2">
+                {PHASES.map((phase) => (
+                  <div
+                    key={phase.codigo}
+                    className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3"
+                  >
+                    <div>
+                      <div className="font-medium text-slate-700">{phase.name}</div>
+                      <div className="text-xs text-slate-400">{phase.description}</div>
+                    </div>
+                    <Badge variant={phase.points >= 4 ? "warning" : "default"}>
+                      {phase.points} {phase.points === 1 ? "pt" : "pts"}
+                    </Badge>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Penalty Shootouts</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-slate-600">
-            In knock-out stages, if a match goes to penalties, the winner is determined by the
-            penalty shootout result — <strong className="text-slate-900">not</strong> by the score
-            after extra time. Predict accordingly.
-          </p>
-        </CardContent>
-      </Card>
+        {/* Right column: Penalty Shootouts + Leaderboard */}
+        <div className="flex-1 flex flex-col gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Penalty Shootouts</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-slate-600">
+                In knock-out stages, if a match goes to penalties, the winner is determined by the
+                penalty shootout result — <strong className="text-slate-900">not</strong> by the score
+                after extra time. Predict accordingly.
+              </p>
+            </CardContent>
+          </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Leaderboard</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-slate-600">
-            The global leaderboard ranks all players by total points accumulated across all
-            matches. You can also filter by country to see your regional standings.
-          </p>
-        </CardContent>
-      </Card>
-    </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Leaderboard</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-slate-600">
+                The global leaderboard ranks all players by total points accumulated across all
+                matches. You can also filter by country to see your regional standings.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 }

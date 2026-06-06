@@ -1,6 +1,5 @@
 import { auth } from "@/lib/auth";
 import { getAllUsuarios } from "@/actions/usuarios";
-import PageHero from "@/components/ui/PageHero";
 import AdminResetPasswordCard from "@/components/admin/AdminResetPasswordCard";
 import { redirect } from "next/navigation";
 
@@ -14,12 +13,11 @@ export default async function AdminUsuariosPage() {
   const usuarios = await getAllUsuarios();
 
   return (
-    <div className="flex flex-col">
-      <PageHero
-        title="User Management"
-        description="View, block, delete users and reset passwords."
-      />
-      <div className="mx-auto w-full max-w-4xl flex flex-col gap-4 px-4 sm:px-6 lg:px-8 py-8">
+    <div className="mx-auto w-full max-w-7xl flex flex-col gap-4 px-4 sm:px-6 lg:px-8 py-8">
+      <div>
+        <h1 className="text-2xl font-bold text-slate-900">Users</h1>
+        <p className="text-slate-500 text-sm mt-1">View, block, delete users and reset passwords.</p>
+      </div>
         {usuarios.map((usuario) => (
           <AdminResetPasswordCard key={usuario.id} usuario={usuario} />
         ))}
@@ -28,7 +26,6 @@ export default async function AdminUsuariosPage() {
             No users found.
           </div>
         )}
-      </div>
     </div>
   );
 }

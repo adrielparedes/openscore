@@ -4,7 +4,6 @@ import UpcomingDateGroups from "@/components/forecast/UpcomingDateGroups";
 import ForecastFilters from "@/components/forecast/ForecastFilters";
 import KnockoutTree from "@/components/forecast/KnockoutTree";
 import { BracketProvider } from "@/components/forecast/BracketContext";
-import PageHero from "@/components/ui/PageHero";
 import { Suspense } from "react";
 import type { PartidoPronostico } from "@/types";
 
@@ -174,12 +173,11 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
   return (
     <BracketProvider>
       <div className="flex flex-col">
-        <PageHero
-          title="Predictions"
-          description="Select your prediction for each match. Picks lock 15 minutes before kickoff."
-        />
-
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-6 mt-6 pb-8">
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-6 pt-8 pb-4">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900">Predictions</h1>
+            <p className="text-slate-500 text-sm mt-1">Select your prediction for each match. Picks lock 15 minutes before kickoff.</p>
+          </div>
           <ForecastFilters />
         </div>
 
