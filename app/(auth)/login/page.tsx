@@ -6,7 +6,7 @@ import Input from "@/components/ui/Input";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Trophy } from "lucide-react";
+import OpenScoreLogo from "@/components/ui/OpenScoreLogo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -37,9 +37,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <div className="h-14 w-14 rounded-2xl bg-rose-600 flex items-center justify-center mb-4">
-            <Trophy className="h-8 w-8 text-white" />
-          </div>
+          <OpenScoreLogo variant="dark" className="h-14 w-auto mb-4" />
           <h1 className="text-2xl font-bold text-slate-900">Welcome to Openscore</h1>
           <p className="text-slate-500 text-sm mt-1">Sign in to manage your predictions</p>
         </div>

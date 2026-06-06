@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import OpenScoreLogo from "@/components/ui/OpenScoreLogo";
 import { useSession } from "next-auth/react";
 import { logoutAction } from "@/actions/auth";
 import { cn } from "@/lib/utils";
@@ -38,14 +39,8 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg bg-rh flex items-center justify-center shadow-lg shadow-rh/50">
-              <Trophy className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-lg tracking-tight select-none">
-              <span className="font-light text-white/75">OPEN</span>
-              <span className="font-black text-rh">SCORE</span>
-            </span>
+          <Link href="/" className="flex items-center">
+            <OpenScoreLogo variant="light" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop nav */}
