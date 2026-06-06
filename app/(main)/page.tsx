@@ -23,15 +23,16 @@ export default async function HomePage() {
       {/* ── Top bento: Emblem + Welcome + Countdown + CTAs ── */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
-        <div className="rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 p-6 flex flex-col items-center justify-center gap-3 shadow-sm">
+        <div className="rounded-2xl overflow-hidden shadow-sm">
           <Image
-            src="/2026_FIFA_World_Cup_emblem.svg"
-            alt="2026 FIFA World Cup"
-            width={96}
-            height={96}
-            className="drop-shadow-lg"
+            src="/RH_OpenScore_web.png"
+            alt="Red Hat Open Score — World Cup 2026"
+            width={1080}
+            height={1080}
+            className="h-full w-full object-cover"
+            priority
+            unoptimized
           />
-          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 text-center">FIFA World Cup 2026</p>
         </div>
 
         <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-rose-50 via-white to-slate-100 p-7 flex flex-col justify-center gap-2 shadow-sm">
