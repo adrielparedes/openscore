@@ -99,9 +99,13 @@ export default async function StandingsPage() {
               <div className="h-2 w-2 rounded-full bg-emerald-500" />
               <span>Qualifies automatically (top 2)</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 group relative cursor-help">
               <div className="h-2 w-2 rounded-full bg-amber-400" />
-              <span>May qualify as best third (top 8 of 12)</span>
+              <span className="underline decoration-dotted underline-offset-2">May qualify as best third (top 8 of 12)</span>
+              <div className="invisible group-hover:visible absolute bottom-full left-0 mb-2 w-72 rounded-lg bg-slate-900 px-3 py-2 text-xs text-white shadow-lg z-10">
+                In the 2026 World Cup, the 8 best third-placed teams out of 12 groups also advance to the knockout stage. They are ranked by points, then goal difference, then wins.
+                <div className="absolute top-full left-4 h-0 w-0 border-x-4 border-x-transparent border-t-4 border-t-slate-900" />
+              </div>
             </div>
           </div>
         </>
