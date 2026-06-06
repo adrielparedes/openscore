@@ -17,12 +17,16 @@ import {
   ClipboardList,
   UserCircle,
   Users,
+  Shield,
+  ChevronDown,
+  Table,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const navLinks = [
   { href: "/", label: "Home", icon: Home },
   { href: "/forecast", label: "Predictions", icon: TrendingUp },
+  { href: "/standings", label: "Standings", icon: Table },
   { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/rules", label: "Rules", icon: BookOpen },
 ];
@@ -31,7 +35,19 @@ export default function Navbar() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
+  const adminRef = useRef<HTMLDivElement>(null);
   const isAdmin = ((session?.user as any)?.roles ?? []).includes("ADMIN");
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (adminRef.current && !adminRef.current.contains(e.target as Node)) {
+        setAdminOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-xl border-b border-white/[0.08]">
@@ -61,32 +77,51 @@ export default function Navbar() {
               </Link>
             ))}
             {isAdmin && (
-              <>
-                <Link
-                  href="/admin/results"
+              <div ref={adminRef} className="relative">
+                <button
+                  onClick={() => setAdminOpen((o) => !o)}
                   className={cn(
                     "flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-150",
-                    pathname === "/admin/results"
+                    pathname.startsWith("/admin")
                       ? "bg-gradient-to-r from-rh/40 to-rh/15 text-rh/80"
                       : "text-rh/60 hover:text-rh/80 hover:bg-rh/15"
                   )}
                 >
-                  <ClipboardList className="h-3.5 w-3.5" />
-                  Results
-                </Link>
-                <Link
-                  href="/admin/usuarios"
-                  className={cn(
-                    "flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-150",
-                    pathname === "/admin/usuarios"
-                      ? "bg-gradient-to-r from-rh/40 to-rh/15 text-rh/80"
-                      : "text-rh/60 hover:text-rh/80 hover:bg-rh/15"
-                  )}
-                >
-                  <Users className="h-3.5 w-3.5" />
-                  Users
-                </Link>
-              </>
+                  <Shield className="h-3.5 w-3.5" />
+                  Admin
+                  <ChevronDown className={cn("h-3 w-3 transition-transform duration-150", adminOpen && "rotate-180")} />
+                </button>
+                {adminOpen && (
+                  <div className="absolute right-0 top-full mt-1.5 w-44 rounded-xl border border-white/[0.08] bg-slate-950/95 backdrop-blur-xl shadow-xl py-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                    <Link
+                      href="/admin/results"
+                      onClick={() => setAdminOpen(false)}
+                      className={cn(
+                        "flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                        pathname === "/admin/results"
+                          ? "text-rh/80 bg-rh/10"
+                          : "text-white/50 hover:text-white hover:bg-white/10"
+                      )}
+                    >
+                      <ClipboardList className="h-3.5 w-3.5" />
+                      Results
+                    </Link>
+                    <Link
+                      href="/admin/usuarios"
+                      onClick={() => setAdminOpen(false)}
+                      className={cn(
+                        "flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                        pathname === "/admin/usuarios"
+                          ? "text-rh/80 bg-rh/10"
+                          : "text-white/50 hover:text-white hover:bg-white/10"
+                      )}
+                    >
+                      <Users className="h-3.5 w-3.5" />
+                      Users
+                    </Link>
+                  </div>
+                )}
+              </div>
             )}
           </div>
 
@@ -153,6 +188,10 @@ export default function Navbar() {
           ))}
           {isAdmin && (
             <>
+              <div className="mt-2 mb-1 flex items-center gap-2 px-4 pt-2 border-t border-white/[0.06]">
+                <Shield className="h-3.5 w-3.5 text-rh/50" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-rh/50">Admin</span>
+              </div>
               <Link
                 href="/admin/results"
                 onClick={() => setMobileOpen(false)}

@@ -5,7 +5,39 @@ import { calcularGanador } from "@/lib/utils";
 import { standingsDuration } from "@/lib/metrics";
 import { recordAction } from "@/lib/withMetrics";
 import type { StandingConRelaciones } from "@/types";
+import type { Equipo, Grupo } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+
+export interface GroupWithTeams {
+  grupo: Grupo;
+  teams: Equipo[];
+}
+
+export async function getGroupsWithTeams(): Promise<GroupWithTeams[]> {
+  return recordAction("getGroupsWithTeams", async () => {
+    const partidos = await prisma.partido.findMany({
+      where: { deleted: false, fase: { codigo: "GRUPO" }, grupoId: { not: null } },
+      include: { local: true, visitante: true, grupo: true },
+    });
+
+    const groupMap = new Map<string, { grupo: Grupo; teams: Map<number, Equipo> }>();
+
+    for (const p of partidos) {
+      if (!p.grupo) continue;
+      const key = p.grupo.codigo;
+      if (!groupMap.has(key)) {
+        groupMap.set(key, { grupo: p.grupo, teams: new Map() });
+      }
+      const entry = groupMap.get(key)!;
+      entry.teams.set(p.local.id, p.local);
+      entry.teams.set(p.visitante.id, p.visitante);
+    }
+
+    return Array.from(groupMap.values())
+      .map(({ grupo, teams }) => ({ grupo, teams: Array.from(teams.values()) }))
+      .sort((a, b) => a.grupo.codigo.localeCompare(b.grupo.codigo));
+  });
+}
 
 export async function getStandings(grupo?: string): Promise<StandingConRelaciones[]> {
   return recordAction("getStandings", async () => {
