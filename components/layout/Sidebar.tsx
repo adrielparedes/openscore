@@ -1,0 +1,290 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import OpenScoreLogo from "@/components/ui/OpenScoreLogo";
+import { useSession } from "next-auth/react";
+import { logoutAction } from "@/actions/auth";
+import { cn } from "@/lib/utils";
+import { useLayout } from "@/components/providers/LayoutProvider";
+import {
+  Home,
+  TrendingUp,
+  Trophy,
+  BookOpen,
+  LogOut,
+  Menu,
+  X,
+  ClipboardList,
+  UserCircle,
+  Users,
+  Table,
+  PanelTop,
+  PanelLeftClose,
+  PanelLeftOpen,
+} from "lucide-react";
+import { useState, useEffect } from "react";
+
+const navLinks = [
+  { href: "/", label: "Home", icon: Home },
+  { href: "/forecast", label: "Predictions", icon: TrendingUp },
+  { href: "/standings", label: "Standings", icon: Table },
+  { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
+  { href: "/rules", label: "Rules", icon: BookOpen },
+];
+
+function SidebarContent({
+  collapsed,
+  onNavigate,
+  onToggleLayout,
+  onToggleCollapse,
+}: {
+  collapsed: boolean;
+  onNavigate?: () => void;
+  onToggleLayout?: () => void;
+  onToggleCollapse?: () => void;
+}) {
+  const pathname = usePathname();
+  const { data: session, status } = useSession();
+  const isAdmin = ((session?.user as any)?.roles ?? []).includes("ADMIN");
+
+  return (
+    <div className="flex h-full flex-col">
+      {/* Logo */}
+      <div className={cn(
+        "flex h-16 shrink-0 items-center border-b border-white/[0.08]",
+        collapsed ? "justify-center px-2" : "px-4"
+      )}>
+        <Link href="/" onClick={onNavigate} className="flex items-center">
+          {collapsed ? (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 145" className="h-8 w-8" role="img" aria-label="Red Hat">
+              <path
+                d="M127.47 83.49c12.51 0 30.61-2.58 30.61-17.46a14 14 0 0 0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89 8.69 103.76.5 97.51.5 91.69.5 90 8 83.06 8c-6.68 0-11.64-5.6-17.89-5.6-6 0-9.91 4.09-12.93 12.5 0 0-8.41 23.72-9.49 27.16A6.43 6.43 0 0 0 42.53 44c0 9.22 36.3 39.45 84.94 39.45M160 72.07c1.73 8.19 1.73 9.05 1.73 10.13 0 14-15.74 21.77-36.43 21.77C78.54 104 37.58 76.6 37.58 58.49a18.45 18.45 0 0 1 1.51-7.33C22.27 52 .5 55 .5 74.22c0 31.48 74.59 70.28 133.65 70.28 45.28 0 56.7-20.48 56.7-36.65 0-12.72-11-27.16-30.83-35.78"
+                fill="#ee0000"
+              />
+              <path
+                d="M160 72.07c1.73 8.19 1.73 9.05 1.73 10.13 0 14-15.74 21.77-36.43 21.77C78.54 104 37.58 76.6 37.58 58.49a18.45 18.45 0 0 1 1.51-7.33l3.66-9.06A6.43 6.43 0 0 0 42.53 44c0 9.22 36.3 39.45 84.94 39.45 12.51 0 30.61-2.58 30.61-17.46a14 14 0 0 0-.31-3.42Z"
+                fill="#000000"
+              />
+            </svg>
+          ) : (
+            <OpenScoreLogo variant="light" className="h-8 w-auto" />
+          )}
+        </Link>
+      </div>
+
+      {/* Nav links */}
+      <nav className={cn("flex-1 overflow-y-auto py-4 space-y-1", collapsed ? "px-2" : "px-3")}>
+        {navLinks.map(({ href, label, icon: Icon }) => (
+          <Link
+            key={href}
+            href={href}
+            onClick={onNavigate}
+            title={collapsed ? label : undefined}
+            className={cn(
+              "flex items-center rounded-lg transition-all duration-150",
+              collapsed
+                ? "justify-center p-2.5"
+                : "gap-3 px-3 py-2.5 text-sm font-medium",
+              pathname === href
+                ? "bg-gradient-to-r from-rh/30 to-rh/10 text-white"
+                : "text-white/50 hover:text-white hover:bg-white/[0.07]"
+            )}
+          >
+            <Icon className="h-4 w-4 shrink-0" />
+            {!collapsed && label}
+          </Link>
+        ))}
+
+      </nav>
+
+      {/* Admin section */}
+      {isAdmin && (
+        <div className={cn(
+          "shrink-0 border-t border-white/[0.08] py-3 space-y-1",
+          collapsed ? "px-2" : "px-3"
+        )}>
+          {!collapsed && (
+            <div className="flex items-center gap-2 px-3 pb-1">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-rh/50">Admin</span>
+            </div>
+          )}
+          <Link
+            href="/admin/results"
+            onClick={onNavigate}
+            title={collapsed ? "Results" : undefined}
+            className={cn(
+              "flex items-center rounded-lg transition-all duration-150",
+              collapsed ? "justify-center p-2.5" : "gap-3 px-3 py-2.5 text-sm font-medium",
+              pathname === "/admin/results"
+                ? "text-rh/80 bg-rh/10"
+                : "text-rh/50 hover:text-rh/80 hover:bg-rh/10"
+            )}
+          >
+            <ClipboardList className="h-4 w-4 shrink-0" />
+            {!collapsed && "Results"}
+          </Link>
+          <Link
+            href="/admin/usuarios"
+            onClick={onNavigate}
+            title={collapsed ? "Users" : undefined}
+            className={cn(
+              "flex items-center rounded-lg transition-all duration-150",
+              collapsed ? "justify-center p-2.5" : "gap-3 px-3 py-2.5 text-sm font-medium",
+              pathname === "/admin/usuarios"
+                ? "text-rh/80 bg-rh/10"
+                : "text-rh/50 hover:text-rh/80 hover:bg-rh/10"
+            )}
+          >
+            <Users className="h-4 w-4 shrink-0" />
+            {!collapsed && "Users"}
+          </Link>
+        </div>
+      )}
+
+      {/* Bottom section */}
+      <div className={cn(
+        "shrink-0 border-t border-white/[0.08] py-3 space-y-1",
+        collapsed ? "px-2" : "px-3"
+      )}>
+        {/* Collapse toggle (desktop only) */}
+        {onToggleCollapse && (
+          <button
+            onClick={onToggleCollapse}
+            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            className={cn(
+              "flex w-full items-center rounded-lg text-white/40 hover:text-white hover:bg-white/[0.07] transition-all duration-150",
+              collapsed ? "justify-center p-2.5" : "gap-3 px-3 py-2.5 text-sm font-medium"
+            )}
+          >
+            {collapsed
+              ? <PanelLeftOpen className="h-4 w-4 shrink-0" />
+              : <PanelLeftClose className="h-4 w-4 shrink-0" />
+            }
+            {!collapsed && "Collapse"}
+          </button>
+        )}
+
+        {/* Switch to navbar */}
+        <button
+          onClick={() => { onToggleLayout?.(); onNavigate?.(); }}
+          title={collapsed ? "Navbar layout" : undefined}
+          className={cn(
+            "flex w-full items-center rounded-lg text-white/40 hover:text-white hover:bg-white/[0.07] transition-all duration-150",
+            collapsed ? "justify-center p-2.5" : "gap-3 px-3 py-2.5 text-sm font-medium"
+          )}
+        >
+          <PanelTop className="h-4 w-4 shrink-0" />
+          {!collapsed && "Navbar layout"}
+        </button>
+
+        {/* User */}
+        {status === "loading" && (
+          <div className={cn("rounded-lg bg-white/10 animate-pulse", collapsed ? "h-9 w-9 mx-auto" : "h-9")} />
+        )}
+        {status === "authenticated" && session && (
+          <>
+            <Link
+              href="/profile"
+              onClick={onNavigate}
+              title={collapsed ? ((session.user as any)?.nombre ?? session.user?.name ?? "Profile") : undefined}
+              className={cn(
+                "flex items-center rounded-lg transition-all duration-150",
+                collapsed ? "justify-center p-2.5" : "gap-3 px-3 py-2.5 text-sm font-medium",
+                pathname === "/profile"
+                  ? "bg-gradient-to-r from-rh/30 to-rh/10 text-white"
+                  : "text-white/50 hover:text-white hover:bg-white/[0.07]"
+              )}
+            >
+              <UserCircle className="h-4 w-4 shrink-0" />
+              {!collapsed && (
+                <span className="truncate">
+                  {(session.user as any)?.nombre ?? session.user?.name}
+                </span>
+              )}
+            </Link>
+            <form action={logoutAction}>
+              <button
+                type="submit"
+                title={collapsed ? "Logout" : undefined}
+                className={cn(
+                  "flex w-full items-center rounded-lg text-white/50 hover:text-white hover:bg-white/[0.07] transition-all duration-150",
+                  collapsed ? "justify-center p-2.5" : "gap-3 px-3 py-2.5 text-sm font-medium"
+                )}
+              >
+                <LogOut className="h-4 w-4 shrink-0" />
+                {!collapsed && "Logout"}
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default function Sidebar() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { toggle, collapsed, toggleCollapsed } = useLayout();
+
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }
+  }, [mobileOpen]);
+
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <aside
+        className={cn(
+          "hidden md:fixed md:inset-y-0 md:left-0 md:z-40 md:flex md:flex-col bg-slate-950 border-r border-white/[0.08] transition-[width] duration-200",
+          collapsed ? "md:w-16" : "md:w-60"
+        )}
+      >
+        <SidebarContent
+          collapsed={collapsed}
+          onToggleLayout={toggle}
+          onToggleCollapse={toggleCollapsed}
+        />
+      </aside>
+
+      {/* Mobile top bar */}
+      <div className="sticky top-0 z-50 flex h-14 items-center gap-3 border-b border-slate-200 bg-slate-50 px-4 md:hidden">
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-200 transition-colors"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+        <Link href="/" className="flex items-center">
+          <OpenScoreLogo variant="dark" className="h-7 w-auto" />
+        </Link>
+      </div>
+
+      {/* Mobile drawer overlay */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setMobileOpen(false)}
+          />
+          <aside className="relative flex h-full w-64 flex-col bg-slate-950 shadow-2xl animate-in slide-in-from-left duration-200">
+            <button
+              onClick={() => setMobileOpen(false)}
+              className="absolute right-3 top-4 rounded-lg p-1.5 text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <SidebarContent
+              collapsed={false}
+              onNavigate={() => setMobileOpen(false)}
+              onToggleLayout={toggle}
+            />
+          </aside>
+        </div>
+      )}
+    </>
+  );
+}

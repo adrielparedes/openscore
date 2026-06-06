@@ -6,6 +6,7 @@ import OpenScoreLogo from "@/components/ui/OpenScoreLogo";
 import { useSession } from "next-auth/react";
 import { logoutAction } from "@/actions/auth";
 import { cn } from "@/lib/utils";
+import { useLayout } from "@/components/providers/LayoutProvider";
 import {
   Home,
   TrendingUp,
@@ -20,6 +21,7 @@ import {
   Shield,
   ChevronDown,
   Table,
+  PanelLeft,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
@@ -34,6 +36,7 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
+  const { toggle } = useLayout();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
   const adminRef = useRef<HTMLDivElement>(null);
@@ -50,7 +53,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-xl border-b border-white/[0.08]">
+    <nav className="sticky top-0 z-50 bg-slate-950 border-b border-white/[0.08]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
 
@@ -92,7 +95,7 @@ export default function Navbar() {
                   <ChevronDown className={cn("h-3 w-3 transition-transform duration-150", adminOpen && "rotate-180")} />
                 </button>
                 {adminOpen && (
-                  <div className="absolute right-0 top-full mt-1.5 w-44 rounded-xl border border-white/[0.08] bg-slate-950/95 backdrop-blur-xl shadow-xl py-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                  <div className="absolute right-0 top-full mt-1.5 w-44 rounded-xl border border-white/[0.08] bg-slate-950 shadow-xl py-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
                     <Link
                       href="/admin/results"
                       onClick={() => setAdminOpen(false)}
@@ -127,6 +130,13 @@ export default function Navbar() {
 
           {/* User + logout */}
           <div className="hidden md:flex items-center gap-0.5">
+            <button
+              onClick={toggle}
+              title="Switch to sidebar layout"
+              className="flex items-center gap-1.5 rounded-full p-2 text-white/40 hover:text-white hover:bg-white/10 transition-all duration-150"
+            >
+              <PanelLeft className="h-3.5 w-3.5" />
+            </button>
             {status === "loading" && (
               <div className="h-8 w-32 rounded-full bg-white/10 animate-pulse" />
             )}
@@ -169,7 +179,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-white/[0.08] bg-slate-950/95 backdrop-blur-xl px-4 pb-4 pt-2 space-y-0.5">
+        <div className="md:hidden border-t border-white/[0.08] bg-slate-950 px-4 pb-4 pt-2 space-y-0.5">
           {navLinks.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
@@ -220,6 +230,15 @@ export default function Navbar() {
               </Link>
             </>
           )}
+          <div className="mt-2 pt-2 border-t border-white/[0.06]">
+            <button
+              onClick={() => { toggle(); setMobileOpen(false); }}
+              className="flex w-full items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-white/40 hover:text-white hover:bg-white/10 transition-all duration-150"
+            >
+              <PanelLeft className="h-4 w-4" />
+              Sidebar layout
+            </button>
+          </div>
           {status === "authenticated" && session && (
             <>
               <Link

@@ -1,16 +1,13 @@
-import Navbar from "@/components/layout/Navbar";
+import { LayoutProvider } from "@/components/providers/LayoutProvider";
+import AppShell from "@/components/layout/AppShell";
 import { CountdownProvider } from "@/components/providers/CountdownProvider";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50">
-      <Navbar />
-      <main className="flex-1">
+    <LayoutProvider>
+      <AppShell>
         <CountdownProvider>{children}</CountdownProvider>
-      </main>
-      <footer className="border-t border-slate-200 py-6 text-center text-sm text-slate-400">
-        Openscore © {new Date().getFullYear()}
-      </footer>
-    </div>
+      </AppShell>
+    </LayoutProvider>
   );
 }
