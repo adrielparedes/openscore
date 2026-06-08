@@ -38,7 +38,7 @@ export async function updateFasePuntos(
     select: { id: true, codigo: true, nombre: true, puntos: true },
   });
 
-  revalidateTag("ranking");
+  revalidateTag("ranking", "max");
 
   return fase;
 }
