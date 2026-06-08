@@ -19,6 +19,61 @@ export default function RulesPage() {
         <p className="text-slate-500 text-sm mt-1">How Openscore works.</p>
       </div>
 
+      {/* Participation & Eligibility */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Participation &amp; Eligibility</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-disc list-inside space-y-3 text-sm text-slate-600">
+            <li>To participate, you must be registered.</li>
+            <li>
+              Only Red Hat associates from Argentina, Chile, Peru, Colombia/CEACA and Mexico can win
+              prizes/rewards, using their corporate e-mail address (only one Red Hat e-mail account
+              per person).
+            </li>
+            <li>
+              Remote employees can participate but only if they are located in Latin America, linked
+              to a Red Hat office.
+            </li>
+            <li>
+              Contractors with a Red Hat e-mail address can participate but are not allowed to
+              receive rewards.
+            </li>
+            <li>
+              Participants may register any time during the World Cup and until the day before the
+              final match. Points will be awarded only for the matches for which predictions were
+              entered; consequently, <strong className="text-slate-900">0 (ZERO)</strong> points
+              will be awarded for matches with no predictions entered.
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+
+      {/* Prizes & Winners */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Prizes &amp; Winners</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-disc list-inside space-y-3 text-sm text-slate-600">
+            <li>
+              There will be one winner in each Red Hat office:{" "}
+              <strong className="text-slate-900">1 (ONE)</strong> winner in Argentina,{" "}
+              <strong className="text-slate-900">1 (ONE)</strong> winner in Brazil,{" "}
+              <strong className="text-slate-900">1 (ONE)</strong> winner in Chile,{" "}
+              <strong className="text-slate-900">1 (ONE)</strong> winner in Colombia/CEACA,{" "}
+              <strong className="text-slate-900">1 (ONE)</strong> winner in Peru, and{" "}
+              <strong className="text-slate-900">1 (ONE)</strong> winner in Mexico.
+            </li>
+            <li>
+              In the case of a tie in the first place of each sub-region, a random drawing will
+              take place to determine the winner.
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+
       {/* Making Predictions — full width */}
       <Card>
         <CardHeader>
@@ -84,13 +139,13 @@ export default function RulesPage() {
         <div className="flex-1 flex flex-col gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Penalty Shootouts</CardTitle>
+              <CardTitle>Knockout Stages</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-slate-600">
-                In knock-out stages, if a match goes to penalties, the winner is determined by the
-                penalty shootout result — <strong className="text-slate-900">not</strong> by the score
-                after extra time. Predict accordingly.
+                For predictions from the <strong className="text-slate-900">Round of 32</strong>{" "}
+                onwards, the 90 minutes of the match plus the additional time, if any, and
+                penalties will be taken into account.
               </p>
             </CardContent>
           </Card>
