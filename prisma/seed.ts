@@ -96,7 +96,7 @@ async function main() {
     { codigo: "OCTAVOS", nombre: "Round of 16", puntos: 3 },
     { codigo: "CUARTOS", nombre: "Quarter-finals", puntos: 4 },
     { codigo: "SEMI", nombre: "Semi-finals", puntos: 5 },
-    { codigo: "TERCER", nombre: "3rd Place", puntos: 5 },
+    { codigo: "TERCER", nombre: "3rd Place", puntos: 6 },
     { codigo: "FINAL", nombre: "Final", puntos: 6 },
   ];
 

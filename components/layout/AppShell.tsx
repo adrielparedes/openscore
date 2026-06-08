@@ -3,6 +3,7 @@
 import { useLayout } from "@/components/providers/LayoutProvider";
 import Sidebar from "@/components/layout/Sidebar";
 import Navbar from "@/components/layout/Navbar";
+import Breadcrumb from "@/components/layout/Breadcrumb";
 import { cn } from "@/lib/utils";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
@@ -12,6 +13,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     return (
       <div className="flex min-h-screen flex-col bg-slate-50">
         <Navbar />
+        <Breadcrumb />
         <main className="flex-1">{children}</main>
         <footer className="border-t border-slate-200 py-6 text-center text-sm text-slate-400">
           Openscore © {new Date().getFullYear()}
@@ -29,6 +31,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           collapsed ? "md:pl-16" : "md:pl-60"
         )}
       >
+        <Breadcrumb />
         <main className="flex-1">{children}</main>
         <footer className="border-t border-slate-200 py-6 text-center text-sm text-slate-400">
           Openscore © {new Date().getFullYear()}
