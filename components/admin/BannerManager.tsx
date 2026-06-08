@@ -89,42 +89,42 @@ export default function BannerManager({ banners: initial }: { banners: Banner[] 
   return (
     <div className="space-y-6">
       {/* Upload form */}
-      <form onSubmit={handleUpload} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
-        <h2 className="font-bold text-slate-900 flex items-center gap-2">
+      <form onSubmit={handleUpload} className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-4">
+        <h2 className="font-bold text-foreground flex items-center gap-2">
           <Plus className="h-4 w-4" />
           Add new banner
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-600">Image *</label>
+            <label className="text-xs font-medium text-muted-foreground">Image *</label>
             <input
               ref={fileRef}
               type="file"
               name="file"
               accept="image/jpeg,image/png,image/webp,image/gif"
-              className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100"
+              className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-rose-50 dark:file:bg-rose-900/20 file:text-rose-700 dark:file:text-rose-400 hover:file:bg-rose-100 dark:hover:file:bg-rose-900/30"
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-600">Title (optional)</label>
+            <label className="text-xs font-medium text-muted-foreground">Title (optional)</label>
             <input
               type="text"
               name="titulo"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               placeholder="Banner title"
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"
+              className="w-full rounded-lg border border-border bg-card text-foreground px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-600">Link URL (optional)</label>
+            <label className="text-xs font-medium text-muted-foreground">Link URL (optional)</label>
             <input
               type="url"
               name="linkUrl"
               value={newLink}
               onChange={(e) => setNewLink(e.target.value)}
               placeholder="https://..."
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"
+              className="w-full rounded-lg border border-border bg-card text-foreground px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"
             />
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function BannerManager({ banners: initial }: { banners: Banner[] 
       {/* Banner list */}
       <div className="space-y-2">
         {banners.length === 0 && (
-          <p className="text-sm text-slate-400 text-center py-8">No banners yet. Upload one above.</p>
+          <p className="text-sm text-muted-foreground text-center py-8">No banners yet. Upload one above.</p>
         )}
         {banners.map((banner, idx) => (
           <div
@@ -150,12 +150,12 @@ export default function BannerManager({ banners: initial }: { banners: Banner[] 
             onDragStart={() => handleDragStart(idx)}
             onDragOver={(e) => handleDragOver(e, idx)}
             onDragEnd={handleDragEnd}
-            className={`flex items-center gap-4 rounded-xl border bg-white p-3 shadow-sm transition-all ${
-              dragIdx === idx ? "border-rose-300 shadow-md scale-[1.01]" : "border-slate-200"
+            className={`flex items-center gap-4 rounded-xl border bg-card p-3 shadow-sm transition-all ${
+              dragIdx === idx ? "border-rose-300 dark:border-rose-700 shadow-md scale-[1.01]" : "border-border"
             } ${!banner.activo ? "opacity-60" : ""}`}
           >
-            <GripVertical className="h-4 w-4 text-slate-300 cursor-grab shrink-0" />
-            <div className="h-16 w-28 rounded-lg overflow-hidden bg-slate-100 shrink-0 relative">
+            <GripVertical className="h-4 w-4 text-muted-foreground cursor-grab shrink-0" />
+            <div className="h-16 w-28 rounded-lg overflow-hidden bg-muted shrink-0 relative">
               <Image
                 src={banner.imagen}
                 alt={banner.titulo || "Banner"}
@@ -165,11 +165,11 @@ export default function BannerManager({ banners: initial }: { banners: Banner[] 
               />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-slate-900 truncate">
-                {banner.titulo || <span className="text-slate-400 italic">Untitled</span>}
+              <p className="text-sm font-medium text-foreground truncate">
+                {banner.titulo || <span className="text-muted-foreground italic">Untitled</span>}
               </p>
               {banner.linkUrl && (
-                <p className="text-xs text-slate-400 truncate flex items-center gap-1">
+                <p className="text-xs text-muted-foreground truncate flex items-center gap-1">
                   <ExternalLink className="h-3 w-3" />
                   {banner.linkUrl}
                 </p>
@@ -179,7 +179,7 @@ export default function BannerManager({ banners: initial }: { banners: Banner[] 
               onClick={() => handleToggle(banner)}
               disabled={isPending}
               title={banner.activo ? "Hide" : "Show"}
-              className="rounded-lg p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              className="rounded-lg p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
             >
               {banner.activo ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
             </button>
@@ -187,7 +187,7 @@ export default function BannerManager({ banners: initial }: { banners: Banner[] 
               onClick={() => handleDelete(banner.id)}
               disabled={isPending}
               title="Delete"
-              className="rounded-lg p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+              className="rounded-lg p-2 text-muted-foreground hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
             >
               <Trash2 className="h-4 w-4" />
             </button>
@@ -196,7 +196,7 @@ export default function BannerManager({ banners: initial }: { banners: Banner[] 
       </div>
 
       {isPending && (
-        <p className="text-xs text-slate-400 text-center">Saving...</p>
+        <p className="text-xs text-muted-foreground text-center">Saving...</p>
       )}
     </div>
   );

@@ -155,33 +155,33 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
   if (deleted) return null;
 
   return (
-    <div className={`rounded-2xl border shadow-sm overflow-hidden transition-colors ${isBlocked ? "border-amber-200 bg-amber-50/30" : "border-slate-200 bg-white"}`}>
+    <div className={`rounded-2xl border shadow-sm overflow-hidden transition-colors ${isBlocked ? "border-amber-200 dark:border-amber-800/50 bg-amber-50/30 dark:bg-amber-900/20" : "border-border bg-card"}`}>
       <div className="flex items-center gap-4 px-5 py-4">
-        <div className={`h-10 w-10 rounded-full flex items-center justify-center shrink-0 ${isBlocked ? "bg-amber-100" : "bg-slate-100"}`}>
-          <User className={`h-5 w-5 ${isBlocked ? "text-amber-500" : "text-slate-500"}`} />
+        <div className={`h-10 w-10 rounded-full flex items-center justify-center shrink-0 ${isBlocked ? "bg-amber-100 dark:bg-amber-900/30" : "bg-muted"}`}>
+          <User className={`h-5 w-5 ${isBlocked ? "text-amber-500 dark:text-amber-400" : "text-muted-foreground"}`} />
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <p className="font-semibold text-slate-900 text-sm truncate">
+            <p className="font-semibold text-foreground text-sm truncate">
               {usuario.nombre} {usuario.apellido}
             </p>
             {isAdmin && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2 py-0.5 text-xs font-medium text-rose-700">
+              <span className="inline-flex items-center gap-1 rounded-full bg-rose-100 dark:bg-rose-900/20 px-2 py-0.5 text-xs font-medium text-rose-700 dark:text-rose-400">
                 <Shield className="h-3 w-3" />
                 Admin
               </span>
             )}
             {isBlocked && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 text-xs font-medium text-amber-700 dark:text-amber-400">
                 <Lock className="h-3 w-3" />
                 Blocked
               </span>
             )}
           </div>
           <div className="flex items-center gap-3 mt-0.5">
-            <p className="text-xs text-slate-400 truncate">{usuario.email}</p>
-            <span className="flex items-center gap-1 text-xs text-slate-400">
+            <p className="text-xs text-muted-foreground truncate">{usuario.email}</p>
+            <span className="flex items-center gap-1 text-xs text-muted-foreground">
               <Globe className="h-3 w-3" />
               {usuario.pais.nombre}
             </span>
@@ -195,8 +195,8 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
             title={isAdmin ? "Revoke admin" : "Grant admin"}
             className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors disabled:opacity-60 ${
               isAdmin
-                ? "border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 hover:border-rose-300"
-                : "border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300"
+                ? "border-rose-200 dark:border-rose-800/50 bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 hover:border-rose-300 dark:hover:border-rose-700"
+                : "border-border text-muted-foreground hover:bg-muted hover:border-border"
             }`}
           >
             {adminPending ? (
@@ -214,8 +214,8 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
             title={isBlocked ? "Unblock user" : "Block user"}
             className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors disabled:opacity-60 ${
               isBlocked
-                ? "border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100 hover:border-amber-300"
-                : "border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300"
+                ? "border-amber-200 dark:border-amber-800/50 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/30 hover:border-amber-300 dark:hover:border-amber-700"
+                : "border-border text-muted-foreground hover:bg-muted hover:border-border"
             }`}
           >
             {blockPending ? (
@@ -229,7 +229,7 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
           </button>
           <button
             onClick={handleToggleCard}
-            className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
+            className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-muted hover:border-border transition-colors"
           >
             <CreditCard className="h-3.5 w-3.5" />
             Card
@@ -237,7 +237,7 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
           </button>
           <button
             onClick={handleOpen}
-            className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
+            className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-muted hover:border-border transition-colors"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             Reset
@@ -249,8 +249,8 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
             title={deleteConfirm ? "Click again to confirm deletion" : "Delete user"}
             className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors disabled:opacity-60 ${
               deleteConfirm
-                ? "border-red-300 bg-red-50 text-red-700 hover:bg-red-100 hover:border-red-400"
-                : "border-slate-200 text-slate-600 hover:bg-red-50 hover:border-red-200 hover:text-red-600"
+                ? "border-red-300 dark:border-red-800/50 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 hover:border-red-400 dark:hover:border-red-700"
+                : "border-border text-muted-foreground hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-800/50 hover:text-red-600 dark:hover:text-red-400"
             }`}
           >
             {deletePending ? (
@@ -265,29 +265,29 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
         </div>
       </div>
       {adminError && (
-        <div className="border-t border-rose-100 bg-rose-50 px-5 py-2 text-xs text-rose-600">
+        <div className="border-t border-rose-100 dark:border-rose-800/50 bg-rose-50 dark:bg-rose-900/20 px-5 py-2 text-xs text-rose-600 dark:text-rose-400">
           {adminError}
         </div>
       )}
       {blockError && (
-        <div className="border-t border-amber-100 bg-amber-50 px-5 py-2 text-xs text-amber-700">
+        <div className="border-t border-amber-100 dark:border-amber-800/50 bg-amber-50 dark:bg-amber-900/20 px-5 py-2 text-xs text-amber-700 dark:text-amber-400">
           {blockError}
         </div>
       )}
       {deleteError && (
-        <div className="border-t border-red-100 bg-red-50 px-5 py-2 text-xs text-red-600">
+        <div className="border-t border-red-100 dark:border-red-800/50 bg-red-50 dark:bg-red-900/20 px-5 py-2 text-xs text-red-600 dark:text-red-400">
           {deleteError}
         </div>
       )}
       {deleteConfirm && !deletePending && (
-        <div className="border-t border-red-100 bg-red-50 px-5 py-2 flex items-center justify-between">
-          <span className="text-xs text-red-700 flex items-center gap-1.5">
+        <div className="border-t border-red-100 dark:border-red-800/50 bg-red-50 dark:bg-red-900/20 px-5 py-2 flex items-center justify-between">
+          <span className="text-xs text-red-700 dark:text-red-400 flex items-center gap-1.5">
             <AlertTriangle className="h-3.5 w-3.5" />
             This will permanently delete <strong>{usuario.nombre} {usuario.apellido}</strong>. Click Delete again to confirm.
           </span>
           <button
             onClick={() => setDeleteConfirm(false)}
-            className="text-xs text-slate-500 hover:text-slate-700 ml-4"
+            className="text-xs text-muted-foreground hover:text-foreground ml-4"
           >
             Cancel
           </button>
@@ -295,11 +295,11 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
       )}
 
       {cardOpen && (
-        <div className="border-t border-slate-100 bg-slate-50 px-5 py-4 flex items-center justify-center min-h-[80px]">
+        <div className="border-t border-border bg-muted px-5 py-4 flex items-center justify-center min-h-[80px]">
           {cardLoading ? (
-            <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
+            <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
           ) : stickerCard ? (
-            <div className="relative w-32 aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+            <div className="relative w-32 aspect-[3/4] rounded-xl overflow-hidden border border-border shadow-sm">
               <Image
                 src={stickerCard}
                 alt={`${usuario.nombre}'s sticker card`}
@@ -309,13 +309,13 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
               />
             </div>
           ) : (
-            <p className="text-sm text-slate-400 italic">No sticker card uploaded</p>
+            <p className="text-sm text-muted-foreground italic">No sticker card uploaded</p>
           )}
         </div>
       )}
 
       {open && (
-        <div className="border-t border-slate-100 bg-slate-50 px-5 py-4">
+        <div className="border-t border-border bg-muted px-5 py-4">
           {success ? (
             <div className="flex items-center gap-2 text-green-700 text-sm font-medium">
               <CheckCircle className="h-4 w-4" />
@@ -325,7 +325,7 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
             <form onSubmit={handleReset} className="flex flex-col gap-3">
               <div className="flex flex-col gap-1.5">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-medium text-slate-600">
+                  <label className="text-xs font-medium text-muted-foreground">
                     New password for {usuario.nombre}
                   </label>
                   <button
@@ -347,12 +347,12 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
                       placeholder="Min 6 characters"
                       minLength={6}
                       required
-                      className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 pr-9 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent font-mono"
+                      className="w-full rounded-lg border border-border bg-card px-3 py-2 pr-9 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent font-mono"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword((s) => !s)}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                       tabIndex={-1}
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -363,7 +363,7 @@ export default function AdminResetPasswordCard({ usuario }: { usuario: Usuario }
                     type="button"
                     onClick={handleCopy}
                     title="Copy password"
-                    className="shrink-0 flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
+                    className="shrink-0 flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium text-muted-foreground hover:bg-muted hover:border-border transition-colors"
                   >
                     {copied ? (
                       <>

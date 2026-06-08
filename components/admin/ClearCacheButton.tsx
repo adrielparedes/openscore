@@ -16,7 +16,7 @@ export default function ClearCacheButton() {
     <button
       onClick={handleClick}
       disabled={pending}
-      className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 disabled:opacity-50 transition-colors"
+      className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-foreground shadow-sm hover:bg-muted disabled:opacity-50 transition-colors"
     >
       {pending ? "Clearing…" : "Clear Cache"}
     </button>

@@ -124,22 +124,22 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
   };
 
   const scoreInput =
-    "w-14 h-10 text-center text-lg font-bold rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent disabled:opacity-50";
+    "w-14 h-10 text-center text-lg font-bold rounded-xl border border-border bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent disabled:opacity-50";
 
   const teamSelect =
-    "w-full rounded-lg border border-slate-200 bg-white text-slate-800 text-xs font-medium px-2 py-1 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent cursor-pointer";
+    "w-full rounded-lg border border-border bg-card text-foreground text-xs font-medium px-2 py-1 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent cursor-pointer";
 
   return (
     <div
       className={cn(
-        "rounded-2xl border bg-white shadow-sm overflow-hidden transition-all",
-        match.status === "FINISHED" ? "border-emerald-200" : "border-slate-200",
+        "rounded-2xl border bg-card shadow-sm overflow-hidden transition-all",
+        match.status === "FINISHED" ? "border-emerald-200" : "border-border",
         pending && "opacity-60 pointer-events-none"
       )}
     >
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-3">
-        <div className="flex items-center gap-2 text-xs text-slate-500">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <CalendarClock className="h-3.5 w-3.5" />
           <span suppressHydrationWarning>{matchDate}</span>
         </div>
@@ -163,8 +163,8 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
             className={cn(
               "flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium transition-colors",
               editingTeams
-                ? "bg-rose-100 text-rose-600 hover:bg-rose-200"
-                : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                ? "bg-rose-100 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 hover:bg-rose-200 dark:hover:bg-rose-900/30"
+                : "bg-muted text-muted-foreground hover:bg-secondary"
             )}
           >
             <Pencil className="h-3 w-3" />
@@ -184,7 +184,7 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
           )}
           {editingTeams ? (
             <div className="w-full flex items-center gap-1">
-              <Pencil className="h-3 w-3 text-slate-300 shrink-0" />
+              <Pencil className="h-3 w-3 text-muted-foreground shrink-0" />
               <select
                 value={localId}
                 onChange={(e) => {
@@ -203,10 +203,10 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
             </div>
           ) : (
             <>
-              <span className="font-bold text-slate-900 text-center text-sm leading-tight">
+              <span className="font-bold text-foreground text-center text-sm leading-tight">
                 {selectedLocal.nombre}
               </span>
-              <span className="text-xs text-slate-400 uppercase">{selectedLocal.codigo}</span>
+              <span className="text-xs text-muted-foreground uppercase">{selectedLocal.codigo}</span>
             </>
           )}
         </div>
@@ -223,7 +223,7 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
               className={scoreInput}
               placeholder="–"
             />
-            <span className="text-slate-400 font-bold text-lg">–</span>
+            <span className="text-muted-foreground font-bold text-lg">–</span>
             <input
               type="number"
               min={0}
@@ -240,7 +240,7 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
             <div
               className={cn(
                 "relative w-9 h-5 rounded-full transition-colors",
-                penales ? "bg-rose-500" : "bg-slate-200"
+                penales ? "bg-rose-500" : "bg-muted"
               )}
               onClick={() => {
                 setPenales((v) => !v);
@@ -252,12 +252,12 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
             >
               <div
                 className={cn(
-                  "absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform",
+                  "absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-card shadow transition-transform",
                   penales && "translate-x-4"
                 )}
               />
             </div>
-            <span className="text-xs text-slate-500 font-medium">Penalties</span>
+            <span className="text-xs text-muted-foreground font-medium">Penalties</span>
           </label>
 
           {/* Penalty score inputs */}
@@ -272,7 +272,7 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
                 className={cn(scoreInput, "w-12 h-9 text-base")}
                 placeholder="–"
               />
-              <span className="text-slate-300 text-xs font-semibold">pen</span>
+              <span className="text-muted-foreground text-xs font-semibold">pen</span>
               <input
                 type="number"
                 min={0}
@@ -295,7 +295,7 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
           )}
           {editingTeams ? (
             <div className="w-full flex items-center gap-1">
-              <Pencil className="h-3 w-3 text-slate-300 shrink-0" />
+              <Pencil className="h-3 w-3 text-muted-foreground shrink-0" />
               <select
                 value={visitanteId}
                 onChange={(e) => {
@@ -314,10 +314,10 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
             </div>
           ) : (
             <>
-              <span className="font-bold text-slate-900 text-center text-sm leading-tight">
+              <span className="font-bold text-foreground text-center text-sm leading-tight">
                 {selectedVisitante.nombre}
               </span>
-              <span className="text-xs text-slate-400 uppercase">{selectedVisitante.codigo}</span>
+              <span className="text-xs text-muted-foreground uppercase">{selectedVisitante.codigo}</span>
             </>
           )}
         </div>
@@ -343,7 +343,7 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
             <button
               onClick={handleSaveTeams}
               disabled={pending}
-              className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-sm font-medium px-3 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-1.5 rounded-xl border border-border bg-card hover:bg-muted text-foreground text-sm font-medium px-3 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
               Save teams
@@ -353,7 +353,7 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
             <button
               onClick={() => setConfirmReset(true)}
               disabled={pending}
-              className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white hover:bg-red-50 hover:border-red-200 text-slate-500 hover:text-red-500 text-sm font-medium px-3 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-1.5 rounded-xl border border-border bg-card hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-800/50 text-muted-foreground hover:text-red-500 dark:hover:text-red-400 text-sm font-medium px-3 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <RotateCcw className="h-3.5 w-3.5" />
               Reset
@@ -373,7 +373,7 @@ export default function ResultMatchCard({ match, equipos }: ResultMatchCardProps
               <button
                 onClick={() => setConfirmReset(false)}
                 disabled={pending}
-                className="rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 text-sm font-medium px-3 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="rounded-xl border border-border bg-card hover:bg-muted text-muted-foreground text-sm font-medium px-3 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Cancel
               </button>

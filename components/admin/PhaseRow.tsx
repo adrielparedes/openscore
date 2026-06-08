@@ -45,8 +45,8 @@ export default function PhaseRow({ fase }: PhaseRowProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-between rounded-2xl border bg-white px-5 py-4 shadow-sm transition-all",
-        saved ? "border-emerald-200" : "border-slate-200",
+        "flex items-center justify-between rounded-2xl border bg-card px-5 py-4 shadow-sm transition-all",
+        saved ? "border-emerald-200" : "border-border",
         pending && "opacity-60 pointer-events-none"
       )}
     >
@@ -54,12 +54,12 @@ export default function PhaseRow({ fase }: PhaseRowProps) {
         <Badge variant={fase.puntos >= 4 ? "warning" : "default"}>
           {fase.codigo}
         </Badge>
-        <span className="font-medium text-slate-900">{fase.nombre}</span>
+        <span className="font-medium text-foreground">{fase.nombre}</span>
       </div>
 
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
-          <label className="text-xs text-slate-500 font-medium">Points</label>
+          <label className="text-xs text-muted-foreground font-medium">Points</label>
           <input
             type="number"
             min={0}
@@ -70,7 +70,7 @@ export default function PhaseRow({ fase }: PhaseRowProps) {
               setSaved(false);
               setError(null);
             }}
-            className="w-16 h-9 text-center text-lg font-bold rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+            className="w-16 h-9 text-center text-lg font-bold rounded-xl border border-border bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
           />
         </div>
 
