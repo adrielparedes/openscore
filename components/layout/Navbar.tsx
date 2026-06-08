@@ -23,6 +23,7 @@ import {
   Table,
   PanelLeft,
   SlidersHorizontal,
+  ImageIcon,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
@@ -135,6 +136,19 @@ export default function Navbar() {
                     >
                       <SlidersHorizontal className="h-3.5 w-3.5" />
                       Phases
+                    </Link>
+                    <Link
+                      href="/admin/banners"
+                      onClick={() => setAdminOpen(false)}
+                      className={cn(
+                        "flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                        pathname === "/admin/banners"
+                          ? "text-rh/80 bg-rh/10"
+                          : "text-white/50 hover:text-white hover:bg-white/10"
+                      )}
+                    >
+                      <ImageIcon className="h-3.5 w-3.5" />
+                      Banners
                     </Link>
                   </div>
                 )}
@@ -254,6 +268,19 @@ export default function Navbar() {
               >
                 <SlidersHorizontal className="h-4 w-4" />
                 Phases
+              </Link>
+              <Link
+                href="/admin/banners"
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                  pathname === "/admin/banners"
+                    ? "bg-gradient-to-r from-rh/40 to-rh/15 text-rh/80"
+                    : "text-rh/60 hover:text-rh/80 hover:bg-rh/15"
+                )}
+              >
+                <ImageIcon className="h-4 w-4" />
+                Banners
               </Link>
             </>
           )}

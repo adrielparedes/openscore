@@ -180,3 +180,15 @@ model PreguntaSecreta {
   updatedAt DateTime  @updatedAt
   usuarios  Usuario[]
 }
+
+model Banner {
+  id        Int      @id @default(autoincrement())
+  titulo    String?
+  imagen    String   @db.Text
+  orden     Int      @default(0)
+  activo    Boolean  @default(true)
+  linkUrl   String?
+  deleted   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

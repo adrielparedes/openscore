@@ -1,7 +1,9 @@
 import { auth } from "@/lib/auth";
 import { getRanking } from "@/actions/ranking";
 import { getNextMatchPronostico } from "@/actions/pronosticos";
+import { getActiveBanners } from "@/actions/banners";
 import { WorldCupCountdown } from "@/components/ui/WorldCupCountdown";
+import { HomeCarousel } from "@/components/ui/HomeCarousel";
 import NextMatchCard from "@/components/forecast/NextMatchCard";
 import StickerCardDisplay from "@/components/profile/StickerCardDisplay";
 import Image from "next/image";
@@ -12,9 +14,10 @@ export default async function HomePage() {
   const session = await auth();
   const nombre = (session?.user as any)?.nombre ?? session?.user?.name ?? "there";
   const usuarioId = session?.user?.id ? parseInt(session.user.id) : undefined;
-  const [topRanking, nextMatch] = await Promise.all([
+  const [topRanking, nextMatch, banners] = await Promise.all([
     getRanking({ size: 3 }),
     getNextMatchPronostico(usuarioId),
+    getActiveBanners(),
   ]);
 
   return (
@@ -42,7 +45,11 @@ export default async function HomePage() {
         </section>
 
         <div className="lg:col-span-2 lg:row-span-2 flex">
-          <WorldCupCountdown className="flex-1" />
+          {banners.length > 0 ? (
+            <HomeCarousel banners={banners} />
+          ) : (
+            <WorldCupCountdown className="flex-1" />
+          )}
         </div>
 
         <Link
