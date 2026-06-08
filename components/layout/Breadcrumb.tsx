@@ -15,6 +15,7 @@ const LABELS: Record<string, string> = {
   admin: "Admin",
   results: "Results",
   usuarios: "Users",
+  phases: "Phases",
 };
 
 function getLabel(segment: string): string {
@@ -25,7 +26,18 @@ export default function Breadcrumb() {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
 
-  if (segments.length === 0) return null;
+  if (segments.length === 0) {
+    return (
+      <nav aria-label="Breadcrumb" className="px-4 pt-4 sm:px-6 lg:px-8">
+        <ol className="flex items-center gap-1.5 text-sm text-slate-500">
+          <li className="flex items-center gap-1">
+            <Home className="h-3.5 w-3.5 text-slate-400" />
+            <span className="font-medium text-slate-700">Home</span>
+          </li>
+        </ol>
+      </nav>
+    );
+  }
 
   const crumbs = segments.map((seg, i) => ({
     label: getLabel(seg),
