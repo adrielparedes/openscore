@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { getPartidos, getEquipos } from "@/actions/partidos";
 import ResultMatchCard from "@/components/admin/ResultMatchCard";
+import ClearCacheButton from "@/components/admin/ClearCacheButton";
 import { redirect } from "next/navigation";
 
 export default async function AdminResultsPage() {
@@ -14,9 +15,12 @@ export default async function AdminResultsPage() {
 
   return (
     <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900">Match Results</h1>
-        <p className="text-slate-500 text-sm mt-1">Enter or update scores for each match.</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900">Match Results</h1>
+          <p className="text-slate-500 text-sm mt-1">Enter or update scores for each match.</p>
+        </div>
+        <ClearCacheButton />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

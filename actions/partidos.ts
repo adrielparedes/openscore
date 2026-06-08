@@ -183,3 +183,17 @@ export async function resetResultado(partidoId: number) {
     revalidatePath("/standings");
   });
 }
+
+export async function invalidateAllCaches() {
+  const session = await auth();
+  const roles = (session?.user as any)?.roles ?? [];
+  if (!roles.includes("ADMIN")) throw new Error("Unauthorized");
+
+  updateTag("matches");
+  revalidateTag("ranking", "max");
+  revalidatePath("/", "layout");
+  revalidatePath("/forecast");
+  revalidatePath("/leaderboard");
+  revalidatePath("/standings");
+  revalidatePath("/admin/results");
+}

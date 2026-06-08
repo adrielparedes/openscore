@@ -7,7 +7,7 @@ const PHASES = [
   { name: "Round of 16", codigo: "OCTAVOS", points: 3, description: "Triple points" },
   { name: "Quarter-finals", codigo: "CUARTOS", points: 4, description: "Quadruple points" },
   { name: "Semi-finals", codigo: "SEMI", points: 5, description: "Five times the points" },
-  { name: "3rd Place", codigo: "TERCER", points: 5, description: "Bronze match" },
+  { name: "3rd Place", codigo: "TERCER", points: 6, description: "Bronze match — same as the Final!" },
   { name: "Final", codigo: "FINAL", points: 6, description: "Maximum points — 6x!" },
 ];
 
