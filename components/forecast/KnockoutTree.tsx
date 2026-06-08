@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect, useCallback } from "react";
 import MatchCard from "./MatchCard";
 import { flagUrl } from "@/lib/flags";
 import { X, Timer } from "lucide-react";
@@ -329,6 +329,18 @@ interface KnockoutTreeProps {
 
 export default function KnockoutTree({ matches }: KnockoutTreeProps) {
   const { mode, zoom, mounted } = useBracket();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  const measureContainer = useCallback(() => {
+    if (containerRef.current) setContainerWidth(containerRef.current.clientWidth);
+  }, []);
+
+  useEffect(() => {
+    measureContainer();
+    window.addEventListener("resize", measureContainer);
+    return () => window.removeEventListener("resize", measureContainer);
+  }, [measureContainer]);
 
   if (!mounted) {
     return (
@@ -336,19 +348,21 @@ export default function KnockoutTree({ matches }: KnockoutTreeProps) {
     );
   }
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  // Deriva siempre del array actualizado — así refleja la predicción recién guardada
   const selected = selectedId != null ? (matches.find(m => m.id === selectedId) ?? null) : null;
 
   const cfg = CONFIGS[mode];
   const layout = useMemo(() => buildLayout(matches, cfg), [matches, cfg]);
   const totalH = layout.totalHeight + cfg.HEADER_H + cfg.CONTENT_PAD;
 
+  const fitScale = containerWidth > 0 ? containerWidth / layout.totalWidth : 1;
+  const effectiveZoom = zoom * fitScale;
+
   return (
-    <div>
+    <div ref={containerRef}>
 
       <div className="overflow-x-auto overflow-y-auto">
-        <div style={{ width: layout.totalWidth * zoom, height: totalH * zoom }}>
-          <div style={{ transformOrigin: "top left", transform: `scale(${zoom})`, width: layout.totalWidth, height: totalH }}>
+        <div style={{ width: layout.totalWidth * effectiveZoom, height: totalH * effectiveZoom }}>
+          <div style={{ transformOrigin: "top left", transform: `scale(${effectiveZoom})`, width: layout.totalWidth, height: totalH }}>
             <div className="relative mx-auto" style={{ width: layout.totalWidth, height: totalH }}>
 
               {/* Phase headers */}

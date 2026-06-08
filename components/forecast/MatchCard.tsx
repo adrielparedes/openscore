@@ -135,9 +135,9 @@ export default function MatchCard({ match }: MatchCardProps) {
           <TeamName nombre={match.local.nombre} codigo={match.local.codigo} />
         </div>
 
-        <div className="flex flex-col items-center gap-1 px-2">
+        <div className="flex flex-col items-center gap-1 px-2 shrink-0">
           {match.status === "FINISHED" ? (
-            <div className="text-2xl font-bold text-slate-900 tabular-nums">
+            <div className="text-2xl font-bold text-slate-900 tabular-nums whitespace-nowrap">
               {match.resultadoLocal} – {match.resultadoVisitante}
             </div>
           ) : (
