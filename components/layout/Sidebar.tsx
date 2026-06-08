@@ -22,6 +22,7 @@ import {
   PanelTop,
   PanelLeftClose,
   PanelLeftOpen,
+  SlidersHorizontal,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -138,6 +139,21 @@ function SidebarContent({
           >
             <Users className="h-4 w-4 shrink-0" />
             {!collapsed && "Users"}
+          </Link>
+          <Link
+            href="/admin/phases"
+            onClick={onNavigate}
+            title={collapsed ? "Phases" : undefined}
+            className={cn(
+              "flex items-center rounded-lg transition-all duration-150",
+              collapsed ? "justify-center p-2.5" : "gap-3 px-3 py-2.5 text-sm font-medium",
+              pathname === "/admin/phases"
+                ? "text-rh/80 bg-rh/10"
+                : "text-rh/50 hover:text-rh/80 hover:bg-rh/10"
+            )}
+          >
+            <SlidersHorizontal className="h-4 w-4 shrink-0" />
+            {!collapsed && "Phases"}
           </Link>
         </div>
       )}

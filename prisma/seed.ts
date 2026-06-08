@@ -103,7 +103,7 @@ async function main() {
   for (const f of fasesData) {
     await prisma.fase.upsert({
       where: { codigo: f.codigo },
-      update: {},
+      update: { nombre: f.nombre, puntos: f.puntos },
       create: f,
     });
   }
