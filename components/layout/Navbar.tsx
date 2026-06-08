@@ -24,6 +24,7 @@ import {
   PanelLeft,
   SlidersHorizontal,
   ImageIcon,
+  LayoutDashboard,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -99,6 +100,19 @@ export default function Navbar() {
                 </button>
                 {adminOpen && (
                   <div className="absolute right-0 top-full mt-1.5 w-44 rounded-xl border border-white/[0.08] bg-nav shadow-xl py-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                    <Link
+                      href="/admin/dashboard"
+                      onClick={() => setAdminOpen(false)}
+                      className={cn(
+                        "flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                        pathname === "/admin/dashboard"
+                          ? "text-rh/80 bg-rh/10"
+                          : "text-white/50 hover:text-white hover:bg-white/10"
+                      )}
+                    >
+                      <LayoutDashboard className="h-3.5 w-3.5" />
+                      Analytics
+                    </Link>
                     <Link
                       href="/admin/results"
                       onClick={() => setAdminOpen(false)}
@@ -232,6 +246,19 @@ export default function Navbar() {
                 <Shield className="h-3.5 w-3.5 text-rh/50" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-rh/50">Admin</span>
               </div>
+              <Link
+                href="/admin/dashboard"
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                  pathname === "/admin/dashboard"
+                    ? "bg-gradient-to-r from-rh/40 to-rh/15 text-rh/80"
+                    : "text-rh/60 hover:text-rh/80 hover:bg-rh/15"
+                )}
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                Analytics
+              </Link>
               <Link
                 href="/admin/results"
                 onClick={() => setMobileOpen(false)}
