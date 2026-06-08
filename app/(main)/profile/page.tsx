@@ -17,8 +17,8 @@ export default async function ProfilePage() {
   return (
     <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">My Profile</h1>
-        <p className="text-slate-500 text-sm mt-1">Manage your account details and sticker card</p>
+        <h1 className="text-2xl font-bold text-foreground">My Profile</h1>
+        <p className="text-muted-foreground text-sm mt-1">Manage your account details and sticker card</p>
       </div>
 
       <div className="hidden md:flex gap-6">
@@ -30,12 +30,12 @@ export default async function ProfilePage() {
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-3">
-                <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
-                  <Mail className="h-4 w-4 text-slate-500" />
+                <div className="h-9 w-9 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+                  <Mail className="h-4 w-4 text-muted-foreground" />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400">Email</p>
-                  <p className="text-sm font-medium text-slate-900">{usuario.email}</p>
+                  <p className="text-xs text-muted-foreground">Email</p>
+                  <p className="text-sm font-medium text-foreground">{usuario.email}</p>
                 </div>
               </div>
             </CardContent>
@@ -44,10 +44,10 @@ export default async function ProfilePage() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Pencil className="h-4 w-4 text-slate-500" />
+                <Pencil className="h-4 w-4 text-muted-foreground" />
                 <CardTitle>Edit Profile</CardTitle>
               </div>
-              <p className="text-sm text-slate-500 mt-1">Update your name and country.</p>
+              <p className="text-sm text-muted-foreground mt-1">Update your name and country.</p>
             </CardHeader>
             <CardContent>
               <EditProfileForm
@@ -65,10 +65,10 @@ export default async function ProfilePage() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-rose-500" />
+                <CreditCard className="h-5 w-5 text-primary" />
                 <CardTitle>Sticker Card</CardTitle>
               </div>
-              <p className="text-sm text-slate-500 mt-1">
+              <p className="text-sm text-muted-foreground mt-1">
                 Upload your sticker card — it will appear on your profile and leaderboard.
               </p>
             </CardHeader>
@@ -80,10 +80,10 @@ export default async function ProfilePage() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <KeyRound className="h-4 w-4 text-slate-500" />
+                <KeyRound className="h-4 w-4 text-muted-foreground" />
                 <CardTitle>Change Password</CardTitle>
               </div>
-              <p className="text-sm text-slate-500 mt-1">Enter your current password to set a new one.</p>
+              <p className="text-sm text-muted-foreground mt-1">Enter your current password to set a new one.</p>
             </CardHeader>
             <CardContent>
               <ChangePasswordForm />
@@ -100,12 +100,12 @@ export default async function ProfilePage() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
-              <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
-                <Mail className="h-4 w-4 text-slate-500" />
+              <div className="h-9 w-9 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+                <Mail className="h-4 w-4 text-muted-foreground" />
               </div>
               <div>
-                <p className="text-xs text-slate-400">Email</p>
-                <p className="text-sm font-medium text-slate-900">{usuario.email}</p>
+                <p className="text-xs text-muted-foreground">Email</p>
+                <p className="text-sm font-medium text-foreground">{usuario.email}</p>
               </div>
             </div>
           </CardContent>
@@ -114,10 +114,10 @@ export default async function ProfilePage() {
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <CreditCard className="h-5 w-5 text-rose-500" />
+              <CreditCard className="h-5 w-5 text-primary" />
               <CardTitle>Sticker Card</CardTitle>
             </div>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Upload your sticker card — it will appear on your profile and leaderboard.
             </p>
           </CardHeader>
@@ -129,10 +129,10 @@ export default async function ProfilePage() {
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <Pencil className="h-4 w-4 text-slate-500" />
+              <Pencil className="h-4 w-4 text-muted-foreground" />
               <CardTitle>Edit Profile</CardTitle>
             </div>
-            <p className="text-sm text-slate-500 mt-1">Update your name and country.</p>
+            <p className="text-sm text-muted-foreground mt-1">Update your name and country.</p>
           </CardHeader>
           <CardContent>
             <EditProfileForm
@@ -147,10 +147,10 @@ export default async function ProfilePage() {
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <KeyRound className="h-4 w-4 text-slate-500" />
+              <KeyRound className="h-4 w-4 text-muted-foreground" />
               <CardTitle>Change Password</CardTitle>
             </div>
-            <p className="text-sm text-slate-500 mt-1">Enter your current password to set a new one.</p>
+            <p className="text-sm text-muted-foreground mt-1">Enter your current password to set a new one.</p>
           </CardHeader>
           <CardContent>
             <ChangePasswordForm />

@@ -11,11 +11,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   if (mode === "navbar") {
     return (
-      <div className="flex min-h-screen flex-col bg-slate-50">
+      <div className="flex min-h-screen flex-col bg-background">
         <Navbar />
         <Breadcrumb />
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-slate-200 py-6 text-center text-sm text-slate-400">
+        <footer className="border-t border-border py-6 text-center text-sm text-muted-foreground">
           Openscore © {new Date().getFullYear()}
         </footer>
       </div>
@@ -23,7 +23,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-background">
       <Sidebar />
       <div
         className={cn(
@@ -33,7 +33,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       >
         <Breadcrumb />
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-slate-200 py-6 text-center text-sm text-slate-400">
+        <footer className="border-t border-border py-6 text-center text-sm text-muted-foreground">
           Openscore © {new Date().getFullYear()}
         </footer>
       </div>

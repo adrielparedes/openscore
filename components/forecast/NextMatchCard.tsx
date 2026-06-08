@@ -41,7 +41,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
   const btnVariant = (selected: boolean) =>
     selected
       ? "bg-gradient-to-br from-rh to-rose-700 border-transparent text-white shadow-lg shadow-rh/20 hover:scale-[1.02] hover:shadow-rh/30"
-      : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900";
+      : "bg-card border-border text-muted-foreground hover:bg-accent/50 hover:border-border hover:text-foreground";
 
   const userPrediction = match.pronostico?.ganador ?? null;
   const predictionCorrect = finished && userPrediction !== null && userPrediction === match.ganador;
@@ -57,14 +57,14 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
   return (
     <div
       className={cn(
-        "rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden border-l-4",
+        "rounded-2xl border border-border bg-card shadow-sm overflow-hidden border-l-4",
         leftBorderColor,
         pending && "opacity-60 pointer-events-none"
       )}
     >
       {/* Card header */}
       <div className="flex items-center justify-between px-5 py-3">
-        <div className="flex items-center gap-2 text-xs text-slate-500">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <CalendarClock className="h-3.5 w-3.5" />
           <span suppressHydrationWarning>{matchDate}</span>
         </div>
@@ -95,23 +95,23 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
               />
             </div>
           )}
-          <span className="font-bold text-slate-900 text-center">{match.local.nombre}</span>
-          <span className="text-xs text-slate-400 uppercase">{match.local.codigo}</span>
+          <span className="font-bold text-foreground text-center">{match.local.nombre}</span>
+          <span className="text-xs text-muted-foreground uppercase">{match.local.codigo}</span>
         </div>
 
         {finished ? (
           <div className="flex flex-col items-center gap-1">
-            <div className="text-3xl font-black text-slate-800 tracking-tight tabular-nums">
+            <div className="text-3xl font-black text-foreground tracking-tight tabular-nums">
               {match.resultadoLocal} – {match.resultadoVisitante}
             </div>
             {match.resultadoPenales && (
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-muted-foreground">
                 ({match.resultadoPenalesLocal} – {match.resultadoPenalesVisitante} pens)
               </span>
             )}
           </div>
         ) : (
-          <div className="text-2xl font-bold text-slate-300 select-none">VS</div>
+          <div className="text-2xl font-bold text-border select-none">VS</div>
         )}
 
         {/* Visitante */}
@@ -125,8 +125,8 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
               />
             </div>
           )}
-          <span className="font-bold text-slate-900 text-center">{match.visitante.nombre}</span>
-          <span className="text-xs text-slate-400 uppercase">{match.visitante.codigo}</span>
+          <span className="font-bold text-foreground text-center">{match.visitante.nombre}</span>
+          <span className="text-xs text-muted-foreground uppercase">{match.visitante.codigo}</span>
         </div>
       </div>
 
@@ -137,7 +137,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
             <div className={cn(
               "flex items-center justify-center gap-2 rounded-xl py-2 px-4 text-sm font-semibold",
               predictionCorrect
-                ? "bg-emerald-50 text-emerald-700"
+                ? "bg-emerald-900/20 text-emerald-400"
                 : "bg-rh/10 text-rh"
             )}>
               {predictionCorrect ? (
@@ -156,12 +156,12 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
             </div>
           )
         ) : locked ? (
-          <p className="text-center text-sm text-slate-400 py-1">
+          <p className="text-center text-sm text-muted-foreground py-1">
             Predictions are locked for this match.
           </p>
         ) : (
           <>
-            <p className="text-xs text-slate-400 text-center">Your prediction</p>
+            <p className="text-xs text-muted-foreground text-center">Your prediction</p>
             <div className="flex gap-2">
               <button
                 className={cn(btnBase, btnVariant(match.pronostico?.ganador === "LOCAL"))}

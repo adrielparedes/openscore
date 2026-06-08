@@ -63,8 +63,8 @@ export default async function StandingsPage() {
   return (
     <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Group Standings</h1>
-        <p className="text-slate-500 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-foreground">Group Standings</h1>
+        <p className="text-muted-foreground text-sm mt-1">
           Group stage positions updated after each match.
         </p>
       </div>
@@ -72,7 +72,7 @@ export default async function StandingsPage() {
       {groupsWithTeams.length === 0 ? (
         <Card>
           <CardContent>
-            <p className="text-slate-400 text-center py-10 text-sm">
+            <p className="text-muted-foreground text-center py-10 text-sm">
               No groups have been configured yet.
             </p>
           </CardContent>
@@ -94,7 +94,7 @@ export default async function StandingsPage() {
             <BestThirdTable thirdPlaced={thirdPlaced} />
           )}
 
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-400">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
             <div className="flex items-center gap-2">
               <div className="h-2 w-2 rounded-full bg-emerald-500" />
               <span>Qualifies automatically (top 2)</span>
@@ -102,9 +102,9 @@ export default async function StandingsPage() {
             <div className="flex items-center gap-2 group relative cursor-help">
               <div className="h-2 w-2 rounded-full bg-amber-400" />
               <span className="underline decoration-dotted underline-offset-2">May qualify as best third (top 8 of 12)</span>
-              <div className="invisible group-hover:visible absolute bottom-full left-0 mb-2 w-72 rounded-lg bg-slate-900 px-3 py-2 text-xs text-white shadow-lg z-10">
+              <div className="invisible group-hover:visible absolute bottom-full left-0 mb-2 w-72 rounded-lg bg-nav px-3 py-2 text-xs text-white shadow-lg z-10">
                 In the 2026 World Cup, the 8 best third-placed teams out of 12 groups also advance to the knockout stage. They are ranked by points, then goal difference, then wins.
-                <div className="absolute top-full left-4 h-0 w-0 border-x-4 border-x-transparent border-t-4 border-t-slate-900" />
+                <div className="absolute top-full left-4 h-0 w-0 border-x-4 border-x-transparent border-t-4 border-t-nav" />
               </div>
             </div>
           </div>
@@ -162,7 +162,7 @@ function GroupTable({
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-200 text-slate-500">
+              <tr className="border-b border-border text-muted-foreground">
                 <th className="pb-2 text-left font-medium w-8">#</th>
                 <th className="pb-2 text-left font-medium">Team</th>
                 <th className="pb-2 text-center font-medium w-9">MP</th>
@@ -173,7 +173,7 @@ function GroupTable({
                 <th className="pb-2 text-right font-medium w-10">Pts</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-border/50">
               {rows.map((row, i) => {
                 const qualifies = i < 2;
                 const thirdPlace = i === 2;
@@ -182,13 +182,13 @@ function GroupTable({
                     key={row.id}
                     className={`transition-colors ${
                       qualifies
-                        ? "bg-emerald-50/50"
+                        ? "bg-emerald-900/15"
                         : thirdPlace
-                          ? "bg-amber-50/40"
-                          : "hover:bg-slate-50"
+                          ? "bg-amber-900/15"
+                          : "hover:bg-accent/50"
                     }`}
                   >
-                    <td className="py-2.5 text-slate-400 font-medium">
+                    <td className="py-2.5 text-muted-foreground font-medium">
                       <div className="flex items-center gap-1.5">
                         {qualifies && (
                           <div className="h-2 w-2 rounded-full bg-emerald-500" />
@@ -203,7 +203,7 @@ function GroupTable({
                       </div>
                     </td>
                     <td className="py-2.5">
-                      <span className={`font-medium flex items-center gap-2 ${qualifies ? "text-slate-800" : "text-slate-600"}`}>
+                      <span className={`font-medium flex items-center gap-2 ${qualifies ? "text-foreground" : "text-muted-foreground"}`}>
                         {flagUrl(row.codigo) && (
                           <img
                             src={flagUrl(row.codigo, 20)}
@@ -214,22 +214,22 @@ function GroupTable({
                         {row.nombre}
                       </span>
                     </td>
-                    <td className="py-2.5 text-center text-slate-500">{row.partidos}</td>
-                    <td className="py-2.5 text-center text-slate-500">{row.ganados}</td>
-                    <td className="py-2.5 text-center text-slate-500">{row.empatados}</td>
-                    <td className="py-2.5 text-center text-slate-500">{row.perdidos}</td>
-                    <td className="py-2.5 text-center text-slate-500">
+                    <td className="py-2.5 text-center text-muted-foreground">{row.partidos}</td>
+                    <td className="py-2.5 text-center text-muted-foreground">{row.ganados}</td>
+                    <td className="py-2.5 text-center text-muted-foreground">{row.empatados}</td>
+                    <td className="py-2.5 text-center text-muted-foreground">{row.perdidos}</td>
+                    <td className="py-2.5 text-center text-muted-foreground">
                       <span className={
                         row.diferenciaGol > 0
-                          ? "text-emerald-600"
+                          ? "text-emerald-400"
                           : row.diferenciaGol < 0
-                            ? "text-red-500"
-                            : "text-slate-400"
+                            ? "text-red-400"
+                            : "text-muted-foreground"
                       }>
                         {row.diferenciaGol > 0 ? `+${row.diferenciaGol}` : row.diferenciaGol}
                       </span>
                     </td>
-                    <td className="py-2.5 text-right font-bold text-rose-600">{row.puntos}</td>
+                    <td className="py-2.5 text-right font-bold text-primary">{row.puntos}</td>
                   </tr>
                 );
               })}
@@ -248,13 +248,13 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
         <CardTitle>Best Third-Placed Teams</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-slate-500 text-xs mb-4">
+        <p className="text-muted-foreground text-xs mb-4">
           The 8 best third-placed teams (out of 12) qualify for the knockout stage.
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-200 text-slate-500">
+              <tr className="border-b border-border text-muted-foreground">
                 <th className="pb-2 text-left font-medium w-8">#</th>
                 <th className="pb-2 text-left font-medium">Team</th>
                 <th className="pb-2 text-left font-medium hidden sm:table-cell">Group</th>
@@ -266,17 +266,17 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
                 <th className="pb-2 text-right font-medium w-10">Pts</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-border/50">
               {thirdPlaced.map((row, i) => {
                 const qualifies = i < 8;
                 return (
                   <tr
                     key={row.id}
                     className={`transition-colors ${
-                      qualifies ? "bg-amber-50/40" : "hover:bg-slate-50"
+                      qualifies ? "bg-amber-900/15" : "hover:bg-accent/50"
                     }`}
                   >
-                    <td className="py-2.5 text-slate-400 font-medium">
+                    <td className="py-2.5 text-muted-foreground font-medium">
                       <div className="flex items-center gap-1.5">
                         {qualifies && (
                           <div className="h-2 w-2 rounded-full bg-amber-400" />
@@ -288,7 +288,7 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
                       </div>
                     </td>
                     <td className="py-2.5">
-                      <span className={`font-medium flex items-center gap-2 ${qualifies ? "text-slate-800" : "text-slate-500"}`}>
+                      <span className={`font-medium flex items-center gap-2 ${qualifies ? "text-foreground" : "text-muted-foreground"}`}>
                         {flagUrl(row.codigo) && (
                           <img
                             src={flagUrl(row.codigo, 20)}
@@ -299,23 +299,23 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
                         {row.nombre}
                       </span>
                     </td>
-                    <td className="py-2.5 text-slate-500 hidden sm:table-cell">{row.grupo}</td>
-                    <td className="py-2.5 text-center text-slate-500">{row.partidos}</td>
-                    <td className="py-2.5 text-center text-slate-500">{row.ganados}</td>
-                    <td className="py-2.5 text-center text-slate-500">{row.empatados}</td>
-                    <td className="py-2.5 text-center text-slate-500">{row.perdidos}</td>
-                    <td className="py-2.5 text-center text-slate-500">
+                    <td className="py-2.5 text-muted-foreground hidden sm:table-cell">{row.grupo}</td>
+                    <td className="py-2.5 text-center text-muted-foreground">{row.partidos}</td>
+                    <td className="py-2.5 text-center text-muted-foreground">{row.ganados}</td>
+                    <td className="py-2.5 text-center text-muted-foreground">{row.empatados}</td>
+                    <td className="py-2.5 text-center text-muted-foreground">{row.perdidos}</td>
+                    <td className="py-2.5 text-center text-muted-foreground">
                       <span className={
                         row.diferenciaGol > 0
-                          ? "text-emerald-600"
+                          ? "text-emerald-400"
                           : row.diferenciaGol < 0
-                            ? "text-red-500"
-                            : "text-slate-400"
+                            ? "text-red-400"
+                            : "text-muted-foreground"
                       }>
                         {row.diferenciaGol > 0 ? `+${row.diferenciaGol}` : row.diferenciaGol}
                       </span>
                     </td>
-                    <td className="py-2.5 text-right font-bold text-rose-600">{row.puntos}</td>
+                    <td className="py-2.5 text-right font-bold text-primary">{row.puntos}</td>
                   </tr>
                 );
               })}

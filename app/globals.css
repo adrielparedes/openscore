@@ -1,19 +1,30 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #f8fafc;
-  --color-foreground: #0f172a;
-  --color-primary: #e11d48;
-  --color-primary-hover: #be123c;
-  --color-card: #ffffff;
-  --color-card-border: #e2e8f0;
-  --color-muted: #64748b;
+  --color-background: oklch(0.17 0.02 283.8);
+  --color-foreground: oklch(0.92 0.03 285.88);
+  --color-card: oklch(0.23 0.04 282.93);
+  --color-card-foreground: oklch(0.92 0.03 285.88);
+  --color-primary: oklch(0.72 0.16 290.4);
+  --color-primary-foreground: oklch(0.17 0.02 283.8);
+  --color-secondary: oklch(0.31 0.07 283.46);
+  --color-secondary-foreground: oklch(0.84 0.08 285.91);
+  --color-muted: oklch(0.27 0.06 281.44);
+  --color-muted-foreground: oklch(0.72 0.05 285.17);
+  --color-accent: oklch(0.34 0.08 280.97);
+  --color-accent-foreground: oklch(0.92 0.03 285.88);
+  --color-destructive: oklch(0.69 0.21 14.99);
+  --color-border: oklch(0.33 0.06 282.58);
+  --color-input: oklch(0.33 0.06 282.58);
+  --color-ring: oklch(0.72 0.16 290.4);
   --color-rh: #ee0000;
+  --color-nav: oklch(0.14 0.03 283);
+  --radius: 0.5rem;
 }
 
 body {
-  background: #f8fafc;
-  color: #0f172a;
+  background: oklch(0.17 0.02 283.8);
+  color: oklch(0.92 0.03 285.88);
   font-family: system-ui, -apple-system, sans-serif;
 }
 

@@ -43,20 +43,20 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-10">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-10">
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
-          <div className="h-14 w-14 rounded-2xl bg-rose-600 flex items-center justify-center mb-4">
-            <Trophy className="h-8 w-8 text-white" />
+          <div className="h-14 w-14 rounded-2xl bg-primary flex items-center justify-center mb-4">
+            <Trophy className="h-8 w-8 text-primary-foreground" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">Create your account</h1>
-          <p className="text-slate-500 text-sm mt-1">Join Openscore and start predicting</p>
+          <h1 className="text-2xl font-bold text-foreground">Create your account</h1>
+          <p className="text-muted-foreground text-sm mt-1">Join Openscore and start predicting</p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+        <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
           <form action={formAction} className="flex flex-col gap-4">
             {state?.error && (
-              <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
+              <div className="rounded-lg bg-red-900/30 border border-red-800 px-4 py-3 text-sm text-red-400">
                 {state.error}
               </div>
             )}
@@ -90,7 +90,7 @@ export default function RegisterPage() {
             />
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="pais" className="text-sm font-medium text-slate-700">
+              <label htmlFor="pais" className="text-sm font-medium text-foreground">
                 Country
               </label>
               <select
@@ -99,7 +99,7 @@ export default function RegisterPage() {
                 required
                 value={fields.pais}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                className="w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               >
                 <option value="">Select a country…</option>
                 {PAISES.map((p) => (
@@ -110,13 +110,13 @@ export default function RegisterPage() {
               </select>
             </div>
 
-            <div className="border-t border-slate-100 pt-4 mt-1 flex flex-col gap-4">
-              <p className="text-xs text-slate-500">
+            <div className="border-t border-border pt-4 mt-1 flex flex-col gap-4">
+              <p className="text-xs text-muted-foreground">
                 Choose a security question for account recovery.
               </p>
 
               <div className="flex flex-col gap-1">
-                <label htmlFor="preguntaSecretaId" className="text-sm font-medium text-slate-700">
+                <label htmlFor="preguntaSecretaId" className="text-sm font-medium text-foreground">
                   Security question
                 </label>
                 <select
@@ -125,7 +125,7 @@ export default function RegisterPage() {
                   required
                   value={fields.preguntaSecretaId}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                  className="w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="">Select a question…</option>
                   {preguntas.map((q) => (
@@ -153,9 +153,9 @@ export default function RegisterPage() {
             </Button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-slate-500">
+          <p className="mt-6 text-center text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/login" className="text-rose-600 hover:text-rose-500 font-medium">
+            <Link href="/login" className="text-primary hover:text-primary/80 font-medium">
               Sign in
             </Link>
           </p>

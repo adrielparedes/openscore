@@ -25,7 +25,7 @@ const pillClass = (active: boolean) =>
     "px-4 py-2 text-xs rounded-2xl font-medium inline-flex items-center gap-1.5 transition-all duration-200",
     active
       ? "bg-gradient-to-br from-rh to-rose-700 text-white shadow-md shadow-rh/20 border border-white/20"
-      : "bg-white/70 backdrop-blur-md text-zinc-500 border border-zinc-200/60 hover:bg-white hover:text-zinc-800"
+      : "bg-card/70 backdrop-blur-md text-muted-foreground border border-border hover:bg-accent hover:text-foreground"
   );
 
 export default function FilterPill({ active = false, children, className, href, onClick }: FilterPillProps) {

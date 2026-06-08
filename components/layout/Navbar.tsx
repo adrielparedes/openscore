@@ -55,7 +55,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-slate-950 border-b border-white/[0.08]">
+    <nav className="sticky top-0 z-50 bg-nav border-b border-white/[0.08]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
 
@@ -97,7 +97,7 @@ export default function Navbar() {
                   <ChevronDown className={cn("h-3 w-3 transition-transform duration-150", adminOpen && "rotate-180")} />
                 </button>
                 {adminOpen && (
-                  <div className="absolute right-0 top-full mt-1.5 w-44 rounded-xl border border-white/[0.08] bg-slate-950 shadow-xl py-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                  <div className="absolute right-0 top-full mt-1.5 w-44 rounded-xl border border-white/[0.08] bg-nav shadow-xl py-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
                     <Link
                       href="/admin/results"
                       onClick={() => setAdminOpen(false)}
@@ -207,7 +207,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-white/[0.08] bg-slate-950 px-4 pb-4 pt-2 space-y-0.5">
+        <div className="md:hidden border-t border-white/[0.08] bg-nav px-4 pb-4 pt-2 space-y-0.5">
           {navLinks.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}

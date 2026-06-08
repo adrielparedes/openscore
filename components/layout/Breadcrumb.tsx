@@ -29,10 +29,10 @@ export default function Breadcrumb() {
   if (segments.length === 0) {
     return (
       <nav aria-label="Breadcrumb" className="px-4 pt-4 sm:px-6 lg:px-8">
-        <ol className="flex items-center gap-1.5 text-sm text-slate-500">
+        <ol className="flex items-center gap-1.5 text-sm text-muted-foreground">
           <li className="flex items-center gap-1">
-            <Home className="h-3.5 w-3.5 text-slate-400" />
-            <span className="font-medium text-slate-700">Home</span>
+            <Home className="h-3.5 w-3.5 text-muted-foreground" />
+            <span className="font-medium text-foreground">Home</span>
           </li>
         </ol>
       </nav>
@@ -46,11 +46,11 @@ export default function Breadcrumb() {
 
   return (
     <nav aria-label="Breadcrumb" className="px-4 pt-4 sm:px-6 lg:px-8">
-      <ol className="flex items-center gap-1.5 text-sm text-slate-500">
+      <ol className="flex items-center gap-1.5 text-sm text-muted-foreground">
         <li>
           <Link
             href="/"
-            className="flex items-center gap-1 text-slate-400 transition-colors hover:text-slate-700"
+            className="flex items-center gap-1 text-muted-foreground transition-colors hover:text-foreground"
           >
             <Home className="h-3.5 w-3.5" />
             <span className="sr-only">Home</span>
@@ -60,13 +60,13 @@ export default function Breadcrumb() {
           const isLast = i === crumbs.length - 1;
           return (
             <li key={crumb.href} className="flex items-center gap-1.5">
-              <ChevronRight className="h-3.5 w-3.5 text-slate-300" />
+              <ChevronRight className="h-3.5 w-3.5 text-border" />
               {isLast ? (
-                <span className="font-medium text-slate-700">{crumb.label}</span>
+                <span className="font-medium text-foreground">{crumb.label}</span>
               ) : (
                 <Link
                   href={crumb.href}
-                  className="transition-colors hover:text-slate-700"
+                  className="transition-colors hover:text-foreground"
                 >
                   {crumb.label}
                 </Link>

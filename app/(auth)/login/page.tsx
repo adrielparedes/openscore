@@ -33,19 +33,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
-        {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <OpenScoreLogo variant="dark" className="h-14 w-auto mb-4" />
-          <h1 className="text-2xl font-bold text-slate-900">Welcome to Openscore</h1>
-          <p className="text-slate-500 text-sm mt-1">Sign in to manage your predictions</p>
+          <OpenScoreLogo variant="light" className="h-14 w-auto mb-4" />
+          <h1 className="text-2xl font-bold text-foreground">Welcome to Openscore</h1>
+          <p className="text-muted-foreground text-sm mt-1">Sign in to manage your predictions</p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+        <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             {error && (
-              <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
+              <div className="rounded-lg bg-red-900/30 border border-red-800 px-4 py-3 text-sm text-red-400">
                 {error}
               </div>
             )}
@@ -76,14 +75,14 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-4 text-center">
-            <Link href="/forgot-password" className="text-sm text-slate-500 hover:text-rose-600 transition-colors">
+            <Link href="/forgot-password" className="text-sm text-muted-foreground hover:text-primary transition-colors">
               Forgot your password?
             </Link>
           </div>
 
-          <p className="mt-4 text-center text-sm text-slate-500">
+          <p className="mt-4 text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link href="/register" className="text-rose-600 hover:text-rose-500 font-medium">
+            <Link href="/register" className="text-primary hover:text-primary/80 font-medium">
               Register
             </Link>
           </p>

@@ -193,7 +193,7 @@ function NodeTeam({ codigo, nombre }: { codigo: string; nombre: string }) {
         <div className="w-6 h-4 rounded overflow-hidden shrink-0">
           <img src={flag} alt={codigo} className="w-full h-full object-cover" />
         </div>
-        <span className="font-bold text-slate-800 text-[11px]">{codigo}</span>
+        <span className="font-bold text-foreground text-[11px]">{codigo}</span>
       </div>
     );
   }
@@ -203,8 +203,8 @@ function NodeTeam({ codigo, nombre }: { codigo: string; nombre: string }) {
   const line2 = sp !== -1 ? nombre.slice(sp + 1) : null;
   return (
     <div className="flex-1 min-w-0 flex flex-col items-center leading-tight">
-      <span className="font-semibold text-slate-700 text-[10px] whitespace-nowrap">{line1.replace(/-/g, '‑')}</span>
-      {line2 && <span className="text-slate-400 text-[10px] whitespace-nowrap">{line2.replace(/-/g, '‑')}</span>}
+      <span className="font-semibold text-foreground text-[10px] whitespace-nowrap">{line1.replace(/-/g, '‑')}</span>
+      {line2 && <span className="text-muted-foreground text-[10px] whitespace-nowrap">{line2.replace(/-/g, '‑')}</span>}
     </div>
   );
 }
@@ -215,8 +215,8 @@ function KnockoutNode({ slot, cardH, onClick }: { slot: Slot; cardH: number; onC
 
   if (!slot.match) {
     return (
-      <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 flex items-center justify-center" style={{ height: cardH }}>
-        <span className="text-[10px] text-slate-400 uppercase tracking-wide font-semibold">{PHASE_LABEL[slot.phase]}</span>
+      <div className="rounded-xl border border-dashed border-border bg-background flex items-center justify-center" style={{ height: cardH }}>
+        <span className="text-[10px] text-muted-foreground uppercase tracking-wide font-semibold">{PHASE_LABEL[slot.phase]}</span>
       </div>
     );
   }
@@ -237,12 +237,12 @@ function KnockoutNode({ slot, cardH, onClick }: { slot: Slot; cardH: number; onC
   return (
     <button
       onClick={onClick}
-      className="w-full rounded-xl border border-slate-200 bg-white hover:border-rose-300 hover:shadow-md transition-all text-left flex flex-col justify-center gap-1.5 px-2.5 py-2 cursor-pointer"
+      className="w-full rounded-xl border border-border bg-card hover:border-rose-300 hover:shadow-md transition-all text-left flex flex-col justify-center gap-1.5 px-2.5 py-2 cursor-pointer"
       style={{ height: cardH }}
     >
       <div className="flex items-center justify-center gap-1">
         <NodeTeam codigo={m.local.codigo} nombre={m.local.nombre} />
-        <span className="shrink-0 font-bold text-slate-300 text-[10px] w-8 text-center">
+        <span className="shrink-0 font-bold text-border text-[10px] w-8 text-center">
           {finished ? `${m.resultadoLocal}–${m.resultadoVisitante}` : "vs"}
         </span>
         <NodeTeam codigo={m.visitante.codigo} nombre={m.visitante.nombre} />
@@ -250,11 +250,11 @@ function KnockoutNode({ slot, cardH, onClick }: { slot: Slot; cardH: number; onC
       <div className="flex items-center">
         {showLock ? (
           <div className="group relative shrink-0">
-            <Timer className={cn("h-3 w-3 translate-y-[1px]", isUrgent ? "text-rh" : "text-amber-500")} />
+            <Timer className={cn("h-3 w-3 translate-y-[1px]", isUrgent ? "text-rh" : "text-amber-400")} />
             <div className="pointer-events-none absolute bottom-full left-0 mb-1.5 hidden group-hover:block z-20">
               <div className={cn(
                 "flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-semibold whitespace-nowrap shadow-md",
-                isUrgent ? "bg-rh/10 text-rh" : "bg-amber-50 text-amber-600"
+                isUrgent ? "bg-rh/10 text-rh" : "bg-amber-900/20 text-amber-400"
               )}>
                 <Timer className="h-2.5 w-2.5" />
                 Locks in {formatCountdown(remaining)}
@@ -264,11 +264,11 @@ function KnockoutNode({ slot, cardH, onClick }: { slot: Slot; cardH: number; onC
         ) : <div className="w-3" />}
         <div className="flex-1 text-[10px] text-center leading-none">
           {pickLabel ? (
-            <span className="text-rose-500 font-semibold">Your pick: {pickLabel}</span>
+            <span className="text-primary font-semibold">Your pick: {pickLabel}</span>
           ) : m.status === "PENDING" ? (
-            <span className="text-slate-400">Tap to predict</span>
+            <span className="text-muted-foreground">Tap to predict</span>
           ) : (
-            <span className="text-slate-300">No prediction</span>
+            <span className="text-border">No prediction</span>
           )}
         </div>
         <div className="w-3" />
@@ -282,7 +282,7 @@ function FullNode({ slot, cardH }: { slot: Slot; cardH: number }) {
   if (!slot.match) {
     return (
       <div
-        className="rounded-2xl border border-dashed border-slate-200 bg-white flex flex-col items-center justify-center gap-1 text-slate-400"
+        className="rounded-2xl border border-dashed border-border bg-card flex flex-col items-center justify-center gap-1 text-muted-foreground"
         style={{ height: cardH }}
       >
         <span className="text-xs font-semibold uppercase tracking-wide">{PHASE_LABEL[slot.phase]}</span>
@@ -299,17 +299,17 @@ function MatchModal({ match, onClose }: { match: PartidoPronostico; onClose: () 
     <>
       <div className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40" onClick={onClose} />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
-        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm flex flex-col max-h-[90vh]" onClick={e => e.stopPropagation()}>
-          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 shrink-0">
+        <div className="bg-card rounded-2xl shadow-2xl w-full max-w-sm flex flex-col max-h-[90vh]" onClick={e => e.stopPropagation()}>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                 {PHASE_LABEL[match.fase.codigo] ?? match.fase.codigo}
               </p>
-              <p className="text-sm font-bold text-slate-900">
+              <p className="text-sm font-bold text-foreground">
                 {match.local.nombre} vs {match.visitante.nombre}
               </p>
             </div>
-            <button onClick={onClose} className="h-8 w-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-500 transition-colors">
+            <button onClick={onClose} className="h-8 w-8 rounded-full hover:bg-accent flex items-center justify-center text-muted-foreground transition-colors">
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -344,7 +344,7 @@ export default function KnockoutTree({ matches }: KnockoutTreeProps) {
 
   if (!mounted) {
     return (
-      <div className="w-full rounded-xl border border-slate-200 bg-slate-50 animate-pulse" style={{ height: "60vh", minHeight: 400 }} />
+      <div className="w-full rounded-xl border border-border bg-background animate-pulse" style={{ height: "60vh", minHeight: 400 }} />
     );
   }
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -367,7 +367,7 @@ export default function KnockoutTree({ matches }: KnockoutTreeProps) {
 
               {/* Phase headers */}
               <div
-                className="absolute z-10 border-b border-slate-200 bg-white/95 backdrop-blur-sm"
+                className="absolute z-10 border-b border-border bg-card/95 backdrop-blur-sm"
                 style={{ top: 0, left: 0, width: layout.totalWidth, height: cfg.HEADER_H }}
               >
                 {layout.headers.map((h, i) => (
@@ -377,8 +377,8 @@ export default function KnockoutTree({ matches }: KnockoutTreeProps) {
                     style={{ left: h.x, width: cfg.CARD_W, height: cfg.HEADER_H }}
                   >
                     {h.isFinal
-                      ? <span className="text-rose-500">{h.label}</span>
-                      : <span className="text-slate-400">{h.label}</span>
+                      ? <span className="text-primary">{h.label}</span>
+                      : <span className="text-muted-foreground">{h.label}</span>
                     }
                   </div>
                 ))}

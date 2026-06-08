@@ -35,9 +35,9 @@ export default function UpcomingDateGroups({ matches }: Props) {
         <div key={group.label}>
           {i > 0 && (
             <div className="flex items-center gap-3 mb-4">
-              <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">{group.label}</h2>
-              <div className="flex-1 h-px bg-slate-200" />
-              <span className="text-xs text-slate-400 font-medium">{group.items.length} match{group.items.length !== 1 ? "es" : ""}</span>
+              <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider">{group.label}</h2>
+              <div className="flex-1 h-px bg-border" />
+              <span className="text-xs text-muted-foreground font-medium">{group.items.length} match{group.items.length !== 1 ? "es" : ""}</span>
             </div>
           )}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">

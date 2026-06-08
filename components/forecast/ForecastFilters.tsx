@@ -79,11 +79,11 @@ export default function ForecastFilters() {
         {isBracket && mounted && (
           <div className="flex items-center gap-3">
             {/* View toggle */}
-            <div className="flex items-center rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div className="flex items-center rounded-lg border border-border bg-card overflow-hidden">
               <button
                 onClick={() => setMode("condensed")}
                 className={`h-7 px-2.5 flex items-center gap-1.5 text-xs font-medium transition-colors cursor-pointer ${
-                  mode === "condensed" ? "bg-slate-900 text-white" : "text-slate-500 hover:bg-slate-50"
+                  mode === "condensed" ? "bg-nav text-white" : "text-muted-foreground hover:bg-accent/50"
                 }`}
               >
                 <LayoutList className="h-3.5 w-3.5" />
@@ -92,7 +92,7 @@ export default function ForecastFilters() {
               <button
                 onClick={() => setMode("normal")}
                 className={`h-7 px-2.5 flex items-center gap-1.5 text-xs font-medium transition-colors cursor-pointer ${
-                  mode === "normal" ? "bg-slate-900 text-white" : "text-slate-500 hover:bg-slate-50"
+                  mode === "normal" ? "bg-nav text-white" : "text-muted-foreground hover:bg-accent/50"
                 }`}
               >
                 <LayoutGrid className="h-3.5 w-3.5" />
@@ -105,13 +105,13 @@ export default function ForecastFilters() {
               <button
                 onClick={() => setZoom(Math.max(MIN_ZOOM, parseFloat((zoom - ZOOM_STEP).toFixed(1))))}
                 disabled={zoom <= MIN_ZOOM}
-                className="h-7 w-7 rounded border border-slate-200 bg-white text-slate-600 flex items-center justify-center hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer font-bold text-base leading-none"
+                className="h-7 w-7 rounded border border-border bg-card text-muted-foreground flex items-center justify-center hover:bg-accent/50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer font-bold text-base leading-none"
               >−</button>
-              <span className="text-xs text-slate-500 w-10 text-center tabular-nums">{Math.round(zoom * 100)}%</span>
+              <span className="text-xs text-muted-foreground w-10 text-center tabular-nums">{Math.round(zoom * 100)}%</span>
               <button
                 onClick={() => setZoom(Math.min(MAX_ZOOM, parseFloat((zoom + ZOOM_STEP).toFixed(1))))}
                 disabled={zoom >= MAX_ZOOM}
-                className="h-7 w-7 rounded border border-slate-200 bg-white text-slate-600 flex items-center justify-center hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer font-bold text-base leading-none"
+                className="h-7 w-7 rounded border border-border bg-card text-muted-foreground flex items-center justify-center hover:bg-accent/50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer font-bold text-base leading-none"
               >+</button>
             </div>
           </div>

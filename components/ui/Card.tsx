@@ -7,18 +7,18 @@ interface CardProps {
 
 export function Card({ className, children }: CardProps) {
   return (
-    <div className={cn("rounded-xl border border-slate-200 bg-white p-4 shadow-sm", className)}>
+    <div className={cn("rounded-xl border border-border bg-card p-4 shadow-sm", className)}>
       {children}
     </div>
   );
 }
 
 export function CardHeader({ className, children }: CardProps) {
-  return <div className={cn("mb-4 border-b border-slate-200 pb-3", className)}>{children}</div>;
+  return <div className={cn("mb-4 border-b border-border pb-3", className)}>{children}</div>;
 }
 
 export function CardTitle({ className, children }: CardProps) {
-  return <h2 className={cn("text-lg font-semibold text-slate-900", className)}>{children}</h2>;
+  return <h2 className={cn("text-lg font-semibold text-foreground", className)}>{children}</h2>;
 }
 
 export function CardContent({ className, children }: CardProps) {

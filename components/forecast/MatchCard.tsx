@@ -17,8 +17,8 @@ function TeamName({ nombre, codigo }: { nombre: string; codigo: string }) {
   if (hasFlag) {
     return (
       <>
-        <span className="font-bold text-slate-900 text-center text-sm">{nombre}</span>
-        <span className="text-xs text-slate-400 uppercase">{codigo}</span>
+        <span className="font-bold text-foreground text-center text-sm">{nombre}</span>
+        <span className="text-xs text-muted-foreground uppercase">{codigo}</span>
       </>
     );
   }
@@ -28,8 +28,8 @@ function TeamName({ nombre, codigo }: { nombre: string; codigo: string }) {
   const noBreak = (s: string) => s.replace(/-/g, "‑");
   return (
     <>
-      <span className="font-bold text-slate-900 text-center text-sm whitespace-nowrap">{noBreak(line1)}</span>
-      {line2 && <span className="text-xs text-slate-400 text-center whitespace-nowrap">{noBreak(line2)}</span>}
+      <span className="font-bold text-foreground text-center text-sm whitespace-nowrap">{noBreak(line1)}</span>
+      {line2 && <span className="text-xs text-muted-foreground text-center whitespace-nowrap">{noBreak(line2)}</span>}
     </>
   );
 }
@@ -75,7 +75,7 @@ export default function MatchCard({ match }: MatchCardProps) {
   const btnVariant = (selected: boolean) =>
     selected
       ? "bg-gradient-to-br from-rh to-rose-700 border-transparent text-white shadow-lg shadow-rh/20 hover:scale-[1.02] hover:shadow-rh/30"
-      : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900";
+      : "bg-card border-border text-muted-foreground hover:bg-accent/50 hover:border-border hover:text-foreground";
 
   const matchDate = new Date(match.dia).toLocaleString("en-US", {
     weekday: "short",
@@ -98,14 +98,14 @@ export default function MatchCard({ match }: MatchCardProps) {
   return (
     <div
       className={cn(
-        "flex flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden transition-opacity border-l-4",
+        "flex flex-col rounded-2xl border border-border bg-card shadow-sm overflow-hidden transition-opacity border-l-4",
         leftBorderColor,
         pending && "opacity-60 pointer-events-none"
       )}
     >
       {/* Header */}
       <div className="flex items-center justify-between gap-3 px-5 py-3">
-        <div className="flex items-center gap-2 text-xs text-slate-500 min-w-0 overflow-hidden">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground min-w-0 overflow-hidden">
           <CalendarClock className="h-3.5 w-3.5 shrink-0" />
           <span suppressHydrationWarning className="whitespace-nowrap">{matchDate}</span>
         </div>
@@ -137,11 +137,11 @@ export default function MatchCard({ match }: MatchCardProps) {
 
         <div className="flex flex-col items-center gap-1 px-2 shrink-0">
           {match.status === "FINISHED" ? (
-            <div className="text-2xl font-bold text-slate-900 tabular-nums whitespace-nowrap">
+            <div className="text-2xl font-bold text-foreground tabular-nums whitespace-nowrap">
               {match.resultadoLocal} – {match.resultadoVisitante}
             </div>
           ) : (
-            <div className="text-xl font-bold text-slate-300">VS</div>
+            <div className="text-xl font-bold text-border">VS</div>
           )}
         </div>
 
@@ -163,7 +163,7 @@ export default function MatchCard({ match }: MatchCardProps) {
       {/* Prediction buttons */}
       <div className="mt-auto px-5 pb-5 flex flex-col gap-2">
         {!locked && (
-          <p className="text-xs text-slate-400 text-center">Your prediction</p>
+          <p className="text-xs text-muted-foreground text-center">Your prediction</p>
         )}
         <div className="flex gap-2">
           <button
@@ -192,7 +192,7 @@ export default function MatchCard({ match }: MatchCardProps) {
         </div>
 
         {match.status === "FINISHED" && match.puntos > 0 && (
-          <div className="text-center text-xs font-semibold text-emerald-600 mt-1">
+          <div className="text-center text-xs font-semibold text-emerald-400 mt-1">
             +{match.puntos} pts earned ✓
           </div>
         )}
@@ -212,7 +212,7 @@ export default function MatchCard({ match }: MatchCardProps) {
             "flex items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold tabular-nums mt-1",
             remaining < FIVE_MINUTES_MS
               ? "bg-rh/10 text-rh"
-              : "bg-amber-50 text-amber-600"
+              : "bg-amber-900/20 text-amber-400"
           )}>
             <Timer className="h-3.5 w-3.5" />
             <span>Locks in {formatCountdown(remaining)}</span>

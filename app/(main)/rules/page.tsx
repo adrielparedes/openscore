@@ -15,8 +15,8 @@ export default function RulesPage() {
   return (
     <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Rules</h1>
-        <p className="text-slate-500 text-sm mt-1">How Openscore works.</p>
+        <h1 className="text-2xl font-bold text-foreground">Rules</h1>
+        <p className="text-muted-foreground text-sm mt-1">How Openscore works.</p>
       </div>
 
       {/* Participation & Eligibility */}
@@ -25,7 +25,7 @@ export default function RulesPage() {
           <CardTitle>Participation &amp; Eligibility</CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="list-disc list-inside space-y-3 text-sm text-slate-600">
+          <ul className="list-disc list-inside space-y-3 text-sm text-muted-foreground">
             <li>To participate, you must be registered.</li>
             <li>
               Only Red Hat associates from Argentina, Chile, Peru, Colombia/CEACA and Mexico can win
@@ -43,7 +43,7 @@ export default function RulesPage() {
             <li>
               Participants may register any time during the World Cup and until the day before the
               final match. Points will be awarded only for the matches for which predictions were
-              entered; consequently, <strong className="text-slate-900">0 (ZERO)</strong> points
+              entered; consequently, <strong className="text-foreground">0 (ZERO)</strong> points
               will be awarded for matches with no predictions entered.
             </li>
           </ul>
@@ -56,15 +56,15 @@ export default function RulesPage() {
           <CardTitle>Prizes &amp; Winners</CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="list-disc list-inside space-y-3 text-sm text-slate-600">
+          <ul className="list-disc list-inside space-y-3 text-sm text-muted-foreground">
             <li>
               There will be one winner in each Red Hat office:{" "}
-              <strong className="text-slate-900">1 (ONE)</strong> winner in Argentina,{" "}
-              <strong className="text-slate-900">1 (ONE)</strong> winner in Brazil,{" "}
-              <strong className="text-slate-900">1 (ONE)</strong> winner in Chile,{" "}
-              <strong className="text-slate-900">1 (ONE)</strong> winner in Colombia/CEACA,{" "}
-              <strong className="text-slate-900">1 (ONE)</strong> winner in Peru, and{" "}
-              <strong className="text-slate-900">1 (ONE)</strong> winner in Mexico.
+              <strong className="text-foreground">1 (ONE)</strong> winner in Argentina,{" "}
+              <strong className="text-foreground">1 (ONE)</strong> winner in Brazil,{" "}
+              <strong className="text-foreground">1 (ONE)</strong> winner in Chile,{" "}
+              <strong className="text-foreground">1 (ONE)</strong> winner in Colombia/CEACA,{" "}
+              <strong className="text-foreground">1 (ONE)</strong> winner in Peru, and{" "}
+              <strong className="text-foreground">1 (ONE)</strong> winner in Mexico.
             </li>
             <li>
               In the case of a tie in the first place of each sub-region, a random drawing will
@@ -80,23 +80,23 @@ export default function RulesPage() {
           <CardTitle>Making Predictions</CardTitle>
         </CardHeader>
         <CardContent>
-          <ol className="list-decimal list-inside space-y-3 text-sm text-slate-600">
+          <ol className="list-decimal list-inside space-y-3 text-sm text-muted-foreground">
             <li>
-              Navigate to <strong className="text-slate-900">Predictions</strong> to see all matches.
+              Navigate to <strong className="text-foreground">Predictions</strong> to see all matches.
             </li>
             <li>
               For each match, select one of three outcomes:{" "}
-              <strong className="text-slate-900">Home</strong> (left team wins),{" "}
-              <strong className="text-slate-900">Draw</strong>, or{" "}
-              <strong className="text-slate-900">Away</strong> (right team wins).
+              <strong className="text-foreground">Home</strong> (left team wins),{" "}
+              <strong className="text-foreground">Draw</strong>, or{" "}
+              <strong className="text-foreground">Away</strong> (right team wins).
             </li>
             <li>
               Predictions can be changed at any time until the match is{" "}
-              <strong className="text-slate-900">locked</strong>.
+              <strong className="text-foreground">locked</strong>.
             </li>
             <li>
               Matches lock automatically{" "}
-              <strong className="text-slate-900">15 minutes before kickoff</strong>. No changes
+              <strong className="text-foreground">15 minutes before kickoff</strong>. No changes
               after that.
             </li>
           </ol>
@@ -112,18 +112,18 @@ export default function RulesPage() {
               <CardTitle>Scoring System</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-slate-500 mb-4">
+              <p className="text-sm text-muted-foreground mb-4">
                 Points increase with the importance of the round:
               </p>
               <div className="space-y-2">
                 {PHASES.map((phase) => (
                   <div
                     key={phase.codigo}
-                    className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3"
+                    className="flex items-center justify-between rounded-lg bg-background px-4 py-3"
                   >
                     <div>
-                      <div className="font-medium text-slate-700">{phase.name}</div>
-                      <div className="text-xs text-slate-400">{phase.description}</div>
+                      <div className="font-medium text-foreground">{phase.name}</div>
+                      <div className="text-xs text-muted-foreground">{phase.description}</div>
                     </div>
                     <Badge variant={phase.points >= 4 ? "warning" : "default"}>
                       {phase.points} {phase.points === 1 ? "pt" : "pts"}
@@ -142,8 +142,8 @@ export default function RulesPage() {
               <CardTitle>Knockout Stages</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-slate-600">
-                For predictions from the <strong className="text-slate-900">Round of 32</strong>{" "}
+              <p className="text-sm text-muted-foreground">
+                For predictions from the <strong className="text-foreground">Round of 32</strong>{" "}
                 onwards, the 90 minutes of the match plus the additional time, if any, and
                 penalties will be taken into account.
               </p>
@@ -155,7 +155,7 @@ export default function RulesPage() {
               <CardTitle>Leaderboard</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-muted-foreground">
                 The global leaderboard ranks all players by total points accumulated across all
                 matches. You can also filter by country to see your regional standings.
               </p>

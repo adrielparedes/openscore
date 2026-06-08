@@ -59,8 +59,8 @@ async function MatchList({
 
   if (matches.length === 0) {
     return (
-      <div className="rounded-xl border border-slate-200 bg-white p-12 text-center shadow-sm">
-        <p className="text-slate-500">No matches found for the selected filter.</p>
+      <div className="rounded-xl border border-border bg-card p-12 text-center shadow-sm">
+        <p className="text-muted-foreground">No matches found for the selected filter.</p>
       </div>
     );
   }
@@ -72,11 +72,11 @@ async function MatchList({
         {groups.map((group) => (
           <div key={group.nombre}>
             <div className="flex items-center gap-3 mb-4">
-              <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">
+              <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider">
                 {group.nombre}
               </h2>
-              <div className="flex-1 h-px bg-slate-200" />
-              <span className="text-xs text-slate-400 font-medium">{group.matches.length} matches</span>
+              <div className="flex-1 h-px bg-border" />
+              <span className="text-xs text-muted-foreground font-medium">{group.matches.length} matches</span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {group.matches.map((match) => (
@@ -105,8 +105,8 @@ async function UpcomingMatchList() {
 
   if (!hasToday && !hasNextDay) {
     return (
-      <div className="rounded-xl border border-slate-200 bg-white p-12 text-center shadow-sm">
-        <p className="text-slate-500">No upcoming matches scheduled.</p>
+      <div className="rounded-xl border border-border bg-card p-12 text-center shadow-sm">
+        <p className="text-muted-foreground">No upcoming matches scheduled.</p>
       </div>
     );
   }
@@ -119,14 +119,14 @@ async function UpcomingMatchList() {
 
   return (
     <div className="flex flex-col gap-6">
-      <p className="text-sm text-slate-500">{description}</p>
+      <p className="text-sm text-muted-foreground">{description}</p>
 
       {hasToday && (
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Today</h2>
-            <div className="flex-1 h-px bg-slate-200" />
-            <span className="text-xs text-slate-400 font-medium">{today.length} match{today.length !== 1 ? "es" : ""}</span>
+            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider">Today</h2>
+            <div className="flex-1 h-px bg-border" />
+            <span className="text-xs text-muted-foreground font-medium">{today.length} match{today.length !== 1 ? "es" : ""}</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {today.map((match) => (
@@ -139,11 +139,11 @@ async function UpcomingMatchList() {
       {hasNextDay && (
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">
+            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider">
               {nextDayDate ? `From ${formatUpcomingDate(nextDayDate)}` : "Upcoming"}
             </h2>
-            <div className="flex-1 h-px bg-slate-200" />
-            <span className="text-xs text-slate-400 font-medium">{nextDay.length} match{nextDay.length !== 1 ? "es" : ""}</span>
+            <div className="flex-1 h-px bg-border" />
+            <span className="text-xs text-muted-foreground font-medium">{nextDay.length} match{nextDay.length !== 1 ? "es" : ""}</span>
           </div>
           <UpcomingDateGroups matches={nextDay} />
         </div>
@@ -165,7 +165,7 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
   const matchGridFallback = (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
       {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="h-44 rounded-xl bg-slate-100 animate-pulse" />
+        <div key={i} className="h-44 rounded-xl bg-muted animate-pulse" />
       ))}
     </div>
   );
@@ -175,8 +175,8 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
       <div className="flex flex-col">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-6 pt-8 pb-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">Predictions</h1>
-            <p className="text-slate-500 text-sm mt-1">Select your prediction for each match. Picks lock 15 minutes before kickoff.</p>
+            <h1 className="text-2xl font-bold text-foreground">Predictions</h1>
+            <p className="text-muted-foreground text-sm mt-1">Select your prediction for each match. Picks lock 15 minutes before kickoff.</p>
           </div>
           <ForecastFilters />
         </div>
@@ -185,7 +185,7 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
           <div className="w-full px-4 sm:px-6 lg:px-8 pb-8">
             <Suspense
               fallback={
-                <div className="w-full rounded-xl border border-slate-200 bg-slate-50 animate-pulse" style={{ height: "75vh", minHeight: 500 }} />
+                <div className="w-full rounded-xl border border-border bg-muted animate-pulse" style={{ height: "75vh", minHeight: 500 }} />
               }
             >
               <KnockoutBracketSection />

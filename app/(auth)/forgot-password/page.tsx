@@ -48,21 +48,21 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
-          <div className="h-14 w-14 rounded-2xl bg-rose-600 flex items-center justify-center mb-4">
-            <Trophy className="h-8 w-8 text-white" />
+          <div className="h-14 w-14 rounded-2xl bg-primary flex items-center justify-center mb-4">
+            <Trophy className="h-8 w-8 text-primary-foreground" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">Recover your account</h1>
-          <p className="text-slate-500 text-sm mt-1">Answer your security question to reset your password</p>
+          <h1 className="text-2xl font-bold text-foreground">Recover your account</h1>
+          <p className="text-muted-foreground text-sm mt-1">Answer your security question to reset your password</p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+        <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
           {step === "email" && (
             <form onSubmit={handleEmailSubmit} className="flex flex-col gap-5">
               {error && (
-                <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
+                <div className="rounded-lg bg-red-900/30 border border-red-800 px-4 py-3 text-sm text-red-400">
                   {error}
                 </div>
               )}
@@ -84,14 +84,14 @@ export default function ForgotPasswordPage() {
           {step === "answer" && (
             <form onSubmit={handleResetSubmit} className="flex flex-col gap-5">
               {error && (
-                <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
+                <div className="rounded-lg bg-red-900/30 border border-red-800 px-4 py-3 text-sm text-red-400">
                   {error}
                 </div>
               )}
 
-              <div className="rounded-lg bg-slate-50 border border-slate-200 px-4 py-3">
-                <p className="text-xs text-slate-400 mb-1">Security question for <span className="font-medium text-slate-600">{email}</span></p>
-                <p className="text-sm font-medium text-slate-800">{pregunta}</p>
+              <div className="rounded-lg bg-muted border border-border px-4 py-3">
+                <p className="text-xs text-muted-foreground mb-1">Security question for <span className="font-medium text-foreground">{email}</span></p>
+                <p className="text-sm font-medium text-foreground">{pregunta}</p>
               </div>
 
               <Input
@@ -120,7 +120,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="button"
                 onClick={() => { setStep("email"); setError(null); }}
-                className="text-sm text-slate-500 hover:text-slate-700 text-center"
+                className="text-sm text-muted-foreground hover:text-foreground text-center"
               >
                 ← Use a different email
               </button>
@@ -129,16 +129,16 @@ export default function ForgotPasswordPage() {
 
           {step === "done" && (
             <div className="flex flex-col items-center gap-4 py-4">
-              <div className="h-14 w-14 rounded-full bg-green-100 flex items-center justify-center">
-                <CheckCircle className="h-8 w-8 text-green-600" />
+              <div className="h-14 w-14 rounded-full bg-emerald-900/30 flex items-center justify-center">
+                <CheckCircle className="h-8 w-8 text-emerald-400" />
               </div>
               <div className="text-center">
-                <p className="font-semibold text-slate-900">Password reset!</p>
-                <p className="text-sm text-slate-500 mt-1">You can now sign in with your new password.</p>
+                <p className="font-semibold text-foreground">Password reset!</p>
+                <p className="text-sm text-muted-foreground mt-1">You can now sign in with your new password.</p>
               </div>
               <Link
                 href="/login"
-                className="mt-2 inline-flex items-center justify-center rounded-lg bg-rose-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-rose-700 transition-colors"
+                className="mt-2 inline-flex items-center justify-center rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/80 transition-colors"
               >
                 Go to login
               </Link>
@@ -146,9 +146,9 @@ export default function ForgotPasswordPage() {
           )}
 
           {step !== "done" && (
-            <p className="mt-6 text-center text-sm text-slate-500">
+            <p className="mt-6 text-center text-sm text-muted-foreground">
               Remembered your password?{" "}
-              <Link href="/login" className="text-rose-600 hover:text-rose-500 font-medium">
+              <Link href="/login" className="text-primary hover:text-primary/80 font-medium">
                 Sign in
               </Link>
             </p>

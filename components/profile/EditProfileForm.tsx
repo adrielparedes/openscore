@@ -65,7 +65,7 @@ export default function EditProfileForm({ nombre, apellido, paisCodigo, paises }
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="pais" className="text-sm font-medium text-slate-700">
+        <label htmlFor="pais" className="text-sm font-medium text-foreground">
           Country
         </label>
         <select
@@ -73,7 +73,7 @@ export default function EditProfileForm({ nombre, apellido, paisCodigo, paises }
           name="pais"
           defaultValue={paisCodigo}
           disabled={isPending}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {paises.map((p) => (
             <option key={p.id} value={p.codigo}>
@@ -84,13 +84,13 @@ export default function EditProfileForm({ nombre, apellido, paisCodigo, paises }
       </div>
 
       {error && (
-        <p className="text-sm text-rose-600 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2">
+        <p className="text-sm text-primary bg-rose-900/20 border border-rose-800/50 rounded-lg px-3 py-2">
           {error}
         </p>
       )}
 
       {success && (
-        <p className="flex items-center gap-2 text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">
+        <p className="flex items-center gap-2 text-sm text-emerald-400 bg-emerald-900/20 border border-emerald-700/50 rounded-lg px-3 py-2">
           <CheckCircle2 className="h-4 w-4 shrink-0" />
           Profile updated successfully.
         </p>

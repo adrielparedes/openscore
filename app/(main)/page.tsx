@@ -38,10 +38,10 @@ export default async function HomePage() {
           />
         </div>
 
-        <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-rose-50 via-white to-slate-100 p-7 flex flex-col justify-center gap-2 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-widest text-rose-500">Welcome back</p>
-          <h1 className="text-2xl font-bold text-slate-900 leading-tight">{nombre}!</h1>
-          <p className="text-slate-500 text-sm">Ready to predict today&apos;s matches?</p>
+        <section className="rounded-2xl border border-border bg-gradient-to-br from-primary/10 via-card to-accent/20 p-7 flex flex-col justify-center gap-2 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-widest text-primary">Welcome back</p>
+          <h1 className="text-2xl font-bold text-foreground leading-tight">{nombre}!</h1>
+          <p className="text-muted-foreground text-sm">Ready to predict today&apos;s matches?</p>
         </section>
 
         <div className="lg:col-span-2 lg:row-span-2 flex">
@@ -54,30 +54,30 @@ export default async function HomePage() {
 
         <Link
           href="/forecast"
-          className="group rounded-2xl border border-rose-100 bg-gradient-to-br from-rose-50 to-rose-100/60 p-6 flex flex-col justify-between shadow-sm hover:border-rose-300 hover:shadow-md transition-all"
+          className="group rounded-2xl border border-rose-900/40 bg-gradient-to-br from-rose-900/20 to-rose-800/10 p-6 flex flex-col justify-between shadow-sm hover:border-rose-700/60 hover:shadow-md transition-all"
         >
           <div className="h-10 w-10 rounded-xl bg-rose-600 flex items-center justify-center mb-4">
             <TrendingUp className="h-5 w-5 text-white" />
           </div>
           <div>
-            <div className="font-bold text-slate-900">Predictions</div>
-            <div className="text-xs text-slate-500 mt-0.5">Predict match results</div>
+            <div className="font-bold text-foreground">Predictions</div>
+            <div className="text-xs text-muted-foreground mt-0.5">Predict match results</div>
           </div>
-          <ArrowRight className="h-4 w-4 text-rose-500 mt-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="h-4 w-4 text-rose-400 mt-4 group-hover:translate-x-1 transition-transform" />
         </Link>
 
         <Link
           href="/leaderboard"
-          className="group rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50 to-yellow-50/60 p-6 flex flex-col justify-between shadow-sm hover:border-amber-300 hover:shadow-md transition-all"
+          className="group rounded-2xl border border-amber-900/40 bg-gradient-to-br from-amber-900/20 to-amber-800/10 p-6 flex flex-col justify-between shadow-sm hover:border-amber-700/60 hover:shadow-md transition-all"
         >
           <div className="h-10 w-10 rounded-xl bg-amber-500 flex items-center justify-center mb-4">
             <Globe className="h-5 w-5 text-white" />
           </div>
           <div>
-            <div className="font-bold text-slate-900">Leaderboard</div>
-            <div className="text-xs text-slate-500 mt-0.5">See global rankings</div>
+            <div className="font-bold text-foreground">Leaderboard</div>
+            <div className="text-xs text-muted-foreground mt-0.5">See global rankings</div>
           </div>
-          <ArrowRight className="h-4 w-4 text-amber-500 mt-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="h-4 w-4 text-amber-400 mt-4 group-hover:translate-x-1 transition-transform" />
         </Link>
 
       </div>
@@ -90,39 +90,39 @@ export default async function HomePage() {
           {nextMatch ? (
             <NextMatchCard match={nextMatch} />
           ) : (
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-center p-8 text-sm text-slate-400 shadow-sm">
+            <div className="rounded-2xl border border-border bg-muted flex items-center justify-center p-8 text-sm text-muted-foreground shadow-sm">
               No upcoming matches scheduled.
             </div>
           )}
           <div className="flex gap-4">
-            <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-6 flex flex-col gap-4 shadow-sm">
+            <div className="flex-1 rounded-2xl border border-border bg-card p-6 flex flex-col gap-4 shadow-sm">
               <div className="flex items-center gap-2">
-                <BookOpen className="h-4 w-4 text-slate-400" />
-                <h2 className="font-bold text-slate-900">How to play</h2>
+                <BookOpen className="h-4 w-4 text-muted-foreground" />
+                <h2 className="font-bold text-foreground">How to play</h2>
               </div>
-              <ol className="space-y-3 text-sm text-slate-600">
+              <ol className="space-y-3 text-sm text-muted-foreground">
                 <li className="flex gap-2.5">
-                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center">1</span>
-                  <span>Go to <Link href="/forecast" className="text-rose-600 hover:underline">Predictions</Link> to see upcoming matches</span>
+                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">1</span>
+                  <span>Go to <Link href="/forecast" className="text-primary hover:underline">Predictions</Link> to see upcoming matches</span>
                 </li>
                 <li className="flex gap-2.5">
-                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center">2</span>
-                  <span>Pick <strong className="text-slate-800">Home</strong>, <strong className="text-slate-800">Draw</strong>, or <strong className="text-slate-800">Away</strong></span>
+                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">2</span>
+                  <span>Pick <strong className="text-foreground">Home</strong>, <strong className="text-foreground">Draw</strong>, or <strong className="text-foreground">Away</strong></span>
                 </li>
                 <li className="flex gap-2.5">
-                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center">3</span>
-                  <span>Predictions lock <strong className="text-slate-800">15 min</strong> before kickoff</span>
+                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">3</span>
+                  <span>Predictions lock <strong className="text-foreground">15 min</strong> before kickoff</span>
                 </li>
                 <li className="flex gap-2.5">
-                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center">4</span>
-                  <span>Knockout stages are worth <strong className="text-slate-800">more points!</strong></span>
+                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">4</span>
+                  <span>Knockout stages are worth <strong className="text-foreground">more points!</strong></span>
                 </li>
               </ol>
             </div>
-            <div className="flex-1 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 p-6 flex flex-col justify-between gap-4 shadow-sm">
+            <div className="flex-1 rounded-2xl border border-amber-800/40 bg-gradient-to-br from-amber-900/20 via-amber-900/10 to-orange-900/10 p-6 flex flex-col justify-between gap-4 shadow-sm">
               <div>
-                <h2 className="font-bold text-slate-900 leading-snug">Your World Cup sticker card</h2>
-                <p className="text-xs text-slate-500 mt-1">
+                <h2 className="font-bold text-foreground leading-snug">Your World Cup sticker card</h2>
+                <p className="text-xs text-muted-foreground mt-1">
                   Upload your photo &amp; pick your country — download in high res.
                 </p>
               </div>
@@ -138,7 +138,7 @@ export default async function HomePage() {
                 </a>
                 <Link
                   href="/profile"
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-amber-300 bg-white hover:bg-amber-50 transition-colors px-4 py-2.5 text-amber-700 font-semibold text-sm"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-amber-700/50 bg-card hover:bg-accent transition-colors px-4 py-2.5 text-amber-400 font-semibold text-sm"
                 >
                   Upload to profile
                 </Link>
@@ -149,15 +149,15 @@ export default async function HomePage() {
 
         {/* Columna derecha */}
         <div className="flex-1 flex flex-col gap-4">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 flex flex-col gap-4 shadow-sm">
+          <div className="rounded-2xl border border-border bg-card p-6 flex flex-col gap-4 shadow-sm">
             <div className="flex items-center justify-between">
-              <h2 className="font-bold text-slate-900">Top 3</h2>
-              <Link href="/leaderboard" className="text-xs text-rose-500 hover:underline flex items-center gap-1">
+              <h2 className="font-bold text-foreground">Top 3</h2>
+              <Link href="/leaderboard" className="text-xs text-primary hover:underline flex items-center gap-1">
                 View all <ArrowRight className="h-3 w-3" />
               </Link>
             </div>
             {topRanking.length === 0 ? (
-              <p className="text-sm text-slate-400">No rankings yet — be the first to predict!</p>
+              <p className="text-sm text-muted-foreground">No rankings yet — be the first to predict!</p>
             ) : (
               <div className="grid grid-cols-3 gap-3">
                 {topRanking.map((entry) => (
@@ -177,9 +177,9 @@ export default async function HomePage() {
             href="https://redhat.enterprise.slack.com/archives/C0B7WVA16H5"
             target="_blank"
             rel="noopener noreferrer"
-            className="group rounded-2xl border border-purple-200 bg-linear-to-br from-purple-50 via-violet-50 to-indigo-50 p-6 flex items-center gap-4 shadow-sm hover:border-purple-400 hover:shadow-md transition-all"
+            className="group rounded-2xl border border-purple-800/40 bg-gradient-to-br from-purple-900/20 via-violet-900/15 to-indigo-900/10 p-6 flex items-center gap-4 shadow-sm hover:border-purple-600/50 hover:shadow-md transition-all"
           >
-            <div className="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center shadow-sm border border-purple-100">
+            <div className="h-11 w-11 shrink-0 rounded-xl bg-card flex items-center justify-center shadow-sm border border-purple-700/40">
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52z" fill="#E01E5A"/>
                 <path d="M6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313z" fill="#E01E5A"/>
@@ -192,10 +192,10 @@ export default async function HomePage() {
               </svg>
             </div>
             <div className="flex-1 min-w-0">
-              <div className="font-bold text-slate-900">Join the conversation</div>
-              <div className="text-xs text-slate-500 mt-0.5 truncate">#openscore on Slack</div>
+              <div className="font-bold text-foreground">Join the conversation</div>
+              <div className="text-xs text-muted-foreground mt-0.5 truncate">#openscore on Slack</div>
             </div>
-            <ArrowRight className="h-4 w-4 text-purple-500 shrink-0 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="h-4 w-4 text-purple-400 shrink-0 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
 
@@ -206,19 +206,19 @@ export default async function HomePage() {
         {nextMatch ? (
           <NextMatchCard match={nextMatch} />
         ) : (
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-center p-8 text-sm text-slate-400">
+          <div className="rounded-2xl border border-border bg-muted flex items-center justify-center p-8 text-sm text-muted-foreground">
             No upcoming matches scheduled.
           </div>
         )}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 flex flex-col gap-4">
+        <div className="rounded-2xl border border-border bg-card p-6 flex flex-col gap-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-bold text-slate-900">Top 3</h2>
-            <Link href="/leaderboard" className="text-xs text-rose-500 hover:underline flex items-center gap-1">
+            <h2 className="font-bold text-foreground">Top 3</h2>
+            <Link href="/leaderboard" className="text-xs text-primary hover:underline flex items-center gap-1">
               View all <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
           {topRanking.length === 0 ? (
-            <p className="text-sm text-slate-400">No rankings yet — be the first to predict!</p>
+            <p className="text-sm text-muted-foreground">No rankings yet — be the first to predict!</p>
           ) : (
             <div className="grid grid-cols-3 gap-3">
               {topRanking.map((entry) => (
@@ -234,27 +234,27 @@ export default async function HomePage() {
             </div>
           )}
         </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 flex flex-col gap-4">
+        <div className="rounded-2xl border border-border bg-card p-6 flex flex-col gap-4">
           <div className="flex items-center gap-2">
-            <BookOpen className="h-4 w-4 text-slate-400" />
-            <h2 className="font-bold text-slate-900">How to play</h2>
+            <BookOpen className="h-4 w-4 text-muted-foreground" />
+            <h2 className="font-bold text-foreground">How to play</h2>
           </div>
-          <ol className="space-y-3 text-sm text-slate-600">
+          <ol className="space-y-3 text-sm text-muted-foreground">
             <li className="flex gap-2.5">
-              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center">1</span>
-              <span>Go to <Link href="/forecast" className="text-rose-600 hover:underline">Predictions</Link> to see upcoming matches</span>
+              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">1</span>
+              <span>Go to <Link href="/forecast" className="text-primary hover:underline">Predictions</Link> to see upcoming matches</span>
             </li>
             <li className="flex gap-2.5">
-              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center">2</span>
-              <span>Pick <strong className="text-slate-800">Home</strong>, <strong className="text-slate-800">Draw</strong>, or <strong className="text-slate-800">Away</strong></span>
+              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">2</span>
+              <span>Pick <strong className="text-foreground">Home</strong>, <strong className="text-foreground">Draw</strong>, or <strong className="text-foreground">Away</strong></span>
             </li>
             <li className="flex gap-2.5">
-              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center">3</span>
-              <span>Predictions lock <strong className="text-slate-800">15 min</strong> before kickoff</span>
+              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">3</span>
+              <span>Predictions lock <strong className="text-foreground">15 min</strong> before kickoff</span>
             </li>
             <li className="flex gap-2.5">
-              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center">4</span>
-              <span>Knockout stages are worth <strong className="text-slate-800">more points!</strong></span>
+              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">4</span>
+              <span>Knockout stages are worth <strong className="text-foreground">more points!</strong></span>
             </li>
           </ol>
         </div>
@@ -262,7 +262,7 @@ export default async function HomePage() {
           href="https://redhat.enterprise.slack.com/archives/C0B7WVA16H5"
           target="_blank"
           rel="noopener noreferrer"
-          className="group rounded-2xl border border-purple-200 bg-linear-to-br from-purple-50 via-violet-50 to-indigo-50 p-6 flex items-center gap-4 shadow-sm hover:border-purple-400 hover:shadow-md transition-all"
+          className="group rounded-2xl border border-purple-800/40 bg-gradient-to-br from-purple-900/20 via-violet-900/15 to-indigo-900/10 p-6 flex items-center gap-4 shadow-sm hover:border-purple-600/50 hover:shadow-md transition-all"
         >
           <div className="h-11 w-11 shrink-0 rounded-xl bg-purple-600 flex items-center justify-center shadow-sm">
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -277,15 +277,15 @@ export default async function HomePage() {
               </svg>
           </div>
           <div className="flex-1 min-w-0">
-            <div className="font-bold text-slate-900">Join the conversation</div>
-            <div className="text-xs text-slate-500 mt-0.5 truncate">#openscore on Slack</div>
+            <div className="font-bold text-foreground">Join the conversation</div>
+            <div className="text-xs text-muted-foreground mt-0.5 truncate">#openscore on Slack</div>
           </div>
-          <ArrowRight className="h-4 w-4 text-purple-500 shrink-0 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="h-4 w-4 text-purple-400 shrink-0 group-hover:translate-x-1 transition-transform" />
         </a>
-        <div className="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 p-6 flex flex-col justify-between gap-4 shadow-sm">
+        <div className="rounded-2xl border border-amber-800/40 bg-gradient-to-br from-amber-900/20 via-amber-900/10 to-orange-900/10 p-6 flex flex-col justify-between gap-4 shadow-sm">
           <div>
-            <h2 className="font-bold text-slate-900 leading-snug">Your World Cup sticker card</h2>
-            <p className="text-xs text-slate-500 mt-1">
+            <h2 className="font-bold text-foreground leading-snug">Your World Cup sticker card</h2>
+            <p className="text-xs text-muted-foreground mt-1">
               Upload your photo &amp; pick your country — download in high res.
             </p>
           </div>
@@ -301,7 +301,7 @@ export default async function HomePage() {
             </a>
             <Link
               href="/profile"
-              className="flex items-center justify-center gap-1.5 rounded-xl border border-amber-300 bg-white hover:bg-amber-50 transition-colors px-4 py-2.5 text-amber-700 font-semibold text-sm"
+              className="flex items-center justify-center gap-1.5 rounded-xl border border-amber-700/50 bg-card hover:bg-accent transition-colors px-4 py-2.5 text-amber-400 font-semibold text-sm"
             >
               Upload to profile
             </Link>

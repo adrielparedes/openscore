@@ -258,7 +258,7 @@ export default function Sidebar() {
       {/* Desktop sidebar */}
       <aside
         className={cn(
-          "hidden md:fixed md:inset-y-0 md:left-0 md:z-40 md:flex md:flex-col bg-slate-950 border-r border-white/[0.08] transition-[width] duration-200",
+          "hidden md:fixed md:inset-y-0 md:left-0 md:z-40 md:flex md:flex-col bg-nav border-r border-white/[0.08] transition-[width] duration-200",
           collapsed ? "md:w-16" : "md:w-60"
         )}
       >
@@ -270,15 +270,15 @@ export default function Sidebar() {
       </aside>
 
       {/* Mobile top bar */}
-      <div className="sticky top-0 z-50 flex h-14 items-center gap-3 border-b border-slate-200 bg-slate-50 px-4 md:hidden">
+      <div className="sticky top-0 z-50 flex h-14 items-center gap-3 border-b border-border bg-card px-4 md:hidden">
         <button
           onClick={() => setMobileOpen(true)}
-          className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-200 transition-colors"
+          className="rounded-lg p-1.5 text-muted-foreground hover:bg-accent transition-colors"
         >
           <Menu className="h-5 w-5" />
         </button>
         <Link href="/" className="flex items-center">
-          <OpenScoreLogo variant="dark" className="h-7 w-auto" />
+          <OpenScoreLogo variant="light" className="h-7 w-auto" />
         </Link>
       </div>
 
@@ -289,7 +289,7 @@ export default function Sidebar() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setMobileOpen(false)}
           />
-          <aside className="relative flex h-full w-64 flex-col bg-slate-950 shadow-2xl animate-in slide-in-from-left duration-200">
+          <aside className="relative flex h-full w-64 flex-col bg-nav shadow-2xl animate-in slide-in-from-left duration-200">
             <button
               onClick={() => setMobileOpen(false)}
               className="absolute right-3 top-4 rounded-lg p-1.5 text-white/50 hover:text-white hover:bg-white/10 transition-colors"
