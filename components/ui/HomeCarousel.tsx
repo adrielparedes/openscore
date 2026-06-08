@@ -41,7 +41,7 @@ export function HomeCarousel({ banners }: { banners: Banner[] }) {
 
   return (
     <div
-      className="relative h-full w-full rounded-2xl overflow-hidden bg-slate-900 shadow-sm"
+      className="relative h-full w-full rounded-2xl overflow-hidden bg-muted shadow-sm"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
