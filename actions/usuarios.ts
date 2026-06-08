@@ -4,8 +4,10 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { hashPassword } from "@/lib/password";
 import { recordAction } from "@/lib/withMetrics";
+import { DEFAULT_PAGE_SIZE } from "@/lib/adminUsuariosUrl";
 import { z } from "zod";
 import { revalidatePath, revalidateTag } from "next/cache";
+import type { Prisma } from "@prisma/client";
 
 const updateSchema = z.object({
   nombre: z.string().min(2),
@@ -18,6 +20,12 @@ const passwordSchema = z.object({
   password: z.string().min(6),
 });
 
+const securityQuestionSchema = z.object({
+  preguntaSecretaId: z.coerce.number().int().positive(),
+  respuestaSecreta: z.string().trim().min(1, "Answer is required"),
+  currentPassword: z.string().min(1, "Current password is required"),
+});
+
 export async function getMiUsuario() {
   return recordAction("getMiUsuario", async () => {
     const session = await auth();
@@ -25,7 +33,7 @@ export async function getMiUsuario() {
 
     return prisma.usuario.findUnique({
       where: { id: parseInt(session.user.id) },
-      include: { pais: true, roles: true },
+      include: { pais: true, roles: true, preguntaSecreta: true },
     });
   });
 }
@@ -58,6 +66,53 @@ export async function updateUsuario(formData: FormData) {
 
     revalidatePath("/");
     revalidateTag("ranking", "max");
+    return {};
+  });
+}
+
+export async function updateSecurityQuestion(formData: FormData) {
+  return recordAction("updateSecurityQuestion", async () => {
+    const session = await auth();
+    if (!session?.user?.id) return { error: "Not authenticated" };
+
+    const parsed = securityQuestionSchema.safeParse({
+      preguntaSecretaId: formData.get("preguntaSecretaId"),
+      respuestaSecreta: formData.get("respuestaSecreta"),
+      currentPassword: formData.get("currentPassword"),
+    });
+    if (!parsed.success) return { error: parsed.error.issues[0].message };
+
+    const usuario = await prisma.usuario.findUniqueOrThrow({
+      where: { id: parseInt(session.user.id) },
+    });
+
+    if (usuario.password !== await hashPassword(parsed.data.currentPassword)) {
+      return { error: "Current password does not match" };
+    }
+
+    const pregunta = await prisma.preguntaSecreta.findFirst({
+      where: { id: parsed.data.preguntaSecretaId, deleted: false },
+    });
+    if (!pregunta) return { error: "Security question not found" };
+
+    const respuestaSecreta = parsed.data.respuestaSecreta.toLowerCase();
+
+    if (
+      usuario.preguntaSecretaId === parsed.data.preguntaSecretaId &&
+      usuario.respuestaSecreta === respuestaSecreta
+    ) {
+      return { error: "No changes to save" };
+    }
+
+    await prisma.usuario.update({
+      where: { id: usuario.id },
+      data: {
+        preguntaSecretaId: parsed.data.preguntaSecretaId,
+        respuestaSecreta,
+      },
+    });
+
+    revalidatePath("/profile");
     return {};
   });
 }
@@ -111,6 +166,96 @@ export async function getPaises() {
       where: { deleted: false },
       orderBy: { nombre: "asc" },
     });
+  });
+}
+
+export type UsuariosFilter = {
+  search?: string;
+  role?: string;
+  status?: string;
+  pais?: string;
+  page?: number;
+  pageSize?: number;
+};
+
+export type UsuariosPageResult = {
+  usuarios: Awaited<ReturnType<typeof fetchUsuariosPage>>["usuarios"];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+};
+
+function buildUsuariosWhere(filters: UsuariosFilter): Prisma.UsuarioWhereInput {
+  const where: Prisma.UsuarioWhereInput = {};
+
+  const status = filters.status ?? "all";
+  if (status === "active") {
+    where.deleted = false;
+    where.blocked = false;
+  } else if (status === "blocked") {
+    where.deleted = false;
+    where.blocked = true;
+  } else if (status === "deleted") {
+    where.deleted = true;
+  }
+
+  const role = filters.role ?? "all";
+  if (role === "admin") {
+    where.roles = { some: { rol: "ADMIN" } };
+  } else if (role === "user") {
+    where.roles = { none: { rol: "ADMIN" } };
+  }
+
+  if (filters.pais) {
+    where.pais = { codigo: filters.pais };
+  }
+
+  const search = filters.search?.trim();
+  if (search) {
+    where.OR = [
+      { nombre: { contains: search, mode: "insensitive" } },
+      { apellido: { contains: search, mode: "insensitive" } },
+      { email: { contains: search, mode: "insensitive" } },
+    ];
+  }
+
+  return where;
+}
+
+async function fetchUsuariosPage(filters: UsuariosFilter) {
+  const pageSize = Math.min(Math.max(filters.pageSize ?? DEFAULT_PAGE_SIZE, 1), 100);
+  const page = Math.max(filters.page ?? 1, 1);
+  const where = buildUsuariosWhere(filters);
+
+  const [usuarios, total] = await Promise.all([
+    prisma.usuario.findMany({
+      where,
+      omit: { stickerCard: true },
+      include: { pais: true, roles: true },
+      orderBy: [{ blocked: "desc" }, { createdAt: "desc" }],
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    }),
+    prisma.usuario.count({ where }),
+  ]);
+
+  return {
+    usuarios,
+    total,
+    page,
+    pageSize,
+    totalPages: Math.max(Math.ceil(total / pageSize), 1),
+  };
+}
+
+export async function getUsuarios(filters: UsuariosFilter = {}): Promise<UsuariosPageResult> {
+  return recordAction("getUsuarios", async () => {
+    const session = await auth();
+    const roles = (session?.user as any)?.roles ?? [];
+    if (!roles.includes("ADMIN")) throw new Error("Forbidden");
+
+    return fetchUsuariosPage(filters);
   });
 }
 
