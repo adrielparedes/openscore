@@ -3,9 +3,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
-  ),
+  metadataBase: new URL(process.env.AUTH_URL ?? "http://localhost:3000"),
   title: "Red Hat Openscore - World Cup prediction game",
   description: "Predict match results and compete with your friends",
   openGraph: {

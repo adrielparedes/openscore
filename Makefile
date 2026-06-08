@@ -18,3 +18,10 @@ db-create:
 
 db-seed:
 	pnpm db:generate && pnpm db:push && pnpm db:seed
+
+db-backup:
+	@if [ ! -f .env.prod ]; then echo "Error: .env.prod not found"; exit 1; fi
+	$(eval DATABASE_URL := $(shell grep '^DATABASE_URL=' .env.prod | cut -d'=' -f2-))
+	@mkdir -p backups
+	pg_dump "$(DATABASE_URL)" --no-owner --no-acl -F c -f backups/openscore_ng_$(shell date +%Y%m%d_%H%M%S).dump
+	@echo "Backup saved to backups/"
