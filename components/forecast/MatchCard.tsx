@@ -89,11 +89,11 @@ export default function MatchCard({ match }: MatchCardProps) {
   const leftBorderColor =
     match.status === "FINISHED"
       ? match.puntos > 0
-        ? "border-l-emerald-400"
+        ? "border-l-emerald-600 dark:border-l-emerald-400"
         : "border-l-rh"
       : match.status === "BLOCKED"
-      ? "border-l-amber-400"
-      : "border-l-blue-400";
+      ? "border-l-amber-600 dark:border-l-amber-400"
+      : "border-l-blue-600 dark:border-l-blue-400";
 
   return (
     <div
@@ -192,7 +192,7 @@ export default function MatchCard({ match }: MatchCardProps) {
         </div>
 
         {match.status === "FINISHED" && match.puntos > 0 && (
-          <div className="text-center text-xs font-semibold text-emerald-400 mt-1">
+          <div className="text-center text-xs font-semibold text-emerald-700 dark:text-emerald-400 mt-1">
             +{match.puntos} pts earned ✓
           </div>
         )}
@@ -212,7 +212,7 @@ export default function MatchCard({ match }: MatchCardProps) {
             "flex items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold tabular-nums mt-1",
             remaining < FIVE_MINUTES_MS
               ? "bg-rh/10 text-rh"
-              : "bg-amber-900/20 text-amber-400"
+              : "bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400"
           )}>
             <Timer className="h-3.5 w-3.5" />
             <span>Locks in {formatCountdown(remaining)}</span>

@@ -14,7 +14,7 @@ export default async function AdminBannersPage() {
   return (
     <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-xl bg-rose-900/30 flex items-center justify-center">
+        <div className="h-10 w-10 rounded-xl bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
           <ImageIcon className="h-5 w-5 text-primary" />
         </div>
         <div>

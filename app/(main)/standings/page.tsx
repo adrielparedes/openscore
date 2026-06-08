@@ -182,9 +182,9 @@ function GroupTable({
                     key={row.id}
                     className={`transition-colors ${
                       qualifies
-                        ? "bg-emerald-900/15"
+                        ? "bg-emerald-100 dark:bg-emerald-900/15"
                         : thirdPlace
-                          ? "bg-amber-900/15"
+                          ? "bg-amber-100 dark:bg-amber-900/15"
                           : "hover:bg-accent/50"
                     }`}
                   >
@@ -221,9 +221,9 @@ function GroupTable({
                     <td className="py-2.5 text-center text-muted-foreground">
                       <span className={
                         row.diferenciaGol > 0
-                          ? "text-emerald-400"
+                          ? "text-emerald-700 dark:text-emerald-400"
                           : row.diferenciaGol < 0
-                            ? "text-red-400"
+                            ? "text-red-700 dark:text-red-400"
                             : "text-muted-foreground"
                       }>
                         {row.diferenciaGol > 0 ? `+${row.diferenciaGol}` : row.diferenciaGol}
@@ -273,7 +273,7 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
                   <tr
                     key={row.id}
                     className={`transition-colors ${
-                      qualifies ? "bg-amber-900/15" : "hover:bg-accent/50"
+                      qualifies ? "bg-amber-100 dark:bg-amber-900/15" : "hover:bg-accent/50"
                     }`}
                   >
                     <td className="py-2.5 text-muted-foreground font-medium">
@@ -307,9 +307,9 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
                     <td className="py-2.5 text-center text-muted-foreground">
                       <span className={
                         row.diferenciaGol > 0
-                          ? "text-emerald-400"
+                          ? "text-emerald-700 dark:text-emerald-400"
                           : row.diferenciaGol < 0
-                            ? "text-red-400"
+                            ? "text-red-700 dark:text-red-400"
                             : "text-muted-foreground"
                       }>
                         {row.diferenciaGol > 0 ? `+${row.diferenciaGol}` : row.diferenciaGol}

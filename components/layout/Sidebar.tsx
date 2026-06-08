@@ -26,6 +26,7 @@ import {
   ImageIcon,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const navLinks = [
   { href: "/", label: "Home", icon: Home },
@@ -184,6 +185,8 @@ function SidebarContent({
           </button>
         )}
 
+        <ThemeToggle collapsed={collapsed} />
+
         {/* Switch to navbar */}
         <button
           onClick={() => { onToggleLayout?.(); onNavigate?.(); }}
@@ -270,10 +273,10 @@ export default function Sidebar() {
       </aside>
 
       {/* Mobile top bar */}
-      <div className="sticky top-0 z-50 flex h-14 items-center gap-3 border-b border-border bg-card px-4 md:hidden">
+      <div className="sticky top-0 z-50 flex h-14 items-center gap-3 border-b border-white/[0.08] bg-nav px-4 md:hidden">
         <button
           onClick={() => setMobileOpen(true)}
-          className="rounded-lg p-1.5 text-muted-foreground hover:bg-accent transition-colors"
+          className="rounded-lg p-1.5 text-white/50 hover:bg-white/10 transition-colors"
         >
           <Menu className="h-5 w-5" />
         </button>

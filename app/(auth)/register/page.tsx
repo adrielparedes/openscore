@@ -56,7 +56,7 @@ export default function RegisterPage() {
         <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
           <form action={formAction} className="flex flex-col gap-4">
             {state?.error && (
-              <div className="rounded-lg bg-red-900/30 border border-red-800 px-4 py-3 text-sm text-red-400">
+              <div className="rounded-lg bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-400">
                 {state.error}
               </div>
             )}

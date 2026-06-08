@@ -54,7 +54,7 @@ export default async function HomePage() {
 
         <Link
           href="/forecast"
-          className="group rounded-2xl border border-rose-900/40 bg-gradient-to-br from-rose-900/20 to-rose-800/10 p-6 flex flex-col justify-between shadow-sm hover:border-rose-700/60 hover:shadow-md transition-all"
+          className="group rounded-2xl border border-rose-200 dark:border-rose-900/40 bg-gradient-to-br from-rose-100 dark:from-rose-900/20 to-rose-100 dark:to-rose-800/10 p-6 flex flex-col justify-between shadow-sm hover:border-rose-300 dark:hover:border-rose-700/60 hover:shadow-md transition-all"
         >
           <div className="h-10 w-10 rounded-xl bg-rose-600 flex items-center justify-center mb-4">
             <TrendingUp className="h-5 w-5 text-white" />
@@ -63,12 +63,12 @@ export default async function HomePage() {
             <div className="font-bold text-foreground">Predictions</div>
             <div className="text-xs text-muted-foreground mt-0.5">Predict match results</div>
           </div>
-          <ArrowRight className="h-4 w-4 text-rose-400 mt-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="h-4 w-4 text-rose-700 dark:text-rose-400 mt-4 group-hover:translate-x-1 transition-transform" />
         </Link>
 
         <Link
           href="/leaderboard"
-          className="group rounded-2xl border border-amber-900/40 bg-gradient-to-br from-amber-900/20 to-amber-800/10 p-6 flex flex-col justify-between shadow-sm hover:border-amber-700/60 hover:shadow-md transition-all"
+          className="group rounded-2xl border border-amber-200 dark:border-amber-900/40 bg-gradient-to-br from-amber-100 dark:from-amber-900/20 to-amber-100 dark:to-amber-800/10 p-6 flex flex-col justify-between shadow-sm hover:border-amber-300 dark:hover:border-amber-700/60 hover:shadow-md transition-all"
         >
           <div className="h-10 w-10 rounded-xl bg-amber-500 flex items-center justify-center mb-4">
             <Globe className="h-5 w-5 text-white" />
@@ -77,7 +77,7 @@ export default async function HomePage() {
             <div className="font-bold text-foreground">Leaderboard</div>
             <div className="text-xs text-muted-foreground mt-0.5">See global rankings</div>
           </div>
-          <ArrowRight className="h-4 w-4 text-amber-400 mt-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="h-4 w-4 text-amber-700 dark:text-amber-400 mt-4 group-hover:translate-x-1 transition-transform" />
         </Link>
 
       </div>
@@ -102,24 +102,24 @@ export default async function HomePage() {
               </div>
               <ol className="space-y-3 text-sm text-muted-foreground">
                 <li className="flex gap-2.5">
-                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">1</span>
+                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 text-xs font-bold flex items-center justify-center">1</span>
                   <span>Go to <Link href="/forecast" className="text-primary hover:underline">Predictions</Link> to see upcoming matches</span>
                 </li>
                 <li className="flex gap-2.5">
-                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">2</span>
+                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 text-xs font-bold flex items-center justify-center">2</span>
                   <span>Pick <strong className="text-foreground">Home</strong>, <strong className="text-foreground">Draw</strong>, or <strong className="text-foreground">Away</strong></span>
                 </li>
                 <li className="flex gap-2.5">
-                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">3</span>
+                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 text-xs font-bold flex items-center justify-center">3</span>
                   <span>Predictions lock <strong className="text-foreground">15 min</strong> before kickoff</span>
                 </li>
                 <li className="flex gap-2.5">
-                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">4</span>
+                  <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 text-xs font-bold flex items-center justify-center">4</span>
                   <span>Knockout stages are worth <strong className="text-foreground">more points!</strong></span>
                 </li>
               </ol>
             </div>
-            <div className="flex-1 rounded-2xl border border-amber-800/40 bg-gradient-to-br from-amber-900/20 via-amber-900/10 to-orange-900/10 p-6 flex flex-col justify-between gap-4 shadow-sm">
+            <div className="flex-1 rounded-2xl border border-amber-200 dark:border-amber-800/40 bg-gradient-to-br from-amber-100 dark:from-amber-900/20 via-amber-50 dark:via-amber-900/10 to-orange-100 dark:to-orange-900/10 p-6 flex flex-col justify-between gap-4 shadow-sm">
               <div>
                 <h2 className="font-bold text-foreground leading-snug">Your World Cup sticker card</h2>
                 <p className="text-xs text-muted-foreground mt-1">
@@ -138,7 +138,7 @@ export default async function HomePage() {
                 </a>
                 <Link
                   href="/profile"
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-amber-700/50 bg-card hover:bg-accent transition-colors px-4 py-2.5 text-amber-400 font-semibold text-sm"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-amber-200 dark:border-amber-700/50 bg-card hover:bg-accent transition-colors px-4 py-2.5 text-amber-700 dark:text-amber-400 font-semibold text-sm"
                 >
                   Upload to profile
                 </Link>
@@ -177,9 +177,9 @@ export default async function HomePage() {
             href="https://redhat.enterprise.slack.com/archives/C0B7WVA16H5"
             target="_blank"
             rel="noopener noreferrer"
-            className="group rounded-2xl border border-purple-800/40 bg-gradient-to-br from-purple-900/20 via-violet-900/15 to-indigo-900/10 p-6 flex items-center gap-4 shadow-sm hover:border-purple-600/50 hover:shadow-md transition-all"
+            className="group rounded-2xl border border-purple-200 dark:border-purple-800/40 bg-gradient-to-br from-purple-100 dark:from-purple-900/20 via-violet-100 dark:via-violet-900/15 to-indigo-100 dark:to-indigo-900/10 p-6 flex items-center gap-4 shadow-sm hover:border-purple-300 dark:hover:border-purple-600/50 hover:shadow-md transition-all"
           >
-            <div className="h-11 w-11 shrink-0 rounded-xl bg-card flex items-center justify-center shadow-sm border border-purple-700/40">
+            <div className="h-11 w-11 shrink-0 rounded-xl bg-card flex items-center justify-center shadow-sm border border-purple-200 dark:border-purple-700/40">
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52z" fill="#E01E5A"/>
                 <path d="M6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313z" fill="#E01E5A"/>
@@ -195,7 +195,7 @@ export default async function HomePage() {
               <div className="font-bold text-foreground">Join the conversation</div>
               <div className="text-xs text-muted-foreground mt-0.5 truncate">#openscore on Slack</div>
             </div>
-            <ArrowRight className="h-4 w-4 text-purple-400 shrink-0 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="h-4 w-4 text-purple-700 dark:text-purple-400 shrink-0 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
 
@@ -241,19 +241,19 @@ export default async function HomePage() {
           </div>
           <ol className="space-y-3 text-sm text-muted-foreground">
             <li className="flex gap-2.5">
-              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">1</span>
+              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 text-xs font-bold flex items-center justify-center">1</span>
               <span>Go to <Link href="/forecast" className="text-primary hover:underline">Predictions</Link> to see upcoming matches</span>
             </li>
             <li className="flex gap-2.5">
-              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">2</span>
+              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 text-xs font-bold flex items-center justify-center">2</span>
               <span>Pick <strong className="text-foreground">Home</strong>, <strong className="text-foreground">Draw</strong>, or <strong className="text-foreground">Away</strong></span>
             </li>
             <li className="flex gap-2.5">
-              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">3</span>
+              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 text-xs font-bold flex items-center justify-center">3</span>
               <span>Predictions lock <strong className="text-foreground">15 min</strong> before kickoff</span>
             </li>
             <li className="flex gap-2.5">
-              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-900/30 text-rose-400 text-xs font-bold flex items-center justify-center">4</span>
+              <span className="shrink-0 h-5 w-5 rounded-full bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 text-xs font-bold flex items-center justify-center">4</span>
               <span>Knockout stages are worth <strong className="text-foreground">more points!</strong></span>
             </li>
           </ol>
@@ -262,7 +262,7 @@ export default async function HomePage() {
           href="https://redhat.enterprise.slack.com/archives/C0B7WVA16H5"
           target="_blank"
           rel="noopener noreferrer"
-          className="group rounded-2xl border border-purple-800/40 bg-gradient-to-br from-purple-900/20 via-violet-900/15 to-indigo-900/10 p-6 flex items-center gap-4 shadow-sm hover:border-purple-600/50 hover:shadow-md transition-all"
+          className="group rounded-2xl border border-purple-200 dark:border-purple-800/40 bg-gradient-to-br from-purple-100 dark:from-purple-900/20 via-violet-100 dark:via-violet-900/15 to-indigo-100 dark:to-indigo-900/10 p-6 flex items-center gap-4 shadow-sm hover:border-purple-300 dark:hover:border-purple-600/50 hover:shadow-md transition-all"
         >
           <div className="h-11 w-11 shrink-0 rounded-xl bg-purple-600 flex items-center justify-center shadow-sm">
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -280,9 +280,9 @@ export default async function HomePage() {
             <div className="font-bold text-foreground">Join the conversation</div>
             <div className="text-xs text-muted-foreground mt-0.5 truncate">#openscore on Slack</div>
           </div>
-          <ArrowRight className="h-4 w-4 text-purple-400 shrink-0 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="h-4 w-4 text-purple-700 dark:text-purple-400 shrink-0 group-hover:translate-x-1 transition-transform" />
         </a>
-        <div className="rounded-2xl border border-amber-800/40 bg-gradient-to-br from-amber-900/20 via-amber-900/10 to-orange-900/10 p-6 flex flex-col justify-between gap-4 shadow-sm">
+        <div className="rounded-2xl border border-amber-200 dark:border-amber-800/40 bg-gradient-to-br from-amber-100 dark:from-amber-900/20 via-amber-50 dark:via-amber-900/10 to-orange-100 dark:to-orange-900/10 p-6 flex flex-col justify-between gap-4 shadow-sm">
           <div>
             <h2 className="font-bold text-foreground leading-snug">Your World Cup sticker card</h2>
             <p className="text-xs text-muted-foreground mt-1">
@@ -301,7 +301,7 @@ export default async function HomePage() {
             </a>
             <Link
               href="/profile"
-              className="flex items-center justify-center gap-1.5 rounded-xl border border-amber-700/50 bg-card hover:bg-accent transition-colors px-4 py-2.5 text-amber-400 font-semibold text-sm"
+              className="flex items-center justify-center gap-1.5 rounded-xl border border-amber-200 dark:border-amber-700/50 bg-card hover:bg-accent transition-colors px-4 py-2.5 text-amber-700 dark:text-amber-400 font-semibold text-sm"
             >
               Upload to profile
             </Link>

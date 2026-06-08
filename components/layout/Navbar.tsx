@@ -26,6 +26,7 @@ import {
   ImageIcon,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const navLinks = [
   { href: "/", label: "Home", icon: Home },
@@ -158,6 +159,7 @@ export default function Navbar() {
 
           {/* User + logout */}
           <div className="hidden md:flex items-center gap-0.5">
+            <ThemeToggle collapsed className="rounded-full p-2" />
             <button
               onClick={toggle}
               title="Switch to sidebar layout"
@@ -284,7 +286,8 @@ export default function Navbar() {
               </Link>
             </>
           )}
-          <div className="mt-2 pt-2 border-t border-white/[0.06]">
+          <div className="mt-2 pt-2 border-t border-white/[0.06] space-y-0.5">
+            <ThemeToggle className="rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider" />
             <button
               onClick={() => { toggle(); setMobileOpen(false); }}
               className="flex w-full items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-white/40 hover:text-white hover:bg-white/10 transition-all duration-150"

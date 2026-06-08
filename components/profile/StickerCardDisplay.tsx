@@ -31,15 +31,15 @@ function RankIcon({ rank }: { rank: number }) {
 }
 
 const rankBorderColor: Record<number, string> = {
-  1: "border-amber-400 shadow-amber-700/50",
+  1: "border-amber-500 dark:border-amber-400 shadow-amber-300/50 dark:shadow-amber-700/50",
   2: "border-slate-400 shadow-slate-700/50",
-  3: "border-amber-700 shadow-amber-900/30",
+  3: "border-amber-600 dark:border-amber-700 shadow-amber-200/50 dark:shadow-amber-900/30",
 };
 
 const rankLabelColor: Record<number, string> = {
-  1: "text-amber-400",
+  1: "text-amber-700 dark:text-amber-400",
   2: "text-muted-foreground",
-  3: "text-amber-400",
+  3: "text-amber-700 dark:text-amber-400",
 };
 
 export default function StickerCardDisplay({ nombre, pais, puntos, ranking, stickerCard }: Props) {

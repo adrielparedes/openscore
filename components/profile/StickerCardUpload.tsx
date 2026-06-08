@@ -125,13 +125,13 @@ export default function StickerCardUpload({ currentCard }: Props) {
           onClick={() => inputRef.current?.click()}
           className={`relative flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-10 cursor-pointer transition-colors
             ${dragOver
-              ? "border-rose-400 bg-rose-900/20"
-              : "border-border bg-background hover:border-rose-300 hover:bg-rose-900/20"
+              ? "border-rose-400 bg-rose-100 dark:bg-rose-900/20"
+              : "border-border bg-background hover:border-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/20"
             }`}
         >
           {uploading ? (
             <>
-              <Loader2 className="h-8 w-8 text-rose-400 animate-spin" />
+              <Loader2 className="h-8 w-8 text-rose-700 dark:text-rose-400 animate-spin" />
               <p className="text-sm text-muted-foreground">Uploading…</p>
             </>
           ) : (
@@ -162,7 +162,7 @@ export default function StickerCardUpload({ currentCard }: Props) {
       />
 
       {error && (
-        <p className="text-sm text-primary bg-rose-900/20 border border-rose-800/50 rounded-lg px-3 py-2">
+        <p className="text-sm text-primary bg-rose-100 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800/50 rounded-lg px-3 py-2">
           {error}
         </p>
       )}

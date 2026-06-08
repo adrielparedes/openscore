@@ -39,7 +39,7 @@ export default async function DashboardPage() {
         <Card className="sm:col-span-1">
           <CardContent>
             <div className="flex items-center gap-4 pt-1">
-              <div className="h-12 w-12 rounded-xl bg-rose-900/30 flex items-center justify-center">
+              <div className="h-12 w-12 rounded-xl bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
                 <Trophy className="h-6 w-6 text-primary" />
               </div>
               <div>
@@ -55,8 +55,8 @@ export default async function DashboardPage() {
         <Card className="sm:col-span-1">
           <CardContent>
             <div className="flex items-center gap-4 pt-1">
-              <div className="h-12 w-12 rounded-xl bg-emerald-900/30 flex items-center justify-center">
-                <TrendingUp className="h-6 w-6 text-emerald-400" />
+              <div className="h-12 w-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                <TrendingUp className="h-6 w-6 text-emerald-700 dark:text-emerald-400" />
               </div>
               <div>
                 <div className="text-2xl font-bold text-foreground">
@@ -71,8 +71,8 @@ export default async function DashboardPage() {
         <Card className="sm:col-span-1">
           <CardContent>
             <div className="flex items-center gap-4 pt-1">
-              <div className="h-12 w-12 rounded-xl bg-amber-900/30 flex items-center justify-center">
-                <BarChart3 className="h-6 w-6 text-amber-400" />
+              <div className="h-12 w-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                <BarChart3 className="h-6 w-6 text-amber-700 dark:text-amber-400" />
               </div>
               <div>
                 <div className="text-2xl font-bold text-foreground">{nombre}</div>

@@ -48,11 +48,11 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
 
   const leftBorderColor = finished
     ? predictionCorrect
-      ? "border-l-emerald-500"
+      ? "border-l-emerald-600 dark:border-l-emerald-500"
       : "border-l-rh"
     : locked
-    ? "border-l-amber-400"
-    : "border-l-blue-400";
+    ? "border-l-amber-600 dark:border-l-amber-400"
+    : "border-l-blue-600 dark:border-l-blue-400";
 
   return (
     <div
@@ -137,7 +137,7 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
             <div className={cn(
               "flex items-center justify-center gap-2 rounded-xl py-2 px-4 text-sm font-semibold",
               predictionCorrect
-                ? "bg-emerald-900/20 text-emerald-400"
+                ? "bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400"
                 : "bg-rh/10 text-rh"
             )}>
               {predictionCorrect ? (

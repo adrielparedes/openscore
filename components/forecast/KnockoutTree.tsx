@@ -250,11 +250,11 @@ function KnockoutNode({ slot, cardH, onClick }: { slot: Slot; cardH: number; onC
       <div className="flex items-center">
         {showLock ? (
           <div className="group relative shrink-0">
-            <Timer className={cn("h-3 w-3 translate-y-[1px]", isUrgent ? "text-rh" : "text-amber-400")} />
+            <Timer className={cn("h-3 w-3 translate-y-[1px]", isUrgent ? "text-rh" : "text-amber-700 dark:text-amber-400")} />
             <div className="pointer-events-none absolute bottom-full left-0 mb-1.5 hidden group-hover:block z-20">
               <div className={cn(
                 "flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-semibold whitespace-nowrap shadow-md",
-                isUrgent ? "bg-rh/10 text-rh" : "bg-amber-900/20 text-amber-400"
+                isUrgent ? "bg-rh/10 text-rh" : "bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400"
               )}>
                 <Timer className="h-2.5 w-2.5" />
                 Locks in {formatCountdown(remaining)}

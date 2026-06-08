@@ -55,13 +55,13 @@ export default function ChangePasswordForm() {
       />
 
       {error && (
-        <p className="text-sm text-primary bg-rose-900/20 border border-rose-800/50 rounded-lg px-3 py-2">
+        <p className="text-sm text-primary bg-rose-100 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800/50 rounded-lg px-3 py-2">
           {error}
         </p>
       )}
 
       {success && (
-        <p className="flex items-center gap-2 text-sm text-emerald-400 bg-emerald-900/20 border border-emerald-700/50 rounded-lg px-3 py-2">
+        <p className="flex items-center gap-2 text-sm text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-700/50 rounded-lg px-3 py-2">
           <CheckCircle2 className="h-4 w-4 shrink-0" />
           Password changed successfully.
         </p>

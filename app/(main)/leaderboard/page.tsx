@@ -19,9 +19,9 @@ interface LeaderboardPageProps {
 }
 
 function RankBadge({ rank }: { rank: number }) {
-  if (rank === 1) return <Trophy className="h-5 w-5 text-amber-400" />;
+  if (rank === 1) return <Trophy className="h-5 w-5 text-amber-700 dark:text-amber-400" />;
   if (rank === 2) return <Medal className="h-5 w-5 text-muted-foreground" />;
-  if (rank === 3) return <Medal className="h-5 w-5 text-amber-400" />;
+  if (rank === 3) return <Medal className="h-5 w-5 text-amber-700 dark:text-amber-400" />;
   return <span className="text-sm font-bold text-muted-foreground w-5 text-center">#{rank}</span>;
 }
 
@@ -83,7 +83,7 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
                         key={entry.usuario}
                         className={`transition-colors ${
                           isMe
-                            ? "bg-rose-900/20 border-l-2 border-l-rose-500"
+                            ? "bg-rose-100 dark:bg-rose-900/20 border-l-2 border-l-rose-500"
                             : "hover:bg-accent/50"
                         }`}
                       >
@@ -95,7 +95,7 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
                         <td className="py-3">
                           <span className={`font-medium ${isMe ? "text-primary" : "text-foreground"}`}>
                             {entry.nombre}
-                            {isMe && <span className="ml-2 text-xs text-rose-400">(you)</span>}
+                            {isMe && <span className="ml-2 text-xs text-rose-700 dark:text-rose-400">(you)</span>}
                           </span>
                         </td>
                         <td className="py-3 hidden sm:table-cell">

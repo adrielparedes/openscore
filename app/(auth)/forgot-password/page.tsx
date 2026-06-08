@@ -62,7 +62,7 @@ export default function ForgotPasswordPage() {
           {step === "email" && (
             <form onSubmit={handleEmailSubmit} className="flex flex-col gap-5">
               {error && (
-                <div className="rounded-lg bg-red-900/30 border border-red-800 px-4 py-3 text-sm text-red-400">
+                <div className="rounded-lg bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-400">
                   {error}
                 </div>
               )}
@@ -84,7 +84,7 @@ export default function ForgotPasswordPage() {
           {step === "answer" && (
             <form onSubmit={handleResetSubmit} className="flex flex-col gap-5">
               {error && (
-                <div className="rounded-lg bg-red-900/30 border border-red-800 px-4 py-3 text-sm text-red-400">
+                <div className="rounded-lg bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-400">
                   {error}
                 </div>
               )}
@@ -129,8 +129,8 @@ export default function ForgotPasswordPage() {
 
           {step === "done" && (
             <div className="flex flex-col items-center gap-4 py-4">
-              <div className="h-14 w-14 rounded-full bg-emerald-900/30 flex items-center justify-center">
-                <CheckCircle className="h-8 w-8 text-emerald-400" />
+              <div className="h-14 w-14 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                <CheckCircle className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div className="text-center">
                 <p className="font-semibold text-foreground">Password reset!</p>

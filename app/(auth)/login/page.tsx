@@ -36,7 +36,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
-          <OpenScoreLogo variant="light" className="h-14 w-auto mb-4" />
+          <OpenScoreLogo className="h-14 w-auto mb-4" />
           <h1 className="text-2xl font-bold text-foreground">Welcome to Openscore</h1>
           <p className="text-muted-foreground text-sm mt-1">Sign in to manage your predictions</p>
         </div>
@@ -44,7 +44,7 @@ export default function LoginPage() {
         <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             {error && (
-              <div className="rounded-lg bg-red-900/30 border border-red-800 px-4 py-3 text-sm text-red-400">
+              <div className="rounded-lg bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-400">
                 {error}
               </div>
             )}
