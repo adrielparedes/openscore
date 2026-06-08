@@ -7,13 +7,15 @@ export const metadata: Metadata = {
   title: "Red Hat Openscore - World Cup prediction game",
   description: "Predict match results and compete with your friends",
   openGraph: {
+    type: "website",
+    siteName: "Red Hat Openscore",
     title: "Red Hat Openscore - World Cup prediction game",
     description: "Predict match results and compete with your friends",
     images: [
       {
         url: "/RH_OpenScore_web.png",
-        width: 1024,
-        height: 1024,
+        width: 1080,
+        height: 1080,
         alt: "Red Hat Openscore",
       },
     ],
