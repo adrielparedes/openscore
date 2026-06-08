@@ -30,7 +30,7 @@ async function fetchRanking(filters?: {
   const start = performance.now();
   const filtered = !!filters?.pais;
 
-  const where: any = { deleted: false, email: { not: "admin@openscore.com" } };
+  const where: any = { deleted: false, blocked: false, email: { not: "admin@openscore.com" } };
   if (filters?.pais) where.pais = { codigo: filters.pais };
 
   const usuarios = await prisma.usuario.findMany({
