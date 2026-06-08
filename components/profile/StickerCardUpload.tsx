@@ -84,7 +84,7 @@ export default function StickerCardUpload({ currentCard }: Props) {
     <div className="flex flex-col gap-4">
       {preview ? (
         <div className="relative group">
-          <div className="relative w-full max-w-xs mx-auto aspect-[3/4] rounded-xl overflow-hidden border border-slate-200 bg-slate-50 shadow-sm">
+          <div className="relative w-full max-w-xs mx-auto aspect-[3/4] rounded-xl overflow-hidden border border-border bg-background shadow-sm">
             <Image
               src={preview}
               alt="Sticker card"
@@ -96,7 +96,7 @@ export default function StickerCardUpload({ currentCard }: Props) {
               <button
                 onClick={() => inputRef.current?.click()}
                 disabled={uploading || deleting}
-                className="flex items-center gap-1.5 rounded-lg bg-white/90 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-white transition-colors shadow"
+                className="flex items-center gap-1.5 rounded-lg bg-card/90 px-3 py-2 text-xs font-medium text-foreground hover:bg-card transition-colors shadow"
               >
                 <Upload className="h-3.5 w-3.5" />
                 Replace
@@ -104,7 +104,7 @@ export default function StickerCardUpload({ currentCard }: Props) {
               <button
                 onClick={handleDelete}
                 disabled={uploading || deleting}
-                className="flex items-center gap-1.5 rounded-lg bg-white/90 px-3 py-2 text-xs font-medium text-rose-600 hover:bg-white transition-colors shadow"
+                className="flex items-center gap-1.5 rounded-lg bg-card/90 px-3 py-2 text-xs font-medium text-primary hover:bg-card transition-colors shadow"
               >
                 {deleting ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -115,7 +115,7 @@ export default function StickerCardUpload({ currentCard }: Props) {
               </button>
             </div>
           </div>
-          <p className="text-xs text-slate-400 mt-2 text-center">Hover to replace or remove</p>
+          <p className="text-xs text-muted-foreground mt-2 text-center">Hover to replace or remove</p>
         </div>
       ) : (
         <div
@@ -125,25 +125,25 @@ export default function StickerCardUpload({ currentCard }: Props) {
           onClick={() => inputRef.current?.click()}
           className={`relative flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-10 cursor-pointer transition-colors
             ${dragOver
-              ? "border-rose-400 bg-rose-50"
-              : "border-slate-200 bg-slate-50 hover:border-rose-300 hover:bg-rose-50/50"
+              ? "border-rose-400 bg-rose-900/20"
+              : "border-border bg-background hover:border-rose-300 hover:bg-rose-900/20"
             }`}
         >
           {uploading ? (
             <>
               <Loader2 className="h-8 w-8 text-rose-400 animate-spin" />
-              <p className="text-sm text-slate-500">Uploading…</p>
+              <p className="text-sm text-muted-foreground">Uploading…</p>
             </>
           ) : (
             <>
-              <div className="h-14 w-14 rounded-full bg-slate-100 flex items-center justify-center">
-                <ImageIcon className="h-7 w-7 text-slate-400" />
+              <div className="h-14 w-14 rounded-full bg-secondary flex items-center justify-center">
+                <ImageIcon className="h-7 w-7 text-muted-foreground" />
               </div>
               <div className="text-center">
-                <p className="text-sm font-medium text-slate-700">
+                <p className="text-sm font-medium text-foreground">
                   Drop your sticker card here
                 </p>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <p className="text-xs text-muted-foreground mt-0.5">
                   or click to browse — JPEG, PNG, WebP up to 5 MB
                 </p>
               </div>
@@ -162,7 +162,7 @@ export default function StickerCardUpload({ currentCard }: Props) {
       />
 
       {error && (
-        <p className="text-sm text-rose-600 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2">
+        <p className="text-sm text-primary bg-rose-900/20 border border-rose-800/50 rounded-lg px-3 py-2">
           {error}
         </p>
       )}
