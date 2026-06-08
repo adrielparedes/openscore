@@ -1,17 +1,23 @@
 import { auth } from "@/lib/auth";
 import { getMiUsuario, getPaises } from "@/actions/usuarios";
+import { getPreguntasSecretas } from "@/actions/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import StickerCardUpload from "@/components/profile/StickerCardUpload";
 import EditProfileForm from "@/components/profile/EditProfileForm";
 import ChangePasswordForm from "@/components/profile/ChangePasswordForm";
+import UpdateSecurityQuestionForm from "@/components/profile/UpdateSecurityQuestionForm";
 import { redirect } from "next/navigation";
-import { Mail, CreditCard, Pencil, KeyRound } from "lucide-react";
+import { Mail, CreditCard, Pencil, KeyRound, ShieldQuestion } from "lucide-react";
 
 export default async function ProfilePage() {
   const session = await auth();
   if (!session?.user?.id) redirect("/login");
 
-  const [usuario, paises] = await Promise.all([getMiUsuario(), getPaises()]);
+  const [usuario, paises, preguntas] = await Promise.all([
+    getMiUsuario(),
+    getPaises(),
+    getPreguntasSecretas(),
+  ]);
   if (!usuario) redirect("/api/auth/signout");
 
   return (
@@ -89,6 +95,24 @@ export default async function ProfilePage() {
               <ChangePasswordForm />
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <ShieldQuestion className="h-4 w-4 text-muted-foreground" />
+                <CardTitle>Security Question</CardTitle>
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">
+                Update your security question for account recovery.
+              </p>
+            </CardHeader>
+            <CardContent>
+              <UpdateSecurityQuestionForm
+                currentQuestion={usuario.preguntaSecreta?.pregunta ?? null}
+                preguntas={preguntas}
+              />
+            </CardContent>
+          </Card>
         </div>
       </div>
 
@@ -154,6 +178,24 @@ export default async function ProfilePage() {
           </CardHeader>
           <CardContent>
             <ChangePasswordForm />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <ShieldQuestion className="h-4 w-4 text-muted-foreground" />
+              <CardTitle>Security Question</CardTitle>
+            </div>
+            <p className="text-sm text-muted-foreground mt-1">
+              Update your security question for account recovery.
+            </p>
+          </CardHeader>
+          <CardContent>
+            <UpdateSecurityQuestionForm
+              currentQuestion={usuario.preguntaSecreta?.pregunta ?? null}
+              preguntas={preguntas}
+            />
           </CardContent>
         </Card>
       </div>
