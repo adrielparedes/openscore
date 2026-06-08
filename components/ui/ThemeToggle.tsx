@@ -38,11 +38,11 @@ export default function ThemeToggle({ collapsed = false, className }: ThemeToggl
       )}
     >
       {isDark ? (
-        <Sun className="h-4 w-4 shrink-0" />
-      ) : (
         <Moon className="h-4 w-4 shrink-0" />
+      ) : (
+        <Sun className="h-4 w-4 shrink-0" />
       )}
-      {!collapsed && (isDark ? "Light mode" : "Dark mode")}
+      {!collapsed && (isDark ? "Dark mode" : "Light mode")}
     </button>
   );
 }
