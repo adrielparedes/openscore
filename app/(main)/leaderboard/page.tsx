@@ -3,7 +3,8 @@ import { auth } from "@/lib/auth";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import FilterPill from "@/components/ui/FilterPill";
-import { Trophy, Medal, Target, Percent, ClipboardList } from "lucide-react";
+import StickerCardDisplay from "@/components/profile/StickerCardDisplay";
+import { Trophy, Medal, Target, Percent, ClipboardList, User } from "lucide-react";
 
 const LEADERBOARD_PAISES = [
   { codigo: "ARG", nombre: "Argentina" },
@@ -33,6 +34,8 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
   const myId = session?.user?.id ? parseInt(session.user.id) : null;
 
   const ranking = await getRanking({ pais });
+  const myEntry = myId ? ranking.find((r) => r.usuario === myId) : null;
+  const podium = ranking.filter((r) => r.ranking <= 3 && r.puntos > 0);
 
   return (
     <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
@@ -56,6 +59,50 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
           </FilterPill>
         ))}
       </div>
+
+      {podium.length > 0 && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {podium.map((entry) => (
+            <div key={entry.usuario} className="w-full max-w-[180px] mx-auto">
+              <StickerCardDisplay
+                nombre={entry.nombre}
+                pais={entry.pais}
+                puntos={entry.puntos}
+                ranking={entry.ranking}
+                stickerCard={entry.stickerCard}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {myEntry && (
+        <Card className="border-rose-200 dark:border-rose-800 bg-rose-50/50 dark:bg-rose-950/20">
+          <CardContent className="py-4">
+            <div className="flex items-center gap-4 flex-wrap">
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4 text-rose-600 dark:text-rose-400" />
+                <span className="text-sm font-medium text-muted-foreground">Your rank</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1.5">
+                  <RankBadge rank={myEntry.ranking} puntos={myEntry.puntos} />
+                  <span className="text-lg font-bold text-foreground">#{myEntry.ranking}</span>
+                </div>
+                <span className="text-muted-foreground">·</span>
+                <span className="text-sm font-semibold text-primary">{myEntry.puntos} pts</span>
+                <span className="text-muted-foreground">·</span>
+                <span className="text-sm text-muted-foreground">{myEntry.aciertos}/{myEntry.totalPronosticos} correct</span>
+                <span className="text-muted-foreground hidden sm:inline">·</span>
+                <span className="text-sm text-muted-foreground hidden sm:inline">{myEntry.accuracy}% accuracy</span>
+              </div>
+              <span className="ml-auto text-xs text-muted-foreground hidden md:inline">
+                out of {ranking.length} players
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader>
