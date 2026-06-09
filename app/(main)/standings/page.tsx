@@ -163,14 +163,14 @@ function GroupTable({
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border text-muted-foreground">
-                <th className="pb-2 text-left font-medium w-8">#</th>
+                <th className="pb-2 pl-3 text-left font-medium w-8">#</th>
                 <th className="pb-2 text-left font-medium">Team</th>
                 <th className="pb-2 text-center font-medium w-9">MP</th>
                 <th className="pb-2 text-center font-medium w-9">W</th>
                 <th className="pb-2 text-center font-medium w-9">D</th>
                 <th className="pb-2 text-center font-medium w-9">L</th>
                 <th className="pb-2 text-center font-medium w-9">GD</th>
-                <th className="pb-2 text-right font-medium w-10">Pts</th>
+                <th className="pb-2 pr-3 text-right font-medium w-10">Pts</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/50">
@@ -188,7 +188,7 @@ function GroupTable({
                           : "hover:bg-accent/50"
                     }`}
                   >
-                    <td className="py-2.5 text-muted-foreground font-medium">
+                    <td className="py-2.5 pl-3 pr-2 text-muted-foreground font-medium">
                       <div className="flex items-center gap-1.5">
                         {qualifies && (
                           <div className="h-2 w-2 rounded-full bg-emerald-500" />
@@ -229,7 +229,7 @@ function GroupTable({
                         {row.diferenciaGol > 0 ? `+${row.diferenciaGol}` : row.diferenciaGol}
                       </span>
                     </td>
-                    <td className="py-2.5 text-right font-bold text-primary">{row.puntos}</td>
+                    <td className="py-2.5 pr-3 text-right font-bold text-primary">{row.puntos}</td>
                   </tr>
                 );
               })}
@@ -255,7 +255,7 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border text-muted-foreground">
-                <th className="pb-2 text-left font-medium w-8">#</th>
+                <th className="pb-2 pl-3 text-left font-medium w-8">#</th>
                 <th className="pb-2 text-left font-medium">Team</th>
                 <th className="pb-2 text-left font-medium hidden sm:table-cell">Group</th>
                 <th className="pb-2 text-center font-medium w-9">MP</th>
@@ -263,7 +263,7 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
                 <th className="pb-2 text-center font-medium w-9">D</th>
                 <th className="pb-2 text-center font-medium w-9">L</th>
                 <th className="pb-2 text-center font-medium w-9">GD</th>
-                <th className="pb-2 text-right font-medium w-10">Pts</th>
+                <th className="pb-2 pr-3 text-right font-medium w-10">Pts</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/50">
@@ -276,7 +276,7 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
                       qualifies ? "bg-amber-100 dark:bg-amber-900/15" : "hover:bg-accent/50"
                     }`}
                   >
-                    <td className="py-2.5 text-muted-foreground font-medium">
+                    <td className="py-2.5 pl-3 pr-2 text-muted-foreground font-medium">
                       <div className="flex items-center gap-1.5">
                         {qualifies && (
                           <div className="h-2 w-2 rounded-full bg-amber-400" />
@@ -315,7 +315,7 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
                         {row.diferenciaGol > 0 ? `+${row.diferenciaGol}` : row.diferenciaGol}
                       </span>
                     </td>
-                    <td className="py-2.5 text-right font-bold text-primary">{row.puntos}</td>
+                    <td className="py-2.5 pr-3 text-right font-bold text-primary">{row.puntos}</td>
                   </tr>
                 );
               })}
