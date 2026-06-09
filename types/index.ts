@@ -28,6 +28,11 @@ export interface RankingEntry {
   puntos: number;
   ranking: number;
   stickerCard?: string | null;
+  aciertos: number;
+  totalPronosticos: number;
+  totalPartidos: number;
+  accuracy: number;
+  coverage: number;
 }
 
 export interface StandingConRelaciones extends Standing {

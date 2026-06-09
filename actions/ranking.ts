@@ -6,10 +6,21 @@ import { calcularGanador } from "@/lib/utils";
 import { rankingDuration, rankingUsersScored, cacheRequests, cacheMisses } from "@/lib/metrics";
 import type { RankingEntry } from "@/types";
 
-function calcularPuntosUsuario(pronosticos: any[]): number {
-  return pronosticos.reduce((total, p) => {
+interface UsuarioStats {
+  puntos: number;
+  aciertos: number;
+  totalPronosticos: number;
+}
+
+function calcularStatsUsuario(pronosticos: any[]): UsuarioStats {
+  let puntos = 0;
+  let aciertos = 0;
+  let totalPronosticos = 0;
+
+  for (const p of pronosticos) {
     const partido = p.partido;
-    if (partido.resultadoLocal === null) return total;
+    if (partido.resultadoLocal === null) continue;
+    totalPronosticos++;
     const ganador = calcularGanador(
       partido.resultadoLocal,
       partido.resultadoVisitante,
@@ -17,9 +28,13 @@ function calcularPuntosUsuario(pronosticos: any[]): number {
       partido.resultadoPenalesLocal,
       partido.resultadoPenalesVisitante
     );
-    const acertado = p.ganador === ganador;
-    return total + (acertado ? partido.fase.puntos : 0);
-  }, 0);
+    if (p.ganador === ganador) {
+      aciertos++;
+      puntos += partido.fase.puntos;
+    }
+  }
+
+  return { puntos, aciertos, totalPronosticos };
 }
 
 async function fetchRanking(filters?: {
@@ -33,30 +48,47 @@ async function fetchRanking(filters?: {
   const where: any = { deleted: false, blocked: false, email: { not: "admin@openscore.com" } };
   if (filters?.pais) where.pais = { codigo: filters.pais };
 
-  const usuarios = await prisma.usuario.findMany({
-    where,
-    include: {
-      pais: true,
-      pronosticos: {
-        where: { deleted: false },
-        include: {
-          partido: {
-            include: { fase: true },
+  const [usuarios, totalPartidos] = await Promise.all([
+    prisma.usuario.findMany({
+      where,
+      include: {
+        pais: true,
+        pronosticos: {
+          where: { deleted: false },
+          include: {
+            partido: {
+              include: { fase: true },
+            },
           },
         },
       },
-    },
-  });
+    }),
+    prisma.partido.count({
+      where: { resultadoLocal: { not: null } },
+    }),
+  ]);
 
   const rankings: RankingEntry[] = usuarios
-    .map((u) => ({
-      usuario: u.id,
-      nombre: `${u.nombre} ${u.apellido}`,
-      pais: u.pais.codigo,
-      puntos: calcularPuntosUsuario(u.pronosticos),
-      ranking: 0,
-      stickerCard: u.stickerCard ?? null,
-    }))
+    .map((u) => {
+      const stats = calcularStatsUsuario(u.pronosticos);
+      return {
+        usuario: u.id,
+        nombre: `${u.nombre} ${u.apellido}`,
+        pais: u.pais.codigo,
+        puntos: stats.puntos,
+        ranking: 0,
+        stickerCard: u.stickerCard ?? null,
+        aciertos: stats.aciertos,
+        totalPronosticos: stats.totalPronosticos,
+        totalPartidos,
+        accuracy: stats.totalPronosticos > 0
+          ? Math.round((stats.aciertos / stats.totalPronosticos) * 100)
+          : 0,
+        coverage: totalPartidos > 0
+          ? Math.round((stats.totalPronosticos / totalPartidos) * 100)
+          : 0,
+      };
+    })
     .sort((a, b) => b.puntos - a.puntos)
     .map((r, i) => ({ ...r, ranking: i + 1 }));
 

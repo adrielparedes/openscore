@@ -3,7 +3,7 @@ import { getStandings } from "@/actions/standings";
 import { getRankingForUsuario } from "@/actions/ranking";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { Trophy, TrendingUp, BarChart3 } from "lucide-react";
+import { Trophy, TrendingUp, Target, Percent } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
@@ -35,8 +35,8 @@ export default async function DashboardPage() {
       </div>
 
       {/* My stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="sm:col-span-1">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <Card>
           <CardContent>
             <div className="flex items-center gap-4 pt-1">
               <div className="h-12 w-12 rounded-xl bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
@@ -52,7 +52,7 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="sm:col-span-1">
+        <Card>
           <CardContent>
             <div className="flex items-center gap-4 pt-1">
               <div className="h-12 w-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
@@ -68,15 +68,33 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="sm:col-span-1">
+        <Card>
           <CardContent>
             <div className="flex items-center gap-4 pt-1">
               <div className="h-12 w-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
-                <BarChart3 className="h-6 w-6 text-amber-700 dark:text-amber-400" />
+                <Target className="h-6 w-6 text-amber-700 dark:text-amber-400" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-foreground">{nombre}</div>
-                <div className="text-xs text-muted-foreground">Logged in as</div>
+                <div className="text-2xl font-bold text-foreground">
+                  {myRanking ? `${myRanking.aciertos}/${myRanking.totalPronosticos}` : "—"}
+                </div>
+                <div className="text-xs text-muted-foreground">Correct picks</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent>
+            <div className="flex items-center gap-4 pt-1">
+              <div className="h-12 w-12 rounded-xl bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center">
+                <Percent className="h-6 w-6 text-violet-700 dark:text-violet-400" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-foreground">
+                  {myRanking ? `${myRanking.accuracy}%` : "—"}
+                </div>
+                <div className="text-xs text-muted-foreground">Accuracy</div>
               </div>
             </div>
           </CardContent>
