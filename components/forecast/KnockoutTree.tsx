@@ -3,7 +3,7 @@
 import { useMemo, useState, useRef, useEffect, useCallback } from "react";
 import MatchCard from "./MatchCard";
 import { flagUrl } from "@/lib/flags";
-import { X, Timer } from "lucide-react";
+import { X, Timer, Check } from "lucide-react";
 import { useBracket } from "./BracketContext";
 import { useNow } from "@/components/providers/CountdownProvider";
 import { cn } from "@/lib/utils";
@@ -229,6 +229,18 @@ function KnockoutNode({ slot, cardH, onClick }: { slot: Slot; cardH: number; onC
     pick === "VISITANTE" ? m.visitante.codigo :
     pick === "EMPATE"    ? "Draw" : null;
 
+  const correct = finished && pick != null && m.puntos > 0;
+  const wrong   = finished && pick != null && m.puntos === 0;
+  const missed  = finished && pick == null;
+
+  const borderColor = finished
+    ? correct
+      ? "border-l-emerald-600 dark:border-l-emerald-400"
+      : "border-l-rh"
+    : m.status === "BLOCKED"
+    ? "border-l-amber-600 dark:border-l-amber-400"
+    : "";
+
   const lockAtMs = new Date(m.dia).getTime() - LOCK_OFFSET_MS;
   const remaining = m.status !== "PENDING" ? 0 : Math.max(0, lockAtMs - now);
   const showLock = m.status === "PENDING" && remaining > 0;
@@ -237,7 +249,11 @@ function KnockoutNode({ slot, cardH, onClick }: { slot: Slot; cardH: number; onC
   return (
     <button
       onClick={onClick}
-      className="w-full rounded-xl border border-border bg-card hover:border-rose-300 hover:shadow-md transition-all text-left flex flex-col justify-center gap-1.5 px-2.5 py-2 cursor-pointer"
+      className={cn(
+        "w-full rounded-xl border bg-card hover:border-rose-300 hover:shadow-md transition-all text-left flex flex-col justify-center gap-1.5 px-2.5 py-2 cursor-pointer",
+        finished || m.status === "BLOCKED" ? "border-l-4 border-border" : "border border-border",
+        borderColor
+      )}
       style={{ height: cardH }}
     >
       <div className="flex items-center justify-center gap-1">
@@ -264,7 +280,19 @@ function KnockoutNode({ slot, cardH, onClick }: { slot: Slot; cardH: number; onC
         ) : <div className="w-3" />}
         <div className="flex-1 text-[10px] text-center leading-none">
           {pickLabel ? (
-            <span className="text-primary font-semibold">Your pick: {pickLabel}</span>
+            correct ? (
+              <span className="text-emerald-700 dark:text-emerald-400 font-semibold inline-flex items-center justify-center gap-0.5">
+                <Check className="h-3 w-3" /> {pickLabel} +{m.puntos}
+              </span>
+            ) : wrong ? (
+              <span className="text-rh font-semibold inline-flex items-center justify-center gap-0.5">
+                <X className="h-3 w-3" /> {pickLabel}
+              </span>
+            ) : (
+              <span className="text-primary font-semibold">Your pick: {pickLabel}</span>
+            )
+          ) : missed ? (
+            <span className="text-rh font-semibold">No prediction</span>
           ) : m.status === "PENDING" ? (
             <span className="text-muted-foreground">Tap to predict</span>
           ) : (
