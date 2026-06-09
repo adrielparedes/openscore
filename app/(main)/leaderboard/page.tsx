@@ -18,10 +18,12 @@ interface LeaderboardPageProps {
   searchParams: Promise<{ pais?: string }>;
 }
 
-function RankBadge({ rank }: { rank: number }) {
-  if (rank === 1) return <Trophy className="h-5 w-5 text-amber-700 dark:text-amber-400" />;
-  if (rank === 2) return <Medal className="h-5 w-5 text-muted-foreground" />;
-  if (rank === 3) return <Medal className="h-5 w-5 text-amber-800 dark:text-amber-600" />;
+function RankBadge({ rank, puntos }: { rank: number; puntos: number }) {
+  if (puntos > 0) {
+    if (rank === 1) return <Trophy className="h-5 w-5 text-amber-700 dark:text-amber-400" />;
+    if (rank === 2) return <Medal className="h-5 w-5 text-muted-foreground" />;
+    if (rank === 3) return <Medal className="h-5 w-5 text-amber-800 dark:text-amber-600" />;
+  }
   return <span className="text-sm font-bold text-muted-foreground w-5 text-center">#{rank}</span>;
 }
 
@@ -104,7 +106,7 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
                       >
                         <td className="py-3 pl-2">
                           <div className="flex items-center justify-center w-8">
-                            <RankBadge rank={entry.ranking} />
+                            <RankBadge rank={entry.ranking} puntos={entry.puntos} />
                           </div>
                         </td>
                         <td className="py-3">
