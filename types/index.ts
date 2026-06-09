@@ -30,7 +30,9 @@ export interface RankingEntry {
   stickerCard?: string | null;
   aciertos: number;
   totalPronosticos: number;
+  totalPredicted: number;
   totalPartidos: number;
+  totalMatches: number;
   accuracy: number;
   coverage: number;
 }

@@ -150,8 +150,8 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
                           </div>
                         </td>
                         <td className="py-3 text-center hidden md:table-cell text-muted-foreground">
-                          <span className="font-medium text-foreground">{entry.totalPronosticos}</span>
-                          <span className="text-xs">/{entry.totalPartidos}</span>
+                          <span className="font-medium text-foreground">{entry.totalPredicted}</span>
+                          <span className="text-xs">/{entry.totalMatches}</span>
                         </td>
                         <td className="py-3 pr-2 text-right font-bold text-primary">
                           {entry.puntos} pts

@@ -48,7 +48,7 @@ async function fetchRanking(filters?: {
   const where: any = { deleted: false, blocked: false, email: { not: "admin@openscore.com" } };
   if (filters?.pais) where.pais = { codigo: filters.pais };
 
-  const [usuarios, totalPartidos] = await Promise.all([
+  const [usuarios, totalPartidos, totalMatches] = await Promise.all([
     prisma.usuario.findMany({
       where,
       include: {
@@ -66,6 +66,7 @@ async function fetchRanking(filters?: {
     prisma.partido.count({
       where: { resultadoLocal: { not: null } },
     }),
+    prisma.partido.count(),
   ]);
 
   const rankings: RankingEntry[] = usuarios
@@ -80,7 +81,9 @@ async function fetchRanking(filters?: {
         stickerCard: u.stickerCard ?? null,
         aciertos: stats.aciertos,
         totalPronosticos: stats.totalPronosticos,
+        totalPredicted: u.pronosticos.length,
         totalPartidos,
+        totalMatches,
         accuracy: stats.totalPronosticos > 0
           ? Math.round((stats.aciertos / stats.totalPronosticos) * 100)
           : 0,
