@@ -61,9 +61,9 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
       </div>
 
       {podium.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="flex flex-wrap justify-center gap-4">
           {podium.map((entry) => (
-            <div key={entry.usuario} className="w-full max-w-[180px] mx-auto">
+            <div key={entry.usuario} className="w-[160px]">
               <StickerCardDisplay
                 nombre={entry.nombre}
                 pais={entry.pais}
