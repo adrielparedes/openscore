@@ -89,8 +89,17 @@ async function fetchRanking(filters?: {
           : 0,
       };
     })
-    .sort((a, b) => b.puntos - a.puntos)
-    .map((r, i) => ({ ...r, ranking: i + 1 }));
+    .sort((a, b) => b.puntos - a.puntos);
+
+  let currentRank = 1;
+  for (let i = 0; i < rankings.length; i++) {
+    if (i > 0 && rankings[i].puntos === rankings[i - 1].puntos) {
+      rankings[i].ranking = rankings[i - 1].ranking;
+    } else {
+      rankings[i].ranking = currentRank;
+    }
+    currentRank++;
+  }
 
   const elapsed = (performance.now() - start) / 1000;
   rankingDuration()?.record(elapsed, { filtered: String(filtered) });
