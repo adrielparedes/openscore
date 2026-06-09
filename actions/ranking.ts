@@ -144,21 +144,21 @@ async function fetchRankingForUsuario(
 const _cachedGetAllRanking = unstable_cache(
   (size?: number) => fetchRanking({ size }),
   ["ranking", "all"],
-  { tags: ["ranking"], revalidate: 60 }
+  { tags: ["ranking"], revalidate: false }
 );
 
 function getCachedRankingByPais(pais: string) {
   return unstable_cache(
     () => fetchRanking({ pais }),
     ["ranking", "pais", pais],
-    { tags: ["ranking"], revalidate: 60 }
+    { tags: ["ranking"], revalidate: false }
   )();
 }
 
 const _cachedGetRankingForUsuario = unstable_cache(
   fetchRankingForUsuario,
   ["ranking-usuario"],
-  { tags: ["ranking"], revalidate: 60 }
+  { tags: ["ranking"], revalidate: false }
 );
 
 export async function getRanking(filters?: {

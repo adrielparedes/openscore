@@ -30,10 +30,8 @@ function RankBadge({ rank, puntos }: { rank: number; puntos: number }) {
 
 export default async function LeaderboardPage({ searchParams }: LeaderboardPageProps) {
   const { pais } = await searchParams;
-  const session = await auth();
+  const [session, ranking] = await Promise.all([auth(), getRanking({ pais })]);
   const myId = session?.user?.id ? parseInt(session.user.id) : null;
-
-  const ranking = await getRanking({ pais });
   const myEntry = myId ? ranking.find((r) => r.usuario === myId) : null;
   const podium = ranking.filter((r) => r.ranking <= 3 && r.puntos > 0);
 

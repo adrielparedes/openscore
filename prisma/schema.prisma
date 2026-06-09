@@ -78,6 +78,9 @@ model Partido {
   grupo       Grupo?      @relation(fields: [grupoId], references: [id])
   fase        Fase        @relation(fields: [faseId], references: [id])
   pronosticos Pronostico[]
+
+  @@index([faseId])
+  @@index([resultadoLocal])
 }
 
 model Usuario {
@@ -134,6 +137,7 @@ model Pronostico {
   usuario    Usuario  @relation(fields: [usuarioId], references: [id])
 
   @@unique([partidoId, usuarioId])
+  @@index([usuarioId, deleted])
 }
 
 model Standing {
