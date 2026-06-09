@@ -21,7 +21,7 @@ interface LeaderboardPageProps {
 function RankBadge({ rank }: { rank: number }) {
   if (rank === 1) return <Trophy className="h-5 w-5 text-amber-700 dark:text-amber-400" />;
   if (rank === 2) return <Medal className="h-5 w-5 text-muted-foreground" />;
-  if (rank === 3) return <Medal className="h-5 w-5 text-amber-700 dark:text-amber-400" />;
+  if (rank === 3) return <Medal className="h-5 w-5 text-amber-800 dark:text-amber-600" />;
   return <span className="text-sm font-bold text-muted-foreground w-5 text-center">#{rank}</span>;
 }
 
