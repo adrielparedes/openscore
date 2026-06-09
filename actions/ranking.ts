@@ -1,41 +1,9 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { pool } from "@/lib/prisma";
 import { unstable_cache } from "next/cache";
-import { calcularGanador } from "@/lib/utils";
 import { rankingDuration, rankingUsersScored, cacheRequests, cacheMisses } from "@/lib/metrics";
 import type { RankingEntry } from "@/types";
-
-interface UsuarioStats {
-  puntos: number;
-  aciertos: number;
-  totalPronosticos: number;
-}
-
-function calcularStatsUsuario(pronosticos: any[]): UsuarioStats {
-  let puntos = 0;
-  let aciertos = 0;
-  let totalPronosticos = 0;
-
-  for (const p of pronosticos) {
-    const partido = p.partido;
-    if (partido.resultadoLocal === null) continue;
-    totalPronosticos++;
-    const ganador = calcularGanador(
-      partido.resultadoLocal,
-      partido.resultadoVisitante,
-      partido.resultadoPenales,
-      partido.resultadoPenalesLocal,
-      partido.resultadoPenalesVisitante
-    );
-    if (p.ganador === ganador) {
-      aciertos++;
-      puntos += partido.fase.puntos;
-    }
-  }
-
-  return { puntos, aciertos, totalPronosticos };
-}
 
 async function fetchRanking(filters?: {
   pais?: string;
@@ -45,54 +13,104 @@ async function fetchRanking(filters?: {
   const start = performance.now();
   const filtered = !!filters?.pais;
 
-  const where: any = { deleted: false, blocked: false, email: { not: "admin@openscore.com" } };
-  if (filters?.pais) where.pais = { codigo: filters.pais };
+  const params: (string | number)[] = [];
+  let paisFilter = "";
+  if (filters?.pais) {
+    params.push(filters.pais);
+    paisFilter = `AND pa."codigo" = $${params.length}`;
+  }
 
-  const [usuarios, totalPartidos, totalMatches] = await Promise.all([
-    prisma.usuario.findMany({
-      where,
-      include: {
-        pais: true,
-        pronosticos: {
-          where: { deleted: false },
-          include: {
-            partido: {
-              include: { fase: true },
-            },
-          },
-        },
-      },
-    }),
-    prisma.partido.count({
-      where: { resultadoLocal: { not: null } },
-    }),
-    prisma.partido.count(),
-  ]);
+  const sql = `
+    WITH match_counts AS (
+      SELECT
+        COUNT(*) FILTER (WHERE "resultadoLocal" IS NOT NULL) AS finished,
+        COUNT(*) AS total
+      FROM "Partido"
+    ),
+    user_stats AS (
+      SELECT
+        u.id AS usuario,
+        u.nombre || ' ' || u.apellido AS nombre,
+        pa.codigo AS pais,
+        u."stickerCard",
+        COALESCE(SUM(
+          CASE WHEN p."resultadoLocal" IS NOT NULL AND (
+            pr.ganador::text = CASE
+              WHEN p."resultadoPenales" = true AND p."resultadoPenalesLocal" IS NOT NULL AND p."resultadoPenalesVisitante" IS NOT NULL THEN
+                CASE
+                  WHEN p."resultadoPenalesLocal" > p."resultadoPenalesVisitante" THEN 'LOCAL'
+                  WHEN p."resultadoPenalesLocal" < p."resultadoPenalesVisitante" THEN 'VISITANTE'
+                  ELSE 'EMPATE'
+                END
+              ELSE
+                CASE
+                  WHEN p."resultadoLocal" > p."resultadoVisitante" THEN 'LOCAL'
+                  WHEN p."resultadoLocal" < p."resultadoVisitante" THEN 'VISITANTE'
+                  ELSE 'EMPATE'
+                END
+            END
+          ) THEN f.puntos ELSE 0 END
+        ), 0)::int AS puntos,
+        COALESCE(SUM(
+          CASE WHEN p."resultadoLocal" IS NOT NULL AND (
+            pr.ganador::text = CASE
+              WHEN p."resultadoPenales" = true AND p."resultadoPenalesLocal" IS NOT NULL AND p."resultadoPenalesVisitante" IS NOT NULL THEN
+                CASE
+                  WHEN p."resultadoPenalesLocal" > p."resultadoPenalesVisitante" THEN 'LOCAL'
+                  WHEN p."resultadoPenalesLocal" < p."resultadoPenalesVisitante" THEN 'VISITANTE'
+                  ELSE 'EMPATE'
+                END
+              ELSE
+                CASE
+                  WHEN p."resultadoLocal" > p."resultadoVisitante" THEN 'LOCAL'
+                  WHEN p."resultadoLocal" < p."resultadoVisitante" THEN 'VISITANTE'
+                  ELSE 'EMPATE'
+                END
+            END
+          ) THEN 1 ELSE 0 END
+        ), 0)::int AS aciertos,
+        COUNT(pr.id) FILTER (WHERE p."resultadoLocal" IS NOT NULL)::int AS "totalPronosticos",
+        COUNT(pr.id)::int AS "totalPredicted"
+      FROM "Usuario" u
+      JOIN "Pais" pa ON pa.id = u."paisId"
+      LEFT JOIN "Pronostico" pr ON pr."usuarioId" = u.id AND pr.deleted = false
+      LEFT JOIN "Partido" p ON p.id = pr."partidoId"
+      LEFT JOIN "Fase" f ON f.id = p."faseId"
+      WHERE u.deleted = false AND u.blocked = false AND u.email != 'admin@openscore.com'
+      ${paisFilter}
+      GROUP BY u.id, u.nombre, u.apellido, pa.codigo, u."stickerCard"
+    )
+    SELECT
+      us.*,
+      mc.finished AS "totalPartidos",
+      mc.total AS "totalMatches",
+      CASE WHEN us."totalPronosticos" > 0
+        THEN ROUND((us.aciertos::numeric / us."totalPronosticos") * 100)::int
+        ELSE 0 END AS accuracy,
+      CASE WHEN mc.finished > 0
+        THEN ROUND((us."totalPronosticos"::numeric / mc.finished) * 100)::int
+        ELSE 0 END AS coverage
+    FROM user_stats us, match_counts mc
+    ORDER BY us.puntos DESC
+  `;
 
-  const rankings: RankingEntry[] = usuarios
-    .map((u) => {
-      const stats = calcularStatsUsuario(u.pronosticos);
-      return {
-        usuario: u.id,
-        nombre: `${u.nombre} ${u.apellido}`,
-        pais: u.pais.codigo,
-        puntos: stats.puntos,
-        ranking: 0,
-        stickerCard: u.stickerCard ?? null,
-        aciertos: stats.aciertos,
-        totalPronosticos: stats.totalPronosticos,
-        totalPredicted: u.pronosticos.length,
-        totalPartidos,
-        totalMatches,
-        accuracy: stats.totalPronosticos > 0
-          ? Math.round((stats.aciertos / stats.totalPronosticos) * 100)
-          : 0,
-        coverage: totalPartidos > 0
-          ? Math.round((stats.totalPronosticos / totalPartidos) * 100)
-          : 0,
-      };
-    })
-    .sort((a, b) => b.puntos - a.puntos);
+  const { rows } = await pool.query(sql, params);
+
+  const rankings: RankingEntry[] = rows.map((r) => ({
+    usuario: r.usuario,
+    nombre: r.nombre,
+    pais: r.pais,
+    puntos: r.puntos,
+    ranking: 0,
+    stickerCard: r.stickerCard ?? null,
+    aciertos: r.aciertos,
+    totalPronosticos: r.totalPronosticos,
+    totalPredicted: r.totalPredicted,
+    totalPartidos: Number(r.totalPartidos),
+    totalMatches: Number(r.totalMatches),
+    accuracy: r.accuracy,
+    coverage: r.coverage,
+  }));
 
   let currentRank = 1;
   for (let i = 0; i < rankings.length; i++) {
@@ -129,11 +147,13 @@ const _cachedGetAllRanking = unstable_cache(
   { tags: ["ranking"], revalidate: 60 }
 );
 
-const _cachedGetRankingByPais = unstable_cache(
-  (pais: string) => fetchRanking({ pais }),
-  ["ranking", "pais"],
-  { tags: ["ranking"], revalidate: 60 }
-);
+function getCachedRankingByPais(pais: string) {
+  return unstable_cache(
+    () => fetchRanking({ pais }),
+    ["ranking", "pais", pais],
+    { tags: ["ranking"], revalidate: 60 }
+  )();
+}
 
 const _cachedGetRankingForUsuario = unstable_cache(
   fetchRankingForUsuario,
@@ -147,7 +167,7 @@ export async function getRanking(filters?: {
 }): Promise<RankingEntry[]> {
   cacheRequests()?.add(1, { cache: "ranking" });
   if (filters?.pais) {
-    return _cachedGetRankingByPais(filters.pais);
+    return getCachedRankingByPais(filters.pais);
   }
   return _cachedGetAllRanking(filters?.size);
 }
