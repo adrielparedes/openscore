@@ -139,3 +139,8 @@ Architecture replaces the Java REST layer with Next.js 16 App Router server-side
 **Environment variables required:** `DATABASE_URL`, `AUTH_SECRET`.
 
 
+## Guardrails
+
+- Before doing anything related with the database check if there are updated backups.
+
+
