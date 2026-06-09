@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import FilterPill from "@/components/ui/FilterPill";
-import { Trophy, Medal, Target, BarChart3, Percent } from "lucide-react";
+import { Trophy, Medal, Target, BarChart3, Percent, ClipboardList } from "lucide-react";
 
 const LEADERBOARD_PAISES = [
   { codigo: "ARG", nombre: "Argentina" },
@@ -89,6 +89,11 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
                         <BarChart3 className="h-3.5 w-3.5" /> Coverage
                       </span>
                     </th>
+                    <th className="pb-3 text-center font-medium text-muted-foreground hidden md:table-cell">
+                      <span className="flex items-center justify-center gap-1" title="Matches predicted out of total finished">
+                        <ClipboardList className="h-3.5 w-3.5" /> Predicted
+                      </span>
+                    </th>
                     <th className="pb-3 pr-2 text-right font-medium text-muted-foreground">Points</th>
                   </tr>
                 </thead>
@@ -143,6 +148,10 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
                             </div>
                             <span className="text-xs text-muted-foreground w-8">{entry.coverage}%</span>
                           </div>
+                        </td>
+                        <td className="py-3 text-center hidden md:table-cell text-muted-foreground">
+                          <span className="font-medium text-foreground">{entry.totalPronosticos}</span>
+                          <span className="text-xs">/{entry.totalPartidos}</span>
                         </td>
                         <td className="py-3 pr-2 text-right font-bold text-primary">
                           {entry.puntos} pts
