@@ -9,6 +9,7 @@ import { flagUrl } from "@/lib/flags";
 import { Badge } from "@/components/ui/Badge";
 import { ArrowRight, CalendarClock, CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
+import OddsBar from "@/components/forecast/OddsBar";
 
 interface NextMatchCardProps {
   match: PartidoPronostico;
@@ -186,6 +187,10 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
               </button>
             </div>
           </>
+        )}
+
+        {match.odds && locked && (
+          <OddsBar odds={match.odds} showDraw={match.fase.codigo === "GRUPO"} />
         )}
 
         <Link

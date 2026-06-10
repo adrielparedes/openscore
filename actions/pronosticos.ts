@@ -5,7 +5,7 @@ import { auth } from "@/lib/auth";
 import { calcularGanador, calcularStatus, isBloqueado } from "@/lib/utils";
 import { recordAction } from "@/lib/withMetrics";
 import { cacheRequests, cacheMisses } from "@/lib/metrics";
-import type { PartidoPronostico } from "@/types";
+import type { PartidoPronostico, MatchOdds } from "@/types";
 import type { PronosticoGanador } from "@prisma/client";
 import { revalidatePath, updateTag, unstable_cache } from "next/cache";
 
@@ -20,7 +20,11 @@ function normalizeDia<T extends { dia: Date | string }>(p: T): T & { dia: Date }
   return { ...p, dia: new Date(p.dia) };
 }
 
-function buildPartidoPronostico(partido: any, pronostico: any | null): PartidoPronostico {
+function buildPartidoPronostico(
+  partido: any,
+  pronostico: any | null,
+  odds: MatchOdds | null = null
+): PartidoPronostico {
   const { dia } = normalizeDia(partido);
   const status = calcularStatus(dia, partido.resultadoLocal);
   const ganador =
@@ -39,7 +43,7 @@ function buildPartidoPronostico(partido: any, pronostico: any | null): PartidoPr
     puntos = pronostico.ganador === ganador ? partido.fase.puntos : 0;
   }
 
-  return { ...partido, dia, status, ganador, pronostico, puntos };
+  return { ...partido, dia, status, ganador, pronostico, puntos, odds };
 }
 
 const KNOCKOUT_PHASE_CODES = [
@@ -137,6 +141,37 @@ function cachedPronosticos(usuarioId: number) {
   )();
 }
 
+async function cachedOdds(partidoIds: number[]): Promise<Map<number, MatchOdds>> {
+  if (partidoIds.length === 0) return new Map();
+  const key = ["odds", ...partidoIds.map(String).sort()];
+  cacheRequests()?.add(1, { cache: "odds" });
+  const record = await unstable_cache(
+    async () => {
+      cacheMisses()?.add(1, { cache: "odds" });
+      const rows = await prisma.pronostico.groupBy({
+        by: ["partidoId", "ganador"],
+        where: { partidoId: { in: partidoIds }, deleted: false },
+        _count: true,
+      });
+      const result: Record<number, MatchOdds> = {};
+      for (const row of rows) {
+        if (!result[row.partidoId]) {
+          result[row.partidoId] = { local: 0, empate: 0, visitante: 0, total: 0 };
+        }
+        const entry = result[row.partidoId];
+        entry.total += row._count;
+        if (row.ganador === "LOCAL") entry.local = row._count;
+        else if (row.ganador === "EMPATE") entry.empate = row._count;
+        else if (row.ganador === "VISITANTE") entry.visitante = row._count;
+      }
+      return result;
+    },
+    key,
+    { tags: ["odds"], revalidate: 60 }
+  )();
+  return new Map(Object.entries(record).map(([k, v]) => [Number(k), v]));
+}
+
 export async function getPronosticos(filters?: {
   grupo?: string;
   fase?: string;
@@ -148,9 +183,10 @@ export async function getPronosticos(filters?: {
       cachedPartidos(filters),
       cachedPronosticos(usuarioId),
     ]);
+    const oddsMap = await cachedOdds(partidos.map((p) => p.id));
     return partidos.map((partido) => {
       const pronostico = pronosticos.find((p) => p.partidoId === partido.id) ?? null;
-      return buildPartidoPronostico(partido, pronostico);
+      return buildPartidoPronostico(partido, pronostico, oddsMap.get(partido.id) ?? null);
     });
   });
 }
@@ -177,6 +213,7 @@ export async function setPronostico(
     });
 
     updateTag(`pronosticos-${usuarioId}`);
+    updateTag("odds");
     revalidatePath("/forecast");
     revalidatePath("/");
     return {};
@@ -190,9 +227,10 @@ export async function getKnockoutPronosticos(): Promise<PartidoPronostico[]> {
       cachedKnockoutPartidos(),
       cachedPronosticos(usuarioId),
     ]);
+    const oddsMap = await cachedOdds(partidos.map((p) => p.id));
     return partidos.map((partido) => {
       const pronostico = pronosticos.find((p) => p.partidoId === partido.id) ?? null;
-      return buildPartidoPronostico(partido, pronostico);
+      return buildPartidoPronostico(partido, pronostico, oddsMap.get(partido.id) ?? null);
     });
   });
 }
@@ -215,10 +253,11 @@ export async function getUpcomingPronosticos(): Promise<{
       cachedUpcomingPartidos(todayStart),
       cachedPronosticos(usuarioId),
     ]);
+    const oddsMap = await cachedOdds(allUpcoming.map((p) => p.id));
 
     const toPronostico = (p: any) => {
       const pronostico = pronosticos.find((pr) => pr.partidoId === p.id) ?? null;
-      return buildPartidoPronostico(p, pronostico);
+      return buildPartidoPronostico(p, pronostico, oddsMap.get(p.id) ?? null);
     };
 
     const todayMatches = allUpcoming.filter((p) => new Date(p.dia) < todayEnd);
@@ -267,11 +306,13 @@ export async function getNextMatchPronostico(
 
     if (!partido) return null;
 
-    const pronostico =
-      (await prisma.pronostico.findUnique({
+    const [pronostico, oddsMap] = await Promise.all([
+      prisma.pronostico.findUnique({
         where: { partidoId_usuarioId: { partidoId: partido.id, usuarioId } },
-      })) ?? null;
+      }),
+      cachedOdds([partido.id]),
+    ]);
 
-    return buildPartidoPronostico(partido, pronostico);
+    return buildPartidoPronostico(partido, pronostico ?? null, oddsMap.get(partido.id) ?? null);
   });
 }

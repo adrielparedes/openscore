@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/Badge";
 import { CalendarClock, Timer } from "lucide-react";
 import { useTransition } from "react";
 import { useNow } from "@/components/providers/CountdownProvider";
+import OddsBar from "@/components/forecast/OddsBar";
 
 const LOCK_OFFSET_MS = 15 * 60 * 1000;
 
@@ -216,6 +217,12 @@ export default function MatchCard({ match }: MatchCardProps) {
           )}>
             <Timer className="h-3.5 w-3.5" />
             <span>Locks in {formatCountdown(remaining)}</span>
+          </div>
+        )}
+
+        {match.odds && locked && (
+          <div className="mt-2">
+            <OddsBar odds={match.odds} showDraw={match.fase.codigo === "GRUPO"} />
           </div>
         )}
       </div>

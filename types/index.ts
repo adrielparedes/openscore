@@ -16,9 +16,17 @@ export interface PronosticoConPartido extends Pronostico {
   partido: PartidoConRelaciones;
 }
 
+export interface MatchOdds {
+  local: number;
+  empate: number;
+  visitante: number;
+  total: number;
+}
+
 export interface PartidoPronostico extends PartidoConRelaciones {
   pronostico: Pronostico | null;
   puntos: number;
+  odds: MatchOdds | null;
 }
 
 export interface RankingEntry {
