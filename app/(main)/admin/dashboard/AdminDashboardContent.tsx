@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { getAnalytics, type AnalyticsData } from "@/actions/analytics";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import {
@@ -16,8 +16,6 @@ import {
   Globe,
   RefreshCw,
 } from "lucide-react";
-
-const REFRESH_INTERVAL_MS = 60_000;
 
 function StatCard({
   icon: Icon,
@@ -71,20 +69,17 @@ export default function AdminDashboardContent({
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
   const [isPending, startTransition] = useTransition();
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      startTransition(async () => {
-        try {
-          const fresh = await getAnalytics();
-          setAnalytics(fresh);
-          setLastRefresh(new Date());
-        } catch {
-          // silently skip on error; next tick will retry
-        }
-      });
-    }, REFRESH_INTERVAL_MS);
-    return () => clearInterval(id);
-  }, []);
+  function handleRefresh() {
+    startTransition(async () => {
+      try {
+        const fresh = await getAnalytics();
+        setAnalytics(fresh);
+        setLastRefresh(new Date());
+      } catch {
+        // silently skip on error
+      }
+    });
+  }
 
   return (
     <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
@@ -96,9 +91,16 @@ export default function AdminDashboardContent({
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <RefreshCw
-            className={`h-3.5 w-3.5 ${isPending ? "animate-spin" : ""}`}
-          />
+          <button
+            onClick={handleRefresh}
+            disabled={isPending}
+            className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 hover:bg-accent transition-colors disabled:opacity-50"
+          >
+            <RefreshCw
+              className={`h-3.5 w-3.5 ${isPending ? "animate-spin" : ""}`}
+            />
+            <span>Refresh</span>
+          </button>
           <span>
             Updated {lastRefresh.toLocaleTimeString()}
           </span>
