@@ -4,12 +4,34 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { calcularGanador } from "@/lib/utils";
 import { recordAction } from "@/lib/withMetrics";
+import { unstable_cache } from "next/cache";
 
 const activeUserWhere = {
   deleted: false,
   blocked: false,
   email: { not: "admin@openscore.com" },
 } as const;
+
+export type HomeStats = {
+  activeUsers: number;
+  predictionsMade: number;
+};
+
+const _cachedGetHomeStats = unstable_cache(
+  async (): Promise<HomeStats> => {
+    const [activeUsers, predictionsMade] = await Promise.all([
+      prisma.usuario.count({ where: activeUserWhere }),
+      prisma.pronostico.count({ where: { deleted: false } }),
+    ]);
+    return { activeUsers, predictionsMade };
+  },
+  ["homeStats"],
+  { tags: ["ranking"], revalidate: false }
+);
+
+export async function getHomeStats(): Promise<HomeStats> {
+  return recordAction("getHomeStats", () => _cachedGetHomeStats());
+}
 
 function calcularPuntosUsuario(
   pronosticos: Array<{

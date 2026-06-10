@@ -3,23 +3,25 @@ import { getRanking } from "@/actions/ranking";
 import { getNextMatchPronostico } from "@/actions/pronosticos";
 import { getActiveBanners } from "@/actions/banners";
 import { getTournamentProgress } from "@/actions/partidos";
+import { getHomeStats } from "@/actions/analytics";
 import { WorldCupCountdown } from "@/components/ui/WorldCupCountdown";
 import { HomeCarousel } from "@/components/ui/HomeCarousel";
 import NextMatchCard from "@/components/forecast/NextMatchCard";
 import StickerCardDisplay from "@/components/profile/StickerCardDisplay";
 import Image from "next/image";
 import Link from "next/link";
-import { TrendingUp, Globe, ArrowRight, BookOpen } from "lucide-react";
+import { TrendingUp, Globe, ArrowRight, BookOpen, Users, Target } from "lucide-react";
 
 export default async function HomePage() {
   const session = await auth();
   const nombre = (session?.user as any)?.nombre ?? session?.user?.name ?? "there";
   const usuarioId = session?.user?.id ? parseInt(session.user.id) : undefined;
-  const [topRanking, nextMatch, banners, progress] = await Promise.all([
+  const [topRanking, nextMatch, banners, progress, homeStats] = await Promise.all([
     getRanking({ size: 3 }),
     getNextMatchPronostico(usuarioId),
     getActiveBanners(),
     getTournamentProgress(),
+    getHomeStats(),
   ]);
 
   return (
@@ -84,19 +86,41 @@ export default async function HomePage() {
 
       </div>
 
-      {/* ── Tournament progress ── */}
-      <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-semibold text-foreground">Tournament progress</span>
-          <span className="text-xs tabular-nums text-muted-foreground">
-            {progress.withResults} / {progress.total} matches
-          </span>
+      {/* ── Tournament progress + platform stats ── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="md:col-span-1 rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-semibold text-foreground">Tournament progress</span>
+            <span className="text-xs tabular-nums text-muted-foreground">
+              {progress.withResults} / {progress.total} matches
+            </span>
+          </div>
+          <div className="h-3 w-full rounded-full bg-muted overflow-hidden">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 transition-all"
+              style={{ width: `${(progress.withResults / progress.total) * 100}%` }}
+            />
+          </div>
         </div>
-        <div className="h-3 w-full rounded-full bg-muted overflow-hidden">
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 transition-all"
-            style={{ width: `${(progress.withResults / progress.total) * 100}%` }}
-          />
+
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm flex items-center gap-4">
+          <div className="h-10 w-10 shrink-0 rounded-xl bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center">
+            <Users className="h-5 w-5 text-sky-600 dark:text-sky-400" />
+          </div>
+          <div>
+            <div className="text-2xl font-bold tabular-nums text-foreground">{homeStats.activeUsers.toLocaleString()}</div>
+            <div className="text-xs text-muted-foreground">Active players</div>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm flex items-center gap-4">
+          <div className="h-10 w-10 shrink-0 rounded-xl bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center">
+            <Target className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+          </div>
+          <div>
+            <div className="text-2xl font-bold tabular-nums text-foreground">{homeStats.predictionsMade.toLocaleString()}</div>
+            <div className="text-xs text-muted-foreground">Predictions made</div>
+          </div>
         </div>
       </div>
 
