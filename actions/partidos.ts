@@ -121,6 +121,25 @@ export async function getFechas(): Promise<number[]> {
   return recordAction("getFechas", cachedGetFechas);
 }
 
+const TOTAL_MATCHES = 104;
+
+const _cachedGetTournamentProgress = unstable_cache(
+  async () => {
+    cacheMisses()?.add(1, { cache: "tournamentProgress" });
+    const withResults = await prisma.partido.count({
+      where: { deleted: false, resultadoLocal: { not: null } },
+    });
+    return { withResults, total: TOTAL_MATCHES };
+  },
+  ["tournamentProgress"],
+  { tags: ["matches"] }
+);
+
+export async function getTournamentProgress() {
+  cacheRequests()?.add(1, { cache: "tournamentProgress" });
+  return _cachedGetTournamentProgress();
+}
+
 export async function setResultado(
   partidoId: number,
   data: {

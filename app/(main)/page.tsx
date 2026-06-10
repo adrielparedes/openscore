@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { getRanking } from "@/actions/ranking";
 import { getNextMatchPronostico } from "@/actions/pronosticos";
 import { getActiveBanners } from "@/actions/banners";
+import { getTournamentProgress } from "@/actions/partidos";
 import { WorldCupCountdown } from "@/components/ui/WorldCupCountdown";
 import { HomeCarousel } from "@/components/ui/HomeCarousel";
 import NextMatchCard from "@/components/forecast/NextMatchCard";
@@ -14,10 +15,11 @@ export default async function HomePage() {
   const session = await auth();
   const nombre = (session?.user as any)?.nombre ?? session?.user?.name ?? "there";
   const usuarioId = session?.user?.id ? parseInt(session.user.id) : undefined;
-  const [topRanking, nextMatch, banners] = await Promise.all([
+  const [topRanking, nextMatch, banners, progress] = await Promise.all([
     getRanking({ size: 3 }),
     getNextMatchPronostico(usuarioId),
     getActiveBanners(),
+    getTournamentProgress(),
   ]);
 
   return (
@@ -80,6 +82,22 @@ export default async function HomePage() {
           <ArrowRight className="h-4 w-4 text-amber-700 dark:text-amber-400 mt-4 group-hover:translate-x-1 transition-transform" />
         </Link>
 
+      </div>
+
+      {/* ── Tournament progress ── */}
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-semibold text-foreground">Tournament progress</span>
+          <span className="text-xs tabular-nums text-muted-foreground">
+            {progress.withResults} / {progress.total} matches
+          </span>
+        </div>
+        <div className="h-3 w-full rounded-full bg-muted overflow-hidden">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 transition-all"
+            style={{ width: `${(progress.withResults / progress.total) * 100}%` }}
+          />
+        </div>
       </div>
 
       {/* ── Bottom: dos columnas independientes, gap uniforme en cada una ── */}
