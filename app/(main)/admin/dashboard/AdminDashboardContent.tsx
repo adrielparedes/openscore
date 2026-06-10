@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { getAnalytics, type AnalyticsData } from "@/actions/analytics";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import RegistrationChart from "@/components/admin/RegistrationChart";
 import {
   Users,
   UserCheck,
@@ -15,6 +16,7 @@ import {
   TrendingUp,
   Globe,
   RefreshCw,
+  UserPlus,
 } from "lucide-react";
 
 function StatCard({
@@ -169,6 +171,22 @@ export default function AdminDashboardContent({
           iconClass="text-primary"
         />
       </div>
+
+      {/* Daily registrations bar chart */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <UserPlus className="h-5 w-5 text-primary" />
+            New Users per Day
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <RegistrationChart
+            days={analytics.dailyRegistrations.days}
+            countries={analytics.dailyRegistrations.countries}
+          />
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Registrations by country */}

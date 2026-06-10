@@ -61,6 +61,12 @@ function calcularPuntosUsuario(
   }, 0);
 }
 
+export type DailyRegistration = {
+  date: string;
+  total: number;
+  byCountry: Record<string, number>;
+};
+
 export type AnalyticsData = {
   users: {
     total: number;
@@ -73,6 +79,10 @@ export type AnalyticsData = {
     countryCode: string;
     count: number;
   }>;
+  dailyRegistrations: {
+    days: DailyRegistration[];
+    countries: Array<{ code: string; name: string }>;
+  };
   predictions: {
     total: number;
     totalPossible: number;
@@ -169,6 +179,38 @@ export async function getAnalytics(): Promise<AnalyticsData> {
       };
     });
 
+    const allUsers = await prisma.usuario.findMany({
+      where: { deleted: false },
+      select: { createdAt: true, paisId: true },
+      orderBy: { createdAt: "asc" },
+    });
+
+    const dailyMap = new Map<string, Map<number, number>>();
+    for (const u of allUsers) {
+      const day = u.createdAt.toISOString().slice(0, 10);
+      if (!dailyMap.has(day)) dailyMap.set(day, new Map());
+      const countryMap = dailyMap.get(day)!;
+      countryMap.set(u.paisId, (countryMap.get(u.paisId) ?? 0) + 1);
+    }
+
+    const dailyRegistrations = {
+      days: Array.from(dailyMap.entries()).map(([date, countryMap]) => {
+        const byCountry: Record<string, number> = {};
+        let total = 0;
+        for (const [paisId, count] of countryMap) {
+          const pais = paisMap.get(paisId);
+          const code = pais?.codigo ?? "OTHER";
+          byCountry[code] = (byCountry[code] ?? 0) + count;
+          total += count;
+        }
+        return { date, total, byCountry };
+      }),
+      countries: registrationsByCountry.map((r) => ({
+        code: r.countryCode,
+        name: r.countryName,
+      })),
+    };
+
     const totalPossible = activeUsers * totalMatches;
     const coveragePercent =
       totalPossible > 0
@@ -222,6 +264,7 @@ export async function getAnalytics(): Promise<AnalyticsData> {
         deleted: deletedUsers,
       },
       registrationsByCountry,
+      dailyRegistrations,
       predictions: {
         total: totalPredictions,
         totalPossible,
