@@ -235,19 +235,14 @@ export async function getKnockoutPronosticos(): Promise<PartidoPronostico[]> {
   });
 }
 
-export async function getUpcomingPronosticos(): Promise<{
-  today: PartidoPronostico[];
-  nextDay: PartidoPronostico[];
-  nextDayDate: Date | null;
-}> {
+export async function getUpcomingPronosticos(): Promise<PartidoPronostico[]> {
   return recordAction("getUpcomingPronosticos", async () => {
     const session = await auth();
-    if (!session?.user?.id) return { today: [], nextDay: [], nextDayDate: null };
+    if (!session?.user?.id) return [];
     const usuarioId = parseInt(session.user.id);
 
     const now = new Date();
     const todayStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-    const todayEnd = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1));
 
     const [allUpcoming, pronosticos] = await Promise.all([
       cachedUpcomingPartidos(todayStart),
@@ -255,28 +250,10 @@ export async function getUpcomingPronosticos(): Promise<{
     ]);
     const oddsMap = await cachedOdds(allUpcoming.map((p) => p.id));
 
-    const toPronostico = (p: any) => {
+    return allUpcoming.map((p) => {
       const pronostico = pronosticos.find((pr) => pr.partidoId === p.id) ?? null;
       return buildPartidoPronostico(p, pronostico, oddsMap.get(p.id) ?? null);
-    };
-
-    const todayMatches = allUpcoming.filter((p) => new Date(p.dia) < todayEnd);
-
-    const afterToday = allUpcoming.filter((p) => new Date(p.dia) >= todayEnd);
-    let nextDayMatches: typeof allUpcoming = [];
-    let nextDayDate: Date | null = null;
-
-    if (afterToday.length > 0) {
-      const firstDia = new Date(afterToday[0].dia);
-      nextDayDate = new Date(Date.UTC(firstDia.getUTCFullYear(), firstDia.getUTCMonth(), firstDia.getUTCDate()));
-      nextDayMatches = afterToday.slice(0, 6);
-    }
-
-    return {
-      today: todayMatches.map(toPronostico),
-      nextDay: nextDayMatches.map(toPronostico),
-      nextDayDate,
-    };
+    });
   });
 }
 

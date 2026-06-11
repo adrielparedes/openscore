@@ -1,6 +1,6 @@
 import { getPronosticos, getKnockoutPronosticos, getUpcomingPronosticos } from "@/actions/pronosticos";
 import MatchCard from "@/components/forecast/MatchCard";
-import UpcomingDateGroups from "@/components/forecast/UpcomingDateGroups";
+import UpcomingMatchesSplit from "@/components/forecast/UpcomingMatchesSplit";
 import ForecastFilters from "@/components/forecast/ForecastFilters";
 import KnockoutTree from "@/components/forecast/KnockoutTree";
 import { BracketProvider } from "@/components/forecast/BracketContext";
@@ -9,13 +9,6 @@ import type { PartidoPronostico } from "@/types";
 
 interface ForecastPageProps {
   searchParams: Promise<{ grupo?: string; fase?: string; fecha?: string; view?: string; filter?: string }>;
-}
-
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-function formatUpcomingDate(date: Date): string {
-  return `${DAYS[date.getUTCDay()]}, ${MONTHS[date.getUTCMonth()]} ${date.getUTCDate()}`;
 }
 
 const PHASE_ORDER = [
@@ -111,69 +104,8 @@ async function MatchList({
 }
 
 async function UpcomingMatchList({ filter }: { filter?: string }) {
-  const { today, nextDay, nextDayDate } = await getUpcomingPronosticos();
-
-  const notPredicted = filter === "not-predicted";
-  const filteredToday = notPredicted ? today.filter((m) => !m.pronostico && m.status === "PENDING") : today;
-  const filteredNextDay = notPredicted ? nextDay.filter((m) => !m.pronostico && m.status === "PENDING") : nextDay;
-
-  const hasToday = filteredToday.length > 0;
-  const hasNextDay = filteredNextDay.length > 0;
-
-  if (!hasToday && !hasNextDay) {
-    return (
-      <div className="rounded-xl border border-border bg-card p-12 text-center shadow-sm">
-        <p className="text-muted-foreground">
-          {notPredicted
-            ? "You're all caught up! Every upcoming match has a prediction."
-            : "No upcoming matches scheduled."}
-        </p>
-      </div>
-    );
-  }
-
-  const total = filteredToday.length + filteredNextDay.length;
-  const description = notPredicted
-    ? `Showing ${total} upcoming match${total !== 1 ? "es" : ""} still waiting for your prediction.`
-    : hasToday && hasNextDay
-    ? `Showing today's ${filteredToday.length} match${filteredToday.length !== 1 ? "es" : ""} and the next ${filteredNextDay.length} upcoming.`
-    : hasToday
-    ? `Showing all of today's ${filteredToday.length} match${filteredToday.length !== 1 ? "es" : ""}.`
-    : `No matches today — showing the next ${filteredNextDay.length} upcoming match${filteredNextDay.length !== 1 ? "es" : ""}.`;
-
-  return (
-    <div className="flex flex-col gap-6">
-      <p className="text-sm text-muted-foreground">{description}</p>
-
-      {hasToday && (
-        <div>
-          <div className="flex items-center gap-3 mb-4">
-            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider">Today</h2>
-            <div className="flex-1 h-px bg-border" />
-            <span className="text-xs text-muted-foreground font-medium">{filteredToday.length} match{filteredToday.length !== 1 ? "es" : ""}</span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {filteredToday.map((match) => (
-              <MatchCard key={match.id} match={match} />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {hasNextDay && (
-        <div>
-          <div className="flex items-center gap-3 mb-4">
-            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider">
-              {nextDayDate ? `From ${formatUpcomingDate(nextDayDate)}` : "Upcoming"}
-            </h2>
-            <div className="flex-1 h-px bg-border" />
-            <span className="text-xs text-muted-foreground font-medium">{filteredNextDay.length} match{filteredNextDay.length !== 1 ? "es" : ""}</span>
-          </div>
-          <UpcomingDateGroups matches={filteredNextDay} />
-        </div>
-      )}
-    </div>
-  );
+  const matches = await getUpcomingPronosticos();
+  return <UpcomingMatchesSplit matches={matches} filter={filter} />;
 }
 
 async function KnockoutBracketSection() {
