@@ -58,17 +58,28 @@ export default function RulesPage() {
         <CardContent>
           <ul className="list-disc list-inside space-y-3 text-sm text-muted-foreground">
             <li>
-              There will be one winner in each Red Hat office:{" "}
-              <strong className="text-foreground">1 (ONE)</strong> winner in Argentina,{" "}
-              <strong className="text-foreground">1 (ONE)</strong> winner in Brazil,{" "}
-              <strong className="text-foreground">1 (ONE)</strong> winner in Chile,{" "}
-              <strong className="text-foreground">1 (ONE)</strong> winner in Colombia/CEACA,{" "}
-              <strong className="text-foreground">1 (ONE)</strong> winner in Peru, and{" "}
-              <strong className="text-foreground">1 (ONE)</strong> winner in Mexico.
+              There will be <strong className="text-foreground">3 winners per region</strong>. The
+              regions are: <strong className="text-foreground">SOLA</strong> (South Latin America),{" "}
+              <strong className="text-foreground">NOLA</strong> (North Latin America), and{" "}
+              <strong className="text-foreground">Brasil</strong>.
             </li>
             <li>
-              In the case of a tie in the first place of each sub-region, a random drawing will
-              take place to determine the winner.
+              Prizes are awarded in <strong className="text-foreground">Reward Points</strong>:
+              <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
+                <li>
+                  <strong className="text-foreground">1st place</strong> — 400 Reward Points
+                </li>
+                <li>
+                  <strong className="text-foreground">2nd place</strong> — 200 Reward Points
+                </li>
+                <li>
+                  <strong className="text-foreground">3rd place</strong> — 100 Reward Points
+                </li>
+              </ul>
+            </li>
+            <li>
+              In the case of a tie, a random drawing will take place to determine the final
+              placement among the tied participants.
             </li>
           </ul>
         </CardContent>

@@ -1,0 +1,52 @@
+---
+description: Openscore-ng full-stack conventions (Next.js 16, Prisma 7, NextAuth v5)
+alwaysApply: true
+---
+
+# Openscore-ng Conventions
+
+Active development happens in the `openscore-ng` root (not `openscore-core` or `openscore-ui`).
+
+## Server Actions (`actions/`)
+
+Every server action file starts with `"use server"` and follows this pattern:
+
+```typescript
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+import { recordAction } from "@/lib/withMetrics";
+
+async function getUserId(): Promise<number> {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Not authenticated");
+  return parseInt(session.user.id);
+}
+```
+
+- Always authenticate via `auth()` before DB access
+- Wrap mutations with `recordAction("actionName", fn)` for metrics
+- Call `revalidatePath` or `unstable_cache` / `updateTag` after mutations
+- Domain terms are in Spanish: `partido` (match), `pronostico` (prediction), `equipo` (team), `fase` (phase), `usuario` (user)
+
+## Prisma
+
+- Singleton in `@/lib/prisma` uses `@prisma/adapter-pg` with a `pg.Pool` — never create a second client
+- Schema lives at `prisma/schema.prisma`; config at `prisma.config.ts`
+- Run `pnpm db:generate` after schema changes, `pnpm db:migrate` for migrations
+
+## Auth
+
+- NextAuth v5 (beta) with Credentials provider; config in `lib/auth.ts` + `lib/auth.config.ts`
+- Middleware at `middleware.ts` protects `(main)` routes; public routes live under `(auth)`
+- Passwords use SHA-256 (`lib/password.ts`) to match the legacy Java implementation
+
+## Components
+
+- Server Components by default; add `"use client"` only when needed (interactivity, hooks)
+- UI primitives in `components/ui/`; feature components in `components/{feature}/`
+- Styling: Tailwind v4 with `clsx` + `tailwind-merge` via `cn()` helper
+- Optimistic updates use `useTransition` (see `MatchCard`)
+
+## Scoring Logic
+
+A match locks 15 minutes before `dia`. Points = `fase.puntos` when predicted `ganador` matches actual. For penalty matches, `ganador` uses the shootout score, not 90-min score.
