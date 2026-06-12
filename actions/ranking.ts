@@ -112,14 +112,12 @@ async function fetchRanking(filters?: {
     coverage: r.coverage,
   }));
 
-  let currentRank = 1;
+  let currentRank = 0;
   for (let i = 0; i < rankings.length; i++) {
-    if (i > 0 && rankings[i].puntos === rankings[i - 1].puntos) {
-      rankings[i].ranking = rankings[i - 1].ranking;
-    } else {
-      rankings[i].ranking = currentRank;
+    if (i === 0 || rankings[i].puntos !== rankings[i - 1].puntos) {
+      currentRank++;
     }
-    currentRank++;
+    rankings[i].ranking = currentRank;
   }
 
   const elapsed = (performance.now() - start) / 1000;
