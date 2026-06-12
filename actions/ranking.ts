@@ -7,15 +7,22 @@ import type { RankingEntry } from "@/types";
 
 async function fetchRanking(filters?: {
   pais?: string;
+  paises?: string[];
   size?: number;
 }): Promise<RankingEntry[]> {
   cacheMisses()?.add(1, { cache: "ranking" });
   const start = performance.now();
-  const filtered = !!filters?.pais;
+  const filtered = !!(filters?.pais || filters?.paises?.length);
 
   const params: (string | number)[] = [];
   let paisFilter = "";
-  if (filters?.pais) {
+  if (filters?.paises?.length) {
+    const placeholders = filters.paises.map((p, i) => {
+      params.push(p);
+      return `$${i + 1}`;
+    });
+    paisFilter = `AND pa."codigo" IN (${placeholders.join(", ")})`;
+  } else if (filters?.pais) {
     params.push(filters.pais);
     paisFilter = `AND pa."codigo" = $${params.length}`;
   }
@@ -153,6 +160,14 @@ function getCachedRankingByPais(pais: string) {
   )();
 }
 
+function getCachedRankingByRegion(region: string, paises: string[]) {
+  return unstable_cache(
+    () => fetchRanking({ paises }),
+    ["ranking", "region", region],
+    { tags: ["ranking"], revalidate: false }
+  )();
+}
+
 const _cachedGetRankingForUsuario = unstable_cache(
   fetchRankingForUsuario,
   ["ranking-usuario"],
@@ -161,9 +176,14 @@ const _cachedGetRankingForUsuario = unstable_cache(
 
 export async function getRanking(filters?: {
   pais?: string;
+  paises?: string[];
+  region?: string;
   size?: number;
 }): Promise<RankingEntry[]> {
   cacheRequests()?.add(1, { cache: "ranking" });
+  if (filters?.region && filters?.paises?.length) {
+    return getCachedRankingByRegion(filters.region, filters.paises);
+  }
   if (filters?.pais) {
     return getCachedRankingByPais(filters.pais);
   }

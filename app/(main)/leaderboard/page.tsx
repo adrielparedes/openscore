@@ -8,15 +8,20 @@ import { Trophy, Medal, Target, Percent, ClipboardList, User } from "lucide-reac
 
 const LEADERBOARD_PAISES = [
   { codigo: "ARG", nombre: "Argentina" },
-  { codigo: "BRA", nombre: "Brazil" },
   { codigo: "CHL", nombre: "Chile" },
   { codigo: "COL", nombre: "Colombia" },
   { codigo: "MEX", nombre: "Mexico" },
   { codigo: "PER", nombre: "Peru" },
 ];
 
+const LEADERBOARD_REGIONS: Record<string, { label: string; paises: string[] }> = {
+  SOLA: { label: "SOLA", paises: ["ARG", "CHL", "URY", "PRY"] },
+  NOLA: { label: "NOLA", paises: ["PER", "BOL", "ECU", "COL", "MEX"] },
+  BRA: { label: "Brasil", paises: ["BRA"] },
+};
+
 interface LeaderboardPageProps {
-  searchParams: Promise<{ pais?: string }>;
+  searchParams: Promise<{ pais?: string; region?: string }>;
 }
 
 function RankBadge({ rank, puntos }: { rank: number; puntos: number }) {
@@ -29,8 +34,12 @@ function RankBadge({ rank, puntos }: { rank: number; puntos: number }) {
 }
 
 export default async function LeaderboardPage({ searchParams }: LeaderboardPageProps) {
-  const { pais } = await searchParams;
-  const [session, ranking] = await Promise.all([auth(), getRanking({ pais })]);
+  const { pais, region } = await searchParams;
+  const activeRegion = region && LEADERBOARD_REGIONS[region] ? region : undefined;
+  const rankingFilters = activeRegion
+    ? { region: activeRegion, paises: LEADERBOARD_REGIONS[activeRegion].paises }
+    : { pais };
+  const [session, ranking] = await Promise.all([auth(), getRanking(rankingFilters)]);
   const myId = session?.user?.id ? parseInt(session.user.id) : null;
   const myEntry = myId ? ranking.find((r) => r.usuario === myId) : null;
   const podium = ranking.filter((r) => r.ranking <= 3 && r.puntos > 0).slice(0, 5);
@@ -44,14 +53,23 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
 
       {/* Country filter */}
       <div className="flex gap-2 flex-wrap text-sm">
-        <FilterPill href="/leaderboard" active={!pais}>
+        <FilterPill href="/leaderboard" active={!pais && !activeRegion}>
           All countries
         </FilterPill>
+        {Object.entries(LEADERBOARD_REGIONS).map(([key, r]) => (
+          <FilterPill
+            key={key}
+            href={`/leaderboard?region=${key}`}
+            active={activeRegion === key}
+          >
+            {r.label}
+          </FilterPill>
+        ))}
         {LEADERBOARD_PAISES.map((p) => (
           <FilterPill
             key={p.codigo}
             href={`/leaderboard?pais=${p.codigo}`}
-            active={pais === p.codigo}
+            active={!activeRegion && pais === p.codigo}
           >
             {p.nombre}
           </FilterPill>
@@ -104,7 +122,7 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
 
       <Card>
         <CardHeader>
-          <CardTitle>{pais ? `${pais.toUpperCase()} Rankings` : "Global Rankings"}</CardTitle>
+          <CardTitle>{activeRegion ? `${LEADERBOARD_REGIONS[activeRegion].label} Rankings` : pais ? `${pais.toUpperCase()} Rankings` : "Global Rankings"}</CardTitle>
         </CardHeader>
         <CardContent>
           {ranking.length === 0 ? (
