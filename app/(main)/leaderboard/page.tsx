@@ -33,7 +33,7 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
   const [session, ranking] = await Promise.all([auth(), getRanking({ pais })]);
   const myId = session?.user?.id ? parseInt(session.user.id) : null;
   const myEntry = myId ? ranking.find((r) => r.usuario === myId) : null;
-  const podium = ranking.filter((r) => r.ranking <= 3 && r.puntos > 0);
+  const podium = ranking.filter((r) => r.ranking <= 3 && r.puntos > 0).slice(0, 5);
 
   return (
     <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
