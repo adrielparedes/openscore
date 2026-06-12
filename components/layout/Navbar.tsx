@@ -43,13 +43,18 @@ export default function Navbar() {
   const { toggle } = useLayout();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const adminRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
   const isAdmin = ((session?.user as any)?.roles ?? []).includes("ADMIN");
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (adminRef.current && !adminRef.current.contains(e.target as Node)) {
         setAdminOpen(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setProfileOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -171,43 +176,62 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* User + logout */}
+          {/* User dropdown */}
           <div className="hidden md:flex items-center gap-0.5">
-            <ThemeToggle collapsed className="rounded-full p-2" />
-            <button
-              onClick={toggle}
-              title="Switch to sidebar layout"
-              className="flex items-center gap-1.5 rounded-full p-2 text-white/40 hover:text-white hover:bg-white/10 transition-all duration-150"
-            >
-              <PanelLeft className="h-3.5 w-3.5" />
-            </button>
             {status === "loading" && (
               <div className="h-8 w-32 rounded-full bg-white/10 animate-pulse" />
             )}
             {status === "authenticated" && session && (
-              <>
-                <Link
-                  href="/profile"
+              <div ref={profileRef} className="relative">
+                <button
+                  onClick={() => setProfileOpen((o) => !o)}
                   className={cn(
-                    "flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
-                    pathname === "/profile"
-                    ? "bg-gradient-to-r from-rh/35 to-rh/10 text-white"
-                    : "text-white/50 hover:text-white hover:bg-white/10"
+                    "flex items-center gap-2 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-150",
+                    profileOpen || pathname === "/profile"
+                      ? "bg-gradient-to-r from-rh/35 to-rh/10 text-white"
+                      : "text-white/50 hover:text-white hover:bg-white/10"
                   )}
                 >
                   <UserCircle className="h-3.5 w-3.5" />
                   {(session.user as any)?.nombre ?? session.user?.name}
-                </Link>
-                <form action={logoutAction}>
-                  <button
-                    type="submit"
-                    className="flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-white/50 hover:text-white hover:bg-white/10 transition-all duration-150"
-                  >
-                    <LogOut className="h-3.5 w-3.5" />
-                    Logout
-                  </button>
-                </form>
-              </>
+                  <ChevronDown className={cn("h-3 w-3 transition-transform duration-150", profileOpen && "rotate-180")} />
+                </button>
+                {profileOpen && (
+                  <div className="absolute right-0 top-full mt-1.5 w-48 rounded-xl border border-white/[0.08] bg-nav shadow-xl py-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                    <Link
+                      href="/profile"
+                      onClick={() => setProfileOpen(false)}
+                      className={cn(
+                        "flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                        pathname === "/profile"
+                          ? "text-white bg-white/10"
+                          : "text-white/50 hover:text-white hover:bg-white/10"
+                      )}
+                    >
+                      <UserCircle className="h-3.5 w-3.5" />
+                      Profile
+                    </Link>
+                    <ThemeToggle className="gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-none hover:bg-white/10" />
+                    <button
+                      onClick={() => { toggle(); setProfileOpen(false); }}
+                      className="flex w-full items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-white/40 hover:text-white hover:bg-white/10 transition-all duration-150"
+                    >
+                      <PanelLeft className="h-3.5 w-3.5" />
+                      Sidebar layout
+                    </button>
+                    <div className="my-1.5 border-t border-white/[0.08]" />
+                    <form action={logoutAction}>
+                      <button
+                        type="submit"
+                        className="flex w-full items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-white/50 hover:text-white hover:bg-white/10 transition-all duration-150"
+                      >
+                        <LogOut className="h-3.5 w-3.5" />
+                        Logout
+                      </button>
+                    </form>
+                  </div>
+                )}
+              </div>
             )}
           </div>
 
@@ -313,18 +337,14 @@ export default function Navbar() {
               </Link>
             </>
           )}
-          <div className="mt-2 pt-2 border-t border-white/[0.06] space-y-0.5">
-            <ThemeToggle className="rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider" />
-            <button
-              onClick={() => { toggle(); setMobileOpen(false); }}
-              className="flex w-full items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-white/40 hover:text-white hover:bg-white/10 transition-all duration-150"
-            >
-              <PanelLeft className="h-4 w-4" />
-              Sidebar layout
-            </button>
-          </div>
           {status === "authenticated" && session && (
             <>
+              <div className="mt-2 mb-1 flex items-center gap-2 px-4 pt-2 border-t border-white/[0.06]">
+                <UserCircle className="h-3.5 w-3.5 text-white/40" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">
+                  {(session.user as any)?.nombre ?? session.user?.name}
+                </span>
+              </div>
               <Link
                 href="/profile"
                 onClick={() => setMobileOpen(false)}
@@ -338,6 +358,14 @@ export default function Navbar() {
                 <UserCircle className="h-4 w-4" />
                 Profile
               </Link>
+              <ThemeToggle className="rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider" />
+              <button
+                onClick={() => { toggle(); setMobileOpen(false); }}
+                className="flex w-full items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-white/40 hover:text-white hover:bg-white/10 transition-all duration-150"
+              >
+                <PanelLeft className="h-4 w-4" />
+                Sidebar layout
+              </button>
               <form action={logoutAction}>
                 <button
                   type="submit"
