@@ -25,6 +25,7 @@ import {
   SlidersHorizontal,
   ImageIcon,
   LayoutDashboard,
+  Calendar,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -130,6 +131,19 @@ export default function Navbar() {
                     >
                       <ClipboardList className="h-3.5 w-3.5" />
                       Results
+                    </Link>
+                    <Link
+                      href="/admin/matches"
+                      onClick={() => setAdminOpen(false)}
+                      className={cn(
+                        "flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                        pathname === "/admin/matches"
+                          ? "text-rh/80 bg-rh/10"
+                          : "text-white/50 hover:text-white hover:bg-white/10"
+                      )}
+                    >
+                      <Calendar className="h-3.5 w-3.5" />
+                      Matches
                     </Link>
                     <Link
                       href="/admin/usuarios"
@@ -295,6 +309,19 @@ export default function Navbar() {
               >
                 <ClipboardList className="h-4 w-4" />
                 Results
+              </Link>
+              <Link
+                href="/admin/matches"
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-150",
+                  pathname === "/admin/matches"
+                    ? "bg-gradient-to-r from-rh/40 to-rh/15 text-rh/80"
+                    : "text-rh/60 hover:text-rh/80 hover:bg-rh/15"
+                )}
+              >
+                <Calendar className="h-4 w-4" />
+                Matches
               </Link>
               <Link
                 href="/admin/usuarios"

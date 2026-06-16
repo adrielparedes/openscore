@@ -203,6 +203,53 @@ export async function resetResultado(partidoId: number) {
   });
 }
 
+export async function getGrupos(): Promise<{ id: number; codigo: string; nombre: string }[]> {
+  return recordAction("getGrupos", async () => {
+    return prisma.grupo.findMany({
+      where: { deleted: false },
+      orderBy: { codigo: "asc" },
+      select: { id: true, codigo: true, nombre: true },
+    });
+  });
+}
+
+export async function updatePartido(
+  partidoId: number,
+  data: {
+    dia: string;
+    lugar: string | null;
+    faseId: number;
+    grupoId: number | null;
+    fecha: number;
+  }
+) {
+  return recordAction("updatePartido", async () => {
+    const session = await auth();
+    const roles = (session?.user as any)?.roles ?? [];
+    if (!roles.includes("ADMIN")) throw new Error("Unauthorized");
+
+    const parsedDate = new Date(data.dia);
+    if (isNaN(parsedDate.getTime())) throw new Error("Invalid date");
+
+    await prisma.partido.update({
+      where: { id: partidoId },
+      data: {
+        dia: parsedDate,
+        lugar: data.lugar || null,
+        faseId: data.faseId,
+        grupoId: data.grupoId,
+        fecha: data.fecha,
+      },
+    });
+
+    updateTag("matches");
+    revalidatePath("/");
+    revalidatePath("/forecast");
+    revalidatePath("/admin/results");
+    revalidatePath("/admin/matches");
+  });
+}
+
 export async function invalidateAllCaches() {
   const session = await auth();
   const roles = (session?.user as any)?.roles ?? [];

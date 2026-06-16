@@ -26,6 +26,7 @@ import {
   SlidersHorizontal,
   ImageIcon,
   LayoutDashboard,
+  Calendar,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -143,6 +144,21 @@ function SidebarContent({
           >
             <ClipboardList className="h-4 w-4 shrink-0" />
             {!collapsed && "Results"}
+          </Link>
+          <Link
+            href="/admin/matches"
+            onClick={onNavigate}
+            title={collapsed ? "Matches" : undefined}
+            className={cn(
+              "flex items-center rounded-lg transition-all duration-150",
+              collapsed ? "justify-center p-2.5" : "gap-3 px-3 py-2.5 text-sm font-medium",
+              pathname === "/admin/matches"
+                ? "text-rh/80 bg-rh/10"
+                : "text-rh/50 hover:text-rh/80 hover:bg-rh/10"
+            )}
+          >
+            <Calendar className="h-4 w-4 shrink-0" />
+            {!collapsed && "Matches"}
           </Link>
           <Link
             href="/admin/usuarios"
