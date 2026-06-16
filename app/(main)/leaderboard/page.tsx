@@ -108,7 +108,7 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
                 <span className="text-muted-foreground">·</span>
                 <span className="text-sm font-semibold text-primary">{myEntry.puntos} pts</span>
                 <span className="text-muted-foreground">·</span>
-                <span className="text-sm text-muted-foreground">{myEntry.aciertos}/{myEntry.totalPronosticos} correct</span>
+                <span className="text-sm text-muted-foreground">{myEntry.aciertos}/{myEntry.totalPartidos} correct</span>
                 <span className="text-muted-foreground hidden sm:inline">·</span>
                 <span className="text-sm text-muted-foreground hidden sm:inline">{myEntry.accuracy}% accuracy</span>
               </div>
@@ -138,12 +138,12 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
                     <th className="pb-3 text-left font-medium text-muted-foreground">Player</th>
                     <th className="pb-3 text-left font-medium text-muted-foreground hidden sm:table-cell">Country</th>
                     <th className="pb-3 text-center font-medium text-muted-foreground hidden md:table-cell">
-                      <span className="flex items-center justify-center gap-1" title="Correct predictions out of total predictions on finished matches">
+                      <span className="flex items-center justify-center gap-1" title="Correct predictions out of total finished matches">
                         <Target className="h-3.5 w-3.5" /> Correct
                       </span>
                     </th>
                     <th className="pb-3 text-center font-medium text-muted-foreground hidden md:table-cell">
-                      <span className="flex items-center justify-center gap-1" title="Percentage of predictions that were correct (correct / total on finished matches)">
+                      <span className="flex items-center justify-center gap-1" title="Percentage of finished matches predicted correctly">
                         <Percent className="h-3.5 w-3.5" /> Accuracy
                       </span>
                     </th>
@@ -181,11 +181,11 @@ export default async function LeaderboardPage({ searchParams }: LeaderboardPageP
                         <td className="py-3 hidden sm:table-cell">
                           <Badge variant="muted">{entry.pais.toUpperCase()}</Badge>
                         </td>
-                        <td className="py-3 text-center hidden md:table-cell text-muted-foreground" title={`${entry.aciertos} correct out of ${entry.totalPronosticos} predictions on finished matches`}>
+                        <td className="py-3 text-center hidden md:table-cell text-muted-foreground" title={`${entry.aciertos} correct out of ${entry.totalPartidos} finished matches`}>
                           <span className="font-medium text-foreground">{entry.aciertos}</span>
-                          <span className="text-xs">/{entry.totalPronosticos}</span>
+                          <span className="text-xs">/{entry.totalPartidos}</span>
                         </td>
-                        <td className="py-3 text-center hidden md:table-cell" title={`${entry.accuracy}% of predictions were correct`}>
+                        <td className="py-3 text-center hidden md:table-cell" title={`${entry.accuracy}% of finished matches predicted correctly`}>
                           <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold ${
                             entry.accuracy >= 60
                               ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"

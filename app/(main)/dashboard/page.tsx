@@ -76,7 +76,7 @@ export default async function DashboardPage() {
               </div>
               <div>
                 <div className="text-2xl font-bold text-foreground">
-                  {myRanking ? `${myRanking.aciertos}/${myRanking.totalPronosticos}` : "—"}
+                  {myRanking ? `${myRanking.aciertos}/${myRanking.totalPartidos}` : "—"}
                 </div>
                 <div className="text-xs text-muted-foreground">Correct picks</div>
               </div>

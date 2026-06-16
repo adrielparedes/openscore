@@ -297,7 +297,7 @@ async function main() {
       { local: "HTI", visitante: "SCO", grupo: "GRUPO_C", dia: new Date("2026-06-14T01:00:00Z"), lugar: "Gillette Stadium, Boston", fecha: 1 },
       // Group D
       { local: "USA", visitante: "PRY", grupo: "GRUPO_D", dia: new Date("2026-06-13T01:00:00Z"), lugar: "SoFi Stadium, Los Angeles", fecha: 1 },
-      { local: "AUS", visitante: "TUR", grupo: "GRUPO_D", dia: new Date("2026-06-13T04:00:00Z"), lugar: "BC Place, Vancouver", fecha: 1 },
+      { local: "AUS", visitante: "TUR", grupo: "GRUPO_D", dia: new Date("2026-06-14T04:00:00Z"), lugar: "BC Place, Vancouver", fecha: 1 },
       // Group E
       { local: "DEU", visitante: "CUW", grupo: "GRUPO_E", dia: new Date("2026-06-14T17:00:00Z"), lugar: "NRG Stadium, Houston", fecha: 1 },
       { local: "CIV", visitante: "ECU", grupo: "GRUPO_E", dia: new Date("2026-06-14T23:00:00Z"), lugar: "Lincoln Financial Field, Philadelphia", fecha: 1 },
@@ -315,7 +315,7 @@ async function main() {
       { local: "IRQ", visitante: "NOR", grupo: "GRUPO_I", dia: new Date("2026-06-16T22:00:00Z"), lugar: "Gillette Stadium, Boston", fecha: 1 },
       // Group J
       { local: "ARG", visitante: "DZA", grupo: "GRUPO_J", dia: new Date("2026-06-17T01:00:00Z"), lugar: "Arrowhead Stadium, Kansas City", fecha: 1 },
-      { local: "AUT", visitante: "JOR", grupo: "GRUPO_J", dia: new Date("2026-06-16T04:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area", fecha: 1 },
+      { local: "AUT", visitante: "JOR", grupo: "GRUPO_J", dia: new Date("2026-06-17T04:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area", fecha: 1 },
       // Group K
       { local: "PRT", visitante: "COD", grupo: "GRUPO_K", dia: new Date("2026-06-17T17:00:00Z"), lugar: "NRG Stadium, Houston", fecha: 1 },
       { local: "UZB", visitante: "COL", grupo: "GRUPO_K", dia: new Date("2026-06-18T02:00:00Z"), lugar: "Estadio Azteca, Mexico City", fecha: 1 },
@@ -335,13 +335,13 @@ async function main() {
       { local: "BRA", visitante: "HTI", grupo: "GRUPO_C", dia: new Date("2026-06-20T01:00:00Z"), lugar: "Lincoln Financial Field, Philadelphia", fecha: 2 },
       // Group D
       { local: "USA", visitante: "AUS", grupo: "GRUPO_D", dia: new Date("2026-06-19T19:00:00Z"), lugar: "Lumen Field, Seattle", fecha: 2 },
-      { local: "TUR", visitante: "PRY", grupo: "GRUPO_D", dia: new Date("2026-06-20T03:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area", fecha: 2 },
+      { local: "TUR", visitante: "PRY", grupo: "GRUPO_D", dia: new Date("2026-06-20T04:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area", fecha: 2 },
       // Group E
       { local: "DEU", visitante: "CIV", grupo: "GRUPO_E", dia: new Date("2026-06-20T20:00:00Z"), lugar: "BMO Field, Toronto", fecha: 2 },
       { local: "ECU", visitante: "CUW", grupo: "GRUPO_E", dia: new Date("2026-06-21T00:00:00Z"), lugar: "Arrowhead Stadium, Kansas City", fecha: 2 },
       // Group F
       { local: "NLD", visitante: "SWE", grupo: "GRUPO_F", dia: new Date("2026-06-20T17:00:00Z"), lugar: "NRG Stadium, Houston", fecha: 2 },
-      { local: "TUN", visitante: "JPN", grupo: "GRUPO_F", dia: new Date("2026-06-20T04:00:00Z"), lugar: "Estadio BBVA, Monterrey", fecha: 2 },
+      { local: "TUN", visitante: "JPN", grupo: "GRUPO_F", dia: new Date("2026-06-21T04:00:00Z"), lugar: "Estadio BBVA, Monterrey", fecha: 2 },
       // Group G
       { local: "BEL", visitante: "IRN", grupo: "GRUPO_G", dia: new Date("2026-06-21T19:00:00Z"), lugar: "SoFi Stadium, Los Angeles", fecha: 2 },
       { local: "NZL", visitante: "EGY", grupo: "GRUPO_G", dia: new Date("2026-06-22T01:00:00Z"), lugar: "BC Place, Vancouver", fecha: 2 },
@@ -444,71 +444,71 @@ async function main() {
     // ── Round of 32 (matches 73–88) ──────────────────────────────────────────
     const r32Data: KnockoutInput[] = [
       // Jun 28
-      { local: "2A",   visitante: "2B",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-28T18:00:00Z"), lugar: "SoFi Stadium, Los Angeles" },
+      { local: "2A",   visitante: "2B",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-28T19:00:00Z"), lugar: "SoFi Stadium, Los Angeles" },
       // Jun 29
-      { local: "1C",   visitante: "2F",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-29T16:00:00Z"), lugar: "NRG Stadium, Houston" },
-      { local: "1E",   visitante: "3T74", fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-29T19:30:00Z"), lugar: "Gillette Stadium, Boston" },
-      { local: "1F",   visitante: "2C",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-30T00:00:00Z"), lugar: "Estadio BBVA, Monterrey" },
+      { local: "1C",   visitante: "2F",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-29T17:00:00Z"), lugar: "NRG Stadium, Houston" },
+      { local: "1E",   visitante: "3T74", fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-29T20:30:00Z"), lugar: "Gillette Stadium, Boston" },
+      { local: "1F",   visitante: "2C",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-30T01:00:00Z"), lugar: "Estadio BBVA, Monterrey" },
       // Jun 30
-      { local: "2E",   visitante: "2I",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-30T16:00:00Z"), lugar: "AT&T Stadium, Dallas" },
-      { local: "1I",   visitante: "3T77", fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-30T20:00:00Z"), lugar: "MetLife Stadium, New York/New Jersey" },
-      { local: "1A",   visitante: "3T79", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T00:00:00Z"), lugar: "Estadio Azteca, Mexico City" },
+      { local: "2E",   visitante: "2I",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-30T17:00:00Z"), lugar: "AT&T Stadium, Dallas" },
+      { local: "1I",   visitante: "3T77", fase: "TREINTAIDOSAVOS", dia: new Date("2026-06-30T21:00:00Z"), lugar: "MetLife Stadium, New York/New Jersey" },
+      { local: "1A",   visitante: "3T79", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T01:00:00Z"), lugar: "Estadio Azteca, Mexico City" },
       // Jul 1
-      { local: "1L",   visitante: "3T80", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T15:00:00Z"), lugar: "Mercedes-Benz Stadium, Atlanta" },
-      { local: "1G",   visitante: "3T82", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T19:00:00Z"), lugar: "Lumen Field, Seattle" },
-      { local: "1D",   visitante: "3T81", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T23:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area" },
+      { local: "1L",   visitante: "3T80", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T16:00:00Z"), lugar: "Mercedes-Benz Stadium, Atlanta" },
+      { local: "1G",   visitante: "3T82", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T20:00:00Z"), lugar: "Lumen Field, Seattle" },
+      { local: "1D",   visitante: "3T81", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T00:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area" },
       // Jul 2
-      { local: "1H",   visitante: "2J",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T18:00:00Z"), lugar: "SoFi Stadium, Los Angeles" },
-      { local: "2K",   visitante: "2L",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T22:00:00Z"), lugar: "BMO Field, Toronto" },
-      { local: "1B",   visitante: "3T85", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T02:00:00Z"), lugar: "BC Place, Vancouver" },
+      { local: "1H",   visitante: "2J",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T19:00:00Z"), lugar: "SoFi Stadium, Los Angeles" },
+      { local: "2K",   visitante: "2L",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T23:00:00Z"), lugar: "BMO Field, Toronto" },
+      { local: "1B",   visitante: "3T85", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T03:00:00Z"), lugar: "BC Place, Vancouver" },
       // Jul 3
-      { local: "2D",   visitante: "2G",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T17:00:00Z"), lugar: "AT&T Stadium, Dallas" },
-      { local: "1J",   visitante: "2H",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T21:00:00Z"), lugar: "Hard Rock Stadium, Miami" },
-      { local: "1K",   visitante: "3T87", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-04T00:30:00Z"), lugar: "GEHA Field at Arrowhead, Kansas City" },
+      { local: "2D",   visitante: "2G",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T18:00:00Z"), lugar: "AT&T Stadium, Dallas" },
+      { local: "1J",   visitante: "2H",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T22:00:00Z"), lugar: "Hard Rock Stadium, Miami" },
+      { local: "1K",   visitante: "3T87", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-04T01:30:00Z"), lugar: "GEHA Field at Arrowhead, Kansas City" },
     ];
 
     // ── Round of 16 (matches 89–96) ───────────────────────────────────────────
-    // Bracket: W74 vs W76 → M89, W73 vs W75 → M90, W79 vs W80 → M91,
-    //          W77 vs W78 → M92, W83 vs W84 → M93, W85 vs W86 → M94,
-    //          W81 vs W82 → M95, W87 vs W88 → M96
+    // Bracket: W73 vs W75 → M90, W74 vs W77 → M89, W76 vs W78 → M91,
+    //          W79 vs W80 → M92, W83 vs W84 → M93, W81 vs W82 → M94,
+    //          W86 vs W88 → M95, W85 vs W87 → M96
     const r16Data: KnockoutInput[] = [
       // Jul 4
-      { local: "W74", visitante: "W76", fase: "OCTAVOS", dia: new Date("2026-07-04T16:00:00Z"), lugar: "NRG Stadium, Houston" },
-      { local: "W73", visitante: "W75", fase: "OCTAVOS", dia: new Date("2026-07-04T20:00:00Z"), lugar: "MetLife Stadium, New York/New Jersey" },
+      { local: "W73", visitante: "W75", fase: "OCTAVOS", dia: new Date("2026-07-04T17:00:00Z"), lugar: "NRG Stadium, Houston" },
+      { local: "W74", visitante: "W77", fase: "OCTAVOS", dia: new Date("2026-07-04T21:00:00Z"), lugar: "Lincoln Financial Field, Philadelphia" },
       // Jul 5
-      { local: "W79", visitante: "W80", fase: "OCTAVOS", dia: new Date("2026-07-05T18:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area" },
-      { local: "W77", visitante: "W78", fase: "OCTAVOS", dia: new Date("2026-07-05T23:00:00Z"), lugar: "Estadio Azteca, Mexico City" },
+      { local: "W76", visitante: "W78", fase: "OCTAVOS", dia: new Date("2026-07-05T20:00:00Z"), lugar: "MetLife Stadium, New York/New Jersey" },
+      { local: "W79", visitante: "W80", fase: "OCTAVOS", dia: new Date("2026-07-06T00:00:00Z"), lugar: "Estadio Azteca, Mexico City" },
       // Jul 6
-      { local: "W83", visitante: "W84", fase: "OCTAVOS", dia: new Date("2026-07-06T18:00:00Z"), lugar: "AT&T Stadium, Dallas" },
-      { local: "W85", visitante: "W86", fase: "OCTAVOS", dia: new Date("2026-07-06T23:00:00Z"), lugar: "Lumen Field, Seattle" },
+      { local: "W83", visitante: "W84", fase: "OCTAVOS", dia: new Date("2026-07-06T19:00:00Z"), lugar: "AT&T Stadium, Dallas" },
+      { local: "W81", visitante: "W82", fase: "OCTAVOS", dia: new Date("2026-07-07T00:00:00Z"), lugar: "Lumen Field, Seattle" },
       // Jul 7
-      { local: "W81", visitante: "W82", fase: "OCTAVOS", dia: new Date("2026-07-07T18:00:00Z"), lugar: "Mercedes-Benz Stadium, Atlanta" },
-      { local: "W87", visitante: "W88", fase: "OCTAVOS", dia: new Date("2026-07-07T23:00:00Z"), lugar: "Lincoln Financial Field, Philadelphia" },
+      { local: "W86", visitante: "W88", fase: "OCTAVOS", dia: new Date("2026-07-07T16:00:00Z"), lugar: "Mercedes-Benz Stadium, Atlanta" },
+      { local: "W85", visitante: "W87", fase: "OCTAVOS", dia: new Date("2026-07-07T20:00:00Z"), lugar: "BC Place, Vancouver" },
     ];
 
     // ── Quarter-finals (matches 97–100) ───────────────────────────────────────
     // QF1 = W89 vs W90, QF2 = W93 vs W94, QF3 = W91 vs W92, QF4 = W95 vs W96
     const qfData: KnockoutInput[] = [
-      { local: "W89", visitante: "W90", fase: "CUARTOS", dia: new Date("2026-07-09T19:00:00Z"), lugar: "Gillette Stadium, Boston" },
-      { local: "W93", visitante: "W94", fase: "CUARTOS", dia: new Date("2026-07-10T18:00:00Z"), lugar: "SoFi Stadium, Los Angeles" },
-      { local: "W91", visitante: "W92", fase: "CUARTOS", dia: new Date("2026-07-11T20:00:00Z"), lugar: "Hard Rock Stadium, Miami" },
-      { local: "W95", visitante: "W96", fase: "CUARTOS", dia: new Date("2026-07-12T00:00:00Z"), lugar: "GEHA Field at Arrowhead, Kansas City" },
+      { local: "W89", visitante: "W90", fase: "CUARTOS", dia: new Date("2026-07-09T20:00:00Z"), lugar: "Gillette Stadium, Boston" },
+      { local: "W93", visitante: "W94", fase: "CUARTOS", dia: new Date("2026-07-10T19:00:00Z"), lugar: "SoFi Stadium, Los Angeles" },
+      { local: "W91", visitante: "W92", fase: "CUARTOS", dia: new Date("2026-07-11T21:00:00Z"), lugar: "Hard Rock Stadium, Miami" },
+      { local: "W95", visitante: "W96", fase: "CUARTOS", dia: new Date("2026-07-12T01:00:00Z"), lugar: "GEHA Field at Arrowhead, Kansas City" },
     ];
 
     // ── Semi-finals (matches 101–102) ─────────────────────────────────────────
     const sfData: KnockoutInput[] = [
-      { local: "W97",  visitante: "W98",  fase: "SEMI", dia: new Date("2026-07-15T00:00:00Z"), lugar: "AT&T Stadium, Dallas" },
-      { local: "W99",  visitante: "W100", fase: "SEMI", dia: new Date("2026-07-16T00:00:00Z"), lugar: "Mercedes-Benz Stadium, Atlanta" },
+      { local: "W97",  visitante: "W98",  fase: "SEMI", dia: new Date("2026-07-14T19:00:00Z"), lugar: "AT&T Stadium, Dallas" },
+      { local: "W99",  visitante: "W100", fase: "SEMI", dia: new Date("2026-07-15T19:00:00Z"), lugar: "Mercedes-Benz Stadium, Atlanta" },
     ];
 
     // ── 3rd Place (match 103) ─────────────────────────────────────────────────
     const thirdData: KnockoutInput[] = [
-      { local: "L101", visitante: "L102", fase: "TERCER", dia: new Date("2026-07-18T18:00:00Z"), lugar: "Hard Rock Stadium, Miami" },
+      { local: "L101", visitante: "L102", fase: "TERCER", dia: new Date("2026-07-18T21:00:00Z"), lugar: "Hard Rock Stadium, Miami" },
     ];
 
     // ── Final (match 104) ─────────────────────────────────────────────────────
     const finalData: KnockoutInput[] = [
-      { local: "W101", visitante: "W102", fase: "FINAL", dia: new Date("2026-07-19T18:00:00Z"), lugar: "MetLife Stadium, East Rutherford" },
+      { local: "W101", visitante: "W102", fase: "FINAL", dia: new Date("2026-07-19T19:00:00Z"), lugar: "MetLife Stadium, East Rutherford" },
     ];
 
     const allKnockout = [...r32Data, ...r16Data, ...qfData, ...sfData, ...thirdData, ...finalData];

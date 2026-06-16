@@ -91,8 +91,8 @@ async function fetchRanking(filters?: {
       us.*,
       mc.finished AS "totalPartidos",
       mc.total AS "totalMatches",
-      CASE WHEN us."totalPronosticos" > 0
-        THEN ROUND((us.aciertos::numeric / us."totalPronosticos") * 100)::int
+      CASE WHEN mc.finished > 0
+        THEN ROUND((us.aciertos::numeric / mc.finished) * 100)::int
         ELSE 0 END AS accuracy,
       CASE WHEN mc.finished > 0
         THEN ROUND((us."totalPronosticos"::numeric / mc.finished) * 100)::int
