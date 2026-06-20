@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { getPartidos, getEquipos } from "@/actions/partidos";
-import ResultMatchCard from "@/components/admin/ResultMatchCard";
+import AdminResultsList from "@/components/admin/AdminResultsList";
 import ClearCacheButton from "@/components/admin/ClearCacheButton";
 import { redirect } from "next/navigation";
 
@@ -23,17 +23,7 @@ export default async function AdminResultsPage() {
         <ClearCacheButton />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {partidos.map((partido) => (
-          <ResultMatchCard key={partido.id} match={partido} equipos={equipos} />
-        ))}
-      </div>
-
-      {partidos.length === 0 && (
-        <div className="rounded-2xl border border-border bg-card p-10 text-center text-muted-foreground text-sm">
-          No matches found.
-        </div>
-      )}
+      <AdminResultsList partidos={partidos} equipos={equipos} />
     </div>
   );
 }

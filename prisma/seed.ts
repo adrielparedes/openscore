@@ -332,10 +332,10 @@ async function main() {
       { local: "CAN", visitante: "QAT", grupo: "GRUPO_B", dia: new Date("2026-06-18T22:00:00Z"), lugar: "BC Place, Vancouver", fecha: 2 },
       // Group C
       { local: "SCO", visitante: "MAR", grupo: "GRUPO_C", dia: new Date("2026-06-19T22:00:00Z"), lugar: "Gillette Stadium, Boston", fecha: 2 },
-      { local: "BRA", visitante: "HTI", grupo: "GRUPO_C", dia: new Date("2026-06-20T01:00:00Z"), lugar: "Lincoln Financial Field, Philadelphia", fecha: 2 },
+      { local: "BRA", visitante: "HTI", grupo: "GRUPO_C", dia: new Date("2026-06-20T00:30:00Z"), lugar: "Lincoln Financial Field, Philadelphia", fecha: 2 },
       // Group D
       { local: "USA", visitante: "AUS", grupo: "GRUPO_D", dia: new Date("2026-06-19T19:00:00Z"), lugar: "Lumen Field, Seattle", fecha: 2 },
-      { local: "TUR", visitante: "PRY", grupo: "GRUPO_D", dia: new Date("2026-06-20T04:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area", fecha: 2 },
+      { local: "TUR", visitante: "PRY", grupo: "GRUPO_D", dia: new Date("2026-06-20T03:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area", fecha: 2 },
       // Group E
       { local: "DEU", visitante: "CIV", grupo: "GRUPO_E", dia: new Date("2026-06-20T20:00:00Z"), lugar: "BMO Field, Toronto", fecha: 2 },
       { local: "ECU", visitante: "CUW", grupo: "GRUPO_E", dia: new Date("2026-06-21T00:00:00Z"), lugar: "Arrowhead Stadium, Kansas City", fecha: 2 },

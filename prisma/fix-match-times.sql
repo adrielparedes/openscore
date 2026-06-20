@@ -8,10 +8,15 @@ UPDATE "Partido" SET dia = '2026-06-21 04:00:00+00'
 WHERE "localId" = (SELECT id FROM "Equipo" WHERE codigo = 'TUN')
   AND "visitanteId" = (SELECT id FROM "Equipo" WHERE codigo = 'JPN');
 
--- Group Stage: Türkiye vs Paraguay (MD2) — 03:00 → 04:00
-UPDATE "Partido" SET dia = '2026-06-20 04:00:00+00'
+-- Group Stage: Türkiye vs Paraguay (MD2) — reverted to FIFA official 03:00 UTC
+UPDATE "Partido" SET dia = '2026-06-20 03:00:00+00'
 WHERE "localId" = (SELECT id FROM "Equipo" WHERE codigo = 'TUR')
   AND "visitanteId" = (SELECT id FROM "Equipo" WHERE codigo = 'PRY');
+
+-- Group Stage: Brazil vs Haiti (MD2) — 01:00 → 00:30 UTC (FIFA official)
+UPDATE "Partido" SET dia = '2026-06-20 00:30:00+00'
+WHERE "localId" = (SELECT id FROM "Equipo" WHERE codigo = 'BRA')
+  AND "visitanteId" = (SELECT id FROM "Equipo" WHERE codigo = 'HTI');
 
 -- Round of 32: all 16 matches +1 hour
 UPDATE "Partido" SET dia = dia + INTERVAL '1 hour'
