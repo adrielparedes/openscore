@@ -149,6 +149,7 @@ model Standing {
   perdidos       Int      @default(0)
   empatados      Int      @default(0)
   diferenciaGol  Int      @default(0)
+  golesAFavor    Int      @default(0)
   partidos       Int      @default(0)
   deleted        Boolean  @default(false)
   createdAt      DateTime @default(now())

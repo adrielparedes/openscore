@@ -74,6 +74,7 @@ export async function calculateStandings(): Promise<void> {
         let ganados = 0;
         let perdidos = 0;
         let empatados = 0;
+        let golesAFavor = 0;
         let diferenciaGol = 0;
         let cantidadPartidos = 0;
         let grupoId: number | null = null;
@@ -84,7 +85,13 @@ export async function calculateStandings(): Promise<void> {
           if (partido.resultadoLocal === null) continue;
 
           cantidadPartidos++;
-          const gol = partido.resultadoLocal - partido.resultadoVisitante!;
+          const esLocal = partido.local.codigo === equipo.codigo;
+          const golesEquipo = esLocal ? partido.resultadoLocal : partido.resultadoVisitante!;
+          const golesRival = esLocal ? partido.resultadoVisitante! : partido.resultadoLocal;
+
+          golesAFavor += golesEquipo;
+          diferenciaGol += golesEquipo - golesRival;
+
           const ganador = calcularGanador(
             partido.resultadoLocal,
             partido.resultadoVisitante!,
@@ -93,8 +100,6 @@ export async function calculateStandings(): Promise<void> {
             partido.resultadoPenalesVisitante
           );
 
-          const esLocal = partido.local.codigo === equipo.codigo;
-
           if (ganador === "EMPATE") {
             empatados++;
           } else if (
@@ -102,10 +107,8 @@ export async function calculateStandings(): Promise<void> {
             (ganador === "VISITANTE" && !esLocal)
           ) {
             ganados++;
-            diferenciaGol += Math.abs(gol);
           } else {
             perdidos++;
-            diferenciaGol -= Math.abs(gol);
           }
         }
 
@@ -117,6 +120,7 @@ export async function calculateStandings(): Promise<void> {
               ganados,
               perdidos,
               empatados,
+              golesAFavor,
               diferenciaGol,
               partidos: cantidadPartidos,
               puntos: ganados * 3 + empatados,

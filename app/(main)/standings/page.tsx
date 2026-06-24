@@ -36,7 +36,7 @@ export default async function StandingsPage() {
     const groupStandings = standingsByGroup.get(grupo.codigo);
     if (!groupStandings) continue;
     const sorted = [...groupStandings].sort(
-      (a, b) => b.puntos - a.puntos || b.diferenciaGol - a.diferenciaGol || b.ganados - a.ganados
+      (a, b) => b.puntos - a.puntos || b.diferenciaGol - a.diferenciaGol || b.golesAFavor - a.golesAFavor || b.ganados - a.ganados
     );
     if (sorted.length >= 3) {
       const s = sorted[2];
@@ -50,14 +50,14 @@ export default async function StandingsPage() {
         perdidos: s.perdidos,
         diferenciaGol: s.diferenciaGol,
         puntos: s.puntos,
-        golesAFavor: s.ganados,
+        golesAFavor: s.golesAFavor,
         grupo: grupo.codigo.replace("GRUPO_", "Group "),
       });
     }
   }
 
   thirdPlaced.sort(
-    (a, b) => b.puntos - a.puntos || b.diferenciaGol - a.diferenciaGol || b.ganados - a.ganados
+    (a, b) => b.puntos - a.puntos || b.diferenciaGol - a.diferenciaGol || b.golesAFavor - a.golesAFavor || b.ganados - a.ganados
   );
 
   return (
@@ -127,7 +127,7 @@ function GroupTable({
 
   const rows: TeamRow[] = standings
     ? [...standings]
-        .sort((a, b) => b.puntos - a.puntos || b.diferenciaGol - a.diferenciaGol || b.ganados - a.ganados)
+        .sort((a, b) => b.puntos - a.puntos || b.diferenciaGol - a.diferenciaGol || b.golesAFavor - a.golesAFavor || b.ganados - a.ganados)
         .map((s) => ({
           id: s.equipo.id,
           nombre: s.equipo.nombre,
@@ -138,7 +138,7 @@ function GroupTable({
           perdidos: s.perdidos,
           diferenciaGol: s.diferenciaGol,
           puntos: s.puntos,
-          golesAFavor: s.ganados,
+          golesAFavor: s.golesAFavor,
         }))
     : teams.map((t) => ({
         id: t.id,
