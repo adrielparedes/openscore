@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { getAnalytics, type AnalyticsData } from "@/actions/analytics";
+import { calculateStandings } from "@/actions/standings";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import RegistrationChart from "@/components/admin/RegistrationChart";
 import {
@@ -17,6 +18,7 @@ import {
   Globe,
   RefreshCw,
   UserPlus,
+  TableProperties,
 } from "lucide-react";
 
 function StatCard({
@@ -70,6 +72,8 @@ export default function AdminDashboardContent({
   const [analytics, setAnalytics] = useState(initialData);
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
   const [isPending, startTransition] = useTransition();
+  const [isRecalculating, startRecalc] = useTransition();
+  const [recalcMessage, setRecalcMessage] = useState<string | null>(null);
 
   function handleRefresh() {
     startTransition(async () => {
@@ -83,6 +87,18 @@ export default function AdminDashboardContent({
     });
   }
 
+  function handleRecalcStandings() {
+    setRecalcMessage(null);
+    startRecalc(async () => {
+      try {
+        await calculateStandings();
+        setRecalcMessage("Standings recalculated successfully.");
+      } catch {
+        setRecalcMessage("Failed to recalculate standings.");
+      }
+    });
+  }
+
   return (
     <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex items-end justify-between">
@@ -92,7 +108,17 @@ export default function AdminDashboardContent({
             Platform overview — users, predictions, and match progress.
           </p>
         </div>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <button
+            onClick={handleRecalcStandings}
+            disabled={isRecalculating}
+            className="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 font-medium text-foreground hover:bg-accent transition-colors disabled:opacity-50"
+          >
+            <TableProperties
+              className={`h-3.5 w-3.5 ${isRecalculating ? "animate-spin" : ""}`}
+            />
+            <span>{isRecalculating ? "Recalculating…" : "Recalculate Standings"}</span>
+          </button>
           <button
             onClick={handleRefresh}
             disabled={isPending}
@@ -108,6 +134,12 @@ export default function AdminDashboardContent({
           </span>
         </div>
       </div>
+
+      {recalcMessage && (
+        <div className={`rounded-md px-3 py-2 text-sm ${recalcMessage.includes("success") ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300" : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"}`}>
+          {recalcMessage}
+        </div>
+      )}
 
       {/* User & prediction stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
