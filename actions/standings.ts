@@ -129,7 +129,7 @@ export async function calculateStandings(): Promise<void> {
         }
       }
 
-      revalidatePath("/");
+      revalidatePath("/", "layout");
     } finally {
       standingsDuration()?.record((performance.now() - start) / 1000);
     }

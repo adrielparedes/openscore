@@ -169,6 +169,7 @@ function GroupTable({
                 <th className="pb-2 text-center font-medium w-9">W</th>
                 <th className="pb-2 text-center font-medium w-9">D</th>
                 <th className="pb-2 text-center font-medium w-9">L</th>
+                <th className="pb-2 text-center font-medium w-9">GF</th>
                 <th className="pb-2 text-center font-medium w-9">GD</th>
                 <th className="pb-2 pr-3 text-right font-medium w-10">Pts</th>
               </tr>
@@ -218,6 +219,7 @@ function GroupTable({
                     <td className="py-2.5 text-center text-muted-foreground">{row.ganados}</td>
                     <td className="py-2.5 text-center text-muted-foreground">{row.empatados}</td>
                     <td className="py-2.5 text-center text-muted-foreground">{row.perdidos}</td>
+                    <td className="py-2.5 text-center text-muted-foreground">{row.golesAFavor}</td>
                     <td className="py-2.5 text-center text-muted-foreground">
                       <span className={
                         row.diferenciaGol > 0
@@ -262,6 +264,7 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
                 <th className="pb-2 text-center font-medium w-9">W</th>
                 <th className="pb-2 text-center font-medium w-9">D</th>
                 <th className="pb-2 text-center font-medium w-9">L</th>
+                <th className="pb-2 text-center font-medium w-9">GF</th>
                 <th className="pb-2 text-center font-medium w-9">GD</th>
                 <th className="pb-2 pr-3 text-right font-medium w-10">Pts</th>
               </tr>
@@ -304,6 +307,7 @@ function BestThirdTable({ thirdPlaced }: { thirdPlaced: (TeamRow & { grupo: stri
                     <td className="py-2.5 text-center text-muted-foreground">{row.ganados}</td>
                     <td className="py-2.5 text-center text-muted-foreground">{row.empatados}</td>
                     <td className="py-2.5 text-center text-muted-foreground">{row.perdidos}</td>
+                    <td className="py-2.5 text-center text-muted-foreground">{row.golesAFavor}</td>
                     <td className="py-2.5 text-center text-muted-foreground">
                       <span className={
                         row.diferenciaGol > 0
