@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { getAnalytics, type AnalyticsData } from "@/actions/analytics";
 import { calculateStandings } from "@/actions/standings";
+import { advanceGroupWinners, advanceKnockoutWinners } from "@/actions/advancement";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import RegistrationChart from "@/components/admin/RegistrationChart";
 import {
@@ -19,6 +20,8 @@ import {
   RefreshCw,
   UserPlus,
   TableProperties,
+  Network,
+  Swords,
 } from "lucide-react";
 
 function StatCard({
@@ -74,6 +77,9 @@ export default function AdminDashboardContent({
   const [isPending, startTransition] = useTransition();
   const [isRecalculating, startRecalc] = useTransition();
   const [recalcMessage, setRecalcMessage] = useState<string | null>(null);
+  const [isAdvancingGroups, startAdvanceGroups] = useTransition();
+  const [isAdvancingKnockout, startAdvanceKnockout] = useTransition();
+  const [advanceMessage, setAdvanceMessage] = useState<string | null>(null);
 
   function handleRefresh() {
     startTransition(async () => {
@@ -99,6 +105,45 @@ export default function AdminDashboardContent({
     });
   }
 
+  function handleAdvanceGroups() {
+    setAdvanceMessage(null);
+    startAdvanceGroups(async () => {
+      try {
+        const result = await advanceGroupWinners();
+        const skipped = result.details.find((d) => d.startsWith("Skipped"));
+        if (result.updated > 0) {
+          setAdvanceMessage(
+            `Advanced group winners: ${result.updated} match(es) updated.${skipped ? ` ${skipped}` : ""}`
+          );
+        } else {
+          setAdvanceMessage(
+            skipped
+              ? `No groups advanced. ${skipped}`
+              : "No group matches to update (already advanced or standings incomplete)."
+          );
+        }
+      } catch {
+        setAdvanceMessage("Failed to advance group winners.");
+      }
+    });
+  }
+
+  function handleAdvanceKnockout() {
+    setAdvanceMessage(null);
+    startAdvanceKnockout(async () => {
+      try {
+        const result = await advanceKnockoutWinners();
+        setAdvanceMessage(
+          result.updated > 0
+            ? `Advanced knockout winners: ${result.updated} match(es) updated.`
+            : "No knockout matches to update (no finished matches or already advanced)."
+        );
+      } catch {
+        setAdvanceMessage("Failed to advance knockout winners.");
+      }
+    });
+  }
+
   return (
     <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex items-end justify-between">
@@ -109,6 +154,26 @@ export default function AdminDashboardContent({
           </p>
         </div>
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <button
+            onClick={handleAdvanceGroups}
+            disabled={isAdvancingGroups}
+            className="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 font-medium text-foreground hover:bg-accent transition-colors disabled:opacity-50"
+          >
+            <Network
+              className={`h-3.5 w-3.5 ${isAdvancingGroups ? "animate-spin" : ""}`}
+            />
+            <span>{isAdvancingGroups ? "Advancing…" : "Advance Group Winners"}</span>
+          </button>
+          <button
+            onClick={handleAdvanceKnockout}
+            disabled={isAdvancingKnockout}
+            className="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 font-medium text-foreground hover:bg-accent transition-colors disabled:opacity-50"
+          >
+            <Swords
+              className={`h-3.5 w-3.5 ${isAdvancingKnockout ? "animate-spin" : ""}`}
+            />
+            <span>{isAdvancingKnockout ? "Advancing…" : "Advance Knockout Winners"}</span>
+          </button>
           <button
             onClick={handleRecalcStandings}
             disabled={isRecalculating}
@@ -138,6 +203,12 @@ export default function AdminDashboardContent({
       {recalcMessage && (
         <div className={`rounded-md px-3 py-2 text-sm ${recalcMessage.includes("success") ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300" : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"}`}>
           {recalcMessage}
+        </div>
+      )}
+
+      {advanceMessage && (
+        <div className={`rounded-md px-3 py-2 text-sm ${advanceMessage.includes("Failed") ? "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300" : "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300"}`}>
+          {advanceMessage}
         </div>
       )}
 
