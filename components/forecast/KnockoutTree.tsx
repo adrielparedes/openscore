@@ -67,21 +67,76 @@ function halve(arr: number[]): number[] {
   return res;
 }
 
-// ─── Layout builder ────────────────────────────────────────────────────────────
-function buildLayout(matches: PartidoPronostico[], cfg: typeof CONFIGS[ViewMode]) {
-  const { CARD_W, CARD_H, H_GAP, V_GAP } = cfg;
-  const COL_W  = CARD_W + H_GAP;
-  const SLOT_H = CARD_H + V_GAP;
-
+// ─── Bracket order derivation ─────────────────────────────────────────────────
+// Derives correct bracket positioning from match references (W{N} codes).
+// Walks the tree level-by-level from the Final backwards, ensuring that adjacent
+// pairs at each phase feed into the correct next-round slot.
+function deriveBracketOrder(matches: PartidoPronostico[]): Record<string, PartidoPronostico[]> {
+  const byId = new Map(matches.map(m => [m.id, m]));
   const byPhase: Record<string, PartidoPronostico[]> = {};
   for (const m of matches) {
     const c = m.fase.codigo;
     if (!byPhase[c]) byPhase[c] = [];
     byPhase[c].push(m);
   }
-  for (const arr of Object.values(byPhase)) {
-    arr.sort((a, b) => new Date(a.dia).getTime() - new Date(b.dia).getTime());
+
+  const finalMatch = byPhase["FINAL"]?.[0];
+  const tercerMatch = byPhase["TERCER"]?.[0];
+  if (!finalMatch) {
+    for (const arr of Object.values(byPhase)) {
+      arr.sort((a, b) => a.id - b.id);
+    }
+    return byPhase;
   }
+
+  function getFeeders(match: PartidoPronostico): [number | null, number | null] {
+    const lm = match.local.codigo.match(/^W(\d+)$/);
+    const vm = match.visitante.codigo.match(/^W(\d+)$/);
+    return [lm ? parseInt(lm[1]) : null, vm ? parseInt(vm[1]) : null];
+  }
+
+  // Level-by-level expansion: for each match in the current level,
+  // expand to its two feeders to get the next (outer) level's order.
+  function expandLevel(matchIds: number[]): number[] {
+    const result: number[] = [];
+    for (const id of matchIds) {
+      const m = byId.get(id);
+      if (!m) continue;
+      const [l, r] = getFeeders(m);
+      if (l !== null) result.push(l);
+      if (r !== null) result.push(r);
+    }
+    return result;
+  }
+
+  // Build ordered IDs for each phase, starting from SEMI and expanding outward
+  const [sf1Id, sf2Id] = getFeeders(finalMatch);
+  const semiIds = [sf1Id, sf2Id].filter((id): id is number => id !== null);
+
+  const phaseIds: Record<string, number[]> = {};
+  phaseIds["SEMI"] = semiIds;
+  phaseIds["CUARTOS"] = expandLevel(semiIds);
+  phaseIds["OCTAVOS"] = expandLevel(phaseIds["CUARTOS"]);
+  phaseIds["TREINTAIDOSAVOS"] = expandLevel(phaseIds["OCTAVOS"]);
+
+  const ordered: Record<string, PartidoPronostico[]> = {};
+  for (const phase of WING_PHASE_CODES) {
+    const ids = phaseIds[phase] ?? [];
+    ordered[phase] = ids.map(id => byId.get(id)!).filter(Boolean);
+  }
+  ordered["FINAL"] = finalMatch ? [finalMatch] : [];
+  ordered["TERCER"] = tercerMatch ? [tercerMatch] : [];
+
+  return ordered;
+}
+
+// ─── Layout builder ────────────────────────────────────────────────────────────
+function buildLayout(matches: PartidoPronostico[], cfg: typeof CONFIGS[ViewMode]) {
+  const { CARD_W, CARD_H, H_GAP, V_GAP } = cfg;
+  const COL_W  = CARD_W + H_GAP;
+  const SLOT_H = CARD_H + V_GAP;
+
+  const byPhase = deriveBracketOrder(matches);
 
   const wingPhases = WING_PHASE_CODES.filter(p => (byPhase[p]?.length ?? 0) > 0);
   const nCols = Math.max(wingPhases.length, 1);

@@ -147,12 +147,11 @@ export async function advanceKnockoutWinners(): Promise<AdvancementResult> {
     const allMatches = await prisma.partido.findMany({
       where: { deleted: false },
       include: { local: true, visitante: true, fase: true },
-      orderBy: [{ dia: "asc" }, { id: "asc" }],
     });
 
-    const matchByPosition = new Map<number, (typeof allMatches)[number]>();
-    for (let i = 0; i < allMatches.length; i++) {
-      matchByPosition.set(i + 1, allMatches[i]);
+    const matchById = new Map<number, (typeof allMatches)[number]>();
+    for (const m of allMatches) {
+      matchById.set(m.id, m);
     }
 
     const KNOCKOUT_PHASES = new Set([
@@ -164,10 +163,10 @@ export async function advanceKnockoutWinners(): Promise<AdvancementResult> {
       "FINAL",
     ]);
 
-    const winnerByPosition = new Map<number, number>();
-    const loserByPosition = new Map<number, number>();
+    const winnerById = new Map<number, number>();
+    const loserById = new Map<number, number>();
 
-    for (const [pos, match] of matchByPosition) {
+    for (const [id, match] of matchById) {
       if (!KNOCKOUT_PHASES.has(match.fase.codigo)) continue;
       if (match.resultadoLocal === null) continue;
 
@@ -180,11 +179,11 @@ export async function advanceKnockoutWinners(): Promise<AdvancementResult> {
       );
 
       if (ganador === "LOCAL") {
-        winnerByPosition.set(pos, match.localId);
-        loserByPosition.set(pos, match.visitanteId);
+        winnerById.set(id, match.localId);
+        loserById.set(id, match.visitanteId);
       } else if (ganador === "VISITANTE") {
-        winnerByPosition.set(pos, match.visitanteId);
-        loserByPosition.set(pos, match.localId);
+        winnerById.set(id, match.visitanteId);
+        loserById.set(id, match.localId);
       }
     }
 
@@ -207,29 +206,29 @@ export async function advanceKnockoutWinners(): Promise<AdvancementResult> {
       const visitanteLMatch = visitanteCode.match(/^L(\d+)$/);
 
       if (localWMatch) {
-        const refPos = parseInt(localWMatch[1]);
-        if (winnerByPosition.has(refPos)) {
-          const realId = winnerByPosition.get(refPos)!;
+        const refId = parseInt(localWMatch[1]);
+        if (winnerById.has(refId)) {
+          const realId = winnerById.get(refId)!;
           if (realId !== match.localId) updates.localId = realId;
         }
       } else if (localLMatch) {
-        const refPos = parseInt(localLMatch[1]);
-        if (loserByPosition.has(refPos)) {
-          const realId = loserByPosition.get(refPos)!;
+        const refId = parseInt(localLMatch[1]);
+        if (loserById.has(refId)) {
+          const realId = loserById.get(refId)!;
           if (realId !== match.localId) updates.localId = realId;
         }
       }
 
       if (visitanteWMatch) {
-        const refPos = parseInt(visitanteWMatch[1]);
-        if (winnerByPosition.has(refPos)) {
-          const realId = winnerByPosition.get(refPos)!;
+        const refId = parseInt(visitanteWMatch[1]);
+        if (winnerById.has(refId)) {
+          const realId = winnerById.get(refId)!;
           if (realId !== match.visitanteId) updates.visitanteId = realId;
         }
       } else if (visitanteLMatch) {
-        const refPos = parseInt(visitanteLMatch[1]);
-        if (loserByPosition.has(refPos)) {
-          const realId = loserByPosition.get(refPos)!;
+        const refId = parseInt(visitanteLMatch[1]);
+        if (loserById.has(refId)) {
+          const realId = loserById.get(refId)!;
           if (realId !== match.visitanteId) updates.visitanteId = realId;
         }
       }
