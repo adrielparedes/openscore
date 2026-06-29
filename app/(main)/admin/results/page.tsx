@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { getPartidos, getEquipos } from "@/actions/partidos";
 import AdminResultsList from "@/components/admin/AdminResultsList";
 import ClearCacheButton from "@/components/admin/ClearCacheButton";
+import AdvanceKnockoutButton from "@/components/admin/AdvanceKnockoutButton";
 import { redirect } from "next/navigation";
 
 export default async function AdminResultsPage() {
@@ -20,7 +21,10 @@ export default async function AdminResultsPage() {
           <h1 className="text-2xl font-bold text-foreground">Match Results</h1>
           <p className="text-muted-foreground text-sm mt-1">Enter or update scores for each match.</p>
         </div>
-        <ClearCacheButton />
+        <div className="flex items-center gap-3">
+          <AdvanceKnockoutButton />
+          <ClearCacheButton />
+        </div>
       </div>
 
       <AdminResultsList partidos={partidos} equipos={equipos} />

@@ -8,6 +8,16 @@ import type { PartidoConRelaciones, Equipo } from "@/types";
 import { auth } from "@/lib/auth";
 import { revalidatePath, revalidateTag, updateTag, unstable_cache } from "next/cache";
 import { calculateStandings } from "@/actions/standings";
+import { advanceKnockoutWinners } from "@/actions/advancement";
+
+const KNOCKOUT_PHASES = new Set([
+  "TREINTAIDOSAVOS",
+  "OCTAVOS",
+  "CUARTOS",
+  "SEMI",
+  "TERCER",
+  "FINAL",
+]);
 
 function enrichPartido(p: any): PartidoConRelaciones {
   const status = calcularStatus(p.dia, p.resultadoLocal);
@@ -155,7 +165,7 @@ export async function setResultado(
     const roles = (session?.user as any)?.roles ?? [];
     if (!roles.includes("ADMIN")) throw new Error("Unauthorized");
 
-    await prisma.partido.update({
+    const partido = await prisma.partido.update({
       where: { id: partidoId },
       data: {
         resultadoLocal: data.local,
@@ -164,9 +174,15 @@ export async function setResultado(
         resultadoPenalesLocal: data.penalesLocal ?? null,
         resultadoPenalesVisitante: data.penalesVisitante ?? null,
       },
+      include: { fase: true },
     });
 
     await calculateStandings();
+
+    if (KNOCKOUT_PHASES.has(partido.fase.codigo)) {
+      await advanceKnockoutWinners();
+    }
+
     updateTag("matches");
     revalidateTag("ranking", "max");
     revalidatePath("/");

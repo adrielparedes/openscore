@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { getAnalytics, type AnalyticsData } from "@/actions/analytics";
 import { calculateStandings } from "@/actions/standings";
-import { advanceGroupWinners, advanceKnockoutWinners } from "@/actions/advancement";
+import { advanceGroupWinners } from "@/actions/advancement";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import RegistrationChart from "@/components/admin/RegistrationChart";
 import {
@@ -21,7 +21,6 @@ import {
   UserPlus,
   TableProperties,
   Network,
-  Swords,
 } from "lucide-react";
 
 function StatCard({
@@ -78,7 +77,6 @@ export default function AdminDashboardContent({
   const [isRecalculating, startRecalc] = useTransition();
   const [recalcMessage, setRecalcMessage] = useState<string | null>(null);
   const [isAdvancingGroups, startAdvanceGroups] = useTransition();
-  const [isAdvancingKnockout, startAdvanceKnockout] = useTransition();
   const [advanceMessage, setAdvanceMessage] = useState<string | null>(null);
 
   function handleRefresh() {
@@ -128,22 +126,6 @@ export default function AdminDashboardContent({
     });
   }
 
-  function handleAdvanceKnockout() {
-    setAdvanceMessage(null);
-    startAdvanceKnockout(async () => {
-      try {
-        const result = await advanceKnockoutWinners();
-        setAdvanceMessage(
-          result.updated > 0
-            ? `Advanced knockout winners: ${result.updated} match(es) updated.`
-            : "No knockout matches to update (no finished matches or already advanced)."
-        );
-      } catch {
-        setAdvanceMessage("Failed to advance knockout winners.");
-      }
-    });
-  }
-
   return (
     <div className="mx-auto w-full max-w-7xl flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex items-end justify-between">
@@ -163,16 +145,6 @@ export default function AdminDashboardContent({
               className={`h-3.5 w-3.5 ${isAdvancingGroups ? "animate-spin" : ""}`}
             />
             <span>{isAdvancingGroups ? "Advancing…" : "Advance Group Winners"}</span>
-          </button>
-          <button
-            onClick={handleAdvanceKnockout}
-            disabled={isAdvancingKnockout}
-            className="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 font-medium text-foreground hover:bg-accent transition-colors disabled:opacity-50"
-          >
-            <Swords
-              className={`h-3.5 w-3.5 ${isAdvancingKnockout ? "animate-spin" : ""}`}
-            />
-            <span>{isAdvancingKnockout ? "Advancing…" : "Advance Knockout Winners"}</span>
           </button>
           <button
             onClick={handleRecalcStandings}
