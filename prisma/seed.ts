@@ -455,16 +455,16 @@ async function main() {
       { local: "1A",   visitante: "3T79", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T01:00:00Z"), lugar: "Estadio Azteca, Mexico City" },
       // Jul 1
       { local: "1L",   visitante: "3T80", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T16:00:00Z"), lugar: "Mercedes-Benz Stadium, Atlanta" },
-      { local: "1G",   visitante: "3T82", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T20:00:00Z"), lugar: "Lumen Field, Seattle" },
-      { local: "1D",   visitante: "3T81", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T00:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area" },
+      { local: "1D",   visitante: "3T81", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-01T20:00:00Z"), lugar: "Levi's Stadium, San Francisco Bay Area" },
+      { local: "1G",   visitante: "3T82", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T00:00:00Z"), lugar: "Lumen Field, Seattle" },
       // Jul 2
-      { local: "1H",   visitante: "2J",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T19:00:00Z"), lugar: "SoFi Stadium, Los Angeles" },
-      { local: "2K",   visitante: "2L",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T23:00:00Z"), lugar: "BMO Field, Toronto" },
+      { local: "2K",   visitante: "2L",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T19:00:00Z"), lugar: "BMO Field, Toronto" },
+      { local: "1H",   visitante: "2J",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-02T23:00:00Z"), lugar: "SoFi Stadium, Los Angeles" },
       { local: "1B",   visitante: "3T85", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T03:00:00Z"), lugar: "BC Place, Vancouver" },
       // Jul 3
       { local: "2D",   visitante: "2G",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T18:00:00Z"), lugar: "AT&T Stadium, Dallas" },
-      { local: "1J",   visitante: "2H",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T22:00:00Z"), lugar: "Hard Rock Stadium, Miami" },
-      { local: "1K",   visitante: "3T87", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-04T01:30:00Z"), lugar: "GEHA Field at Arrowhead, Kansas City" },
+      { local: "1K",   visitante: "3T87", fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-03T22:00:00Z"), lugar: "GEHA Field at Arrowhead, Kansas City" },
+      { local: "1J",   visitante: "2H",   fase: "TREINTAIDOSAVOS", dia: new Date("2026-07-04T01:30:00Z"), lugar: "Hard Rock Stadium, Miami" },
     ];
 
     // ── Round of 16 (matches 89–96) ───────────────────────────────────────────

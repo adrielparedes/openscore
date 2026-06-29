@@ -72,8 +72,8 @@ function halve(arr: number[]): number[] {
 // This is immune to advanceKnockoutWinners replacing W{N} placeholder teams
 // with real teams — the bracket wiring never changes.
 const BRACKET_FEEDERS: Record<number, [number, number]> = {
-  89: [74, 76], 90: [73, 75], 91: [79, 80], 92: [77, 78],
-  93: [83, 84], 94: [85, 86], 95: [81, 82], 96: [87, 88],
+  89: [74, 77], 90: [73, 75], 91: [76, 78], 92: [79, 80],
+  93: [83, 84], 94: [81, 82], 95: [86, 88], 96: [85, 87],
   97: [89, 90], 98: [93, 94], 99: [91, 92], 100: [95, 96],
   101: [97, 98], 102: [99, 100],
   104: [101, 102],
