@@ -67,8 +67,19 @@ function halve(arr: number[]): number[] {
   return res;
 }
 
+// ─── Static bracket structure ────────────────────────────────────────────────
+// Maps each knockout match to its two feeder match IDs [local, visitante].
+// This is immune to advanceKnockoutWinners replacing W{N} placeholder teams
+// with real teams — the bracket wiring never changes.
+const BRACKET_FEEDERS: Record<number, [number, number]> = {
+  89: [74, 76], 90: [73, 75], 91: [79, 80], 92: [77, 78],
+  93: [83, 84], 94: [85, 86], 95: [81, 82], 96: [87, 88],
+  97: [89, 90], 98: [93, 94], 99: [91, 92], 100: [95, 96],
+  101: [97, 98], 102: [99, 100],
+  104: [101, 102],
+};
+
 // ─── Bracket order derivation ─────────────────────────────────────────────────
-// Derives correct bracket positioning from match references (W{N} codes).
 // Walks the tree level-by-level from the Final backwards, ensuring that adjacent
 // pairs at each phase feed into the correct next-round slot.
 function deriveBracketOrder(matches: PartidoPronostico[]): Record<string, PartidoPronostico[]> {
@@ -89,28 +100,28 @@ function deriveBracketOrder(matches: PartidoPronostico[]): Record<string, Partid
     return byPhase;
   }
 
-  function getFeeders(match: PartidoPronostico): [number | null, number | null] {
-    const lm = match.local.codigo.match(/^W(\d+)$/);
-    const vm = match.visitante.codigo.match(/^W(\d+)$/);
+  function getFeeders(matchId: number): [number | null, number | null] {
+    const entry = BRACKET_FEEDERS[matchId];
+    if (entry) return entry;
+    const m = byId.get(matchId);
+    if (!m) return [null, null];
+    const lm = m.local.codigo.match(/^W(\d+)$/);
+    const vm = m.visitante.codigo.match(/^W(\d+)$/);
     return [lm ? parseInt(lm[1]) : null, vm ? parseInt(vm[1]) : null];
   }
 
-  // Level-by-level expansion: for each match in the current level,
-  // expand to its two feeders to get the next (outer) level's order.
   function expandLevel(matchIds: number[]): number[] {
     const result: number[] = [];
     for (const id of matchIds) {
-      const m = byId.get(id);
-      if (!m) continue;
-      const [l, r] = getFeeders(m);
+      if (!byId.has(id)) continue;
+      const [l, r] = getFeeders(id);
       if (l !== null) result.push(l);
       if (r !== null) result.push(r);
     }
     return result;
   }
 
-  // Build ordered IDs for each phase, starting from SEMI and expanding outward
-  const [sf1Id, sf2Id] = getFeeders(finalMatch);
+  const [sf1Id, sf2Id] = getFeeders(finalMatch.id);
   const semiIds = [sf1Id, sf2Id].filter((id): id is number => id !== null);
 
   const phaseIds: Record<string, number[]> = {};
