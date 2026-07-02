@@ -26,7 +26,11 @@ const MIN_ZOOM = 0.4;
 const MAX_ZOOM = 1.5;
 const ZOOM_STEP = 0.1;
 
-export default function ForecastFilters() {
+interface ForecastFiltersProps {
+  serverDefaultView?: string;
+}
+
+export default function ForecastFilters({ serverDefaultView }: ForecastFiltersProps) {
   const router = useRouter();
   const params = useSearchParams();
   const { mode, setMode, zoom, setZoom, mounted: bracketMounted } = useBracket();
@@ -46,9 +50,12 @@ export default function ForecastFilters() {
     view: params.get("view"),
   };
 
-  const isBracket = active.view === "bracket";
-  const isUpcoming = !active.grupo && !active.fase && !active.fecha && !active.view;
-  const isAll = active.view === "all" && !active.grupo && !active.fase && !active.fecha;
+  const hasExplicitParams = !!(active.grupo || active.fase || active.fecha || active.view);
+  const effectiveView = hasExplicitParams ? active.view : (serverDefaultView ?? null);
+
+  const isBracket = effectiveView === "bracket";
+  const isUpcoming = !active.grupo && !active.fase && !active.fecha && !effectiveView;
+  const isAll = (effectiveView === "all") && !active.grupo && !active.fase && !active.fecha;
 
   const buildUrl = useCallback((base: URLSearchParams, np: boolean) => {
     if (np) base.set("filter", "not-predicted");

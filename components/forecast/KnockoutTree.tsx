@@ -322,12 +322,19 @@ function KnockoutNode({ slot, cardH, onClick }: { slot: Slot; cardH: number; onC
       )}
       style={{ height: cardH }}
     >
-      <div className="flex items-center justify-center gap-1">
-        <NodeTeam codigo={m.local.codigo} nombre={m.local.nombre} />
-        <span className="shrink-0 font-bold text-border text-[10px] w-8 text-center">
-          {finished ? `${m.resultadoLocal}–${m.resultadoVisitante}` : "vs"}
-        </span>
-        <NodeTeam codigo={m.visitante.codigo} nombre={m.visitante.nombre} />
+      <div className="flex flex-col items-center gap-0.5">
+        <div className="flex items-center justify-center gap-1">
+          <NodeTeam codigo={m.local.codigo} nombre={m.local.nombre} />
+          <span className="shrink-0 font-bold text-border text-[10px] w-8 text-center">
+            {finished ? `${m.resultadoLocal}–${m.resultadoVisitante}` : "vs"}
+          </span>
+          <NodeTeam codigo={m.visitante.codigo} nombre={m.visitante.nombre} />
+        </div>
+        {finished && m.resultadoPenales && (
+          <span className="text-[9px] text-muted-foreground leading-none">
+            ({m.resultadoPenalesLocal}–{m.resultadoPenalesVisitante} pens)
+          </span>
+        )}
       </div>
       <div className="flex items-center">
         {showLock ? (

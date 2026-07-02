@@ -138,9 +138,16 @@ export default function MatchCard({ match }: MatchCardProps) {
 
         <div className="flex flex-col items-center gap-1 px-2 shrink-0">
           {match.status === "FINISHED" ? (
-            <div className="text-2xl font-bold text-foreground tabular-nums whitespace-nowrap">
-              {match.resultadoLocal} – {match.resultadoVisitante}
-            </div>
+            <>
+              <div className="text-2xl font-bold text-foreground tabular-nums whitespace-nowrap">
+                {match.resultadoLocal} – {match.resultadoVisitante}
+              </div>
+              {match.resultadoPenales && (
+                <span className="text-xs text-muted-foreground">
+                  ({match.resultadoPenalesLocal} – {match.resultadoPenalesVisitante} pens)
+                </span>
+              )}
+            </>
           ) : (
             <div className="text-xl font-bold text-border">VS</div>
           )}

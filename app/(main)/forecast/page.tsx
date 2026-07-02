@@ -1,9 +1,11 @@
 import { getPronosticos, getKnockoutPronosticos, getUpcomingPronosticos } from "@/actions/pronosticos";
+import { cachedGetForecastDefaults } from "@/actions/settings";
 import MatchCard from "@/components/forecast/MatchCard";
 import UpcomingMatchesSplit from "@/components/forecast/UpcomingMatchesSplit";
 import ForecastFilters from "@/components/forecast/ForecastFilters";
 import KnockoutTree from "@/components/forecast/KnockoutTree";
 import { BracketProvider } from "@/components/forecast/BracketContext";
+import { headers } from "next/headers";
 import { Suspense } from "react";
 import type { PartidoPronostico } from "@/types";
 
@@ -113,10 +115,28 @@ async function KnockoutBracketSection() {
   return <KnockoutTree matches={matches} />;
 }
 
+function isMobileUserAgent(ua: string): boolean {
+  return /android|iphone|ipad|ipod|mobile|webos|blackberry|opera mini|iemobile/i.test(ua);
+}
+
 export default async function ForecastPage({ searchParams }: ForecastPageProps) {
   const params = await searchParams;
-  const isBracket = params.view === "bracket";
-  const isUpcoming = !params.grupo && !params.fase && !params.fecha && !params.view;
+  const hasExplicitParams = !!(params.grupo || params.fase || params.fecha || params.view);
+
+  let effectiveView = params.view;
+  if (!hasExplicitParams) {
+    const reqHeaders = await headers();
+    const ua = reqHeaders.get("user-agent") ?? "";
+    const isMobile = isMobileUserAgent(ua);
+    const defaults = await cachedGetForecastDefaults();
+    const defaultView = isMobile ? defaults.mobile : defaults.desktop;
+    if (defaultView !== "upcoming") {
+      effectiveView = defaultView === "all" ? "all" : "bracket";
+    }
+  }
+
+  const isBracket = effectiveView === "bracket";
+  const isUpcoming = !params.grupo && !params.fase && !params.fecha && !effectiveView;
 
   const matchGridFallback = (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -134,7 +154,7 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
             <h1 className="text-2xl font-bold text-foreground">Predictions</h1>
             <p className="text-muted-foreground text-sm mt-1">Select your prediction for each match. Picks lock 15 minutes before kickoff.</p>
           </div>
-          <ForecastFilters />
+          <ForecastFilters serverDefaultView={effectiveView} />
         </div>
 
         {isBracket ? (
