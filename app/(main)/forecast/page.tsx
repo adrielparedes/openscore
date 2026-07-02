@@ -1,5 +1,5 @@
 import { getPronosticos, getKnockoutPronosticos, getUpcomingPronosticos } from "@/actions/pronosticos";
-import { cachedGetForecastDefaults } from "@/actions/settings";
+import { cachedGetForecastDefaults } from "@/lib/settings";
 import MatchCard from "@/components/forecast/MatchCard";
 import UpcomingMatchesSplit from "@/components/forecast/UpcomingMatchesSplit";
 import ForecastFilters from "@/components/forecast/ForecastFilters";

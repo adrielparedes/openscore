@@ -3,10 +3,8 @@
 import { useState, useTransition } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Settings, Monitor, Smartphone } from "lucide-react";
-import {
-  updateForecastDefaults,
-  type ForecastDefault,
-} from "@/actions/settings";
+import { updateForecastDefaults } from "@/actions/settings";
+import type { ForecastDefault } from "@/lib/settings";
 
 const VIEW_OPTIONS: { value: ForecastDefault; label: string }[] = [
   { value: "upcoming", label: "Upcoming" },

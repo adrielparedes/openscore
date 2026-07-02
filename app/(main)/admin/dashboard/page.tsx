@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { getAnalytics } from "@/actions/analytics";
-import { cachedGetForecastDefaults } from "@/actions/settings";
+import { cachedGetForecastDefaults } from "@/lib/settings";
 import { redirect } from "next/navigation";
 import AdminDashboardContent from "./AdminDashboardContent";
 import ForecastDefaultsCard from "@/components/admin/ForecastDefaultsCard";
