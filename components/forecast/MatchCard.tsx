@@ -121,9 +121,9 @@ export default function MatchCard({ match }: MatchCardProps) {
       </div>
 
       {/* Teams + score */}
-      <div className="flex items-center justify-between gap-4 px-6 py-5">
+      <div className="flex items-center justify-between gap-2 px-5 py-5">
         {/* Local */}
-        <div className="flex-1 flex flex-col items-center gap-2">
+        <div className="flex-1 min-w-0 flex flex-col items-center gap-2">
           {flagUrl(match.local.codigo) && (
             <div className="w-14 h-10 rounded overflow-hidden shadow-sm shrink-0">
               <img
@@ -136,14 +136,14 @@ export default function MatchCard({ match }: MatchCardProps) {
           <TeamName nombre={match.local.nombre} codigo={match.local.codigo} />
         </div>
 
-        <div className="flex flex-col items-center gap-1 px-2 shrink-0">
+        <div className="flex flex-col items-center gap-0.5 px-1 shrink-0">
           {match.status === "FINISHED" ? (
             <>
               <div className="text-2xl font-bold text-foreground tabular-nums whitespace-nowrap">
                 {match.resultadoLocal} – {match.resultadoVisitante}
               </div>
               {match.resultadoPenales && (
-                <span className="text-xs text-muted-foreground">
+                <span className="text-[11px] text-muted-foreground whitespace-nowrap">
                   ({match.resultadoPenalesLocal} – {match.resultadoPenalesVisitante} pens)
                 </span>
               )}
@@ -154,7 +154,7 @@ export default function MatchCard({ match }: MatchCardProps) {
         </div>
 
         {/* Visitante */}
-        <div className="flex-1 flex flex-col items-center gap-2">
+        <div className="flex-1 min-w-0 flex flex-col items-center gap-2">
           {flagUrl(match.visitante.codigo) && (
             <div className="w-14 h-10 rounded overflow-hidden shadow-sm shrink-0">
               <img

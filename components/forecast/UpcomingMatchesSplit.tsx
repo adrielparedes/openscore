@@ -71,7 +71,7 @@ export default function UpcomingMatchesSplit({ matches, filter }: Props) {
               {todayMatches.length} match{todayMatches.length !== 1 ? "es" : ""}
             </span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
             {todayMatches.map((match) => (
               <MatchCard key={match.id} match={match} />
             ))}

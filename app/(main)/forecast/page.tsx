@@ -85,7 +85,7 @@ async function MatchList({
               <div className="flex-1 h-px bg-border" />
               <span className="text-xs text-muted-foreground font-medium">{group.matches.length} matches</span>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
               {group.matches.map((match) => (
                 <MatchCard key={match.id} match={match} />
               ))}
@@ -97,7 +97,7 @@ async function MatchList({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
       {matches.map((match) => (
         <MatchCard key={match.id} match={match} />
       ))}
@@ -139,9 +139,9 @@ export default async function ForecastPage({ searchParams }: ForecastPageProps) 
   const isUpcoming = !params.grupo && !params.fase && !params.fecha && !effectiveView;
 
   const matchGridFallback = (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
       {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="h-44 rounded-xl bg-muted animate-pulse" />
+        <div key={i} className="h-52 rounded-xl bg-muted animate-pulse" />
       ))}
     </div>
   );

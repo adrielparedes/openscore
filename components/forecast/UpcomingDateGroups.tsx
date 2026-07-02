@@ -40,7 +40,7 @@ export default function UpcomingDateGroups({ matches }: Props) {
               <span className="text-xs text-muted-foreground font-medium">{group.items.length} match{group.items.length !== 1 ? "es" : ""}</span>
             </div>
           )}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
             {group.items.map((match) => (
               <MatchCard key={match.id} match={match} />
             ))}

@@ -84,9 +84,9 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
       </div>
 
       {/* Teams + score */}
-      <div className="flex items-center justify-between gap-4 px-6 py-6">
+      <div className="flex items-center justify-between gap-3 px-5 py-6">
         {/* Local */}
-        <div className="flex-1 flex flex-col items-center gap-2">
+        <div className="flex-1 min-w-0 flex flex-col items-center gap-2">
           {flagUrl(match.local.codigo) && (
             <div className="w-14 h-10 rounded overflow-hidden shadow-sm shrink-0">
               <img
@@ -101,22 +101,22 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
         </div>
 
         {finished ? (
-          <div className="flex flex-col items-center gap-1">
-            <div className="text-3xl font-black text-foreground tracking-tight tabular-nums">
+          <div className="flex flex-col items-center gap-0.5 shrink-0">
+            <div className="text-3xl font-black text-foreground tracking-tight tabular-nums whitespace-nowrap">
               {match.resultadoLocal} – {match.resultadoVisitante}
             </div>
             {match.resultadoPenales && (
-              <span className="text-xs text-muted-foreground">
+              <span className="text-[11px] text-muted-foreground whitespace-nowrap">
                 ({match.resultadoPenalesLocal} – {match.resultadoPenalesVisitante} pens)
               </span>
             )}
           </div>
         ) : (
-          <div className="text-2xl font-bold text-border select-none">VS</div>
+          <div className="text-2xl font-bold text-border select-none shrink-0">VS</div>
         )}
 
         {/* Visitante */}
-        <div className="flex-1 flex flex-col items-center gap-2">
+        <div className="flex-1 min-w-0 flex flex-col items-center gap-2">
           {flagUrl(match.visitante.codigo) && (
             <div className="w-14 h-10 rounded overflow-hidden shadow-sm shrink-0">
               <img
