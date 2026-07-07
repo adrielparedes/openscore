@@ -171,13 +171,15 @@ export default function NextMatchCard({ match }: NextMatchCardProps) {
               >
                 Home
               </button>
-              <button
-                className={cn(btnBase, btnVariant(match.pronostico?.ganador === "EMPATE"))}
-                onClick={() => vote("EMPATE")}
-                disabled={locked}
-              >
-                Draw
-              </button>
+              {match.fase.codigo === "GRUPO" && (
+                <button
+                  className={cn(btnBase, btnVariant(match.pronostico?.ganador === "EMPATE"))}
+                  onClick={() => vote("EMPATE")}
+                  disabled={locked}
+                >
+                  Draw
+                </button>
+              )}
               <button
                 className={cn(btnBase, btnVariant(match.pronostico?.ganador === "VISITANTE"))}
                 onClick={() => vote("VISITANTE")}

@@ -200,10 +200,15 @@ export async function setPronostico(
 
     const partido = await prisma.partido.findUniqueOrThrow({
       where: { id: partidoId },
+      include: { fase: true },
     });
 
     if (isBloqueado(partido.dia)) {
       return { error: "Match is locked — predictions closed 15 min before kickoff" };
+    }
+
+    if (ganador === "EMPATE" && partido.fase.codigo !== "GRUPO") {
+      return { error: "Draws are not allowed in knockout stages" };
     }
 
     await prisma.pronostico.upsert({
