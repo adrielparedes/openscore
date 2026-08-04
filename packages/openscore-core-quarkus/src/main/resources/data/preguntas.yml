@@ -1,0 +1,7 @@
+---
+- codigo: PERRO
+  pregunta: What's the name of your first dog?
+- codigo: MADRE
+  pregunta: What's your mother second name?
+- codigo: EQUIPO
+  pregunta: What's you favorite sport team?
