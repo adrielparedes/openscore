@@ -1,0 +1,1 @@
+docker run --name openscore-db -p 5432:5432 -e POSTGRES_PASSWORD=0p3nsc0r3 -e POSTGRES_USER=postgres -d postgres
